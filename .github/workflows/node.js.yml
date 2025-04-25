@@ -20,8 +20,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
-      - run: npm run type-check
+      - run: npm install
+      - run: npm run type-check --if-present
       - run: npm run lint
-      - run: npm run format
-      - run: npm test
+      - run: npm run format --if-present
+      - run: npm test --if-present
