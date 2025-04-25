@@ -24,8 +24,6 @@
 ### Mandatory Requirements
 - [ ] Meets all task criteria (RSS-ECOMM-X_XX)
 - [ ] No console errors (except API requests)
-- [ ] No linting errors
-- [ ] No type-check errors
 - [ ] Responsive across devices
 - [ ] 30%+ test coverage 
 
@@ -33,13 +31,11 @@
 - [ ] Reviewers have been requested
 - [ ] Comprehensive PR description provided
 - [ ] Completed self-code review
-- [ ] Removed all debug code (console.log, temporary comments)
 - [ ] Documentation updated (if relevant)
 
 ### Technical Compliance
 - [ ] All package.json scripts functional
-- [ ] All commented-out unused code has been removed
-- [ ] All unused code has been removed
+
 
 **Related PRs:**
 - #linked_pr_number  
