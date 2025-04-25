@@ -9,7 +9,16 @@
     "baseUrl": "./",
     "paths": {
       "~/*": ["src/*"],
-      "~components/*": ["src/components/*"]
+      "~components/*": ["src/components/*"],
+      "~config/*": ["src/config/*"],
+      "~features/*": ["src/features/*"],
+      "~hooks/*": ["src/hooks/*"],
+      "~lib/*": ["src/lib/*"],
+      "~stores/*": ["src/stores/*"],
+      "~testing/*": ["src/testing/*"],
+      "~types/*": ["src/types/*"],
+      "~utils/*": ["src/utils/*"],
+      "~app/*": ["src/app/*"],
     },
 
     /* Bundler mode */

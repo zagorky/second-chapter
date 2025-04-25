@@ -13,6 +13,17 @@ export default defineConfig({
     alias: {
       '~': path.resolve(__dirname, './src'),
       '~components': path.resolve(__dirname, './src/components'),
+      '~config': path.resolve(__dirname, './src/config'),
+      '~features': path.resolve(__dirname, './src/features'),
+      '~hooks': path.resolve(__dirname, './src/hooks'),
+      '~lib': path.resolve(__dirname, './src/lib'),
+      '~stores': path.resolve(__dirname, './src/stores'),
+      '~testing': path.resolve(__dirname, './src/testing'),
+      '~types': path.resolve(__dirname, './src/types'),
+      '~utils': path.resolve(__dirname, './src/utils'),
+      '~app': path.resolve(__dirname, './src/app'),
+
+
     },
   },
   build: {
