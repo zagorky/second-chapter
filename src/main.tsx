@@ -5,7 +5,7 @@ import App from './App.tsx'
 
 const rootElement = document.querySelector('#root');
 
-createRoot(rootElement).render(
+createRoot(rootElement!).render(
   <StrictMode>
     <App />
   </StrictMode>,
