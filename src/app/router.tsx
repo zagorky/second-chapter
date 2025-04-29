@@ -35,9 +35,9 @@ export const AppRouter = createBrowserRouter([
             {
                 path: '/card',
                 async lazy() {
-                    const { CardPage } = await import('../app/pages/card-page/card-page.tsx');
+                    const { CartPage } = await import('~app/pages/cart-page/cart-page.tsx');
                     return {
-                        element: <CardPage />
+                        element: <CartPage />
                     };
                 }
             },
