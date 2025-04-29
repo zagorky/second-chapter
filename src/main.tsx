@@ -1,12 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import {App} from "~app/App.tsx";
+import {assertIsNonNullable} from "~utils/helpers.ts";
 import './index.css'
-import App from './App.tsx'
 
 const rootElement = document.querySelector('#root');
+assertIsNonNullable(rootElement);
 
-createRoot(rootElement!).render(
+createRoot(rootElement).render(
   <StrictMode>
-    <App />
+    <App/>
   </StrictMode>,
 )
