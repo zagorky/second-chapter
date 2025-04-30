@@ -12,7 +12,7 @@ export default {
           const isValid = pattern.test(subject || '');
           return [
             isValid,
-            '🐶 Commit message must look like: `chore: RSS-ECOMM-1_10: short description`',
+            '🐶 Commit message must look like: `chore(RSS-ECOMM-1_10): short description`',
           ];
         },
       },
