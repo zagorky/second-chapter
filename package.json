@@ -11,13 +11,17 @@
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "knip": "knip",
+    "knip:fix": "knip --fix",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "prepare": "husky",
     "lint-staged": "lint-staged",
-    "lint:styles": "stylelint '**/*.{css}' --fix",
-    "check": "npm run type-check && npm run lint:fix && npm run format && npm run knip && npm run test && npm run lint:styles"
+    "lint:styles:fix": "stylelint '**/*.css' --fix",
+    "lint:styles": "stylelint '**/*.css'",
+    "check:fix": "npm run type-check && npm run lint:fix && npm run format && npm run knip:fix && npm run test && npm run lint:styles:fix",
+    "check": "npm run type-check && npm run lint && npm run format:check && npm run knip && npm run test && npm run lint:styles"
   },
   "dependencies": {
     "react": "^19.0.0",
