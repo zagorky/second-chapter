@@ -6,10 +6,8 @@
   "tabWidth": 2,
   "useTabs": false,
   "endOfLine": "auto",
-  "insertFinalNewline": true,
   "bracketSpacing": true,
   "arrowParens": "always",
 
-  "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindAttributes": ["classes"]
+  "plugins": ["prettier-plugin-tailwindcss"]
 }
