@@ -20,7 +20,7 @@ This project is a fully functional online platform for buying used books.
 
 - **Automation**:
 
-  - [Knip](https://github.com/knipjs/knip)
+  - [Knip](https://knip.dev/)
 
 - **E-Commerce**:
 
