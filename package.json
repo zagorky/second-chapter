@@ -16,7 +16,8 @@
     "test:ui": "vitest --ui",
     "prepare": "husky",
     "lint-staged": "lint-staged",
-    "lint:styles": "stylelint '**/*.{scss,css}' --fix"
+    "lint:styles": "stylelint '**/*.{css}' --fix",
+    "check": "npm run type-check && npm run lint:fix && npm run format && npm run knip && npm run test && npm run lint:styles"
   },
   "dependencies": {
     "react": "^19.0.0",

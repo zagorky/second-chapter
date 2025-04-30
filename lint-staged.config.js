@@ -1,6 +1,6 @@
 const config = {
-  'src/**/*.ts': ['eslint --fix', 'prettier --write'],
-  'src/**/*.tsx': ['eslint --fix', 'prettier --write'],
+  'src/**/*.{ts,tsx}': ['npm run check'],
+  'src/**/*.css': ['npm run lint:styles'],
 };
 
 export default config;
