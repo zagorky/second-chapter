@@ -33,6 +33,32 @@ This project is a fully functional online platform for buying used books.
 - **CI/CD**:
   - [GitHub Actions](https://github.com/features/actions)
 
+---
+
+### 🧰 Available Scripts
+
+| **Script**        | **Description**                                                                        | **Usage**                 |
+| ----------------- | -------------------------------------------------------------------------------------- | ------------------------- |
+| `dev`             | Start the development server with Vite.                                                | `npm run dev`             |
+| `build`           | Build the project using TypeScript and Vite.                                           | `npm run build`           |
+| `lint`            | Run ESLint to check for code issues.                                                   | `npm run lint`            |
+| `lint:fix`        | Automatically fix linting issues.                                                      | `npm run lint:fix`        |
+| `preview`         | Preview the built project.                                                             | `npm run preview`         |
+| `type-check`      | Run TypeScript's type-checking without emitting output.                                | `npm run type-check`      |
+| `format`          | Format the code with Prettier.                                                         | `npm run format`          |
+| `format:check`    | Check if the code is formatted correctly using Prettier.                               | `npm run format:check`    |
+| `knip`            | Run Knip to check for unused code.                                                     | `npm run knip`            |
+| `test`            | Run Vitest tests.                                                                      | `npm run test`            |
+| `test:ui`         | Run Vitest tests with the interactive UI.                                              | `npm run test:ui`         |
+| `prepare`         | Run Husky to set up git hooks.                                                         | `npm run prepare`         |
+| `lint-staged`     | Run linting on staged files using lint-staged.                                         | `npm run lint-staged`     |
+| `lint:styles:fix` | Automatically fix CSS issues using Stylelint.                                          | `npm run lint:styles:fix` |
+| `lint:styles`     | Run Stylelint to check for CSS issues.                                                 | `npm run lint:styles`     |
+| `check:fix`       | Run with fix type-check, lint, format, Knip, tests, and fix CSS issues in one command. | `npm run check:fix`       |
+| `check`           | Run type-check, lint, format check, Knip, and tests in one command.                    | `npm run check`           |
+
+---
+
 ### 🧑‍💻 About us:
 
 We were a team of beginner developers working on our capstone project, with support from experienced mentors who guided us throughout the development process.
