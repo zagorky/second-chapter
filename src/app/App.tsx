@@ -1,10 +1,7 @@
-import '../App.css'
-import {RouterProvider} from "react-router/dom";
-import {AppRouter} from "~app/router.tsx";
+import '../App.css';
+import { AppRouter } from '~app/router.tsx';
+import { RouterProvider } from 'react-router/dom';
 
 export const App = () => {
-    return (
-        <RouterProvider router={AppRouter} />
-    );
+  return <RouterProvider router={AppRouter} />;
 };
-

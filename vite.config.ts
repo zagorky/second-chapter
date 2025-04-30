@@ -1,11 +1,10 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import react from '@vitejs/plugin-react-swc'
-import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react-swc';
+import tailwindcss from '@tailwindcss/vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 
 export default defineConfig({
   base: '/',
@@ -22,8 +21,6 @@ export default defineConfig({
       '~types': path.resolve(__dirname, './src/types'),
       '~utils': path.resolve(__dirname, './src/utils'),
       '~app': path.resolve(__dirname, './src/app'),
-
-
     },
   },
   build: {
@@ -35,5 +32,10 @@ export default defineConfig({
       localsConvention: 'camelCaseOnly',
     },
   },
-  plugins: [react(), tailwindcss(),],
-})
+  plugins: [react(), tailwindcss()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './vitest.setupTests.ts',
+  },
+});
