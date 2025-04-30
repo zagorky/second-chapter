@@ -35,6 +35,37 @@ This project is a fully functional online platform for buying used books.
 
 ---
 
+### 🖥️ How to Run the Project Locally
+
+To get started with this project locally, follow these steps:
+
+1. **Clone the repository**
+
+   - With HTTPS:
+
+   ```bash
+   git clone https://github.com/zagorky/second-chapter.git
+   ```
+
+   - With SSH:
+
+   ```bash
+   git clone git@github.com:zagorky/second-chapter.git
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   cd second-chapter
+   npm install
+   ```
+
+3. **Run the project locally**
+   ```bash
+   npm run dev
+   ```
+---
+
 ### 🧰 Available Scripts
 
 | **Script**        | **Description**                                                                        | **Usage**                 |
