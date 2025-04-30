@@ -157,5 +157,13 @@ export default tseslint.config(
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
     },
+  },
+  {
+    files: ['**/*.test.{js,ts,jsx,tsx}', '**/*.spec.{js,ts,jsx,tsx}'],
+    rules: {
+      '@typescript-eslint/no-magic-numbers': 'off',
+      'no-undef': 'off',
+      'no-unused-expressions': 'off',
+    },
   }
 );

@@ -35,7 +35,3 @@
 
 ### Technical Compliance
 - [ ] All package.json scripts functional
-
-
-**Related PRs:**
-- #linked_pr_number  
