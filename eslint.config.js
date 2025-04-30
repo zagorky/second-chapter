@@ -43,6 +43,9 @@ export default tseslint.config(
           project: './tsconfig.json',
         },
       },
+      react: {
+        version: 'detect',
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
