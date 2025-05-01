@@ -1,4 +1,3 @@
-import '../App.css';
 import { AppRouter } from '~app/router.tsx';
 import { RouterProvider } from 'react-router/dom';
 

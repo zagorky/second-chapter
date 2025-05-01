@@ -1,5 +1,6 @@
-import { MainLayout } from '~components/layouts/mainLayout.tsx';
 import { createBrowserRouter } from 'react-router';
+
+import { MainLayout } from '~/components/layouts/mainLayout.tsx';
 
 export const AppRouter = createBrowserRouter([
   {
@@ -12,6 +13,26 @@ export const AppRouter = createBrowserRouter([
 
           return {
             element: <MainPage />,
+          };
+        },
+      },
+      {
+        path: '/signin',
+        async lazy() {
+          const { SigninPage } = await import('./pages/signin-page/signinPage.tsx');
+
+          return {
+            element: <SigninPage />,
+          };
+        },
+      },
+      {
+        path: '/signup',
+        async lazy() {
+          const { SignupPage } = await import('./pages/signup-page/signupPage.tsx');
+
+          return {
+            element: <SignupPage />,
           };
         },
       },
@@ -38,7 +59,7 @@ export const AppRouter = createBrowserRouter([
       {
         path: '/cart',
         async lazy() {
-          const { CartPage } = await import('~app/pages/cart-page/cartPage.tsx');
+          const { CartPage } = await import('~/app/pages/cart-page/cartPage.tsx');
 
           return {
             element: <CartPage />,
