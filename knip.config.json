@@ -1,0 +1,22 @@
+{
+  "entry": ["src/main.tsx"],
+  "project": ["src/**/*.{ts, tsx}"],
+  "ignore": [
+    "**/index.ts",
+    "eslint.config.ts",
+    "vite.config.ts",
+    "vitest.setupTests.ts",
+    "vitest.config.ts",
+    "stylelint.config.js",
+    "commitlint.config.js",
+    "lint-staged.config.js",
+    "tsconfig.json",
+    "tsconfig.app.json",
+    "tsconfig.node.json",
+    ".prettierrc",
+    ".prettierrc.json",
+    ".stylelintignore",
+    "src/global.d.ts"
+  ],
+  "include": ["exports", "files", "types"]
+}
