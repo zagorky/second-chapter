@@ -9,6 +9,9 @@ export const MainLayout = () => {
             <Link to="/">Main</Link>
           </li>
           <li>
+            <Link to="/">Main</Link>
+          </li>
+          <li>
             <Link to="/about">About</Link>
           </li>
           <li>
