@@ -92,7 +92,7 @@ To get started with this project locally, follow these steps:
 
 ### 🧑‍💻 About us:
 
-We were a team of beginner developers working on our capstone project, with support from experienced mentors who guided us throughout the development process.
+We are a team of beginner developers who worked on our capstone project with support from experienced mentors who guided us throughout the development process.
 
 ##### 🧚 Our teams:
 
