@@ -7,7 +7,6 @@ import { ThemeProvider } from '../../features/theme-provider/components/themePro
 import { ModeToggle } from '../ui/modeToggle';
 import { NavigationSheet } from '../ui/navbar/navigationSheet';
 import { NavMenu } from '../ui/navbar/navMenu';
-import { Pagination } from '../ui/pagination';
 
 export const MainLayout = () => {
   return (
@@ -38,7 +37,6 @@ export const MainLayout = () => {
         </header>
         <main className="mx-auto w-full max-w-6xl p-8 text-center">
           <Outlet />
-          <Pagination></Pagination>
         </main>
       </div>
     </ThemeProvider>
