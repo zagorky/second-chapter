@@ -6,13 +6,13 @@ import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { cn } from '~/lib/utilities';
 
-export function SigninForm({ className, ...props }: React.ComponentProps<'div'>) {
+export function SignInForm({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
-          <CardDescription>Enter your email below to signin to your account</CardDescription>
+          <CardDescription>Enter your email below to sign in to your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form>

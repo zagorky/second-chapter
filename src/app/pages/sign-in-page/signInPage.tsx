@@ -1,10 +1,10 @@
-import { SigninForm } from '~/components/ui/signinForm';
+import { SignInForm } from '~/components/ui/signInForm';
 
-export const SigninPage = () => {
+export const SignInPage = () => {
   return (
     <div className="flex flex-col items-center gap-2">
       <h1 className={'text-primary heading-1'}>Sign in</h1>
-      <SigninForm></SigninForm>
+      <SignInForm></SignInForm>
     </div>
   );
 };

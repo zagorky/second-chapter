@@ -19,10 +19,10 @@ export const AppRouter = createBrowserRouter([
       {
         path: '/signin',
         async lazy() {
-          const { SigninPage } = await import('./pages/signin-page/signinPage.tsx');
+          const { SignInPage } = await import('./pages/signin-page/signinPage.tsx');
 
           return {
-            element: <SigninPage />,
+            element: <SignInPage />,
           };
         },
       },
