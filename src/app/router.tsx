@@ -9,7 +9,7 @@ export const AppRouter = createBrowserRouter([
       {
         path: '/',
         async lazy() {
-          const { MainPage } = await import('./pages/main-page/mainPage.tsx');
+          const { MainPage } = await import('~app/pages/main-page/mainPage.tsx');
 
           return {
             element: <MainPage />,
@@ -49,7 +49,7 @@ export const AppRouter = createBrowserRouter([
       {
         path: '/catalog',
         async lazy() {
-          const { CatalogPage } = await import('./pages/catalog-page/catalogPage.tsx');
+          const { CatalogPage } = await import('~app/pages/catalog-page/catalogPage.tsx');
 
           return {
             element: <CatalogPage />,
@@ -59,7 +59,7 @@ export const AppRouter = createBrowserRouter([
       {
         path: '/cart',
         async lazy() {
-          const { CartPage } = await import('~/app/pages/cart-page/cartPage.tsx');
+          const { CartPage } = await import('~app/pages/cart-page/cartPage.tsx');
 
           return {
             element: <CartPage />,
