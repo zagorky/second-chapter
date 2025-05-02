@@ -1,5 +1,6 @@
 import type { NavigationMenuProps } from '@radix-ui/react-navigation-menu';
 
+import { NAVIGATION_ITEMS } from '~config/navigation'
 import { Link, useLocation } from 'react-router';
 
 import {
@@ -9,6 +10,7 @@ import {
   NavigationMenuList,
 } from '~/components/ui/navigation-menu/navigationMenu';
 
+
 export const NavMenu = (props: NavigationMenuProps) => {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -16,34 +18,17 @@ export const NavMenu = (props: NavigationMenuProps) => {
   return (
     <NavigationMenu {...props}>
       <NavigationMenuList className="gap-6 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start">
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild>
-            <Link to="/" data-active={currentPath === '/'}>
-              Main
-            </Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild>
-            <Link to="/about" data-active={currentPath === '/about'}>
-              About
-            </Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild>
-            <Link to="/catalog" data-active={currentPath === '/catalog'}>
-              Catalog
-            </Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild>
-            <Link to="/cart" data-active={currentPath === '/cart'}>
-              Cart
-            </Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
+        {NAVIGATION_ITEMS.map((item) => {
+          return (
+            <NavigationMenuItem key={item.path}>
+              <NavigationMenuLink asChild>
+                <Link to={item.path} data-active={currentPath === item.path}>
+                  {item.title}
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          );
+        })}
       </NavigationMenuList>
     </NavigationMenu>
   );
