@@ -16,7 +16,7 @@
     ".prettierrc",
     ".prettierrc.json",
     ".stylelintignore",
-    "src/global.d.ts"
+    "**/*.d.ts"
   ],
   "include": ["exports", "files", "types"]
 }
