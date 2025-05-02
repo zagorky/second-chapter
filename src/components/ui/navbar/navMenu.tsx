@@ -1,6 +1,6 @@
 import type { NavigationMenuProps } from '@radix-ui/react-navigation-menu';
 
-import { NAVIGATION_ITEMS } from '~config/navigation'
+import { NAVIGATION_ITEMS } from '~config/navigation';
 import { Link, useLocation } from 'react-router';
 
 import {
@@ -9,7 +9,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from '~/components/ui/navigation-menu/navigationMenu';
-
 
 export const NavMenu = (props: NavigationMenuProps) => {
   const location = useLocation();

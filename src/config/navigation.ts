@@ -1,4 +1,3 @@
-
 export const NAVIGATION_ITEMS = [
   { path: '/', title: 'Main' },
   { path: '/about', title: 'About' },
