@@ -1,6 +1,3 @@
-# [Sprint X] Brief Description of Changes
-
-**Related Task:** [Task Name](ClickUp Link)  
 **Type of PR:**
 - [ ] Feature
 - [ ] Bugfix
@@ -24,7 +21,6 @@
 ### Mandatory Requirements
 - [ ] Meets all task criteria (RSS-ECOMM-X_XX)
 - [ ] No console errors (except API requests)
-- [ ] Responsive across devices
 - [ ] 30%+ test coverage 
 
 ### Self-Check ✅ 
