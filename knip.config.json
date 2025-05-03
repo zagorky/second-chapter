@@ -13,5 +13,6 @@
     "**/*.d.ts",
     "src/components/ui/**/*"
   ],
+  "ignoreDependencies": ["src/components/ui/**/*"],
   "include": ["exports", "files", "types"]
 }
