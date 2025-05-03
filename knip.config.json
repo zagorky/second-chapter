@@ -1,15 +1,9 @@
 {
   "entry": ["src/main.tsx"],
-  "project": ["src/**/*.{ts, tsx}"],
+  "project": ["src/**/*.{ts,tsx}"],
   "ignore": [
     "**/index.ts",
-    "eslint.config.ts",
-    "vite.config.ts",
-    "vitest.setupTests.ts",
-    "vitest.config.ts",
-    "stylelint.config.js",
-    "commitlint.config.js",
-    "lint-staged.config.js",
+    "**/*.config.{js,ts}",
     "tsconfig.json",
     "tsconfig.app.json",
     "tsconfig.node.json",
@@ -18,5 +12,6 @@
     ".stylelintignore",
     "**/*.d.ts"
   ],
+  "ignoreDependencies": ["src/components/ui/**/*"],
   "include": ["exports", "files", "types"]
 }
