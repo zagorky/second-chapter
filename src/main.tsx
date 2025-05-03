@@ -1,10 +1,10 @@
 import { App } from '~app/App.tsx';
 import { assertIsNonNullable } from '~utils/helpers.ts';
 import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import './index.css';
-
-import { createRoot } from 'react-dom/client';
+import './styles/fonts.css';
 
 const rootElement = document.querySelector('#root');
 

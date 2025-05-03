@@ -1,5 +1,6 @@
-import { MainLayout } from '~components/layouts/mainLayout.tsx';
 import { createBrowserRouter } from 'react-router';
+
+import { MainLayout } from '~/components/layouts/mainLayout.tsx';
 
 export const AppRouter = createBrowserRouter([
   {
@@ -8,7 +9,7 @@ export const AppRouter = createBrowserRouter([
       {
         path: '/',
         async lazy() {
-          const { MainPage } = await import('./pages/main-page/mainPage.tsx');
+          const { MainPage } = await import('~app/pages/main-page/mainPage.tsx');
 
           return {
             element: <MainPage />,
@@ -16,9 +17,29 @@ export const AppRouter = createBrowserRouter([
         },
       },
       {
+        path: '/signin',
+        async lazy() {
+          const { SignInPage } = await import('~app/pages/sign-in-page/signInPage.tsx');
+
+          return {
+            element: <SignInPage />,
+          };
+        },
+      },
+      {
+        path: '/signup',
+        async lazy() {
+          const { SignUpPage } = await import('~app/pages/sign-up-page/signUpPage.tsx');
+
+          return {
+            element: <SignUpPage />,
+          };
+        },
+      },
+      {
         path: '/about',
         async lazy() {
-          const { AboutPage } = await import('./pages/about-page/aboutPage.tsx');
+          const { AboutPage } = await import('~app/pages/about-page/aboutPage.tsx');
 
           return {
             element: <AboutPage />,
@@ -28,7 +49,7 @@ export const AppRouter = createBrowserRouter([
       {
         path: '/catalog',
         async lazy() {
-          const { CatalogPage } = await import('./pages/catalog-page/catalogPage.tsx');
+          const { CatalogPage } = await import('~app/pages/catalog-page/catalogPage.tsx');
 
           return {
             element: <CatalogPage />,
