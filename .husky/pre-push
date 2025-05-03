@@ -1,1 +1,1 @@
-npm run check && npm run build
+npm run lint:knip
