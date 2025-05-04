@@ -1,0 +1,17 @@
+name: PR Discord Notifier
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+              "content": "🚀 PR ${{ github.event.action }}: **${{ github.event.pull_request.title }}**\n🔗 ${{ github.event.pull_request.html_url }}\n👤 Автор: ${{ github.event.pull_request.user.login }}"
+            }' \
+            "https://discord.com/api/webhooks/1368324302817984592/3sJzz4DtszYv0xdQ4tgt44xPMM9IubhPrs_PtdzY6RXl3N_OhWusltgDDSEVLt8hFnpO"
