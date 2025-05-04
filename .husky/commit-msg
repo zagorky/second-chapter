@@ -1,0 +1,2 @@
+echo '🐶 Commit messages should follow this format: `chore(RSS-ECOMM-1_10): short description`'
+npx --no -- commitlint --edit "$1"

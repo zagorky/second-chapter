@@ -1,0 +1,17 @@
+{
+  "entry": ["src/main.tsx"],
+  "project": ["src/**/*.{ts,tsx}"],
+  "ignore": [
+    "**/index.ts",
+    "**/*.config.{js,ts}",
+    "tsconfig.json",
+    "tsconfig.app.json",
+    "tsconfig.node.json",
+    ".prettierrc",
+    ".prettierrc.json",
+    ".stylelintignore",
+    "**/*.d.ts",
+    "src/components/ui/**/*"
+  ],
+  "include": ["exports", "files", "types"]
+}
