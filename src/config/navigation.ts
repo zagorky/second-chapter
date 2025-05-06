@@ -3,8 +3,9 @@ export const NAVIGATION_ROUTES = {
   about: '/about',
   catalog: '/catalog',
   cart: '/cart',
-  signin: '/signin',
+  signin: '/login',
   signup: '/signup',
+  error: '*',
 } as const;
 
 export const NAVIGATION_ITEMS = [
