@@ -1,9 +1,9 @@
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/ts-client';
+import { API_CONFIG } from '~config/apiConfig';
+import { useAppStore } from '~stores/store';
 
-import { API_CONFIG } from './apiConfig';
 import { createTokenCache } from './createTokenCache';
-import { AppStore } from './store';
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
   host: API_CONFIG.API_URL,
@@ -16,7 +16,7 @@ export class ApiBuilder {
   private client: ReturnType<ClientBuilder['build']>;
 
   constructor() {
-    const storedToken = AppStore.tokenStore;
+    const storedToken = useAppStore.getState().store;
 
     const clientBase: ClientBuilder = this.buildBase();
 
@@ -31,7 +31,7 @@ export class ApiBuilder {
   }
 
   public login(user: Credentials) {
-    AppStore.isAuthenticated = true;
+    useAppStore.getState().setIsAuthenticated(true);
 
     this.client = this.buildBase()
       .withPasswordFlow({
@@ -49,7 +49,7 @@ export class ApiBuilder {
   }
 
   public logout(): void {
-    AppStore.isAuthenticated = false;
+    useAppStore.getState().setIsAuthenticated(false);
     this.client = this.buildAnonymousClient(this.buildBase());
   }
 

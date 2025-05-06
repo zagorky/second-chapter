@@ -1,6 +1,6 @@
 import type { TokenCache, TokenStore } from '@commercetools/ts-client';
 
-import { AppStore } from './store';
+import { useAppStore } from '~/stores/store';
 
 const emptyStore = {
   token: '',
@@ -9,12 +9,12 @@ const emptyStore = {
 };
 
 export const createTokenCache = (): TokenCache => {
-  AppStore.tokenStore = undefined;
+  useAppStore.getState().setStore(undefined);
 
   return {
-    get: () => AppStore.tokenStore ?? emptyStore,
+    get: () => useAppStore.getState().store ?? emptyStore,
     set: (store: TokenStore) => {
-      AppStore.tokenStore = store;
+      useAppStore.getState().setStore(store);
     },
   };
 };
