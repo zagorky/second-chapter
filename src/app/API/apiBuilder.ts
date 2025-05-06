@@ -2,6 +2,7 @@ import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/ts-client';
 import { API_CONFIG } from '~config/apiConfig';
 import { useAppStore } from '~stores/store';
+import { toast } from 'sonner';
 
 import { createTokenCache } from './createTokenCache';
 
@@ -30,8 +31,8 @@ export class ApiBuilder {
     return createApiBuilderFromCtpClient(this.client).withProjectKey({ projectKey: API_CONFIG.PROJECT_KEY });
   }
 
-  public login(user: Credentials) {
-    useAppStore.getState().setIsAuthenticated(true);
+  public async login(user: Credentials): Promise<boolean> {
+    const previousClient = this.client;
 
     this.client = this.buildBase()
       .withPasswordFlow({
@@ -43,9 +44,29 @@ export class ApiBuilder {
           user,
         },
         scopes: API_CONFIG.PASSWORD_SCOPES_WITH_KEYS,
-        tokenCache: createTokenCache(),
       })
       .build();
+
+    try {
+      await createApiBuilderFromCtpClient(this.client)
+        .withProjectKey({ projectKey: API_CONFIG.PROJECT_KEY })
+        .me()
+        .get()
+        .execute()
+        .then(() => {
+          useAppStore.getState().setIsAuthenticated(true);
+        });
+
+      return true;
+    } catch (error: unknown) {
+      this.client = previousClient;
+      const message = error instanceof Error ? error.message : 'Login failed';
+
+      toast.error(message);
+      console.error(message);
+
+      return false;
+    }
   }
 
   public logout(): void {
