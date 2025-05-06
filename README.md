@@ -81,6 +81,7 @@ To get started with this project locally, follow these steps:
 | `knip`            | Run Knip to check for unused code.                                                     | `npm run knip`            |
 | `test`            | Run Vitest tests.                                                                      | `npm run test`            |
 | `test:ui`         | Run Vitest tests with the interactive UI.                                              | `npm run test:ui`         |
+| `test:coverage`         | Run Vitest tests with coverage reporting.                                              | `npm run test:coverage`         |
 | `prepare`         | Run Husky to set up git hooks.                                                         | `npm run prepare`         |
 | `lint-staged`     | Run linting on staged files using lint-staged.                                         | `npm run lint-staged`     |
 | `lint:styles:fix` | Automatically fix CSS issues using Stylelint.                                          | `npm run lint:styles:fix` |
