@@ -1,3 +1,5 @@
+import { AboutPage, CartPage, CatalogPage, MainPage, SignInPage, SignUpPage } from '~app/pages/lazy.tsx';
+import { NAVIGATION_ROUTES } from '~config/navigation.ts';
 import { createBrowserRouter } from 'react-router';
 
 import { MainLayout } from '~/components/layouts/mainLayout.tsx';
@@ -7,64 +9,28 @@ export const AppRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: '/',
-        async lazy() {
-          const { MainPage } = await import('~app/pages/main-page/mainPage.tsx');
-
-          return {
-            element: <MainPage />,
-          };
-        },
+        path: NAVIGATION_ROUTES.main,
+        element: <MainPage />,
       },
       {
-        path: '/signin',
-        async lazy() {
-          const { SignInPage } = await import('~app/pages/sign-in-page/signInPage.tsx');
-
-          return {
-            element: <SignInPage />,
-          };
-        },
+        path: NAVIGATION_ROUTES.signin,
+        element: <SignInPage />,
       },
       {
-        path: '/signup',
-        async lazy() {
-          const { SignUpPage } = await import('~app/pages/sign-up-page/signUpPage.tsx');
-
-          return {
-            element: <SignUpPage />,
-          };
-        },
+        path: NAVIGATION_ROUTES.signup,
+        element: <SignUpPage />,
       },
       {
-        path: '/about',
-        async lazy() {
-          const { AboutPage } = await import('~app/pages/about-page/aboutPage.tsx');
-
-          return {
-            element: <AboutPage />,
-          };
-        },
+        path: NAVIGATION_ROUTES.about,
+        element: <AboutPage />,
       },
       {
-        path: '/catalog',
-        async lazy() {
-          const { CatalogPage } = await import('~app/pages/catalog-page/catalogPage.tsx');
-
-          return {
-            element: <CatalogPage />,
-          };
-        },
+        path: NAVIGATION_ROUTES.catalog,
+        element: <CatalogPage />,
       },
       {
-        path: '/cart',
-        async lazy() {
-          const { CartPage } = await import('~app/pages/cart-page/cartPage.tsx');
-
-          return {
-            element: <CartPage />,
-          };
-        },
+        path: NAVIGATION_ROUTES.cart,
+        element: <CartPage />,
       },
     ],
   },
