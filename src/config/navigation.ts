@@ -5,7 +5,7 @@ export const NAVIGATION_ROUTES = {
   cart: '/cart',
   signin: '/login',
   signup: '/signup',
-  error: '*',
+  error: '/*',
 } as const;
 
 export const NAVIGATION_ITEMS = [
