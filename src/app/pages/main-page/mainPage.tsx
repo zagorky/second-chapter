@@ -3,8 +3,6 @@ import { navigationRoutes } from '~config/navigation.ts';
 import { Link } from 'react-router';
 
 const MainPage = () => {
-  document.title = 'Second Chapter Store | Main';
-
   return (
     <>
       <h1 className={'heading-1'}>Second Chapter Store</h1>
