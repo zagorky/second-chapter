@@ -1,35 +1,13 @@
-import type { TokenCacheOptions } from '@commercetools/ts-client';
+import type { TokenStore } from '@commercetools/ts-client';
 
-import { API_CONFIG } from '~config/apiConfig';
-import { z } from 'zod';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const TokenStoreSchema = z.object({
-  token: z.string(),
-  expirationTime: z.number(),
-  refreshToken: z.string().optional(),
+import { API_CONFIG } from '~/app/API/config/apiConfig';
 
-  tokenCacheKey: z.custom<TokenCacheOptions>().optional(),
-});
+import type { StateStore } from './types/types';
 
-const ZustandStoreSchema = z.object({
-  state: z.object({
-    isAuthenticated: z.boolean(),
-    store: TokenStoreSchema.optional(),
-  }),
-});
-
-type TokenStore = z.infer<typeof TokenStoreSchema>;
-
-type StateStore = {
-  isAuthenticated: boolean;
-  store?: TokenStore;
-  getIsAuthenticated: () => boolean;
-  setIsAuthenticated: (next: boolean) => void;
-  getStore: () => TokenStore | undefined;
-  setStore: (nextStore?: TokenStore) => void;
-};
+import { ZustandStoreSchema } from './types/types';
 
 const retrieveStoreFromLS = () => {
   const raw = localStorage.getItem(API_CONFIG.LS_KEY);

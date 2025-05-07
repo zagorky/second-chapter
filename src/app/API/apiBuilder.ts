@@ -1,20 +1,20 @@
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
-import { ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/ts-client';
-import { API_CONFIG } from '~config/apiConfig';
+import { ClientBuilder, type HttpMiddlewareOptions, type UserAuthOptions, type Client } from '@commercetools/ts-client';
 import { useAppStore } from '~stores/store';
-import { toast } from 'sonner';
 
-import { createTokenCache } from './createTokenCache';
+import { API_CONFIG } from '~/app/API/config/apiConfig';
+
+import { API_ERRORS } from './config/apiErrors';
+import { createTokenCache } from './utils/createTokenCache';
+import { parseApiErrorMessage } from './utils/parseApiErrorMessage';
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
   host: API_CONFIG.API_URL,
   httpClient: fetch,
 };
 
-type Credentials = { username: string; password: string };
-
 export class ApiBuilder {
-  private client: ReturnType<ClientBuilder['build']>;
+  private client: Client;
 
   constructor() {
     const storedToken = useAppStore.getState().store;
@@ -31,7 +31,7 @@ export class ApiBuilder {
     return createApiBuilderFromCtpClient(this.client).withProjectKey({ projectKey: API_CONFIG.PROJECT_KEY });
   }
 
-  public async login(user: Credentials): Promise<boolean> {
+  public async login(user: UserAuthOptions): Promise<{ success: boolean; errorMessage?: string }> {
     const previousClient = this.client;
 
     this.client = this.buildBase()
@@ -43,6 +43,7 @@ export class ApiBuilder {
           clientSecret: API_CONFIG.CLIENT_SECRET,
           user,
         },
+        tokenCache: createTokenCache(),
         scopes: API_CONFIG.PASSWORD_SCOPES_WITH_KEYS,
       })
       .build();
@@ -57,15 +58,13 @@ export class ApiBuilder {
           useAppStore.getState().setIsAuthenticated(true);
         });
 
-      return true;
+      return { success: true };
     } catch (error: unknown) {
       this.client = previousClient;
-      const message = error instanceof Error ? error.message : 'Login failed';
 
-      toast.error(message);
-      console.error(message);
+      const errorMessage = parseApiErrorMessage(error, API_ERRORS.LOGIN_UNKNOWN);
 
-      return false;
+      return { success: false, errorMessage: errorMessage };
     }
   }
 
@@ -79,6 +78,8 @@ export class ApiBuilder {
   }
 
   private buildAnonymousClient(client: ClientBuilder) {
+    useAppStore.getState().setStore(undefined);
+
     return client
       .withAnonymousSessionFlow({
         host: API_CONFIG.AUTH_URL,

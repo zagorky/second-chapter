@@ -9,8 +9,6 @@ const emptyStore = {
 };
 
 export const createTokenCache = (): TokenCache => {
-  useAppStore.getState().setStore(undefined);
-
   return {
     get: () => useAppStore.getState().store ?? emptyStore,
     set: (store: TokenStore) => {
