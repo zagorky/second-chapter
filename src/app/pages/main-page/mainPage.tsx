@@ -1,5 +1,5 @@
 import { Button } from '~components/ui/button/button.tsx';
-import { NAVIGATION_ROUTES } from '~config/navigation.ts';
+import { navigationRoutes } from '~config/navigation.ts';
 import { Link } from 'react-router';
 
 const MainPage = () => {
@@ -10,19 +10,19 @@ const MainPage = () => {
       <h1 className={'heading-1'}>Second Chapter Store</h1>
       <div className="mt-6 flex items-center justify-center gap-3">
         <Button variant="outline" className="hidden sm:inline-flex" asChild>
-          <Link to={NAVIGATION_ROUTES.about}>About us</Link>
+          <Link to={navigationRoutes.about.path}>{navigationRoutes.about.title}</Link>
         </Button>
         <Button variant="outline" className="hidden sm:inline-flex" asChild>
-          <Link to={NAVIGATION_ROUTES.catalog}>Catalog</Link>
+          <Link to={navigationRoutes.catalog.path}>{navigationRoutes.catalog.title}</Link>
         </Button>
         <Button variant="outline" className="hidden sm:inline-flex" asChild>
-          <Link to={NAVIGATION_ROUTES.cart}>Cart</Link>
+          <Link to={navigationRoutes.cart.path}>{navigationRoutes.cart.title}</Link>
         </Button>
         <Button variant="outline" className="hidden sm:inline-flex" asChild>
-          <Link to={NAVIGATION_ROUTES.signin}>Sign In</Link>
+          <Link to={navigationRoutes.login.path}>{navigationRoutes.login.title}</Link>
         </Button>
         <Button variant="outline" className="hidden sm:inline-flex" asChild>
-          <Link to={NAVIGATION_ROUTES.signup}>Sign Up</Link>
+          <Link to={navigationRoutes.signup.path}>{navigationRoutes.signup.title}</Link>
         </Button>
       </div>
     </>

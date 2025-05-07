@@ -1,6 +1,6 @@
 import type { NavigationMenuProps } from '@radix-ui/react-navigation-menu';
 
-import { NAVIGATION_ITEMS } from '~config/navigation';
+import { NAVIGATION_ITEMS } from '~components/ui/navigation-menu/navigationItems.ts';
 import { Link, useLocation } from 'react-router';
 
 import {

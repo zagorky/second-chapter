@@ -1,5 +1,5 @@
 import { AboutPage, CartPage, CatalogPage, MainPage, SignInPage, SignUpPage } from '~app/pages/lazy.tsx';
-import { NAVIGATION_ROUTES } from '~config/navigation.ts';
+import { navigationRoutes } from '~config/navigation.ts';
 import { createBrowserRouter } from 'react-router';
 
 import { MainLayout } from '~/components/layouts/mainLayout.tsx';
@@ -9,27 +9,27 @@ export const AppRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: NAVIGATION_ROUTES.main,
+        path: navigationRoutes.main.path,
         element: <MainPage />,
       },
       {
-        path: NAVIGATION_ROUTES.signin,
+        path: navigationRoutes.login.path,
         element: <SignInPage />,
       },
       {
-        path: NAVIGATION_ROUTES.signup,
+        path: navigationRoutes.signup.path,
         element: <SignUpPage />,
       },
       {
-        path: NAVIGATION_ROUTES.about,
+        path: navigationRoutes.about.path,
         element: <AboutPage />,
       },
       {
-        path: NAVIGATION_ROUTES.catalog,
+        path: navigationRoutes.catalog.path,
         element: <CatalogPage />,
       },
       {
-        path: NAVIGATION_ROUTES.cart,
+        path: navigationRoutes.cart.path,
         element: <CartPage />,
       },
     ],

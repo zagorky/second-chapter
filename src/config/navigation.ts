@@ -1,16 +1,9 @@
-export const NAVIGATION_ROUTES = {
-  main: '/',
-  about: '/about',
-  catalog: '/catalog',
-  cart: '/cart',
-  signin: '/login',
-  signup: '/signup',
-  error: '/*',
+export const navigationRoutes = {
+  main: { path: '/', title: 'Main' },
+  about: { path: '/about', title: 'About Us' },
+  catalog: { path: '/catalog', title: 'Catalog' },
+  cart: { path: '/cart', title: 'Cart' },
+  login: { path: '/login', title: 'Sign In' },
+  signup: { path: '/signup', title: 'Sign Up' },
+  error: { path: '/*', title: 'Page not Found' },
 } as const;
-
-export const NAVIGATION_ITEMS = [
-  { path: NAVIGATION_ROUTES.main, title: 'Main' },
-  { path: NAVIGATION_ROUTES.about, title: 'About' },
-  { path: NAVIGATION_ROUTES.catalog, title: 'Catalog' },
-  { path: NAVIGATION_ROUTES.cart, title: 'Cart' },
-] as const;
