@@ -76,7 +76,7 @@ export default tseslint.config(
       'prefer-arrow-callback': 'error',
       'no-confusing-arrow': ['error', { allowParens: true }],
       '@typescript-eslint/no-explicit-any': 'error',
-      'import/extensions': ['off'],
+      'import/extensions': ['error', { ts: 'never', tsx: 'never' }],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       'import/no-cycle': ['error', { maxDepth: Infinity }],
       'import/first': 'error',
