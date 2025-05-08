@@ -1,8 +1,8 @@
-import { Button } from '~components/ui/button/button.tsx';
-import { ModeToggle } from '~components/ui/modeToggle.tsx';
-import { NavigationSheet } from '~components/ui/navbar/navigationSheet.tsx';
-import { NavMenu } from '~components/ui/navbar/navMenu.tsx';
-import { navigationRoutes } from '~config/navigation.ts';
+import { Button } from '~components/ui/button/button';
+import { ModeToggle } from '~components/ui/modeToggle';
+import { NavigationSheet } from '~components/ui/navbar/navigationSheet';
+import { NavMenu } from '~components/ui/navbar/navMenu';
+import { navigationRoutes } from '~config/navigation';
 import { BookOpen, LogIn, LogOut, UserPlus } from 'lucide-react';
 import { Link } from 'react-router';
 

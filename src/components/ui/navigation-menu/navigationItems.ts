@@ -1,4 +1,4 @@
-import { navigationRoutes } from '~config/navigation.ts';
+import { navigationRoutes } from '~config/navigation';
 
 export const NAVIGATION_ITEMS = [
   navigationRoutes.main,

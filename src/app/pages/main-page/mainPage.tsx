@@ -1,5 +1,5 @@
-import { Button } from '~components/ui/button/button.tsx';
-import { navigationRoutes } from '~config/navigation.ts';
+import { Button } from '~components/ui/button/button';
+import { navigationRoutes } from '~config/navigation';
 import { Link } from 'react-router';
 
 const MainPage = () => {

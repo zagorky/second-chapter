@@ -1,4 +1,4 @@
-import { Header } from '~components/ui/header/header.tsx';
+import { Header } from '~components/ui/header/header';
 import { Outlet } from 'react-router';
 
 export const MainLayout = () => {

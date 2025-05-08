@@ -1,10 +1,10 @@
-import { AboutPage, CartPage, CatalogPage, MainPage, SignInPage, SignUpPage } from '~app/pages/lazy.tsx';
-import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton.tsx';
-import { navigationRoutes } from '~config/navigation.ts';
+import { AboutPage, CartPage, CatalogPage, MainPage, SignInPage, SignUpPage } from '~app/pages/lazy';
+import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
+import { navigationRoutes } from '~config/navigation';
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router';
 
-import { MainLayout } from '~/components/layouts/mainLayout.tsx';
+import { MainLayout } from '~/components/layouts/mainLayout';
 
 export const AppRouter = createBrowserRouter([
   {

@@ -1,4 +1,4 @@
-import { AppRouter } from '~app/router.tsx';
+import { AppRouter } from '~app/router';
 import { ThemeProvider } from '~features/theme-provider/components/themeProvider';
 import { RouterProvider } from 'react-router/dom';
 
