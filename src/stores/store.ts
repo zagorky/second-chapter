@@ -31,6 +31,12 @@ const retrieveStoreFromLS = () => {
   }
 };
 
+const emptyStore = {
+  token: '',
+  expirationTime: 0,
+  refreshToken: '',
+};
+
 export const useAppStore = create<StateStore>()(
   persist(
     (set, get) => ({
@@ -39,11 +45,17 @@ export const useAppStore = create<StateStore>()(
       setIsAuthenticated: (nextAuthenticatedStatus: boolean) => {
         set({ isAuthenticated: nextAuthenticatedStatus });
       },
-      store: retrieveStoreFromLS()?.tokenStore,
+      store: retrieveStoreFromLS()?.tokenStore ?? emptyStore,
       setStore: (nextStore?: TokenStore) => {
         set({ store: nextStore });
       },
       getStore: () => get().store,
+      forceTokenExpiration: () => {
+        const currentStore = get().store;
+
+        currentStore.expirationTime = 0;
+        set({ store: currentStore });
+      },
     }),
     {
       name: API_CONFIG.LS_KEY,

@@ -22,8 +22,8 @@ export class ApiBuilder {
     const clientBase: ClientBuilder = this.buildBase();
 
     this.client =
-      storedToken?.refreshToken && storedToken.token
-        ? this.buildRefreshClient(clientBase, storedToken.token, storedToken.refreshToken)
+      storedToken.refreshToken && storedToken.token
+        ? this.buildExistingTokenClient(clientBase, storedToken.token)
         : this.buildAnonymousClient(clientBase);
   }
 
@@ -44,7 +44,7 @@ export class ApiBuilder {
           user,
         },
         tokenCache: createTokenCache(),
-        scopes: API_CONFIG.PASSWORD_SCOPES_WITH_KEYS,
+        scopes: API_CONFIG.SCOPES,
       })
       .build();
 
@@ -78,7 +78,7 @@ export class ApiBuilder {
   }
 
   private buildAnonymousClient(client: ClientBuilder) {
-    useAppStore.getState().setStore(undefined);
+    console.log('anonymous client build');
 
     return client
       .withAnonymousSessionFlow({
@@ -88,27 +88,13 @@ export class ApiBuilder {
           clientId: API_CONFIG.CLIENT_ID,
           clientSecret: API_CONFIG.CLIENT_SECRET,
         },
-        scopes: API_CONFIG.ANONYMOUS_SCOPES_WITH_KEYS,
+        scopes: API_CONFIG.SCOPES,
         tokenCache: createTokenCache(),
       })
       .build();
   }
 
-  private buildRefreshClient(client: ClientBuilder, accessToken: string, refreshToken: string) {
-    return client
-      .withExistingTokenFlow(`Bearer ${accessToken}`, { force: false })
-      .withRefreshTokenFlow({
-        host: API_CONFIG.AUTH_URL,
-        projectKey: API_CONFIG.PROJECT_KEY,
-        credentials: {
-          clientId: API_CONFIG.CLIENT_ID,
-          clientSecret: API_CONFIG.CLIENT_SECRET,
-        },
-        refreshToken,
-        tokenCache: createTokenCache(),
-      })
-      .build();
+  private buildExistingTokenClient(client: ClientBuilder, accessToken: string) {
+    return client.withExistingTokenFlow(`Bearer ${accessToken}`, { force: true }).build();
   }
 }
-
-export const Api = new ApiBuilder();

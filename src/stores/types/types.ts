@@ -21,9 +21,10 @@ export const ZustandStoreSchema = z.object({
 
 export type StateStore = {
   isAuthenticated: boolean;
-  store?: TokenStore;
+  store: TokenStore;
   getIsAuthenticated: () => boolean;
   setIsAuthenticated: (next: boolean) => void;
   getStore: () => TokenStore | undefined;
   setStore: (nextStore?: TokenStore) => void;
+  forceTokenExpiration: (nextStore: TokenStore) => void;
 };
