@@ -20,19 +20,11 @@ export const AppRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.login.path,
-        element: (
-          <Suspense fallback={<PageSkeleton />}>
-            <SignInPage />
-          </Suspense>
-        ),
+        element: <SignInPage />,
       },
       {
         path: navigationRoutes.signup.path,
-        element: (
-          <Suspense fallback={<PageSkeleton />}>
-            <SignUpPage />
-          </Suspense>
-        ),
+        element: <SignUpPage />,
       },
       {
         path: navigationRoutes.about.path,
