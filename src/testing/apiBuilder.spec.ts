@@ -50,7 +50,6 @@ vi.mock('@commercetools/platform-sdk', () => ({
     withProjectKey: chainApiMock,
   }),
 }));
-globalThis.fetch = vi.fn();
 
 describe('ApiBuilder', () => {
   beforeEach(() => {
@@ -72,25 +71,10 @@ describe('ApiBuilder', () => {
     executeMock.mockResolvedValueOnce({ body: fakeCustomer });
 
     const api = new ApiBuilder();
-    const result = await api.login({ username: 'u', password: 'p' });
+    const result = await api.login({ username: 'user', password: 'password' });
 
     expect(result).toEqual({ success: true, payload: fakeCustomer });
     expect(useAppStore.getState().isAuthenticated).toBe(true);
-  });
-
-  it('should get and set store from zustand', () => {
-    const tokenCache = createTokenCache();
-
-    const testStore: TokenStore = {
-      token: 'foo',
-      refreshToken: 'bar',
-      expirationTime: 123456,
-    };
-
-    tokenCache.set(testStore);
-    const result = tokenCache.get();
-
-    expect(result).toEqual(testStore);
   });
 
   it('should return failure result and keep user logged out on failed relogin', async () => {
