@@ -3,7 +3,7 @@ import { vi } from 'vitest';
 
 import { SignInPage } from './signInPage';
 
-vi.mock('~/components/ui/sign-in-form/signInForm', () => ({
+vi.mock('~/features/sign-in-form/signInForm', () => ({
   SignInForm: () => <div>SignInForm</div>,
 }));
 
