@@ -6,7 +6,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { StateStore } from '~/stores/types/types';
 
 import { ApiBuilder } from '~/app/API/apiBuilder';
-import { createTokenCache } from '~/app/API/utils/createTokenCache';
 
 const INVALID_CREDENTIALS_CODE = 'invalid_customer_account_credentials';
 
