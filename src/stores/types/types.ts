@@ -25,6 +25,6 @@ export type StateStore = {
   getIsAuthenticated: () => boolean;
   setIsAuthenticated: (next: boolean) => void;
   getStore: () => TokenStore | undefined;
-  setStore: (nextStore?: TokenStore) => void;
+  setStore: (nextStore: TokenStore) => void;
   forceTokenExpiration: (nextStore: TokenStore) => void;
 };

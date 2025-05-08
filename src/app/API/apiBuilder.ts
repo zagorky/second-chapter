@@ -1,20 +1,33 @@
-import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { createApiBuilderFromCtpClient, type Customer } from '@commercetools/platform-sdk';
 import { ClientBuilder, type HttpMiddlewareOptions, type UserAuthOptions, type Client } from '@commercetools/ts-client';
 import { useAppStore } from '~stores/store';
 
 import { API_CONFIG } from '~/app/API/config/apiConfig';
 
-import { API_ERRORS } from './config/apiErrors';
 import { createTokenCache } from './utils/createTokenCache';
-import { parseApiErrorMessage } from './utils/parseApiErrorMessage';
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
   host: API_CONFIG.API_URL,
   httpClient: fetch,
 };
 
+const getBaseFlowConfig = () => {
+  return {
+    host: API_CONFIG.AUTH_URL,
+    projectKey: API_CONFIG.PROJECT_KEY,
+    scopes: API_CONFIG.SCOPES,
+    tokenCache: createTokenCache(),
+    credentials: {
+      clientId: API_CONFIG.CLIENT_ID,
+      clientSecret: API_CONFIG.CLIENT_SECRET,
+    },
+  };
+};
+
 export class ApiBuilder {
   private client: Client;
+
+  private readonly baseFlowConfig = getBaseFlowConfig();
 
   constructor() {
     const storedToken = useAppStore.getState().store;
@@ -31,40 +44,35 @@ export class ApiBuilder {
     return createApiBuilderFromCtpClient(this.client).withProjectKey({ projectKey: API_CONFIG.PROJECT_KEY });
   }
 
-  public async login(user: UserAuthOptions): Promise<{ success: boolean; errorMessage?: string }> {
+  public async login(
+    user: UserAuthOptions
+  ): Promise<{ success: true; payload: Customer } | { success: false; error: unknown }> {
     const previousClient = this.client;
 
     this.client = this.buildBase()
       .withPasswordFlow({
-        host: API_CONFIG.AUTH_URL,
-        projectKey: API_CONFIG.PROJECT_KEY,
+        ...this.baseFlowConfig,
         credentials: {
-          clientId: API_CONFIG.CLIENT_ID,
-          clientSecret: API_CONFIG.CLIENT_SECRET,
+          ...this.baseFlowConfig.credentials,
           user,
         },
-        tokenCache: createTokenCache(),
-        scopes: API_CONFIG.SCOPES,
       })
       .build();
 
     try {
-      await createApiBuilderFromCtpClient(this.client)
+      const { body: payload } = await createApiBuilderFromCtpClient(this.client)
         .withProjectKey({ projectKey: API_CONFIG.PROJECT_KEY })
         .me()
         .get()
-        .execute()
-        .then(() => {
-          useAppStore.getState().setIsAuthenticated(true);
-        });
+        .execute();
 
-      return { success: true };
+      useAppStore.getState().setIsAuthenticated(true);
+
+      return { success: true, payload };
     } catch (error: unknown) {
       this.client = previousClient;
 
-      const errorMessage = parseApiErrorMessage(error, API_ERRORS.LOGIN_UNKNOWN);
-
-      return { success: false, errorMessage: errorMessage };
+      return { success: false, error };
     }
   }
 
@@ -77,19 +85,14 @@ export class ApiBuilder {
     return new ClientBuilder().withProjectKey(API_CONFIG.PROJECT_KEY).withHttpMiddleware(httpMiddlewareOptions);
   }
 
-  private buildAnonymousClient(client: ClientBuilder) {
-    console.log('anonymous client build');
-
+  private buildAnonymousClient(client: ClientBuilder, anonymousId?: string) {
     return client
       .withAnonymousSessionFlow({
-        host: API_CONFIG.AUTH_URL,
-        projectKey: API_CONFIG.PROJECT_KEY,
+        ...this.baseFlowConfig,
         credentials: {
-          clientId: API_CONFIG.CLIENT_ID,
-          clientSecret: API_CONFIG.CLIENT_SECRET,
+          ...this.baseFlowConfig.credentials,
+          anonymousId,
         },
-        scopes: API_CONFIG.SCOPES,
-        tokenCache: createTokenCache(),
       })
       .build();
   }
