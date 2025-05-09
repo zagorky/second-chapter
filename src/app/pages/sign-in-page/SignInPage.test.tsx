@@ -8,7 +8,7 @@ vi.mock('~features/sign-in-form/signInForm', () => ({
 }));
 
 describe('SignInPage', () => {
-  it('done', () => {
+  it('should render with a header and a sign-in form', () => {
     render(
       <MemoryRouter>
         <SignInPage />

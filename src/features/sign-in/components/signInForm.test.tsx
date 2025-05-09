@@ -1,7 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
+import SignInPage from '~app/pages/sign-in-page/signInPage';
+import SignUpPage from '~app/pages/sign-up-page/signUpPage';
 import { navigationRoutes } from '~config/navigation';
 import { SignInForm } from '~features/sign-in/components/signInForm';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, Route, Routes } from 'react-router';
 
 describe('SignInForm', () => {
   it('should render form with all fields', () => {
@@ -17,10 +20,13 @@ describe('SignInForm', () => {
     expect(screen.getByTestId('redirection-link')).toBeInTheDocument();
   });
 
-  it('link should navigate to sing up page', () => {
+  it('link should navigate to sing up page', async () => {
     render(
-      <MemoryRouter>
-        <SignInForm />
+      <MemoryRouter initialEntries={[navigationRoutes.login.path]}>
+        <Routes>
+          <Route path={navigationRoutes.login.path} element={<SignInPage />} />
+          <Route path={navigationRoutes.signup.path} element={<SignUpPage />} />
+        </Routes>
       </MemoryRouter>
     );
 
@@ -28,8 +34,8 @@ describe('SignInForm', () => {
 
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', navigationRoutes.signup.path);
-    fireEvent.click(link);
-    expect(screen.getByText(/Sign Up/i)).toBeInTheDocument();
+    await userEvent.click(link);
+    expect(screen.getByTestId('signup-header')).toBeInTheDocument();
   });
 
   it('should show validation errors for empty fields', async () => {

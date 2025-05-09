@@ -1,12 +1,12 @@
 import { FormMessage } from '~components/ui/form';
 
 type FixedFormMessageProps = {
-  styles?: string;
+  classNames?: string;
 };
 
-export const FixedFormMessage = ({ styles = 'h-6 w-[325px]' }: FixedFormMessageProps) => {
+export const FixedFormMessage = ({ classNames = 'h-6 w-[325px]' }: FixedFormMessageProps) => {
   return (
-    <div className={styles}>
+    <div className={classNames}>
       <FormMessage />
     </div>
   );
