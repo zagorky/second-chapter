@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { SignInForm } from '~features/sign-in/signInForm';
+import { navigationRoutes } from '~config/navigation';
+import { SignInForm } from '~features/sign-in/components/signInForm';
 import { MemoryRouter } from 'react-router';
 
 describe('SignInForm', () => {
@@ -26,7 +27,9 @@ describe('SignInForm', () => {
     const link = screen.getByTestId('redirection-link');
 
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', '/signup');
+    expect(link).toHaveAttribute('href', navigationRoutes.signup.path);
+    fireEvent.click(link);
+    expect(screen.getByText(/Sign Up/i)).toBeInTheDocument();
   });
 
   it('should show validation errors for empty fields', async () => {
