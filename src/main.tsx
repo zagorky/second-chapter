@@ -1,5 +1,5 @@
-import { App } from '~app/App.tsx';
-import { assertIsNonNullable } from '~utils/helpers.ts';
+import { App } from '~app/App';
+import { assertIsNonNullable } from '~utils/helpers';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 

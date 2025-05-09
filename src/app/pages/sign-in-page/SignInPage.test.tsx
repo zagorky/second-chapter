@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import { SignInPage } from './signInPage';
+import SignInPage from './signInPage';
 
 vi.mock('~/features/sign-in-form/signInForm', () => ({
   SignInForm: () => <div>SignInForm</div>,
