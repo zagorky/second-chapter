@@ -82,7 +82,6 @@ export default tseslint.config(
       'import/first': 'error',
 
       '@typescript-eslint/consistent-type-imports': 'error',
-      '@typescript-eslint/no-unnecessary-condition': 'error',
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
       '@typescript-eslint/explicit-member-accessibility': [
