@@ -1,7 +1,9 @@
 import type * as LabelPrimitive from '@radix-ui/react-label';
 
 import { Slot } from '@radix-ui/react-slot';
+import { assertIsNonNullable } from '~utils/helpers';
 import * as React from 'react';
+import { useMemo } from 'react';
 import {
   Controller,
   FormProvider,
@@ -24,14 +26,18 @@ type FormFieldContextValue<
   name: TName;
 };
 
-const FormFieldContext = React.createContext<FormFieldContextValue>({} as FormFieldContextValue);
+const formFieldContextDefaultValue: FormFieldContextValue = { name: '<<unknown>>' };
+
+const FormFieldContext = React.createContext<FormFieldContextValue>(formFieldContextDefaultValue);
 
 function FormField<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ ...props }: ControllerProps<TFieldValues, TName>) {
+  const fieldContext = useMemo(() => ({ name: props.name }), [props.name]);
+
   return (
-    <FormFieldContext value={{ name: props.name }}>
+    <FormFieldContext value={fieldContext}>
       <Controller {...props} />
     </FormFieldContext>
   );
@@ -44,9 +50,7 @@ const useFormField = () => {
   const formState = useFormState({ name: fieldContext.name });
   const fieldState = getFieldState(fieldContext.name, formState);
 
-  if (!fieldContext) {
-    throw new Error('useFormField should be used within <FormField>');
-  }
+  assertIsNonNullable(fieldContext, 'useFormField should be used within <FormField>');
 
   const { id } = itemContext;
 
@@ -64,13 +68,16 @@ type FormItemContextValue = {
   id: string;
 };
 
-const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
+const formItemContextDefaultValue: FormItemContextValue = { id: '<<unknown>>' };
+
+const FormItemContext = React.createContext<FormItemContextValue>(formItemContextDefaultValue);
 
 function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
   const id = React.useId();
+  const contextValue = useMemo(() => ({ id }), [id]);
 
   return (
-    <FormItemContext value={{ id }}>
+    <FormItemContext value={contextValue}>
       <div data-slot="form-item" className={cn('grid gap-2', className)} {...props} />
     </FormItemContext>
   );
