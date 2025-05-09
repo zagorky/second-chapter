@@ -1,14 +1,14 @@
-import type { LoginFormType } from '~features/sign-in-form/types/types';
-import type { Control } from 'react-hook-form';
-
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '~components/ui/form';
 import { Input } from '~components/ui/input';
+import { useFormContext } from 'react-hook-form';
 
-export const EmailField = ({ control }: { control: Control<LoginFormType> }) => {
+export const EmailField = ({ name = 'email' }: { name?: string }) => {
+  const form = useFormContext();
+
   return (
     <FormField
-      control={control}
-      name="email"
+      control={form.control}
+      name={name}
       render={({ field }) => (
         <FormItem>
           <div className="grid gap-3">
