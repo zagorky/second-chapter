@@ -1,4 +1,4 @@
-import type { LoginFormType } from '~features/sign-in/types/types';
+import type { LoginFormFieldValues } from '~features/sign-in/types/types';
 import type { ComponentProps } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 
@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
 export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
-  const form = useForm<LoginFormType>({
+  const form = useForm<LoginFormFieldValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -24,7 +24,7 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
     },
   });
 
-  const handleSubmit: SubmitHandler<LoginFormType> = (data) => {
+  const handleSubmit: SubmitHandler<LoginFormFieldValues> = (data) => {
     console.error('login form submit', data);
     form.reset();
   };
