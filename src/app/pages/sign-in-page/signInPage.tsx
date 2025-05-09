@@ -1,4 +1,4 @@
-import { SignInForm } from '~features/sign-in/signInForm';
+import { SignInForm } from '~features/sign-in/components/signInForm';
 import { withDataTestId } from '~utils/helpers';
 
 const SignInPage = () => {

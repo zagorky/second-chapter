@@ -1,12 +1,13 @@
 import { Button } from '~components/ui/button/button';
-import { FormField, FormItem, FormLabel, FormMessage } from '~components/ui/form';
+import { FixedFormMessage } from '~components/ui/fixedFormMessage';
+import { FormField, FormItem, FormLabel } from '~components/ui/form';
 import { Input } from '~components/ui/input';
 import { withDataTestId } from '~utils/helpers';
 import { Eye, EyeOff } from 'lucide-react';
 import { useReducer } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-type PasswordFieldType = {
+type PasswordFieldProps = {
   name?: string;
   label?: string;
   placeholder?: string;
@@ -16,7 +17,7 @@ export const PasswordField = ({
   name = 'password',
   label = 'Password',
   placeholder = 'password',
-}: PasswordFieldType) => {
+}: PasswordFieldProps) => {
   const [showPassword, toggleShowPassword] = useReducer((value) => !value, false);
   const form = useFormContext();
 
@@ -26,7 +27,7 @@ export const PasswordField = ({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className={'text-left'}>{label}</FormLabel>
           <div className="relative">
             <Input
               placeholder={placeholder}
@@ -44,7 +45,7 @@ export const PasswordField = ({
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
           </div>
-          <FormMessage />
+          <FixedFormMessage />
         </FormItem>
       )}
     />

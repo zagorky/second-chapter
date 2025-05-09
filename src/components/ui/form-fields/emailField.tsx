@@ -1,15 +1,16 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '~components/ui/form';
+import { FixedFormMessage } from '~components/ui/fixedFormMessage';
+import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form';
 import { Input } from '~components/ui/input';
 import { withDataTestId } from '~utils/helpers';
 import { useFormContext } from 'react-hook-form';
 
-type EmailFieldType = {
+type EmailFieldProps = {
   name?: string;
   label?: string;
   placeholder?: string;
 };
 
-export const EmailField = ({ name = 'email', label = 'Email', placeholder = 'user@example.com' }: EmailFieldType) => {
+export const EmailField = ({ name = 'email', label = 'Email', placeholder = 'user@example.com' }: EmailFieldProps) => {
   const form = useFormContext();
 
   return (
@@ -19,11 +20,11 @@ export const EmailField = ({ name = 'email', label = 'Email', placeholder = 'use
       render={({ field }) => (
         <FormItem>
           <div className="grid gap-3">
-            <FormLabel>{label}</FormLabel>
+            <FormLabel className={'text-left'}>{label}</FormLabel>
             <FormControl>
               <Input placeholder={placeholder} {...field} type="text" {...withDataTestId(`${name}-input`)} />
             </FormControl>
-            <FormMessage />
+            <FixedFormMessage />
           </div>
         </FormItem>
       )}
