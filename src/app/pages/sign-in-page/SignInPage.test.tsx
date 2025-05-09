@@ -1,18 +1,21 @@
 import { render, screen } from '@testing-library/react';
+import SignInPage from '~app/pages/sign-in-page/signInPage';
+import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
 
-import SignInPage from './signInPage';
-
-vi.mock('~/features/sign-in-form/signInForm', () => ({
+vi.mock('~features/sign-in-form/signInForm', () => ({
   SignInForm: () => <div>SignInForm</div>,
 }));
 
 describe('SignInPage', () => {
   it('done', () => {
-    render(<SignInPage />);
+    render(
+      <MemoryRouter>
+        <SignInPage />
+      </MemoryRouter>
+    );
 
-    expect(screen.getByText(/sign in/i)).toBeInTheDocument();
-
-    expect(screen.getByText(/SignInForm/i)).toBeInTheDocument();
+    expect(screen.getByTestId('signin-header')).toBeInTheDocument();
+    expect(screen.getByTestId('signin-form')).toBeInTheDocument();
   });
 });

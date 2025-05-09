@@ -7,7 +7,7 @@ const SignInPage = () => {
       <h1 className={'text-primary heading-1'} {...withDataTestId('signin-header')}>
         Sign in
       </h1>
-      <SignInForm />
+      <SignInForm {...withDataTestId('signin-form')} />
     </div>
   );
 };
