@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~comp
 import { Form } from '~components/ui/form';
 import { EmailField } from '~features/sign-in-form/components/emailField';
 import { PasswordField } from '~features/sign-in-form/components/passwordField';
-import { loginSchema } from '~features/sign-in-form/types/types';
+import { loginSchema } from '~features/sign-in-form/types/schemas';
 import { cn } from '~lib/utilities';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
