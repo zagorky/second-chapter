@@ -1,5 +1,6 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '~components/ui/form';
 import { Input } from '~components/ui/input';
+import { withDataTestId } from '~utils/helpers';
 import { useFormContext } from 'react-hook-form';
 
 export const EmailField = ({ name = 'email' }: { name?: string }) => {
@@ -14,7 +15,7 @@ export const EmailField = ({ name = 'email' }: { name?: string }) => {
           <div className="grid gap-3">
             <FormLabel>Email</FormLabel>
             <FormControl>
-              <Input placeholder="user@example.com" {...field} type="text" />
+              <Input placeholder="user@example.com" {...field} type="text" {...withDataTestId('email-input')} />
             </FormControl>
             <FormMessage />
           </div>

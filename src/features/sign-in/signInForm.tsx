@@ -8,8 +8,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~comp
 import { Form } from '~components/ui/form';
 import { EmailField } from '~components/ui/form-fields/emailField';
 import { PasswordField } from '~components/ui/form-fields/passwordField';
+import { navigationRoutes } from '~config/navigation';
 import { loginSchema } from '~features/sign-in/types/schemas';
 import { cn } from '~lib/utilities';
+import { withDataTestId } from '~utils/helpers';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
@@ -45,7 +47,11 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
                 </Button>
                 <div className="mt-4 text-center text-sm">
                   Don&apos;t have an account?{' '}
-                  <Link to="/signup" className="underline underline-offset-4">
+                  <Link
+                    to={navigationRoutes.signup.path}
+                    className="underline underline-offset-4"
+                    {...withDataTestId('redirection-link')}
+                  >
                     Sign up
                   </Link>
                 </div>
