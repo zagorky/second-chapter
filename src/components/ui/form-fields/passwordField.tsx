@@ -19,6 +19,7 @@ export const PasswordField = ({
   placeholder = 'password',
 }: PasswordFieldProps) => {
   const [showPassword, toggleShowPassword] = useReducer((value) => !value, false);
+
   const form = useFormContext();
 
   return (
@@ -28,23 +29,22 @@ export const PasswordField = ({
       render={({ field }) => (
         <FormItem>
           <FormLabel className={'text-left'}>{label}</FormLabel>
-          <div className="relative">
-            <Input
-              placeholder={placeholder}
-              {...field}
-              type={showPassword ? 'text' : 'password'}
-              {...withDataTestId(`${name}-input`)}
-            />
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
-              onClick={toggleShowPassword}
-            >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </Button>
-          </div>
+          <Input
+            placeholder={placeholder}
+            {...field}
+            autoComplete="current-password"
+            type={showPassword ? 'text' : 'password'}
+            {...withDataTestId(`${name}-input`)}
+          />
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
+            onClick={toggleShowPassword}
+          >
+            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          </Button>
           <FixedFormMessage />
         </FormItem>
       )}
