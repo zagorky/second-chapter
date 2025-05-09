@@ -1,17 +1,19 @@
-import type { LoginFormType } from '~features/sign-in-form/types/types';
+import type { LoginFormType } from '~features/sign-in/types/types';
+import type { ComponentProps } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '~components/ui/button/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~components/ui/card';
 import { Form } from '~components/ui/form';
-import { EmailField } from '~features/sign-in-form/components/emailField';
-import { PasswordField } from '~features/sign-in-form/components/passwordField';
-import { loginSchema } from '~features/sign-in-form/types/schemas';
+import { EmailField } from '~components/ui/form-fields/emailField';
+import { PasswordField } from '~components/ui/form-fields/passwordField';
+import { loginSchema } from '~features/sign-in/types/schemas';
 import { cn } from '~lib/utilities';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
-export const SignInForm = ({ className, ...props }: React.ComponentProps<'div'>) => {
+export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
   const form = useForm<LoginFormType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -20,8 +22,8 @@ export const SignInForm = ({ className, ...props }: React.ComponentProps<'div'>)
     },
   });
 
-  const handleSubmit = () => {
-    console.error('login form submit', form);
+  const handleSubmit: SubmitHandler<LoginFormType> = (data) => {
+    console.error('login form submit', data);
     form.reset();
   };
 
@@ -36,8 +38,8 @@ export const SignInForm = ({ className, ...props }: React.ComponentProps<'div'>)
           <Form {...form}>
             <form onSubmit={(event) => void form.handleSubmit(handleSubmit)(event)} className="space-y-8">
               <div className="flex flex-col gap-6">
-                <EmailField control={form.control} />
-                <PasswordField control={form.control} />
+                <EmailField />
+                <PasswordField />
                 <Button type="submit" className="w-full">
                   Submit
                 </Button>
