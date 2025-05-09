@@ -14,7 +14,7 @@ export const EmailField = ({ control }: { control: Control<LoginFormType> }) => 
           <div className="grid gap-3">
             <FormLabel>Email</FormLabel>
             <FormControl>
-              <Input placeholder="example@example.com" {...field} type="text" />
+              <Input placeholder="user@example.com" {...field} type="text" />
             </FormControl>
             <FormMessage />
           </div>
