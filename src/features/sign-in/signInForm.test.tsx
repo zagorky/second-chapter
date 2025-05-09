@@ -55,7 +55,7 @@ describe('SignInForm', () => {
     expect(await screen.findByText('Invalid email format')).toBeInTheDocument();
   });
 
-  it('should show contain at least one uppercase letter (A-Z)', async () => {
+  it('password should contain at least one uppercase letter (A-Z)', async () => {
     render(
       <MemoryRouter>
         <SignInForm />
@@ -68,7 +68,7 @@ describe('SignInForm', () => {
     expect(await screen.findByText('Password must contain at least one uppercase letter (A-Z)')).toBeInTheDocument();
   });
 
-  it('should contain at least one lowercase letter (a-z)', async () => {
+  it('password should contain at least one lowercase letter (a-z)', async () => {
     render(
       <MemoryRouter>
         <SignInForm />
@@ -81,7 +81,7 @@ describe('SignInForm', () => {
     expect(await screen.findByText('Password must contain at least one lowercase letter (a-z)')).toBeInTheDocument();
   });
 
-  it('should contain at least one digit (0-9)', async () => {
+  it('password should contain at least one digit (0-9)', async () => {
     render(
       <MemoryRouter>
         <SignInForm />
@@ -94,7 +94,7 @@ describe('SignInForm', () => {
     expect(await screen.findByText('Password must contain at least one digit (0-9)')).toBeInTheDocument();
   });
 
-  it('should contain no more than 15 characters', async () => {
+  it('password should contain no more than 15 characters', async () => {
     render(
       <MemoryRouter>
         <SignInForm />
@@ -107,7 +107,7 @@ describe('SignInForm', () => {
     expect(await screen.findByText('Password must be no more than 15 characters')).toBeInTheDocument();
   });
 
-  it('should contain at least one special character (e.g., !@#$%^&*)', async () => {
+  it('password should contain at least one special character (e.g., !@#$%^&*)', async () => {
     render(
       <MemoryRouter>
         <SignInForm />
@@ -122,7 +122,7 @@ describe('SignInForm', () => {
     ).toBeInTheDocument();
   });
 
-  it('should not contain any whitespace characters', async () => {
+  it('password should not contain any whitespace characters', async () => {
     render(
       <MemoryRouter>
         <SignInForm />
