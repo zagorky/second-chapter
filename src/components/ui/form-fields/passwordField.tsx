@@ -6,7 +6,17 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useReducer } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-export const PasswordField = ({ name = 'password' }: { name?: string }) => {
+type PasswordFieldType = {
+  name?: string;
+  label?: string;
+  placeholder?: string;
+};
+
+export const PasswordField = ({
+  name = 'password',
+  label = 'Password',
+  placeholder = 'password',
+}: PasswordFieldType) => {
   const [showPassword, toggleShowPassword] = useReducer((value) => !value, false);
   const form = useFormContext();
 
@@ -16,13 +26,13 @@ export const PasswordField = ({ name = 'password' }: { name?: string }) => {
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Password</FormLabel>
+          <FormLabel>{label}</FormLabel>
           <div className="relative">
             <Input
-              placeholder="password"
+              placeholder={placeholder}
               {...field}
               type={showPassword ? 'text' : 'password'}
-              {...withDataTestId('password-input')}
+              {...withDataTestId(`${name}-input`)}
             />
             <Button
               type="button"
