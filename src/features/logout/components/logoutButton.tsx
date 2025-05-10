@@ -1,5 +1,5 @@
 import { Button } from '~components/ui/button/button';
-import { useAuth } from '~hooks/useAuth';
+import { useAuth } from '~features/sign-in/hooks/useAuth';
 import { LogOut } from 'lucide-react';
 
 export const LogoutButton = () => {

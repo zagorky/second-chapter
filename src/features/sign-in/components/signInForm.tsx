@@ -9,15 +9,15 @@ import { Form } from '~components/ui/form';
 import { EmailField } from '~components/ui/form-fields/emailField';
 import { PasswordField } from '~components/ui/form-fields/passwordField';
 import { navigationRoutes } from '~config/navigation';
+import { useAuth } from '~features/sign-in/hooks/useAuth';
 import { loginSchema } from '~features/sign-in/types/schemas';
-import { useAuth } from '~hooks/useAuth';
 import { cn } from '~lib/utilities';
 import { withDataTestId } from '~utils/helpers';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
 export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
-  const { login, isLoading, error, logout } = useAuth();
+  const { login, isLoading, errorAuth, successAuth, logout } = useAuth();
   const form = useForm<LoginFormFieldValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -47,7 +47,9 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? 'Loading...' : 'Submit'}
                 </Button>
-                {error instanceof Error && <div className={'h-6 w-[325px] text-red-700'}>{error.message}</div>}
+                {errorAuth instanceof Error && <div className="h-6 w-[325px] text-red-700">{errorAuth.message}</div>}
+
+                {successAuth && <div className="h-6 w-[325px] text-emerald-700">Success!</div>}
                 <div className="mt-4 text-center text-sm">
                   Don&apos;t have an account?{' '}
                   <Link
