@@ -1,70 +1,62 @@
+import { AboutPage, CartPage, CatalogPage, MainPage, SignInPage, SignUpPage } from '~app/pages/lazy';
+import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
+import { navigationRoutes } from '~config/navigation';
+import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router';
 
-import { MainLayout } from '~/components/layouts/mainLayout.tsx';
+import { MainLayout } from '~/components/layouts/mainLayout';
 
 export const AppRouter = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
       {
-        path: '/',
-        async lazy() {
-          const { MainPage } = await import('~app/pages/main-page/mainPage.tsx');
-
-          return {
-            element: <MainPage />,
-          };
-        },
+        path: navigationRoutes.main.path,
+        element: (
+          <Suspense fallback={<PageSkeleton />}>
+            <MainPage />
+          </Suspense>
+        ),
       },
       {
-        path: '/signin',
-        async lazy() {
-          const { SignInPage } = await import('~app/pages/sign-in-page/signInPage.tsx');
-
-          return {
-            element: <SignInPage />,
-          };
-        },
+        path: navigationRoutes.login.path,
+        element: (
+          <Suspense fallback={<PageSkeleton />}>
+            <SignInPage />
+          </Suspense>
+        ),
       },
       {
-        path: '/signup',
-        async lazy() {
-          const { SignUpPage } = await import('~app/pages/sign-up-page/signUpPage.tsx');
-
-          return {
-            element: <SignUpPage />,
-          };
-        },
+        path: navigationRoutes.signup.path,
+        element: (
+          <Suspense fallback={<PageSkeleton />}>
+            <SignUpPage />
+          </Suspense>
+        ),
       },
       {
-        path: '/about',
-        async lazy() {
-          const { AboutPage } = await import('~app/pages/about-page/aboutPage.tsx');
-
-          return {
-            element: <AboutPage />,
-          };
-        },
+        path: navigationRoutes.about.path,
+        element: (
+          <Suspense fallback={<PageSkeleton />}>
+            <AboutPage />
+          </Suspense>
+        ),
       },
       {
-        path: '/catalog',
-        async lazy() {
-          const { CatalogPage } = await import('~app/pages/catalog-page/catalogPage.tsx');
-
-          return {
-            element: <CatalogPage />,
-          };
-        },
+        path: navigationRoutes.catalog.path,
+        element: (
+          <Suspense fallback={<PageSkeleton />}>
+            <CatalogPage />
+          </Suspense>
+        ),
       },
       {
-        path: '/cart',
-        async lazy() {
-          const { CartPage } = await import('~app/pages/cart-page/cartPage.tsx');
-
-          return {
-            element: <CartPage />,
-          };
-        },
+        path: navigationRoutes.cart.path,
+        element: (
+          <Suspense fallback={<PageSkeleton />}>
+            <CartPage />
+          </Suspense>
+        ),
       },
     ],
   },
