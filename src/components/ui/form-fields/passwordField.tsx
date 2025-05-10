@@ -29,22 +29,24 @@ export const PasswordField = ({
       render={({ field }) => (
         <FormItem>
           <FormLabel className={'text-left'}>{label}</FormLabel>
-          <Input
-            placeholder={placeholder}
-            {...field}
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            {...withDataTestId(`${name}-input`)}
-          />
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
-            onClick={toggleShowPassword}
-          >
-            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-          </Button>
+          <div className={'relative'}>
+            <Input
+              placeholder={placeholder}
+              {...field}
+              autoComplete="current-password"
+              type={showPassword ? 'text' : 'password'}
+              {...withDataTestId(`${name}-input`)}
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
+              onClick={toggleShowPassword}
+            >
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </Button>
+          </div>
           <FixedFormMessage />
         </FormItem>
       )}
