@@ -4,7 +4,6 @@ import { LogOut } from 'lucide-react';
 
 export const LogoutButton = () => {
   const { logout } = useAuth();
-
   const handleLogout = () => {
     logout();
   };

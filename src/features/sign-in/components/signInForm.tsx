@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
 export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
-  const { login, isLoading, error } = useAuth();
+  const { login, isLoading, error, logout } = useAuth();
   const form = useForm<LoginFormFieldValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -27,17 +27,8 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
   });
 
   const handleSubmit: SubmitHandler<LoginFormFieldValues> = async (data) => {
-    console.log('login data form submit', data);
-    const loginResult = await login(data);
-
-    console.log('loginResult', loginResult);
-    if (loginResult.success) {
-      console.log('Login successful', loginResult, loginResult.success);
-
-      return;
-    } else {
-      console.log('Login failed', loginResult);
-    }
+    logout();
+    await login(data);
   };
 
   return (
