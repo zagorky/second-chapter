@@ -35,7 +35,7 @@ vi.mock('~stores/store', () => {
   };
 });
 
-describe('ApiBuilder', () => {
+describe('createTokenCache', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     const state = useAppStore.getState();

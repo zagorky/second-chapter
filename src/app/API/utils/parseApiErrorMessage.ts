@@ -1,16 +1,27 @@
 import { z } from 'zod';
 
-import { API_ERRORS } from '../config/apiErrors';
+import { API_ERROR_MESSAGES, API_ERRORS } from '../config/apiErrors';
 
-type ApiErrorCode = keyof typeof API_ERRORS;
 const ErrorSchema = z.object({
-  code: z.custom<ApiErrorCode>((value) => typeof value === 'string' && value in API_ERRORS).optional(),
+  message: z.string(),
 });
 
-export const parseApiErrorMessage = (error: unknown, fallbackMessage?: string): string => {
-  const result = ErrorSchema.safeParse(error);
+const isApiErrorKey = (key: string): key is keyof typeof API_ERROR_MESSAGES => {
+  return key in API_ERROR_MESSAGES;
+};
 
-  const code: string | undefined = result.success && result.data.code ? API_ERRORS[result.data.code] : undefined;
+export const parseErrorMessage = (error: unknown, fallbackMessage?: string): string => {
+  const parsed = ErrorSchema.safeParse(error);
 
-  return code ?? fallbackMessage ?? API_ERRORS.UNKNOWN;
+  if (parsed.success) {
+    const { message } = parsed.data;
+
+    if (isApiErrorKey(message)) {
+      return API_ERROR_MESSAGES[message];
+    }
+
+    return message;
+  }
+
+  return fallbackMessage ?? API_ERRORS.UNKNOWN;
 };

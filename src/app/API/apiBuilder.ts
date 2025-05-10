@@ -77,15 +77,21 @@ export class ApiBuilder {
   }
 
   public logout(): void {
-    useAppStore.getState().setIsAuthenticated(false);
     this.client = this.buildAnonymousClient(this.buildBase());
   }
-
   private buildBase(): ClientBuilder {
     return new ClientBuilder().withProjectKey(API_CONFIG.PROJECT_KEY).withHttpMiddleware(httpMiddlewareOptions);
   }
 
   private buildAnonymousClient(client: ClientBuilder, anonymousId?: string) {
+    useAppStore.getState().setIsAuthenticated(false);
+
+    useAppStore.getState().setStore({
+      token: '',
+      expirationTime: 0,
+      refreshToken: '',
+    });
+
     return client
       .withAnonymousSessionFlow({
         ...this.baseFlowConfig,
@@ -101,3 +107,5 @@ export class ApiBuilder {
     return client.withExistingTokenFlow(`Bearer ${accessToken}`, { force: true }).build();
   }
 }
+
+export const apiInstance = new ApiBuilder();
