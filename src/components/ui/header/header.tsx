@@ -3,7 +3,8 @@ import { ModeToggle } from '~components/ui/modeToggle';
 import { NavigationSheet } from '~components/ui/navbar/navigationSheet';
 import { NavMenu } from '~components/ui/navbar/navMenu';
 import { navigationRoutes } from '~config/navigation';
-import { BookOpen, LogIn, LogOut, UserPlus } from 'lucide-react';
+import { LogoutButton } from '~features/logout/components/logoutButton';
+import { BookOpen, LogIn, UserPlus } from 'lucide-react';
 import { Link } from 'react-router';
 
 export const Header = () => {
@@ -30,12 +31,7 @@ export const Header = () => {
             <span className="hidden sm:inline">{navigationRoutes.signup.title}</span>
           </Link>
         </Button>
-        <Button variant="outline" className="sm:inline-flex">
-          <div className="flex items-center gap-2">
-            <LogOut className="size-4 sm:hidden sm:size-0" />
-            <span className="hidden sm:inline">Logout</span>
-          </div>
-        </Button>
+        <LogoutButton />
         <ModeToggle />
         <div className="md:hidden">
           <NavigationSheet />

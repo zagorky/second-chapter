@@ -10,12 +10,14 @@ import { EmailField } from '~components/ui/form-fields/emailField';
 import { PasswordField } from '~components/ui/form-fields/passwordField';
 import { navigationRoutes } from '~config/navigation';
 import { loginSchema } from '~features/sign-in/types/schemas';
+import { useAuth } from '~hooks/useAuth';
 import { cn } from '~lib/utilities';
 import { withDataTestId } from '~utils/helpers';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
 export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
+  const { login, isLoading, error } = useAuth();
   const form = useForm<LoginFormFieldValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -24,9 +26,18 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
     },
   });
 
-  const handleSubmit: SubmitHandler<LoginFormFieldValues> = (data) => {
-    console.error('login form submit', data);
-    form.reset();
+  const handleSubmit: SubmitHandler<LoginFormFieldValues> = async (data) => {
+    console.log('login data form submit', data);
+    const loginResult = await login(data);
+
+    console.log('loginResult', loginResult);
+    if (loginResult.success) {
+      console.log('Login successful', loginResult, loginResult.success);
+
+      return;
+    } else {
+      console.log('Login failed', loginResult);
+    }
   };
 
   return (
@@ -42,9 +53,10 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
               <div className="flex flex-col gap-6">
                 <EmailField />
                 <PasswordField />
-                <Button type="submit" className="w-full">
-                  Submit
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? 'Loading...' : 'Submit'}
                 </Button>
+                {error instanceof Error && <div className={'h-6 w-[325px] text-red-700'}>{error.message}</div>}
                 <div className="mt-4 text-center text-sm">
                   Don&apos;t have an account?{' '}
                   <Link

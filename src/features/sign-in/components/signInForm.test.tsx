@@ -4,6 +4,7 @@ import SignInPage from '~app/pages/sign-in-page/signInPage';
 import SignUpPage from '~app/pages/sign-up-page/signUpPage';
 import { navigationRoutes } from '~config/navigation';
 import { SignInForm } from '~features/sign-in/components/signInForm';
+import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH, SPEC_CHARACTERS } from '~features/sign-in/types/schemas';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
 describe('SignInForm', () => {
@@ -48,7 +49,9 @@ describe('SignInForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     expect(await screen.findByText('Email cannot be empty')).toBeInTheDocument();
-    expect(await screen.findByText('Password must be at least 8 characters long')).toBeInTheDocument();
+    expect(
+      await screen.findByText(`Password must be at least ${MIN_PASSWORD_LENGTH.toString()} characters long`)
+    ).toBeInTheDocument();
   });
 
   it('should show validation error for invalid email', async () => {
@@ -103,20 +106,22 @@ describe('SignInForm', () => {
     expect(await screen.findByText('Password must contain at least one digit (0-9)')).toBeInTheDocument();
   });
 
-  it('password should contain no more than 15 characters', async () => {
+  it(`password should contain no more than ${MAX_PASSWORD_LENGTH.toString()} characters`, async () => {
     render(
       <MemoryRouter>
         <SignInForm />
       </MemoryRouter>
     );
 
-    fireEvent.change(screen.getByTestId('password-input'), { target: { value: 'Popique the cat0' } });
+    fireEvent.change(screen.getByTestId('password-input'), { target: { value: 'Popique the cat0000000' } });
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
-    expect(await screen.findByText('Password must be no more than 15 characters')).toBeInTheDocument();
+    expect(
+      await screen.findByText(`Password must be no more than ${MAX_PASSWORD_LENGTH.toString()} characters`)
+    ).toBeInTheDocument();
   });
 
-  it('password should contain at least one special character (e.g., !@#$%^&*)', async () => {
+  it(`password should contain at least one special character (e.g., ${SPEC_CHARACTERS.toString()})`, async () => {
     render(
       <MemoryRouter>
         <SignInForm />
@@ -127,7 +132,9 @@ describe('SignInForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     expect(
-      await screen.findByText('Password must contain at least one special character (e.g., !@#$%^&*)')
+      await screen.findByText(
+        `Password must contain at least one special character (e.g., ${SPEC_CHARACTERS.toString()})`
+      )
     ).toBeInTheDocument();
   });
 

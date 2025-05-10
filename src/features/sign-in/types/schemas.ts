@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-const MIN_PASSWORD_LENGTH = 8;
-const MAX_PASSWORD_LENGTH = 15;
+export const MIN_PASSWORD_LENGTH = 8;
+export const MAX_PASSWORD_LENGTH = 20;
+export const SPEC_CHARACTERS = '!@#$%^&?*';
 
 const emailSchema = z.string().min(1, 'Email cannot be empty').email('Invalid email format');
 
@@ -16,8 +17,8 @@ const passwordSchema = z
     message: 'Password must contain at least one lowercase letter (a-z)',
   })
   .refine((password) => /[0-9]/.test(password), { message: 'Password must contain at least one digit (0-9)' })
-  .refine((password) => /[!@#$%^&*]/.test(password), {
-    message: 'Password must contain at least one special character (e.g., !@#$%^&*)',
+  .refine((password) => /[!@#$%^&?*]/.test(password), {
+    message: `Password must contain at least one special character (e.g., ${SPEC_CHARACTERS.toString()})`,
   })
   .refine((password) => !/\s/.test(password), {
     message: 'Password must not contain any whitespace characters',
