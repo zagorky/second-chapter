@@ -1,6 +1,7 @@
 import { AboutPage, CartPage, CatalogPage, MainPage, SignInPage, SignUpPage } from '~app/pages/lazy';
 import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
 import { navigationRoutes } from '~config/navigation';
+import { PathGuard } from '~features/sign-in/components/pathGuard';
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router';
 
@@ -21,9 +22,11 @@ export const AppRouter = createBrowserRouter([
       {
         path: navigationRoutes.login.path,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
-            <SignInPage />
-          </Suspense>
+          <PathGuard>
+            <Suspense fallback={<PageSkeleton />}>
+              <SignInPage />
+            </Suspense>
+          </PathGuard>
         ),
       },
       {
