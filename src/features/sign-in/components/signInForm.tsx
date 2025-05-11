@@ -15,6 +15,7 @@ import { cn } from '~lib/utilities';
 import { withDataTestId } from '~utils/helpers';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
+import { toast } from 'sonner';
 
 export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
   const { login, isLoading, errorAuth, successAuth, logout } = useAuth();
@@ -30,7 +31,11 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
 
   const handleSubmit: SubmitHandler<LoginFormFieldValues> = async (data) => {
     logout();
-    await login(data);
+    const result = await login(data);
+
+    if (result.success) {
+      toast.success('Success! Welcome back!');
+    }
   };
 
   return (
