@@ -1,4 +1,4 @@
-import { FormMessage } from '~components/ui/form';
+import { FormMessage } from '~components/ui/form/form';
 
 type FixedFormMessageProps = {
   classNames?: string;

@@ -1,5 +1,5 @@
 import { FixedFormMessage } from '~components/ui/fixedFormMessage';
-import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form';
+import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Input } from '~components/ui/input';
 import { withDataTestId } from '~utils/helpers';
 import { useFormContext } from 'react-hook-form';

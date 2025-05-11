@@ -1,6 +1,6 @@
 import { Button } from '~components/ui/button/button';
 import { FixedFormMessage } from '~components/ui/fixedFormMessage';
-import { FormField, FormItem, FormLabel } from '~components/ui/form';
+import { FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Input } from '~components/ui/input';
 import { withDataTestId } from '~utils/helpers';
 import { Eye, EyeOff } from 'lucide-react';
