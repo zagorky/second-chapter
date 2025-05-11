@@ -18,7 +18,7 @@ import { Link } from 'react-router';
 import { toast } from 'sonner';
 
 export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
-  const { login, isLoading, errorAuth, successAuth, logout } = useAuth();
+  const { login, isLoading, errorAuth, logout } = useAuth();
   const form = useForm<LoginFormFieldValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -55,11 +55,7 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
                   {isLoading ? 'Loading...' : 'Submit'}
                 </Button>
                 <div className="h-6 w-[325px]">
-                  {errorAuth instanceof Error ? (
-                    <div className="text-red-500">{errorAuth.message}</div>
-                  ) : successAuth ? (
-                    <div className="text-emerald-700">Success!</div>
-                  ) : null}
+                  {errorAuth instanceof Error && <div className="text-red-500">{errorAuth.message}</div>}
                 </div>
                 <div className="mt-4 text-center text-sm">
                   Don&apos;t have an account?{' '}
