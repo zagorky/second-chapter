@@ -24,6 +24,8 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
       email: '',
       password: '',
     },
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   const handleSubmit: SubmitHandler<LoginFormFieldValues> = async (data) => {
@@ -47,9 +49,13 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? 'Loading...' : 'Submit'}
                 </Button>
-                {errorAuth instanceof Error && <div className="h-6 w-[325px] text-red-700">{errorAuth.message}</div>}
-
-                {successAuth && <div className="h-6 w-[325px] text-emerald-700">Success!</div>}
+                <div className="h-6 w-[325px]">
+                  {errorAuth instanceof Error ? (
+                    <div className="text-red-500">{errorAuth.message}</div>
+                  ) : successAuth ? (
+                    <div className="text-emerald-700">Success!</div>
+                  ) : null}
+                </div>
                 <div className="mt-4 text-center text-sm">
                   Don&apos;t have an account?{' '}
                   <Link

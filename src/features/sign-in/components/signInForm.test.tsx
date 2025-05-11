@@ -54,7 +54,7 @@ describe('SignInForm', () => {
     ).toBeInTheDocument();
   });
 
-  it('should show validation error for invalid email', async () => {
+  it('email should not contain any whitespace', async () => {
     render(
       <MemoryRouter>
         <SignInForm />
@@ -64,7 +64,48 @@ describe('SignInForm', () => {
     fireEvent.change(screen.getByTestId('email-input'), { target: { value: 'popique the cat' } });
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
-    expect(await screen.findByText('Invalid email format')).toBeInTheDocument();
+    expect(await screen.findByText('Email must not contain any whitespace')).toBeInTheDocument();
+  });
+
+  it("email should contain an '@' symbol separating local part and domain name", async () => {
+    render(
+      <MemoryRouter>
+        <SignInForm />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByTestId('email-input'), { target: { value: 'popiqueTheCat' } });
+    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+
+    expect(
+      await screen.findByText("Email must contain an '@' symbol separating local part and domain name")
+    ).toBeInTheDocument();
+  });
+
+  it('email should contain a domain name', async () => {
+    render(
+      <MemoryRouter>
+        <SignInForm />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByTestId('email-input'), { target: { value: 'popiqueTheCat@' } });
+    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+
+    expect(await screen.findByText('Email must contain a domain name (e.g., example.com)')).toBeInTheDocument();
+  });
+
+  it('email should be properly formatted (e.g., user@example.com)', async () => {
+    render(
+      <MemoryRouter>
+        <SignInForm />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByTestId('email-input'), { target: { value: 'popiqueTheCat@q.1' } });
+    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+
+    expect(await screen.findByText('Email must be properly formatted (e.g., user@example.com)')).toBeInTheDocument();
   });
 
   it('password should contain at least one uppercase letter (A-Z)', async () => {

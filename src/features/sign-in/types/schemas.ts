@@ -4,7 +4,13 @@ export const MIN_PASSWORD_LENGTH = 8;
 export const MAX_PASSWORD_LENGTH = 20;
 export const SPEC_CHARACTERS = '!@#$%^&?*';
 
-const emailSchema = z.string().min(1, 'Email cannot be empty').email('Invalid email format');
+const emailSchema = z
+  .string()
+  .min(1, 'Email cannot be empty')
+  .regex(/^\S+$/, 'Email must not contain any whitespace')
+  .regex(/(?=.*@)/, "Email must contain an '@' symbol separating local part and domain name")
+  .regex(/^[^@]+@[^@]+\.[^@]+$/, 'Email must contain a domain name (e.g., example.com)')
+  .email('Email must be properly formatted (e.g., user@example.com)');
 
 const passwordSchema = z
   .string()
@@ -22,9 +28,6 @@ const passwordSchema = z
   })
   .refine((password) => !/\s/.test(password), {
     message: 'Password must not contain any whitespace characters',
-  })
-  .refine((password) => password === password.trim(), {
-    message: 'Password must not contain leading or trailing whitespace',
   });
 
 export const loginSchema = z.object({
