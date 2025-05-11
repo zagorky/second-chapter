@@ -7,21 +7,34 @@ import { SignInForm } from '~features/sign-in/components/signInForm';
 import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH, SPEC_CHARACTERS } from '~features/sign-in/types/schemas';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
-describe('SignInForm', () => {
-  it('should render form with all fields', () => {
+class SignInFormTestModel {
+  public get emailInput() {
+    return screen.getByTestId('email-input');
+  }
+
+  public get passwordInput() {
+    return screen.getByTestId('password-input');
+  }
+
+  public get submitButton() {
+    return screen.getByRole('button', { name: /submit/i });
+  }
+
+  public get redirectionLink() {
+    return screen.getByTestId('redirection-link');
+  }
+
+  public static render() {
     render(
       <MemoryRouter>
         <SignInForm />
       </MemoryRouter>
     );
 
-    expect(screen.getByTestId('email-input')).toBeInTheDocument();
-    expect(screen.getByTestId('password-input')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
-    expect(screen.getByTestId('redirection-link')).toBeInTheDocument();
-  });
+    return new SignInFormTestModel();
+  }
 
-  it('link should navigate to sing up page', async () => {
+  public static renderWithRouter() {
     render(
       <MemoryRouter initialEntries={[navigationRoutes.login.path]}>
         <Routes>
@@ -31,23 +44,51 @@ describe('SignInForm', () => {
       </MemoryRouter>
     );
 
-    const link = screen.getByTestId('redirection-link');
+    return new SignInFormTestModel();
+  }
 
-    expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', navigationRoutes.signup.path);
-    await userEvent.click(link);
+  public clickSubmit = () => {
+    fireEvent.click(this.submitButton);
+  };
+
+  public clickRedirectionLink = async () => {
+    await userEvent.click(this.redirectionLink);
+  };
+
+  public fillEmailAndSubmit = (value: string) => {
+    fireEvent.change(this.emailInput, { target: { value: value } });
+    this.clickSubmit();
+  };
+
+  public fillPasswordAndSubmit = (value: string) => {
+    fireEvent.change(this.passwordInput, { target: { value: value } });
+    this.clickSubmit();
+  };
+}
+
+describe('SignInForm', () => {
+  it('should render form with all fields', () => {
+    const { emailInput, passwordInput, submitButton, redirectionLink } = SignInFormTestModel.render();
+
+    expect(emailInput).toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+    expect(submitButton).toBeInTheDocument();
+    expect(redirectionLink).toBeInTheDocument();
+  });
+
+  it('link should navigate to sing up page', async () => {
+    const { redirectionLink, clickRedirectionLink } = SignInFormTestModel.renderWithRouter();
+
+    expect(redirectionLink).toBeInTheDocument();
+    expect(redirectionLink).toHaveAttribute('href', navigationRoutes.signup.path);
+    await clickRedirectionLink();
     expect(screen.getByTestId('signup-header')).toBeInTheDocument();
   });
 
   it('should show validation errors for empty fields', async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { clickSubmit } = SignInFormTestModel.render();
 
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-
+    clickSubmit();
     expect(await screen.findByText('Email cannot be empty')).toBeInTheDocument();
     expect(
       await screen.findByText(`Password must be at least ${MIN_PASSWORD_LENGTH.toString()} characters long`)
@@ -55,107 +96,64 @@ describe('SignInForm', () => {
   });
 
   it('email should not contain any whitespace', async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillEmailAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('email-input'), { target: { value: 'popique the cat' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-
+    fillEmailAndSubmit('popique the cat');
     expect(await screen.findByText('Email must not contain any whitespace')).toBeInTheDocument();
   });
 
   it("email should contain an '@' symbol separating local part and domain name", async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillEmailAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('email-input'), { target: { value: 'popiqueTheCat' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-
+    fillEmailAndSubmit('popiqueTheCat');
     expect(
       await screen.findByText("Email must contain an '@' symbol separating local part and domain name")
     ).toBeInTheDocument();
   });
 
   it('email should contain a domain name', async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillEmailAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('email-input'), { target: { value: 'popiqueTheCat@' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    fillEmailAndSubmit('popiqueTheCat@');
 
     expect(await screen.findByText('Email must contain a domain name (e.g., example.com)')).toBeInTheDocument();
   });
 
   it('email should be properly formatted (e.g., user@example.com)', async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillEmailAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('email-input'), { target: { value: 'popiqueTheCat@q.1' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    fillEmailAndSubmit('popiqueTheCat@q.1');
 
     expect(await screen.findByText('Email must be properly formatted (e.g., user@example.com)')).toBeInTheDocument();
   });
 
   it('password should contain at least one uppercase letter (A-Z)', async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillPasswordAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('password-input'), { target: { value: 'popique the cat' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    fillPasswordAndSubmit('popique the cat');
 
     expect(await screen.findByText('Password must contain at least one uppercase letter (A-Z)')).toBeInTheDocument();
   });
 
   it('password should contain at least one lowercase letter (a-z)', async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillPasswordAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('password-input'), { target: { value: 'POPIQUE THE CAT' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-
+    fillPasswordAndSubmit('POPIQUE THE CAT');
     expect(await screen.findByText('Password must contain at least one lowercase letter (a-z)')).toBeInTheDocument();
   });
 
   it('password should contain at least one digit (0-9)', async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillPasswordAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('password-input'), { target: { value: 'Popique the cat' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    fillPasswordAndSubmit('Popique the cat');
 
     expect(await screen.findByText('Password must contain at least one digit (0-9)')).toBeInTheDocument();
   });
 
   it(`password should contain no more than ${MAX_PASSWORD_LENGTH.toString()} characters`, async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillPasswordAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('password-input'), { target: { value: 'Popique the cat0000000' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    fillPasswordAndSubmit('Popique the cat0000000');
 
     expect(
       await screen.findByText(`Password must be no more than ${MAX_PASSWORD_LENGTH.toString()} characters`)
@@ -163,14 +161,9 @@ describe('SignInForm', () => {
   });
 
   it(`password should contain at least one special character (e.g., ${SPEC_CHARACTERS.toString()})`, async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillPasswordAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('password-input'), { target: { value: 'PopiqueTheCat0' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    fillPasswordAndSubmit('PopiqueTheCat0');
 
     expect(
       await screen.findByText(
@@ -180,14 +173,9 @@ describe('SignInForm', () => {
   });
 
   it('password should not contain any whitespace characters', async () => {
-    render(
-      <MemoryRouter>
-        <SignInForm />
-      </MemoryRouter>
-    );
+    const { fillPasswordAndSubmit } = SignInFormTestModel.render();
 
-    fireEvent.change(screen.getByTestId('password-input'), { target: { value: 'Popik the!cat1' } });
-    fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+    fillPasswordAndSubmit('Popik the!cat1');
 
     expect(await screen.findByText('Password must not contain any whitespace characters')).toBeInTheDocument();
   });
