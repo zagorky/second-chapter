@@ -13,12 +13,13 @@ import { useAuth } from '~features/sign-in/hooks/useAuth';
 import { loginSchema } from '~features/sign-in/types/schemas';
 import { cn } from '~lib/utilities';
 import { withDataTestId } from '~utils/helpers';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { toast } from 'sonner';
 
 export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
-  const { login, isLoading, errorAuth, logout } = useAuth();
+  const { login, isLoading, errorAuth, setErrorAuth, logout } = useAuth();
   const form = useForm<LoginFormFieldValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -28,6 +29,18 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
     mode: 'onChange',
     reValidateMode: 'onChange',
   });
+
+  useEffect(() => {
+    const subscribe = form.watch(() => {
+      if (errorAuth) {
+        setErrorAuth(null);
+      }
+    });
+
+    return () => {
+      subscribe.unsubscribe();
+    };
+  }, [errorAuth, form, setErrorAuth]);
 
   const handleSubmit: SubmitHandler<LoginFormFieldValues> = async (data) => {
     logout();

@@ -43,5 +43,6 @@ export const useAuth = () => {
     logout,
     isLoading,
     errorAuth,
+    setErrorAuth,
   };
 };
