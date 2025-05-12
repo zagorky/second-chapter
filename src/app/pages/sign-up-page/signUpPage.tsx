@@ -1,12 +1,14 @@
+import { useState } from 'react';
+
 import type { CustomCustomerDraft } from '~/app/API/types/customCustomerDraft';
 
 import { apiInstance } from '~/app/API/apiBuilder';
 import { Button } from '~/components/ui/button/button';
+import { Spinner } from '~/components/ui/spinner';
 
 import { signupCustomer } from './examples/signupCustomer';
 
 const RANDOM_POSTFIX = crypto.randomUUID();
-const ANY_VALUE_ACCEPTED = 'any value';
 
 const customerDraft: CustomCustomerDraft = {
   email: `example${RANDOM_POSTFIX}@gmail.com`,
@@ -17,15 +19,15 @@ const customerDraft: CustomCustomerDraft = {
   addresses: [
     {
       country: 'GB',
-      city: ANY_VALUE_ACCEPTED,
-      streetName: ANY_VALUE_ACCEPTED,
-      postalCode: ANY_VALUE_ACCEPTED,
+      city: 'any string',
+      streetName: 'any string',
+      postalCode: 'any string',
     },
     {
       country: 'GB',
-      city: ANY_VALUE_ACCEPTED,
-      streetName: ANY_VALUE_ACCEPTED,
-      postalCode: ANY_VALUE_ACCEPTED,
+      city: 'any string',
+      streetName: 'any string',
+      postalCode: 'any string',
     },
   ],
   defaultBillingAddress: 0,
@@ -33,17 +35,26 @@ const customerDraft: CustomCustomerDraft = {
   shippingAddresses: [1],
 };
 
-export const SignUpPage = () => {
+const SignUpPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = () => {
+    void (async () => {
+      setIsLoading(true);
+      try {
+        apiInstance.logout();
+        await signupCustomer(customerDraft);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  };
+
   return (
     <div className="flex flex-col items-center gap-2">
       <h1 className={'text-primary heading-1'}>Sign Up</h1>
-      <Button
-        onClick={() => {
-          apiInstance.logout();
-          void signupCustomer(customerDraft);
-        }}
-      >
-        {'Begin your journey'}
+      <Button onClick={handleClick} disabled={isLoading} className="min-w-[10rem]">
+        {isLoading ? <Spinner size={5} /> : 'Begin your journey'}
       </Button>
     </div>
   );

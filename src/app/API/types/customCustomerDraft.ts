@@ -1,6 +1,6 @@
 import type { CountryCodeISO3166Alpha2 } from './countryCode';
 
-export type CustomCustomerAddress = {
+type CustomCustomerAddress = {
   country: CountryCodeISO3166Alpha2;
   streetName: string;
   postalCode: string;

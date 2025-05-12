@@ -8,11 +8,10 @@ import { toast } from 'sonner';
 export const signupCustomer = async (customerDraft: CustomCustomerDraft) => {
   const response = await createCustomer(customerDraft);
 
-  await apiInstance.login({ username: customerDraft.email, password: customerDraft.password });
-
   if (response.success) {
     const customer = response.payload.body?.customer;
 
+    await apiInstance.login({ username: customerDraft.email, password: customerDraft.password });
     toast.success(`All set, ${customer?.firstName ?? 'friend'}! The shelves are now yours to explore.`);
   } else {
     const parsedMessage = parseErrorMessage(response.error);

@@ -10,21 +10,28 @@ import { createTokenCache } from '~/app/API/utils/createTokenCache';
 vi.mock('~stores/store', () => {
   const state: StateStore = {
     isAuthenticated: false,
-    store: {
+    tokenStore: {
       token: '',
       expirationTime: 0,
-      refreshToken: '',
     },
+    refreshToken: undefined,
     setIsAuthenticated: (isAuth: boolean) => {
       state.isAuthenticated = isAuth;
     },
-    setStore: (nextStore: TokenStore) => {
-      state.store = nextStore;
+    setTokenStore: (nextStore: TokenStore) => {
+      state.tokenStore = nextStore;
     },
     getIsAuthenticated: () => state.isAuthenticated,
-    getStore: () => state.store,
+    getTokenStore: () => state.tokenStore,
     forceTokenExpiration: () => {
-      state.store.expirationTime = 0;
+      state.tokenStore.expirationTime = 0;
+    },
+    resetStore: () => {
+      state.isAuthenticated = false;
+      state.tokenStore = { token: '', expirationTime: 0 };
+    },
+    setRefreshToken: (refreshToken: string) => {
+      state.refreshToken = refreshToken;
     },
   };
 
@@ -41,10 +48,9 @@ describe('createTokenCache', () => {
     const state = useAppStore.getState();
 
     state.isAuthenticated = false;
-    state.store = {
+    state.tokenStore = {
       token: '',
       expirationTime: 0,
-      refreshToken: '',
     };
   });
 

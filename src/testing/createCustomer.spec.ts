@@ -25,7 +25,7 @@ const draft: CustomCustomerDraft = {
   dateOfBirth: '',
   addresses: [
     {
-      country: '',
+      country: 'RS',
       city: '',
       streetName: '',
       postalCode: '',
