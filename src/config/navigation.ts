@@ -11,7 +11,7 @@ export const navigationRoutes = {
   error: { path: '/*', title: 'Page not Found' },
 } as const;
 
-export const disallowIfAuthenticated = () => {
+export const authenticatedUserGuard = () => {
   const isAuthenticated = useAppStore.getState().isAuthenticated;
 
   if (isAuthenticated) {

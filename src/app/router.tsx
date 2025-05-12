@@ -1,6 +1,6 @@
 import { AboutPage, CartPage, CatalogPage, MainPage, SignInPage, SignUpPage } from '~app/pages/lazy';
 import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
-import { disallowIfAuthenticated, navigationRoutes } from '~config/navigation';
+import { authenticatedUserGuard, navigationRoutes } from '~config/navigation';
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router';
 
@@ -20,7 +20,7 @@ export const AppRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.login.path,
-        loader: disallowIfAuthenticated,
+        loader: authenticatedUserGuard,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <SignInPage />

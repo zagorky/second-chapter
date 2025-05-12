@@ -7,12 +7,8 @@ import { Link } from 'react-router';
 export const LogoutButton = () => {
   const { logout } = useAuth();
 
-  const handleLogout = () => {
-    logout();
-  };
-
   return (
-    <Button variant="outline" className="sm:inline-flex" onClick={handleLogout}>
+    <Button variant="outline" className="sm:inline-flex" onClick={logout}>
       <Link to={navigationRoutes.login.path} className="flex items-center gap-2">
         <LogOut className="size-4 sm:hidden sm:size-0" />
         <span className="hidden sm:inline">Logout</span>

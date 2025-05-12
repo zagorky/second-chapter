@@ -67,7 +67,7 @@ export default tseslint.config(
       ...reactDom.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'no-console': ['off', { allow: ['error'] }],
+      'no-console': ['error', { allow: ['error'] }],
       'no-empty': 'warn',
       curly: ['error', 'all'],
       'no-warning-comments': ['error', { terms: [''], location: 'anywhere' }],
