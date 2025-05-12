@@ -86,6 +86,12 @@ export class ApiBuilder {
   }
 
   private buildAnonymousClient(client: ClientBuilder, anonymousId?: string) {
+    useAppStore.getState().setStore({
+      token: '',
+      expirationTime: 0,
+      refreshToken: '',
+    });
+
     return client
       .withAnonymousSessionFlow({
         ...this.baseFlowConfig,
@@ -101,3 +107,5 @@ export class ApiBuilder {
     return client.withExistingTokenFlow(`Bearer ${accessToken}`, { force: true }).build();
   }
 }
+
+export const api = new ApiBuilder();

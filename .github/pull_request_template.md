@@ -17,6 +17,9 @@
 ## Screenshots/GIFs (if applicable) 📸
 [Screenshot](url)
 
+## Deploy Status
+### [![Netlify Status](https://api.netlify.com/api/v1/badges/dcf60fe5-9b9a-4f1d-b542-198e465eb859/deploy-status)](https://app.netlify.com/sites/second-chapter-zagorky-jsfe2024q4/deploys)
+
 ## Checklist ✅
 ### Mandatory Requirements
 - [ ] Meets all task criteria (RSS-ECOMM-X_XX)
