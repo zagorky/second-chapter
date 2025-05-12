@@ -33,6 +33,9 @@ vi.mock('~stores/store', () => {
     setRefreshToken: (refreshToken: string) => {
       state.refreshToken = refreshToken;
     },
+    resetTokenStore: () => {
+      state.tokenStore = { token: '', expirationTime: 0 };
+    },
   };
 
   return {

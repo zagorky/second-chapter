@@ -2,7 +2,7 @@ import type { CustomCustomerDraft } from '~app/API/types/customCustomerDraft';
 
 import { apiInstance } from '~app/API/apiBuilder';
 import { createCustomer } from '~app/API/utils/createCustomer';
-import { parseErrorMessage } from '~app/API/utils/parseApiErrorMessage';
+import { parseApiErrorMessage } from '~app/API/utils/parseApiErrorMessage';
 import { toast } from 'sonner';
 
 export const signupCustomer = async (customerDraft: CustomCustomerDraft) => {
@@ -14,7 +14,7 @@ export const signupCustomer = async (customerDraft: CustomCustomerDraft) => {
     await apiInstance.login({ username: customerDraft.email, password: customerDraft.password });
     toast.success(`All set, ${customer?.firstName ?? 'friend'}! The shelves are now yours to explore.`);
   } else {
-    const parsedMessage = parseErrorMessage(response.error);
+    const parsedMessage = parseApiErrorMessage(response.error);
 
     toast.error(parsedMessage);
   }

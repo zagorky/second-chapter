@@ -5,6 +5,7 @@ import type { CustomCustomerDraft } from '~/app/API/types/customCustomerDraft';
 import { apiInstance } from '~/app/API/apiBuilder';
 import { Button } from '~/components/ui/button/button';
 import { Spinner } from '~/components/ui/spinner';
+import { withDataTestId } from '~/utils/helpers';
 
 import { signupCustomer } from './examples/signupCustomer';
 
@@ -52,7 +53,9 @@ const SignUpPage = () => {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <h1 className={'text-primary heading-1'}>Sign Up</h1>
+      <h1 className={'text-primary heading-1'} {...withDataTestId('signup-header')}>
+        Sign Up
+      </h1>
       <Button onClick={handleClick} disabled={isLoading} className="min-w-[10rem]">
         {isLoading ? <Spinner size={5} /> : 'Begin your journey'}
       </Button>

@@ -10,7 +10,7 @@ const isApiErrorKey = (key: string): key is keyof typeof API_ERROR_MESSAGES => {
   return key in API_ERROR_MESSAGES;
 };
 
-export const parseErrorMessage = (error: unknown, fallbackMessage?: string): string => {
+export const parseApiErrorMessage = (error: unknown, fallbackMessage?: string): string => {
   const parsed = ErrorSchema.safeParse(error);
 
   if (parsed.success) {
