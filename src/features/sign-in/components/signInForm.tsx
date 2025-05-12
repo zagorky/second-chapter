@@ -3,23 +3,26 @@ import type { ComponentProps } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { parseApiErrorMessage } from '~app/API/utils/parseApiErrorMessage';
 import { Button } from '~components/ui/button/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~components/ui/card';
+import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
 import { EmailField } from '~components/ui/form-fields/emailField';
 import { PasswordField } from '~components/ui/form-fields/passwordField';
 import { Form } from '~components/ui/form/form';
 import { navigationRoutes } from '~config/navigation';
 import { useAuth } from '~features/sign-in/hooks/useAuth';
 import { loginSchema } from '~features/sign-in/types/schemas';
+import { useFormValuesChange } from '~hooks/useFormValuesChange';
 import { cn } from '~lib/utilities';
 import { withDataTestId } from '~utils/helpers';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
-  const { login, isLoading, errorAuth, setErrorAuth, logout } = useAuth();
+  const { login, isLoading, logout } = useAuth();
+  const navigate = useNavigate();
   const form = useForm<LoginFormFieldValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -30,25 +33,23 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
     reValidateMode: 'onChange',
   });
 
-  useEffect(() => {
-    const subscribe = form.watch(() => {
-      if (errorAuth) {
-        setErrorAuth(null);
-      }
-    });
-
-    return () => {
-      subscribe.unsubscribe();
-    };
-  }, [errorAuth, form, setErrorAuth]);
+  useFormValuesChange(form, () => {
+    form.clearErrors('root.authError');
+  });
 
   const handleSubmit: SubmitHandler<LoginFormFieldValues> = async (data) => {
     logout();
-    const result = await login(data);
-
-    if (result.success) {
-      toast.success('Success! Welcome back!');
-    }
+    await login(data).then((result) => {
+      if (result.success) {
+        toast.success('Success! Welcome back!');
+        void navigate(navigationRoutes.main.path);
+      } else {
+        form.setError('root.authError', {
+          type: 'external',
+          message: parseApiErrorMessage(result.error, 'Error occurred during login'),
+        });
+      }
+    });
   };
 
   return (
@@ -67,9 +68,7 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? 'Loading...' : 'Submit'}
                 </Button>
-                <div className="h-6 w-[325px]">
-                  {errorAuth instanceof Error && <div className="text-red-500">{errorAuth.message}</div>}
-                </div>
+                <FixedFormErrorMessage>{form.formState.errors.root?.authError.message}</FixedFormErrorMessage>
                 <div className="mt-4 text-center text-sm">
                   Don&apos;t have an account?{' '}
                   <Link

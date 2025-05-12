@@ -22,21 +22,23 @@ export const Header = () => {
       </div>
 
       <div className="flex items-center gap-3">
-        <Button variant="outline" className="sm:inline-flex" asChild>
-          <Link to={navigationRoutes.signup.path} className="flex items-center gap-2">
-            <UserPlus className="size-4 sm:hidden sm:size-0" />
-            <span className="hidden sm:inline">{navigationRoutes.signup.title}</span>
-          </Link>
-        </Button>
         {isAuthenticated ? (
           <LogoutButton />
         ) : (
-          <Button variant="outline" className="sm:inline-flex" disabled={!isAuthenticated} asChild>
-            <Link to={navigationRoutes.login.path}>
-              <LogIn className="size-4 sm:hidden sm:size-0" />
-              <span className="hidden sm:inline">{navigationRoutes.login.title}</span>
-            </Link>
-          </Button>
+          <>
+            <Button variant="outline" className="sm:inline-flex" asChild>
+              <Link to={navigationRoutes.signup.path} className="flex items-center gap-2">
+                <UserPlus className="size-4 sm:hidden sm:size-0" />
+                <span className="hidden sm:inline">{navigationRoutes.signup.title}</span>
+              </Link>
+            </Button>
+            <Button variant="outline" className="sm:inline-flex" disabled={!isAuthenticated} asChild>
+              <Link to={navigationRoutes.login.path}>
+                <LogIn className="size-4 sm:hidden sm:size-0" />
+                <span className="hidden sm:inline">{navigationRoutes.login.title}</span>
+              </Link>
+            </Button>
+          </>
         )}
         <ModeToggle />
         <div className="md:hidden">

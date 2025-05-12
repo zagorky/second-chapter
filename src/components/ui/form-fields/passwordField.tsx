@@ -1,5 +1,5 @@
 import { Button } from '~components/ui/button/button';
-import { FixedFormMessage } from '~components/ui/fixedFormMessage';
+import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
 import { FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Input } from '~components/ui/input';
 import { withDataTestId } from '~utils/helpers';
@@ -47,7 +47,7 @@ export const PasswordField = ({
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
           </div>
-          <FixedFormMessage />
+          <FixedFormErrorMessage />
         </FormItem>
       )}
     />

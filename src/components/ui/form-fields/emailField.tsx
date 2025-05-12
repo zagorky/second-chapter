@@ -1,4 +1,4 @@
-import { FixedFormMessage } from '~components/ui/fixedFormMessage';
+import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
 import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Input } from '~components/ui/input';
 import { withDataTestId } from '~utils/helpers';
@@ -30,7 +30,7 @@ export const EmailField = ({ name = 'email', label = 'Email', placeholder = 'use
                 {...withDataTestId(`${name}-input`)}
               />
             </FormControl>
-            <FixedFormMessage />
+            <FixedFormErrorMessage />
           </div>
         </FormItem>
       )}
