@@ -11,7 +11,7 @@ export const Spinner = ({ size = 5, className = '' }: SpinnerProps) => {
   return (
     <div
       className={cn(
-        'border-main animate-spin rounded-full border-2 border-dashed transition-opacity duration-300',
+        'border-main-foreground animate-spin rounded-full border-2 border-dashed transition-opacity duration-300',
         sizeClasses,
         className
       )}
