@@ -1,10 +1,15 @@
-import { SignUpForm } from '~/components/ui/sign-up-form/signUpForm';
+import { SignInForm } from '~features/sign-in/components/signInForm';
+import { withDataTestId } from '~utils/helpers';
 
-export const SignUpPage = () => {
+const SignInPage = () => {
   return (
     <div className="flex flex-col items-center gap-2">
-      <h1 className={'text-primary heading-1'}>Sign Up</h1>
-      <SignUpForm />
+      <h1 className={'text-primary heading-1'} {...withDataTestId('signin-header')}>
+        Sign in
+      </h1>
+      <SignInForm {...withDataTestId('signin-form')} />
     </div>
   );
 };
+
+export default SignInPage;
