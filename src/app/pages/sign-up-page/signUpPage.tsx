@@ -4,7 +4,7 @@ import type { CustomCustomerDraft } from '~/app/API/types/customCustomerDraft';
 
 import { apiInstance } from '~/app/API/apiBuilder';
 import { Button } from '~/components/ui/button/button';
-import { Spinner } from '~/components/ui/spinner';
+import { Spinner } from '~/components/ui/spinner/spinner';
 import { withDataTestId } from '~/utils/helpers';
 
 import { signupCustomer } from './examples/signupCustomer';
@@ -57,7 +57,7 @@ const SignUpPage = () => {
         Sign Up
       </h1>
       <Button onClick={handleClick} variant="default" disabled={isLoading} className="min-w-[10rem]">
-        {isLoading ? <Spinner size={6} /> : 'Begin your journey'}
+        {isLoading ? <Spinner size="md" /> : 'Begin your journey'}
       </Button>
     </div>
   );
