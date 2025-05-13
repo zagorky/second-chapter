@@ -56,8 +56,8 @@ const SignUpPage = () => {
       <h1 className={'text-primary heading-1'} {...withDataTestId('signup-header')}>
         Sign Up
       </h1>
-      <Button onClick={handleClick} disabled={isLoading} className="min-w-[10rem]">
-        {isLoading ? <Spinner size={5} /> : 'Begin your journey'}
+      <Button onClick={handleClick} variant="default" disabled={isLoading} className="min-w-[10rem]">
+        {isLoading ? <Spinner size={6} /> : 'Begin your journey'}
       </Button>
     </div>
   );
