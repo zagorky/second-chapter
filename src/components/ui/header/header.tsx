@@ -12,7 +12,7 @@ export const Header = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <header className="bg-background mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between border-b px-4 sm:px-6 lg:px-8">
+    <header className="bg-background max-w-screen-3xl mx-auto flex h-16 w-full items-center justify-between border-b px-4 sm:px-6 lg:px-8">
       <div className="flex items-center gap-8">
         <Link to={navigationRoutes.main.path}>
           <BookOpen className="size-8" />

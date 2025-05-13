@@ -1,5 +1,4 @@
 import * as SheetPrimitive from '@radix-ui/react-dialog';
-import { X } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '~/lib/utilities';
@@ -61,10 +60,6 @@ function SheetContent({
         {...props}
       >
         {children}
-        <SheetPrimitive.Close className="rounded-base focus:ring-ring absolute top-4 right-4 ring-offset-white focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
       </SheetPrimitive.Content>
     </SheetPortal>
   );
