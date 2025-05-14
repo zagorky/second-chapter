@@ -1,14 +1,13 @@
-import {
-  createApiBuilderFromCtpClient,
-  type Customer,
-  type ProductProjectionPagedQueryResponse,
-} from '@commercetools/platform-sdk';
+import { createApiBuilderFromCtpClient, type Customer } from '@commercetools/platform-sdk';
 import { ClientBuilder, type HttpMiddlewareOptions, type UserAuthOptions, type Client } from '@commercetools/ts-client';
 import { useAppStore } from '~stores/store';
 
 import { API_CONFIG } from '~/app/API/config/apiConfig';
 
 import { createTokenCache } from './utils/createTokenCache';
+import { getBaseFlowConfig } from './utils/getBaseFlowConfig';
+import { verifyAuthenticatedClient } from './utils/verifyAuthenticatedClient';
+import { verifyUnauthenticatedClient } from './utils/verifyUnauthenticatedClient';
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
   host: API_CONFIG.API_URL,
@@ -18,7 +17,7 @@ const httpMiddlewareOptions: HttpMiddlewareOptions = {
 export class ApiBuilder {
   private client: Client;
 
-  private readonly baseFlowConfig = this.getBaseFlowConfig();
+  private readonly baseFlowConfig = getBaseFlowConfig();
 
   constructor() {
     this.client = this.buildPlaceholderClient();
@@ -112,20 +111,8 @@ export class ApiBuilder {
       .build();
   }
 
-  private getBaseFlowConfig() {
-    return {
-      host: API_CONFIG.AUTH_URL,
-      projectKey: API_CONFIG.PROJECT_KEY,
-      scopes: API_CONFIG.SCOPES,
-      credentials: {
-        clientId: API_CONFIG.CLIENT_ID,
-        clientSecret: API_CONFIG.CLIENT_SECRET,
-      },
-    };
-  }
-
   private async checkClientAuthStatus(client: Client): Promise<{ success: true } | { success: false; error: unknown }> {
-    const authResult = await this.verifyAuthenticatedClient(client);
+    const authResult = await verifyAuthenticatedClient(client);
 
     if (authResult.success) {
       this.updateAuthenticationStatus(true);
@@ -134,48 +121,13 @@ export class ApiBuilder {
     }
 
     this.updateAuthenticationStatus(false);
-    const unauthResult = await this.verifyUnauthenticatedClient(client);
+    const unauthResult = await verifyUnauthenticatedClient(client);
 
     if (unauthResult.success) {
       return { success: true };
     }
 
     return { success: false, error: unauthResult.error };
-  }
-
-  private async verifyAuthenticatedClient(
-    client: Client
-  ): Promise<{ success: true; payload: Customer } | { success: false; error: unknown }> {
-    const root = createApiBuilderFromCtpClient(client).withProjectKey({
-      projectKey: API_CONFIG.PROJECT_KEY,
-    });
-
-    try {
-      const response = await root.me().get().execute();
-
-      return { success: true, payload: response.body };
-    } catch (error: unknown) {
-      return { success: false, error };
-    }
-  }
-
-  private async verifyUnauthenticatedClient(
-    client: Client
-  ): Promise<{ success: true; payload: ProductProjectionPagedQueryResponse } | { success: false; error: unknown }> {
-    const root = createApiBuilderFromCtpClient(client).withProjectKey({
-      projectKey: API_CONFIG.PROJECT_KEY,
-    });
-
-    try {
-      const response = await root
-        .productProjections()
-        .get({ queryArgs: { limit: 1 } })
-        .execute();
-
-      return { success: true, payload: response.body };
-    } catch (error: unknown) {
-      return { success: false, error };
-    }
   }
 
   private async buildExistingTokenClient(accessToken: string): Promise<Client> {
