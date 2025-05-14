@@ -3,11 +3,13 @@ import type { Client } from '@commercetools/ts-client';
 
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
+import { normalizeError } from '~/utils/normalizeError';
+
 import { API_CONFIG } from '../config/apiConfig';
 
 export const verifyAuthenticatedClient = async (
   client: Client
-): Promise<{ success: true; payload: Customer } | { success: false; error: unknown }> => {
+): Promise<{ success: true; payload: Customer } | { success: false; error: Error }> => {
   const root = createApiBuilderFromCtpClient(client).withProjectKey({
     projectKey: API_CONFIG.PROJECT_KEY,
   });
@@ -17,6 +19,6 @@ export const verifyAuthenticatedClient = async (
 
     return { success: true, payload: response.body };
   } catch (error: unknown) {
-    return { success: false, error };
+    return { success: false, error: normalizeError(error) };
   }
 };

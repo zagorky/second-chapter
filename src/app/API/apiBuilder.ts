@@ -1,8 +1,9 @@
 import { createApiBuilderFromCtpClient, type Customer } from '@commercetools/platform-sdk';
 import { ClientBuilder, type HttpMiddlewareOptions, type UserAuthOptions, type Client } from '@commercetools/ts-client';
+import { API_CONFIG } from '~app/API/config/apiConfig';
 import { useAppStore } from '~stores/store';
 
-import { API_CONFIG } from '~/app/API/config/apiConfig';
+import { normalizeError } from '~/utils/normalizeError';
 
 import { createTokenCache } from './utils/createTokenCache';
 import { getBaseFlowConfig } from './utils/getBaseFlowConfig';
@@ -42,7 +43,7 @@ export class ApiBuilder {
 
   public async login(
     user: UserAuthOptions
-  ): Promise<{ success: true; payload: Customer } | { success: false; error: unknown }> {
+  ): Promise<{ success: true; payload: Customer } | { success: false; error: Error }> {
     const backupTokenStore = useAppStore.getState().tokenStore;
 
     useAppStore.getState().resetTokenStore();
@@ -73,7 +74,7 @@ export class ApiBuilder {
     } catch (error: unknown) {
       useAppStore.getState().setTokenStore(backupTokenStore);
 
-      return { success: false, error };
+      return { success: false, error: normalizeError(error) };
     }
   }
 
@@ -111,23 +112,24 @@ export class ApiBuilder {
       .build();
   }
 
-  private async checkClientAuthStatus(client: Client): Promise<{ success: true } | { success: false; error: unknown }> {
-    const authResult = await verifyAuthenticatedClient(client);
+  private async checkClientAuthStatus(client: Client): Promise<{ success: true } | { success: false; error: Error }> {
+    const authCheckResult = await verifyAuthenticatedClient(client);
 
-    if (authResult.success) {
+    if (authCheckResult.success) {
       this.updateAuthenticationStatus(true);
 
       return { success: true };
     }
 
     this.updateAuthenticationStatus(false);
-    const unauthResult = await verifyUnauthenticatedClient(client);
+    const unauthCheckResult = await verifyUnauthenticatedClient(client);
 
-    if (unauthResult.success) {
+    if (unauthCheckResult.success) {
       return { success: true };
     }
+    const { error } = unauthCheckResult;
 
-    return { success: false, error: unauthResult.error };
+    return { success: false, error: normalizeError(error) };
   }
 
   private async buildExistingTokenClient(accessToken: string): Promise<Client> {
