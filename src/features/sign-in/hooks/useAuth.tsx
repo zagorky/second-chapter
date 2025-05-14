@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react';
 export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const isAuthenticated = useAppStore((store) => store.isAuthenticated);
+  const isClientVerified = useAppStore((store) => store.isClientVerified);
 
   const login = useCallback(async (credentials: LoginFormFieldValues) => {
     setIsLoading(true);
@@ -32,5 +33,6 @@ export const useAuth = () => {
     logout,
     isLoading,
     isAuthenticated,
+    isClientVerified,
   };
 };

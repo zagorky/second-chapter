@@ -66,7 +66,8 @@ export class ApiBuilder {
         .get()
         .execute();
 
-      useAppStore.getState().setIsAuthenticated(true);
+      this.updateAuthenticationStatus(true);
+
       this.client = nextClient;
 
       return { success: true, payload };
@@ -83,12 +84,22 @@ export class ApiBuilder {
   private buildBase(): ClientBuilder {
     return new ClientBuilder().withProjectKey(API_CONFIG.PROJECT_KEY).withHttpMiddleware(httpMiddlewareOptions);
   }
+
+  private updateAuthenticationStatus(isAuthenticated: boolean) {
+    const store = useAppStore.getState();
+
+    if (store.isAuthenticated !== isAuthenticated) {
+      store.setIsAuthenticated(isAuthenticated);
+    }
+  }
+
   private buildPlaceholderClient(): Client {
     return this.buildBase().build();
   }
 
   private buildAnonymousClient() {
     useAppStore.getState().resetStore();
+    this.updateAuthenticationStatus(false);
 
     return this.buildBase()
       .withAnonymousSessionFlow({
@@ -100,6 +111,7 @@ export class ApiBuilder {
       })
       .build();
   }
+
   private getBaseFlowConfig() {
     return {
       host: API_CONFIG.AUTH_URL,
@@ -112,11 +124,64 @@ export class ApiBuilder {
     };
   }
 
+  private async checkClientAuthStatus(client: Client): Promise<{ success: true } | { success: false; error: unknown }> {
+    const authResult = await this.verifyAuthenticatedClient(client);
+
+    if (authResult.success) {
+      this.updateAuthenticationStatus(true);
+
+      return { success: true };
+    }
+
+    this.updateAuthenticationStatus(false);
+    const unauthResult = await this.verifyUnauthenticatedClient(client);
+
+    if (unauthResult.success) {
+      return { success: true };
+    }
+
+    return { success: false, error: unauthResult.error };
+  }
+
+  private async verifyAuthenticatedClient(
+    client: Client
+  ): Promise<{ success: true; payload: Customer } | { success: false; error: unknown }> {
+    const root = createApiBuilderFromCtpClient(client).withProjectKey({
+      projectKey: API_CONFIG.PROJECT_KEY,
+    });
+
+    try {
+      const response = await root.me().get().execute();
+
+      return { success: true, payload: response.body };
+    } catch (error: unknown) {
+      return { success: false, error };
+    }
+  }
+
+  private async verifyUnauthenticatedClient(
+    client: Client
+  ): Promise<{ success: true; payload: ProductProjectionPagedQueryResponse } | { success: false; error: unknown }> {
+    const root = createApiBuilderFromCtpClient(client).withProjectKey({
+      projectKey: API_CONFIG.PROJECT_KEY,
+    });
+
+    try {
+      const response = await root
+        .productProjections()
+        .get({ queryArgs: { limit: 1 } })
+        .execute();
+
+      return { success: true, payload: response.body };
+    } catch (error: unknown) {
+      return { success: false, error };
+    }
+  }
+
   private async buildExistingTokenClient(accessToken: string): Promise<Client> {
     const nextClient = this.buildBase().withExistingTokenFlow(`Bearer ${accessToken}`, { force: true }).build();
-    const isAuthenticated = useAppStore.getState().isAuthenticated;
 
-    const response = await this.verifyClient(nextClient, isAuthenticated);
+    const response = await this.checkClientAuthStatus(nextClient);
 
     if (response.success) {
       return nextClient;
@@ -124,30 +189,6 @@ export class ApiBuilder {
       console.error('Invalid access token from local storage', response.error);
 
       return this.buildAnonymousClient();
-    }
-  }
-
-  private async verifyClient(
-    client: Client,
-    isAuthenticated: boolean
-  ): Promise<
-    { success: true; payload: Customer | ProductProjectionPagedQueryResponse } | { success: false; error: unknown }
-  > {
-    const root = createApiBuilderFromCtpClient(client).withProjectKey({
-      projectKey: API_CONFIG.PROJECT_KEY,
-    });
-
-    try {
-      const response = await (isAuthenticated
-        ? root.me().get().execute()
-        : root
-            .productProjections()
-            .get({ queryArgs: { limit: 1 } })
-            .execute());
-
-      return { success: true, payload: response.body };
-    } catch (error: unknown) {
-      return { success: false, error };
     }
   }
 
@@ -165,12 +206,10 @@ export class ApiBuilder {
       })
       .build();
 
-    const isAuthenticated = useAppStore.getState().isAuthenticated;
-    const response = await this.verifyClient(nextClient, isAuthenticated);
+    const response = await this.checkClientAuthStatus(nextClient);
 
     if (response.success) {
       useAppStore.getState().setRefreshToken(refreshToken);
-      useAppStore.getState().setIsAuthenticated(isAuthenticated);
 
       return nextClient;
     } else {

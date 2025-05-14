@@ -1,24 +1,24 @@
+import { apiInstance } from '~app/API/apiBuilder';
 import { App } from '~app/App';
+import { useAppStore } from '~stores/store';
 import { assertIsNonNullable } from '~utils/helpers';
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
 
-import { apiInstance } from './app/API/apiBuilder';
 import './index.css';
 import './styles/fonts.css';
+
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
 const rootElement = document.querySelector('#root');
 
 assertIsNonNullable(rootElement);
 
-try {
-  await apiInstance.init();
+await useAppStore.persist.rehydrate();
 
-  createRoot(rootElement).render(
-    <StrictMode>
-      <App />
-    </StrictMode>
-  );
-} catch (error) {
-  console.error('[API] Failed to initialize API instance:', error);
-}
+await apiInstance.init();
+
+createRoot(rootElement).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
