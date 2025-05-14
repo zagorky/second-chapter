@@ -1,5 +1,6 @@
 export const API_ERRORS = {
   LOGIN_UNKNOWN: "Login failed. But don't worry — even great stories start with a few rewrites",
+  SIGNUP_UNKNOWN: "Something went wrong during signup. Let's try that again?",
   UNKNOWN: 'A small error stopped the story. Please refresh or try again.',
 } as const;
 
