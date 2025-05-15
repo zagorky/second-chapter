@@ -17,8 +17,12 @@ vi.mock('~stores/store', () => {
       expirationTime: 0,
     },
     refreshToken: undefined,
+    isClientVerified: false,
     setIsAuthenticated: (isAuth: boolean) => {
       state.isAuthenticated = isAuth;
+    },
+    setIsClientVerified: (value: boolean) => {
+      state.isClientVerified = value;
     },
     setTokenStore: (nextStore: TokenStore) => {
       state.tokenStore = nextStore;
