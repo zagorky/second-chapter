@@ -4,9 +4,9 @@ import { useAppStore } from '~/stores/store';
 
 export const createTokenCache = (): TokenCache => {
   return {
-    get: () => useAppStore.getState().store,
+    get: () => useAppStore.getState().tokenStore,
     set: (store: TokenStore) => {
-      useAppStore.getState().setStore(store);
+      useAppStore.getState().setTokenStore(store);
     },
   };
 };

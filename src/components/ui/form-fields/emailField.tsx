@@ -1,8 +1,9 @@
 import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
 import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
-import { Input } from '~components/ui/input';
 import { withDataTestId } from '~utils/helpers';
 import { useFormContext } from 'react-hook-form';
+
+import { Input } from '~/components/ui/input';
 
 type EmailFieldProps = {
   name?: string;
