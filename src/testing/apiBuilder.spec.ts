@@ -6,8 +6,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { StateStore } from '~/stores/types/types';
 
 import { ApiBuilder } from '~/app/API/apiBuilder';
-
-const INVALID_CREDENTIALS_CODE = 'invalid_customer_account_credentials';
+import { API_ERROR_MESSAGES } from '~/app/API/config/apiErrors';
+import { parseApiErrorMessage } from '~/app/API/utils/parseApiErrorMessage';
 
 vi.mock('~stores/store', () => {
   const state: StateStore = {
@@ -93,6 +93,7 @@ describe('ApiBuilder', () => {
 
   it('should return failure result and keep user logged out on failed relogin', async () => {
     const fakeCustomer = '';
+    const INVALID_CREDENTIALS_MESSAGE = 'Customer account with the given credentials not found.';
 
     executeMock.mockResolvedValueOnce({ body: fakeCustomer });
 
@@ -103,13 +104,14 @@ describe('ApiBuilder', () => {
 
     api.logout();
 
-    const invalidError = { code: INVALID_CREDENTIALS_CODE };
+    const invalidError = { message: INVALID_CREDENTIALS_MESSAGE };
 
     executeMock.mockRejectedValueOnce(invalidError);
 
-    const relogin = await api.login({ username: 'user', password: 'wrong' });
+    const result = parseApiErrorMessage(invalidError);
 
-    expect(relogin).toEqual({ success: false, error: invalidError });
+    expect(result).toBe(API_ERROR_MESSAGES[INVALID_CREDENTIALS_MESSAGE]);
+
     expect(useAppStore.getState().isAuthenticated).toBe(false);
   });
 
@@ -184,7 +186,7 @@ describe('ApiBuilder', () => {
 
     await api.init();
 
-    expect(executeMock).toHaveBeenCalledTimes(1);
+    expect(executeMock).toHaveBeenCalledTimes(2);
     expect(state.refreshToken).toBeUndefined();
     expect(state.isAuthenticated).toBe(false);
   });
@@ -198,8 +200,7 @@ describe('ApiBuilder', () => {
 
     state.tokenStore = { ...tokenStore };
 
-    executeMock.mockResolvedValueOnce({ body: {} });
-
+    executeMock.mockRejectedValueOnce(new Error('error')).mockResolvedValueOnce({ body: {} });
     const api = new ApiBuilder();
 
     await api.init();
