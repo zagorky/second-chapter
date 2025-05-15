@@ -27,7 +27,7 @@ export class ApiBuilder {
     return createApiBuilderFromCtpClient(this.client).withProjectKey({ projectKey: API_CONFIG.PROJECT_KEY });
   }
 
-  public async init() {
+  public init = async () => {
     const state = useAppStore.getState();
     const storedToken = state.tokenStore;
     const refreshToken = state.tokenStore.refreshToken ?? state.refreshToken;
@@ -39,11 +39,11 @@ export class ApiBuilder {
     } else {
       this.client = this.buildAnonymousClient();
     }
-  }
+  };
 
-  public async login(
+  public login = async (
     user: UserAuthOptions
-  ): Promise<{ success: true; payload: Customer } | { success: false; error: Error }> {
+  ): Promise<{ success: true; payload: Customer } | { success: false; error: Error }> => {
     const backupTokenStore = useAppStore.getState().tokenStore;
 
     useAppStore.getState().resetTokenStore();
@@ -76,28 +76,28 @@ export class ApiBuilder {
 
       return { success: false, error: normalizeError(error) };
     }
-  }
+  };
 
-  public logout() {
+  public logout = () => {
     this.client = this.buildAnonymousClient();
-  }
-  private buildBase(): ClientBuilder {
+  };
+  private readonly buildBase = (): ClientBuilder => {
     return new ClientBuilder().withProjectKey(API_CONFIG.PROJECT_KEY).withHttpMiddleware(httpMiddlewareOptions);
-  }
+  };
 
-  private updateAuthenticationStatus(isAuthenticated: boolean) {
+  private readonly updateAuthenticationStatus = (isAuthenticated: boolean) => {
     const store = useAppStore.getState();
 
     if (store.isAuthenticated !== isAuthenticated) {
       store.setIsAuthenticated(isAuthenticated);
     }
-  }
+  };
 
-  private buildPlaceholderClient(): Client {
+  private readonly buildPlaceholderClient = (): Client => {
     return this.buildBase().build();
-  }
+  };
 
-  private buildAnonymousClient() {
+  private readonly buildAnonymousClient = () => {
     useAppStore.getState().resetStore();
     this.updateAuthenticationStatus(false);
 
@@ -110,9 +110,11 @@ export class ApiBuilder {
         tokenCache: createTokenCache(),
       })
       .build();
-  }
+  };
 
-  private async checkClientAuthStatus(client: Client): Promise<{ success: true } | { success: false; error: Error }> {
+  private readonly checkClientAuthStatus = async (
+    client: Client
+  ): Promise<{ success: true } | { success: false; error: Error }> => {
     const authCheckResult = await verifyAuthenticatedClient(client);
 
     if (authCheckResult.success) {
@@ -130,9 +132,9 @@ export class ApiBuilder {
     const { error } = unauthCheckResult;
 
     return { success: false, error: normalizeError(error) };
-  }
+  };
 
-  private async buildExistingTokenClient(accessToken: string): Promise<Client> {
+  private readonly buildExistingTokenClient = async (accessToken: string): Promise<Client> => {
     const nextClient = this.buildBase().withExistingTokenFlow(`Bearer ${accessToken}`, { force: true }).build();
 
     const response = await this.checkClientAuthStatus(nextClient);
@@ -144,9 +146,9 @@ export class ApiBuilder {
 
       return this.buildAnonymousClient();
     }
-  }
+  };
 
-  private async buildRefreshTokenClient(refreshToken: string) {
+  private readonly buildRefreshTokenClient = async (refreshToken: string) => {
     useAppStore.getState().resetTokenStore();
 
     const nextClient = this.buildBase()
@@ -171,7 +173,7 @@ export class ApiBuilder {
 
       return this.buildAnonymousClient();
     }
-  }
+  };
 }
 
 export const apiInstance = new ApiBuilder();

@@ -1,9 +1,7 @@
 import type { MyCustomerDraft, BaseAddress } from '@commercetools/platform-sdk';
 
-import type { CountryCodeISO3166Alpha2 } from './countryCode';
-
 type CustomCustomerAddressRequired = {
-  country: CountryCodeISO3166Alpha2;
+  country: 'GB';
   streetName: string;
   postalCode: string;
   city: string;
