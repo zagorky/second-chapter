@@ -1,24 +1,13 @@
 import type { MyCustomerDraft, BaseAddress } from '@commercetools/platform-sdk';
 
-type CustomCustomerAddressRequired = {
-  country: 'GB';
-  streetName: string;
-  postalCode: string;
-  city: string;
-};
+type RequiredBaseAddressKeys = 'country' | 'streetName' | 'postalCode' | 'city';
+type RequiereCustomerDraftKeys = 'email' | 'password' | 'firstName' | 'lastName' | 'dateOfBirth' | 'addresses';
 
-type CustomCustomerAddress = Omit<BaseAddress, keyof CustomCustomerAddressRequired> & CustomCustomerAddressRequired;
+type CustomCustomerAddress = BaseAddress & Required<Pick<BaseAddress, RequiredBaseAddressKeys>>;
 
-type CustomCustomerDraftRequired = {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  addresses: CustomCustomerAddress[];
-  billingAddresses: number[];
-  shippingAddresses: number[];
-};
-
-export type CustomCustomerDraft = Omit<MyCustomerDraft, keyof CustomCustomerDraftRequired> &
-  CustomCustomerDraftRequired;
+export type CustomCustomerDraft = Omit<MyCustomerDraft, 'addresses'> &
+  Required<Pick<MyCustomerDraft, RequiereCustomerDraftKeys>> & {
+    addresses: CustomCustomerAddress[];
+    billingAddresses: number[];
+    shippingAddresses: number[];
+  };
