@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 
 const ErrorPage = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex h-[calc(100vh-200px)] flex-col items-center justify-center">
       <h1 className={'heading-1'} {...withDataTestId('not-found-page-header')}>
         404: A Literary Dead End
       </h1>
@@ -18,9 +18,9 @@ const ErrorPage = () => {
             treasures waiting to be discovered.
           </p>
         </div>
-        <Button variant="outline" className="sm:inline-flex" asChild>
+        <Button variant="default" className="sm:inline-flex" asChild>
           <Link to={navigationRoutes.main.path} className="flex items-center gap-2">
-            <span className="sm:inline">{navigationRoutes.main.title}</span>
+            <span className="sm:inline">Back to {navigationRoutes.main.title}</span>
           </Link>
         </Button>
       </div>
