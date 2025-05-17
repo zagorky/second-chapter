@@ -1,11 +1,11 @@
-import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog';
-import { Menu } from 'lucide-react';
+import { SheetClose } from '~components/ui/sheet';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '~/components/ui/button/button';
 import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet';
 
-import { Logo } from './logo';
+import { DialogTitle, DialogDescription } from '../dialog';
 import { NavMenu } from './navMenu';
 
 export const NavigationSheet = () => {
@@ -14,17 +14,22 @@ export const NavigationSheet = () => {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="default" size="icon">
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent aria-describedby={'Second Chapter Logo'}>
+      <SheetContent className="p-4">
+        <SheetClose className="ml-auto" asChild>
+          <Button variant="neutral" size="icon">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </Button>
+        </SheetClose>
         <DialogTitle className={'sr-only'}>Navigation Menu</DialogTitle>
         <DialogDescription className="sr-only">Navigation links and actions</DialogDescription>
-        <Logo />
         <NavMenu
           orientation="vertical"
-          className="mt-12"
+          className="max-w-none justify-stretch"
           onItemClick={() => {
             setIsOpen(false);
           }}

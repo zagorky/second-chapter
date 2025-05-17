@@ -6,27 +6,42 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { StateStore } from '~/stores/types/types';
 
 import { ApiBuilder } from '~/app/API/apiBuilder';
-
-const INVALID_CREDENTIALS_CODE = 'invalid_customer_account_credentials';
+import { API_ERROR_MESSAGES } from '~/app/API/config/apiErrors';
+import { parseApiErrorMessage } from '~/app/API/utils/parseApiErrorMessage';
 
 vi.mock('~stores/store', () => {
   const state: StateStore = {
     isAuthenticated: false,
-    store: {
+    tokenStore: {
       token: '',
       expirationTime: 0,
-      refreshToken: '',
     },
+    refreshToken: undefined,
+    isClientVerified: false,
     setIsAuthenticated: (isAuth: boolean) => {
       state.isAuthenticated = isAuth;
     },
-    setStore: (nextStore: TokenStore) => {
-      state.store = nextStore;
+    setIsClientVerified: (value: boolean) => {
+      state.isClientVerified = value;
+    },
+    setTokenStore: (nextStore: TokenStore) => {
+      state.tokenStore = nextStore;
     },
     getIsAuthenticated: () => state.isAuthenticated,
-    getStore: () => state.store,
+    getTokenStore: () => state.tokenStore,
     forceTokenExpiration: () => {
-      state.store.expirationTime = 0;
+      state.tokenStore.expirationTime = 0;
+    },
+    resetStore: () => {
+      state.isAuthenticated = false;
+      state.tokenStore = { token: '', expirationTime: 0 };
+      state.refreshToken = undefined;
+    },
+    setRefreshToken: (refreshToken: string) => {
+      state.refreshToken = refreshToken;
+    },
+    resetTokenStore: () => {
+      state.tokenStore = { token: '', expirationTime: 0 };
     },
   };
 
@@ -43,24 +58,27 @@ const chainApiMock = () => ({
   me: () => ({
     get: () => ({ execute: executeMock }),
   }),
+  productProjections: () => ({
+    get: () => ({ execute: executeMock }),
+  }),
 });
 
 vi.mock('@commercetools/platform-sdk', () => ({
   createApiBuilderFromCtpClient: () => ({
-    withProjectKey: chainApiMock,
+    withProjectKey: () => chainApiMock(),
   }),
 }));
 
 describe('ApiBuilder', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    executeMock.mockReset();
     const state = useAppStore.getState();
 
     state.isAuthenticated = false;
-    state.store = {
+    state.tokenStore = {
       token: '',
       expirationTime: 0,
-      refreshToken: '',
     };
   });
   it('should return success payload and sets isAuthenticated on successful login', async () => {
@@ -79,6 +97,7 @@ describe('ApiBuilder', () => {
 
   it('should return failure result and keep user logged out on failed relogin', async () => {
     const fakeCustomer = '';
+    const INVALID_CREDENTIALS_MESSAGE = 'Customer account with the given credentials not found.';
 
     executeMock.mockResolvedValueOnce({ body: fakeCustomer });
 
@@ -89,13 +108,14 @@ describe('ApiBuilder', () => {
 
     api.logout();
 
-    const invalidError = { code: INVALID_CREDENTIALS_CODE };
+    const invalidError = { message: INVALID_CREDENTIALS_MESSAGE };
 
     executeMock.mockRejectedValueOnce(invalidError);
 
-    const relogin = await api.login({ username: 'user', password: 'wrong' });
+    const result = parseApiErrorMessage(invalidError);
 
-    expect(relogin).toEqual({ success: false, error: invalidError });
+    expect(result).toBe(API_ERROR_MESSAGES[INVALID_CREDENTIALS_MESSAGE]);
+
     expect(useAppStore.getState().isAuthenticated).toBe(false);
   });
 
@@ -107,7 +127,7 @@ describe('ApiBuilder', () => {
     expect(state.isAuthenticated).toBe(false);
   });
 
-  it('should not clear store and remain unauthenticated if refresh token is present', () => {
+  it('should not clear store and preserve authentication state if refresh token is present', () => {
     const tokenStore: TokenStore = {
       token: 'access',
       refreshToken: 'refresh',
@@ -116,11 +136,11 @@ describe('ApiBuilder', () => {
 
     const state = useAppStore.getState();
 
-    state.store = tokenStore;
+    state.tokenStore = tokenStore;
 
     new ApiBuilder();
 
-    expect(state.store).toEqual(tokenStore);
+    expect(state.tokenStore).toEqual(tokenStore);
     expect(state.isAuthenticated).toBe(false);
   });
 
@@ -133,6 +153,63 @@ describe('ApiBuilder', () => {
 
     api.logout();
 
+    expect(state.isAuthenticated).toBe(false);
+  });
+
+  it('should save refreshToken separately and preserve authentication state when access token is expired', async () => {
+    const state = useAppStore.getState();
+    const refreshToken = 'refresh';
+
+    state.isAuthenticated = true;
+    state.tokenStore = {
+      token: 'token',
+      refreshToken,
+      expirationTime: 0,
+    };
+    state.refreshToken = undefined;
+
+    executeMock.mockResolvedValueOnce({ body: {} });
+
+    const api = new ApiBuilder();
+
+    await api.init();
+
+    expect(executeMock).toHaveBeenCalledTimes(1);
+    expect(state.refreshToken).toBe(refreshToken);
+    expect(state.isAuthenticated).toBe(true);
+  });
+
+  it('should make a call to API and reset store when there is invalid refresh token', async () => {
+    const state = useAppStore.getState();
+
+    state.tokenStore.refreshToken = 'invalid refresh token';
+
+    executeMock.mockRejectedValueOnce(new Error('error'));
+
+    const api = new ApiBuilder();
+
+    await api.init();
+
+    expect(executeMock).toHaveBeenCalledTimes(2);
+    expect(state.refreshToken).toBeUndefined();
+    expect(state.isAuthenticated).toBe(false);
+  });
+  it('should not mutate store when token is valid and state is unauthenticated', async () => {
+    const state = useAppStore.getState();
+
+    const tokenStore = {
+      token: 'token',
+      expirationTime: Date.now() + 100000,
+    };
+
+    state.tokenStore = { ...tokenStore };
+
+    executeMock.mockRejectedValueOnce(new Error('error')).mockResolvedValueOnce({ body: {} });
+    const api = new ApiBuilder();
+
+    await api.init();
+
+    expect(state.tokenStore).toEqual(tokenStore);
     expect(state.isAuthenticated).toBe(false);
   });
 });

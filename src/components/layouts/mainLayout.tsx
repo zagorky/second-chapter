@@ -5,9 +5,9 @@ export const MainLayout = () => {
   const location = useLocation();
 
   return (
-    <div className="bg-muted min-h-screen">
+    <div className="bg-secondary-background flex min-h-screen flex-col">
       <Header />
-      <main className="mx-auto w-full max-w-6xl p-8 text-center">
+      <main className="mx-auto w-full max-w-6xl flex-grow p-8 text-center">
         <Outlet key={location.pathname} />
       </main>
     </div>

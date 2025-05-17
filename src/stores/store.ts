@@ -20,8 +20,7 @@ const retrieveStoreFromLS = () => {
 
     if (result.success) {
       return {
-        isAuthenticated: result.data.state.isAuthenticated,
-        tokenStore: result.data.state.store,
+        tokenStore: result.data.state.tokenStore,
       };
     } else {
       console.error(result.error.format());
@@ -34,32 +33,52 @@ const retrieveStoreFromLS = () => {
 const emptyStore = {
   token: '',
   expirationTime: 0,
-  refreshToken: '',
 };
 
 export const useAppStore = create<StateStore>()(
   persist(
     (set, get) => ({
-      isAuthenticated: retrieveStoreFromLS()?.isAuthenticated ?? false,
+      isClientVerified: false,
+      isAuthenticated: false,
+      tokenStore: retrieveStoreFromLS()?.tokenStore ?? emptyStore,
       getIsAuthenticated: () => get().isAuthenticated,
       setIsAuthenticated: (nextAuthenticatedStatus: boolean) => {
         set({ isAuthenticated: nextAuthenticatedStatus });
       },
-      store: retrieveStoreFromLS()?.tokenStore ?? emptyStore,
-      setStore: (nextStore?: TokenStore) => {
-        set({ store: nextStore });
+      setTokenStore: (nextStore?: TokenStore) => {
+        set({ tokenStore: nextStore });
       },
-      getStore: () => get().store,
+      getTokenStore: () => get().tokenStore,
       forceTokenExpiration: () => {
-        const currentStore = get().store;
+        const currentStore = get().tokenStore;
 
         currentStore.expirationTime = 0;
-        set({ store: currentStore });
+        set({ tokenStore: currentStore });
+      },
+      setRefreshToken: (refreshToken: string) => {
+        set({ refreshToken });
+      },
+      resetTokenStore: () => {
+        set({ tokenStore: emptyStore });
+      },
+      resetStore: () => {
+        set({ isAuthenticated: false });
+        set({ tokenStore: emptyStore });
+        set({ refreshToken: undefined });
+      },
+      setStore: (nextState: StateStore) => {
+        set(() => nextState);
+      },
+      setIsClientVerified: (nextState: boolean) => {
+        set({ isClientVerified: nextState });
       },
     }),
     {
       name: API_CONFIG.LS_KEY,
-      partialize: (state) => ({ isAuthenticated: state.isAuthenticated, store: state.store }),
+      partialize: (state) => ({
+        refreshToken: state.refreshToken,
+        tokenStore: state.tokenStore,
+      }),
     }
   )
 );
