@@ -8,13 +8,14 @@ import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import-x';
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import unicornPlugin from 'eslint-plugin-unicorn';
-import reactDom from 'eslint-plugin-react-dom';
 import react from 'eslint-plugin-react-x';
+import reactDom from 'eslint-plugin-react-dom';
 import reactPlugin from 'eslint-plugin-react';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import testingLibrary from 'eslint-plugin-testing-library';
 import jestDom from 'eslint-plugin-jest-dom';
 import vitest from '@vitest/eslint-plugin';
+import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 
 export default tseslint.config(
   configs.stylisticTypeChecked,
@@ -22,7 +23,7 @@ export default tseslint.config(
   unicornPlugin.configs.recommended,
   { ignores: ['**/*.js', '**/*.config.js', '**/*.config.ts'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, react.configs.recommended],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended, react.configs.recommended, eslintPluginPrettier],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -152,6 +153,7 @@ export default tseslint.config(
       ],
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
     },
   },
   {

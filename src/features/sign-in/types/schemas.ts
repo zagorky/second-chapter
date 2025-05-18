@@ -4,7 +4,7 @@ export const MIN_PASSWORD_LENGTH = 8;
 export const MAX_PASSWORD_LENGTH = 20;
 export const SPEC_CHARACTERS = '!@#$%^&?*';
 
-const emailSchema = z
+export const emailSchema = z
   .string()
   .min(1, 'Email cannot be empty')
   .regex(/^\S+$/, 'Email must not contain any whitespace')
@@ -12,7 +12,7 @@ const emailSchema = z
   .regex(/^[^@]+@[^@]+\.[^@]+$/, 'Email must contain a domain name (e.g., example.com)')
   .email('Email must be properly formatted (e.g., user@example.com)');
 
-const passwordSchema = z
+export const passwordSchema = z
   .string()
   .min(MIN_PASSWORD_LENGTH, { message: `Password must be at least ${MIN_PASSWORD_LENGTH.toString()} characters long` })
   .max(MAX_PASSWORD_LENGTH, { message: `Password  must be no more than ${MAX_PASSWORD_LENGTH.toString()} characters` })
