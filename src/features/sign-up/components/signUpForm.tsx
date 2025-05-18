@@ -4,16 +4,14 @@ import { FirstnameField } from '~components/ui/form-fields/firstnameField';
 import { LastnameField } from '~components/ui/form-fields/lastnameField';
 import { PasswordField } from '~components/ui/form-fields/passwordField';
 import { Form } from '~components/ui/form/form';
-import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
+import dayjs from 'dayjs';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
 import { Button } from '~/components/ui/button/button';
-import { Calendar } from '~/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
+import { StyledDatePicker } from '~/components/ui/form-fields/datePicker';
 import { registrationSchema } from '~/features/sign-up/types/shemas';
 import { cn } from '~/lib/utilities';
 
@@ -22,7 +20,6 @@ import type { RegistrationFormFieldsValues } from '../types/types';
 import { AddressForm } from './addressForm';
 
 export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>) {
-  const [date, setDate] = React.useState<Date>();
   const form = useForm<RegistrationFormFieldsValues>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
@@ -35,6 +32,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       addressBilling: '',
       cityBilling: '',
       postalCodeShipping: '',
+      dateOfBirth: '',
     },
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -54,17 +52,12 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                 <FirstnameField />
                 <LastnameField />
 
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="noShadow" className="font-base w-[280px] justify-start text-left">
-                      <CalendarIcon />
-                      {date ? format(date, 'PPP') : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto border-0! p-0">
-                    <Calendar className="bg-primary" mode="single" selected={date} onSelect={setDate} initialFocus />
-                  </PopoverContent>
-                </Popover>
+                <StyledDatePicker
+                  value={form.watch('dateOfBirth') ? dayjs(form.watch('dateOfBirth')) : null}
+                  onChange={(date) => {
+                    form.setValue('dateOfBirth', date ? date.toISOString() : '');
+                  }}
+                />
 
                 <EmailField />
                 <PasswordField />
