@@ -18,7 +18,7 @@ export const Header = () => {
       <div className="flex items-center gap-8">
         <Link to={navigationRoutes.main.path}>
           <Button variant="ghost" size="iconLg">
-            <Logo className="h-5 w-5" />
+            <Logo />
           </Button>
         </Link>
         <NavMenu className="hidden md:block" />
