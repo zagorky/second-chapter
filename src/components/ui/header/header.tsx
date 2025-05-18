@@ -5,8 +5,10 @@ import { NavMenu } from '~components/ui/navbar/navMenu';
 import { navigationRoutes } from '~config/navigation';
 import { LogoutButton } from '~features/logout/components/logoutButton';
 import { useAuth } from '~features/sign-in/hooks/useAuth';
-import { BookOpen, LogIn, UserPlus } from 'lucide-react';
+import { LogIn, UserPlus } from 'lucide-react';
 import { Link } from 'react-router';
+
+import { Logo } from '../navbar/logo';
 
 export const Header = () => {
   const { isAuthenticated } = useAuth();
@@ -15,9 +17,10 @@ export const Header = () => {
     <header className="bg-background max-w-screen-3xl mx-auto flex h-16 w-full items-center justify-between border-b px-4 sm:px-6 lg:px-8">
       <div className="flex items-center gap-8">
         <Link to={navigationRoutes.main.path}>
-          <BookOpen className="size-8" />
+          <Button variant="ghost" size="iconLg">
+            <Logo />
+          </Button>
         </Link>
-
         <NavMenu className="hidden md:block" />
       </div>
 
