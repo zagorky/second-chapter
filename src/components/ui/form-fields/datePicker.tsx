@@ -34,7 +34,9 @@ export const StyledDatePicker = <T extends FieldValues>({
         return (
           <FormItem>
             <div className="grid gap-3">
-              <FormLabel htmlFor={name}>{label}</FormLabel>
+              <FormLabel htmlFor={name} className="text-left">
+                {label}
+              </FormLabel>
               <FormControl>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
@@ -51,40 +53,68 @@ export const StyledDatePicker = <T extends FieldValues>({
                         className,
                         fullWidth: true,
                         variant: 'outlined',
+
                         InputProps: {
-                          className: cn(
-                            'dark:bg-input/30 border-input bg-transparent text-base px-3 py-1 rounded-md border shadow-xs h-9 w-full outline-none',
-                            'placeholder:text-muted text-foreground',
-                            'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-                            'disabled:opacity-50 disabled:cursor-not-allowed',
-                            className
-                          ),
+                          classes: {
+                            root: cn(
+                              'rounded-base border-border bg-secondary-background selection:bg-main selection:text-main-foreground font-base text-foreground file:font-heading placeholder:text-foreground/50 flex h-10 w-full border-2 px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm disabled:cursor-not-allowed disabled:opacity-50',
+                              'focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:outline-hidden',
+                              className
+                            ),
+                          },
+                        },
+                      },
+
+                      popper: {
+                        sx: {
+                          '& .MuiPaper-root': {
+                            backgroundColor: 'var(--color-main)',
+                            boxShadow: 'var(--shadow-shadow)',
+                            borderWidth: '2px',
+                            borderColor: 'var(--border)',
+                            fontFamily: 'var(--font-base)',
+                          },
+                          '& .MuiPickersDay-root': {
+                            color: 'var(--color-foreground)',
+                            fontFamily: 'var(--font-base)',
+                            fontWeight: 'var(--font-weight-base)',
+                          },
+                          '& .Mui-selected': {
+                            backgroundColor: 'var(--color-foreground)',
+                            borderRadius: 'var(--radius-base)',
+                            color: 'var(--color-background)',
+                          },
+                          '& .MuiPickersCalendarHeader-label': {
+                            color: 'var(--color-foreground)',
+                          },
+                          '& .MuiPickersDay-dayWithMargin': {
+                            borderRadius: 'var(--radius-base)',
+                          },
+                          '& .MuiPickersDay-today': {
+                            borderWidth: '2px',
+                            borderColor: 'var(--color-background)',
+                            backgroundColor: 'var(--color-foreground)',
+                            borderRadius: 'var(--radius-base)',
+                            color: 'var(--color-background)',
+                            fontWeight: '700',
+                          },
                         },
                       },
                     }}
                     sx={{
-                      '& .MuiDateCalendar-root': {
-                        color: '#f8bbd0',
-                        borderRadius: '2px',
-                        borderWidth: '1px',
-                        borderColor: '#e91e63',
-                        border: '1px solid',
-                        backgroundColor: '#880e4f',
-                      },
                       '& .MuiPickersSectionList-sectionContent[aria-valuetext="Empty"]': {
-                        color: 'var(--muted-foreground)',
+                        color: 'var(--color-foreground)',
+                        opacity: 0.5,
                       },
                       '& .MuiPickersSectionList-sectionContent': {
-                        color: 'var(--foreground)',
+                        color: 'var(--color-foreground)',
                       },
                       '& .MuiPickersInputBase-sectionAfter': {
-                        color: 'var(--muted-foreground)',
-                      },
-                      '& .MuiPickersSectionList-root': {
-                        opacity: 1,
+                        color: 'var(--color-foreground)',
+                        opacity: 0.5,
                       },
                       '& .MuiSvgIcon-root': {
-                        fill: 'var(--muted-foreground)',
+                        fill: 'var(--color-foreground)',
                       },
                     }}
                   />
