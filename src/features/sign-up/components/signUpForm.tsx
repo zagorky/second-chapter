@@ -108,7 +108,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
   const isShippingIsDefaultBilling = form.watch('shippingIsDefaultBilling');
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className={cn('flex w-[calc(100%-32px)] max-w-full flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader>
           <CardTitle>Create account</CardTitle>
@@ -118,80 +118,91 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
           <Form {...form}>
             <form onSubmit={(event) => void form.handleSubmit(handleSubmit)(event)}>
               <div className="flex flex-col gap-6">
-                <FirstnameField />
-                <LastnameField />
-                <StyledDatePicker name="dateOfBirth" label="Date of birth" />
-                <EmailField />
-                <PasswordField />
-                <AddressForm
-                  streetPrefix="streetShipping"
-                  cityPrefix="cityShipping"
-                  postalCodePrefix="postalCodeShipping"
-                  countryPrefix="countryShipping"
-                  control={form.control}
-                  title="Shipping Address"
-                />
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="shippingIsDefaultShipping"
-                    {...form.register('shippingIsDefaultShipping')}
-                    checked={form.watch('shippingIsDefaultShipping')}
-                    onCheckedChange={(value) => {
-                      form.setValue('shippingIsDefaultShipping', value === true, { shouldDirty: true });
-                    }}
-                  />
-                  <label
-                    htmlFor="shippingIsDefaultShipping"
-                    className="text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Use this as my <span className="font-black">default shipping</span> address
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="shippingIsDefaultBilling"
-                    {...form.register('shippingIsDefaultBilling')}
-                    checked={form.watch('shippingIsDefaultBilling')}
-                    onCheckedChange={(value) => {
-                      form.setValue('shippingIsDefaultBilling', value === true);
-                    }}
-                  />
-                  <label
-                    htmlFor="shippingIsDefaultBilling"
-                    className="text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Use this shipping address as my <span className="font-black">billing</span> address
-                  </label>
+                <div className="flex gap-2">
+                  <FirstnameField />
+                  <LastnameField />
+                  <StyledDatePicker name="dateOfBirth" label="Date of birth" />
                 </div>
 
-                {!isShippingIsDefaultBilling && (
-                  <>
+                <div className="flex gap-2">
+                  <EmailField />
+                  <PasswordField />
+                </div>
+
+                <div className="flex space-x-10">
+                  <div className="grow">
                     <AddressForm
-                      streetPrefix="streetBilling"
-                      cityPrefix="cityBilling"
-                      postalCodePrefix="postalCodeBilling"
-                      countryPrefix="countryBilling"
+                      streetPrefix="streetShipping"
+                      cityPrefix="cityShipping"
+                      postalCodePrefix="postalCodeShipping"
+                      countryPrefix="countryShipping"
                       control={form.control}
-                      title="Billing Address"
+                      title="Shipping Address"
                     />
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-y-2 space-x-2">
                       <Checkbox
-                        id="billingIsDefaultBilling"
-                        {...form.register('billingIsDefaultBilling')}
-                        checked={form.watch('billingIsDefaultBilling')}
+                        id="shippingIsDefaultShipping"
+                        {...form.register('shippingIsDefaultShipping')}
+                        checked={form.watch('shippingIsDefaultShipping')}
                         onCheckedChange={(value) => {
-                          form.setValue('billingIsDefaultBilling', value === true);
+                          form.setValue('shippingIsDefaultShipping', value === true, { shouldDirty: true });
                         }}
                       />
                       <label
-                        htmlFor="billingIsDefaultBilling"
-                        className="text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        htmlFor="shippingIsDefaultShipping"
+                        className="text-left text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
-                        Use this billing address as my <span className="font-black">default billing</span> address
+                        Use this as my <span className="font-black">default shipping</span> address
                       </label>
                     </div>
-                  </>
-                )}
+                    <div className="flex items-center space-y-4 space-x-2">
+                      <Checkbox
+                        id="shippingIsDefaultBilling"
+                        {...form.register('shippingIsDefaultBilling')}
+                        checked={form.watch('shippingIsDefaultBilling')}
+                        onCheckedChange={(value) => {
+                          form.setValue('shippingIsDefaultBilling', value === true);
+                        }}
+                      />
+                      <label
+                        htmlFor="shippingIsDefaultBilling"
+                        className="text-left text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Use this shipping address as my <span className="font-black">billing</span> address
+                      </label>
+                    </div>
+                  </div>
+
+                  {!isShippingIsDefaultBilling && (
+                    <div className="grow">
+                      <AddressForm
+                        streetPrefix="streetBilling"
+                        cityPrefix="cityBilling"
+                        postalCodePrefix="postalCodeBilling"
+                        countryPrefix="countryBilling"
+                        control={form.control}
+                        title="Billing Address"
+                      />
+                      <div className="flex items-center space-y-2 space-x-2">
+                        <Checkbox
+                          id="billingIsDefaultBilling"
+                          {...form.register('billingIsDefaultBilling')}
+                          checked={form.watch('billingIsDefaultBilling')}
+                          onCheckedChange={(value) => {
+                            form.setValue('billingIsDefaultBilling', value === true);
+                          }}
+                        />
+                        <label
+                          htmlFor="billingIsDefaultBilling"
+                          className="text-left text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Use this billing address as my <span className="font-black">default billing</span> address
+                        </label>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 <div className="flex flex-col gap-3">
                   <Button variant="default" className="min-w-[10rem]">
                     {isLoading ? <Spinner size="md" /> : 'Begin your journey'}

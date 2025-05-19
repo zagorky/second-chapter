@@ -7,7 +7,7 @@ type FixedFormErrorMessageProps = {
   children?: ReactNode;
 };
 
-export const FixedFormErrorMessage = ({ classNames = 'h-6 w-[325px]', children }: FixedFormErrorMessageProps) => {
+export const FixedFormErrorMessage = ({ classNames = 'h-6 ', children }: FixedFormErrorMessageProps) => {
   return (
     <div className={classNames}>
       <FormMessage>{children}</FormMessage>
