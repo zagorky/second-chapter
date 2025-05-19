@@ -1,4 +1,5 @@
 import type { Dayjs } from 'dayjs';
+import type { Path, FieldValues } from 'react-hook-form';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -10,17 +11,17 @@ import { useFormContext } from 'react-hook-form';
 
 import { cn } from '~/lib/utilities';
 
-type DatePickerFieldProps = {
-  name?: string;
-  label?: string;
+type DatePickerFieldProps<T extends FieldValues> = {
+  name: Path<T>;
+  label: string;
   className?: string;
 };
 
-export const StyledDatePicker = ({
-  name = 'dateOfBirth',
+export const StyledDatePicker = <T extends FieldValues>({
+  name,
   label = 'Date of birth',
   className,
-}: DatePickerFieldProps) => {
+}: DatePickerFieldProps<T>) => {
   const form = useFormContext();
 
   return (
@@ -33,13 +34,7 @@ export const StyledDatePicker = ({
         return (
           <FormItem>
             <div className="grid gap-3">
-              <FormLabel
-                htmlFor={name}
-                className="text-left text-sm peer-disabled:opacity-70"
-                sx={{ color: 'var(--card-foreground)', fontSize: '0.875rem', textAlign: 'left' }}
-              >
-                {label}
-              </FormLabel>
+              <FormLabel htmlFor={name}>{label}</FormLabel>
               <FormControl>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
