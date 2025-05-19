@@ -2,11 +2,7 @@ import type { CustomCustomerDraft } from '~app/API/types/customCustomerDraft';
 
 import { apiInstance } from '~app/API/apiBuilder';
 import { createCustomer } from '~app/API/utils/createCustomer';
-import { parseApiErrorMessage } from '~app/API/utils/parseApiErrorMessage';
 import { useState, useCallback } from 'react';
-import { toast } from 'sonner';
-
-import { API_ERRORS } from '~/app/API/config/apiErrors';
 
 export const useSignupCustomer = () => {
   const [isLoading, setIsLoading] = useState(false);

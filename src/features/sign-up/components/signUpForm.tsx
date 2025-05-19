@@ -84,41 +84,47 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
   });
 
   const handleSubmit = async (data: RegistrationFormSchema) => {
+    const addresses = [
+      {
+        country: data.countryShipping,
+        city: data.cityShipping,
+        streetName: data.streetShipping,
+        postalCode: data.postalCodeShipping,
+      },
+    ];
+
+    if (!data.shippingIsDefaultBilling) {
+      addresses.push({
+        country: data.countryBilling,
+        city: data.cityBilling,
+        streetName: data.streetBilling,
+        postalCode: data.postalCodeBilling,
+      });
+    }
+
     const customerDraft: CustomCustomerDraft = {
       email: data.email,
       password: data.password,
       firstName: data.firstname,
       lastName: data.lastname,
       dateOfBirth: data.dateOfBirth.split('T')[0],
-      addresses: [
-        {
-          country: data.countryShipping,
-          city: data.cityShipping,
-          streetName: data.streetShipping,
-          postalCode: data.postalCodeShipping,
-        },
-        {
-          country: data.countryBilling,
-          city: data.cityBilling,
-          streetName: data.streetBilling,
-          postalCode: data.postalCodeBilling,
-        },
-      ],
-      defaultBillingAddress: data.shippingIsDefaultBilling ? 0 : data.billingIsDefaultBilling ? 1 : undefined,
+      addresses,
+      defaultBillingAddress: data.billingIsDefaultBilling ? 1 : undefined,
       defaultShippingAddress: data.shippingIsDefaultShipping ? 0 : undefined,
       billingAddresses: [data.shippingIsDefaultBilling ? 0 : 1],
       shippingAddresses: [0],
     };
 
-    console.log('дата для тебя', customerDraft);
+    console.log('customerDraft', customerDraft);
 
     const result = await signupCustomer(customerDraft);
 
     if (result.success) {
       toast.success(`All set, ${result.customer?.firstName ?? 'friend'}! The shelves are now yours to explore.`);
-      navigate(navigationRoutes.main.path);
+      void navigate(navigationRoutes.main.path);
     } else {
       const parsedMessage = parseApiErrorMessage(result.error);
+
       toast.error(parsedMessage);
     }
   };
