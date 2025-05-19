@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { parseApiErrorMessage } from '~app/API/utils/parseApiErrorMessage';
 import { EmailField } from '~components/ui/form-fields/emailField';
 import { FirstnameField } from '~components/ui/form-fields/firstnameField';
 import { LastnameField } from '~components/ui/form-fields/lastnameField';
@@ -8,8 +9,9 @@ import dayjs from 'dayjs';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
+import { toast } from 'sonner';
 
-import type { CustomCustomerDraft } from '~/app/API/types/customCustomerDraft';
+import type { CustomCustomerAddress, CustomCustomerDraft } from '~/app/API/types/customCustomerDraft';
 
 import { Button } from '~/components/ui/button/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
@@ -25,35 +27,6 @@ import type { RegistrationFormSchema } from '../types/types';
 
 import { useSignupCustomer } from '../hooks/useSignUp';
 import { AddressForm } from './addressForm';
-import { toast } from 'sonner';
-import { parseApiErrorMessage } from '~app/API/utils/parseApiErrorMessage';
-
-const RANDOM_POSTFIX = crypto.randomUUID();
-
-const customerDraft: CustomCustomerDraft = {
-  email: `example${RANDOM_POSTFIX}@gmail.com`,
-  password: 'password',
-  firstName: 'Kuryonok',
-  lastName: 'Savrukhin',
-  dateOfBirth: '4025-07-31',
-  addresses: [
-    {
-      country: 'GB',
-      city: 'any string',
-      streetName: 'any string',
-      postalCode: 'any string',
-    },
-    {
-      country: 'GB',
-      city: 'any string',
-      streetName: 'any string',
-      postalCode: 'any string',
-    },
-  ],
-  defaultBillingAddress: 0,
-  billingAddresses: [0],
-  shippingAddresses: [1],
-};
 
 export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { signupCustomer, isLoading } = useSignupCustomer();
@@ -84,7 +57,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
   });
 
   const handleSubmit = async (data: RegistrationFormSchema) => {
-    const addresses = [
+    const addresses: CustomCustomerAddress[] = [
       {
         country: data.countryShipping,
         city: data.cityShipping,
@@ -93,7 +66,13 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       },
     ];
 
-    if (!data.shippingIsDefaultBilling) {
+    if (
+      !data.shippingIsDefaultBilling &&
+      data.countryBilling &&
+      data.cityBilling &&
+      data.streetBilling &&
+      data.postalCodeBilling
+    ) {
       addresses.push({
         country: data.countryBilling,
         city: data.cityBilling,
@@ -114,8 +93,6 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       billingAddresses: [data.shippingIsDefaultBilling ? 0 : 1],
       shippingAddresses: [0],
     };
-
-    console.log('customerDraft', customerDraft);
 
     const result = await signupCustomer(customerDraft);
 
@@ -189,7 +166,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                     htmlFor="shippingIsDefaultBilling"
                     className="text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    Use this shipping address as my <span className="font-black">default billing</span> address
+                    Use this shipping address as my <span className="font-black">billing</span> address
                   </label>
                 </div>
 

@@ -1,11 +1,10 @@
 import type { Dayjs } from 'dayjs';
 
-import { FormControl, FormLabel } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
-import { FormField, FormItem } from '~components/ui/form/form';
+import { FormField, FormItem, FormLabel, FormControl } from '~components/ui/form/form';
 import dayjs from 'dayjs';
 import { useFormContext } from 'react-hook-form';
 
@@ -69,6 +68,14 @@ export const StyledDatePicker = ({
                       },
                     }}
                     sx={{
+                      '& .MuiDateCalendar-root': {
+                        color: '#f8bbd0',
+                        borderRadius: '2px',
+                        borderWidth: '1px',
+                        borderColor: '#e91e63',
+                        border: '1px solid',
+                        backgroundColor: '#880e4f',
+                      },
                       '& .MuiPickersSectionList-sectionContent[aria-valuetext="Empty"]': {
                         color: 'var(--muted-foreground)',
                       },
