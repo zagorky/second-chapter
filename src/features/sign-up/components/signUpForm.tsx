@@ -7,7 +7,7 @@ import { Form } from '~components/ui/form/form';
 import dayjs from 'dayjs';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import type { CustomCustomerDraft } from '~/app/API/types/customCustomerDraft';
 
@@ -25,6 +25,8 @@ import type { RegistrationFormSchema } from '../types/types';
 
 import { useSignupCustomer } from '../hooks/useSignUp';
 import { AddressForm } from './addressForm';
+import { toast } from 'sonner';
+import { parseApiErrorMessage } from '~app/API/utils/parseApiErrorMessage';
 
 const RANDOM_POSTFIX = crypto.randomUUID();
 
@@ -55,6 +57,7 @@ const customerDraft: CustomCustomerDraft = {
 
 export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { signupCustomer, isLoading } = useSignupCustomer();
+  const navigate = useNavigate();
 
   const form = useForm<RegistrationFormSchema>({
     resolver: zodResolver(registrationSchema),
@@ -80,37 +83,45 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
     reValidateMode: 'onChange',
   });
 
-  const handleSubmit = (data: RegistrationFormSchema) => {
-    const customerDraft: CustomCustomerDraft = {
-      email: data.email,
-      password: data.password,
-      firstName: data.firstname,
-      lastName: data.lastname,
-      dateOfBirth: data.dateOfBirth,
-      addresses: [
-        {
-          country: data.countryShipping,
-          city: data.cityShipping,
-          streetName: data.streetShipping,
-          postalCode: data.postalCodeShipping,
-        },
-        {
-          country: data.countryBilling,
-          city: data.cityBilling,
-          streetName: data.streetBilling,
-          postalCode: data.postalCodeBilling,
-        },
-      ],
-      defaultBillingAddress: data.shippingIsDefaultBilling ? 0 : data.billingIsDefaultBilling ? 1 : undefined,
-      defaultShippingAddress: data.shippingIsDefaultShipping ? 0 : undefined,
-      billingAddresses: [data.shippingIsDefaultBilling ? 0 : 1],
-      shippingAddresses: [0],
-    };
+  const handleSubmit = async (data: RegistrationFormSchema) => {
+    // const customerDraft: CustomCustomerDraft = {
+    //   email: data.email,
+    //   password: data.password,
+    //   firstName: data.firstname,
+    //   lastName: data.lastname,
+    //   dateOfBirth: data.dateOfBirth,
+    //   addresses: [
+    //     {
+    //       country: data.countryShipping,
+    //       city: data.cityShipping,
+    //       streetName: data.streetShipping,
+    //       postalCode: data.postalCodeShipping,
+    //     },
+    //     {
+    //       country: data.countryBilling,
+    //       city: data.cityBilling,
+    //       streetName: data.streetBilling,
+    //       postalCode: data.postalCodeBilling,
+    //     },
+    //   ],
+    //   defaultBillingAddress: data.shippingIsDefaultBilling ? 0 : data.billingIsDefaultBilling ? 1 : undefined,
+    //   defaultShippingAddress: data.shippingIsDefaultShipping ? 0 : undefined,
+    //   billingAddresses: [data.shippingIsDefaultBilling ? 0 : 1],
+    //   shippingAddresses: [0],
+    // };
 
-    void signupCustomer(customerDraft);
+    const result = await signupCustomer(customerDraft);
+
+    if (result.success) {
+      toast.success(`All set, ${result.customer?.firstName ?? 'friend'}! The shelves are now yours to explore.`);
+      navigate(navigationRoutes.main.path);
+    } else {
+      const parsedMessage = parseApiErrorMessage(result.error);
+      toast.error(parsedMessage);
+    }
   };
 
-  const shippingIsDefaultBilling = form.watch('shippingIsDefaultBilling');
+  const isShippingIsDefaultBilling = form.watch('shippingIsDefaultBilling');
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
@@ -174,7 +185,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                   </label>
                 </div>
 
-                {!shippingIsDefaultBilling && (
+                {!isShippingIsDefaultBilling && (
                   <>
                     <AddressForm
                       streetPrefix="streetBilling"

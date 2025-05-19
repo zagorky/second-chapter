@@ -42,7 +42,7 @@ const postalCodeShema = z
     message: 'Enter a valid UK postcode, such as: NW8 9AY, EC1A 1BB, M1 1AE',
   });
 
-const streetSchemaBilling = z.string().min(MIN_LENGTH, 'This field cannot be empty').max(MAX_LENGTH).optional();
+const streetSchemaBilling = z.string().min(MIN_LENGTH, 'This field cannot be empty').max(MAX_LENGTH);
 
 const cityShemaBilling = z
   .string()
@@ -50,8 +50,7 @@ const cityShemaBilling = z
   .max(MAX_LENGTH)
   .refine((value) => /^[A-Za-z]*$/.test(value), {
     message: 'Please use only letters from the Latin alphabet.',
-  })
-  .optional();
+  });
 
 const postalCodeShemaBilling = z
   .string()
@@ -66,8 +65,7 @@ const postalCodeShemaBilling = z
   })
   .refine((value) => /^(GIR ?0AA|[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2})$/.test(value), {
     message: 'Enter a valid UK postcode, such as: NW8 9AY, EC1A 1BB, M1 1AE',
-  })
-  .optional();
+  });
 
 const dateOfBirthSchema = z
   .string()
@@ -107,27 +105,61 @@ const billingIsDefaultBillingShema = z.boolean().optional();
 const countryShema = z.literal('GB', {
   errorMap: () => ({ message: 'Country is required' }),
 });
-const countrySchemaBilling = z
-  .literal('GB', {
-    errorMap: () => ({ message: 'Country is required' }),
-  })
-  .optional();
-
-export const registrationSchema = z.object({
-  firstname: nameSchema,
-  lastname: nameSchema,
-  email: emailSchema,
-  password: passwordSchema,
-  streetShipping: streetSchema,
-  cityShipping: cityShema,
-  postalCodeShipping: postalCodeShema,
-  streetBilling: streetSchemaBilling,
-  cityBilling: cityShemaBilling,
-  postalCodeBilling: postalCodeShemaBilling,
-  dateOfBirth: dateOfBirthSchema,
-  countryShipping: countryShema,
-  countryBilling: countrySchemaBilling,
-  shippingIsDefaultShipping: shippingIsDefaultShippingShema,
-  shippingIsDefaultBilling: shippingIsDefaultBillingShema,
-  billingIsDefaultBilling: billingIsDefaultBillingShema,
+const countrySchemaBilling = z.literal('GB', {
+  errorMap: () => ({ message: 'Country is required' }),
 });
+
+export const registrationSchema = z
+  .object({
+    firstname: nameSchema,
+    lastname: nameSchema,
+    email: emailSchema,
+    password: passwordSchema,
+    streetShipping: streetSchema,
+    cityShipping: cityShema,
+    postalCodeShipping: postalCodeShema,
+    streetBilling: streetSchemaBilling.optional(),
+    cityBilling: cityShemaBilling.optional(),
+    postalCodeBilling: postalCodeShemaBilling.optional(),
+    dateOfBirth: dateOfBirthSchema,
+    countryShipping: countryShema,
+    countryBilling: countrySchemaBilling.optional(),
+    shippingIsDefaultShipping: shippingIsDefaultShippingShema,
+    shippingIsDefaultBilling: shippingIsDefaultBillingShema,
+    billingIsDefaultBilling: billingIsDefaultBillingShema,
+  })
+  .superRefine((data, context) => {
+    if (!data.shippingIsDefaultBilling) {
+      if (!data.streetBilling) {
+        context.addIssue({
+          path: ['streetBilling'],
+          code: z.ZodIssueCode.custom,
+          message: 'This field cannot be empty',
+        });
+      }
+      if (!data.cityBilling || !/^[A-Za-z]*$/.test(data.cityBilling)) {
+        context.addIssue({
+          path: ['cityBilling'],
+          code: z.ZodIssueCode.custom,
+          message: 'This field cannot be empty',
+        });
+      }
+      if (
+        !data.postalCodeBilling ||
+        !/^(GIR ?0AA|[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2})$/.test(data.postalCodeBilling)
+      ) {
+        context.addIssue({
+          path: ['postalCodeBilling'],
+          code: z.ZodIssueCode.custom,
+          message: 'This field cannot be empty',
+        });
+      }
+      if (!data.countryBilling) {
+        context.addIssue({
+          path: ['countryBilling'],
+          code: z.ZodIssueCode.custom,
+          message: 'Country is required',
+        });
+      }
+    }
+  });

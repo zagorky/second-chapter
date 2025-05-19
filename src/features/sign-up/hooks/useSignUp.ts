@@ -16,19 +16,24 @@ export const useSignupCustomer = () => {
     try {
       const response = await createCustomer(customerDraft);
 
-      if (response.success) {
-        const customer = response.payload.body?.customer;
-
-        await apiInstance.login({ username: customerDraft.email, password: customerDraft.password });
-        toast.success(`All set, ${customer?.firstName ?? 'friend'}! The shelves are now yours to explore.`);
-      } else {
-        console.error(response.error);
-        const parsedMessage = parseApiErrorMessage(response.error);
-
-        toast.error(parsedMessage);
+      if (!response.success) {
+        return { success: false, error: response.error };
       }
-    } catch {
-      toast.error(API_ERRORS.SIGNUP_UNKNOWN);
+
+      const customer = response.payload.body?.customer;
+
+      const loginResponse = await apiInstance.login({
+        username: customerDraft.email,
+        password: customerDraft.password,
+      });
+
+      if (!loginResponse.success) {
+        return { success: false, error: loginResponse.error };
+      }
+
+      return { success: true, customer };
+    } catch (error) {
+      return { success: false, error };
     } finally {
       setIsLoading(false);
     }
