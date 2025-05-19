@@ -84,31 +84,33 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
   });
 
   const handleSubmit = async (data: RegistrationFormSchema) => {
-    // const customerDraft: CustomCustomerDraft = {
-    //   email: data.email,
-    //   password: data.password,
-    //   firstName: data.firstname,
-    //   lastName: data.lastname,
-    //   dateOfBirth: data.dateOfBirth,
-    //   addresses: [
-    //     {
-    //       country: data.countryShipping,
-    //       city: data.cityShipping,
-    //       streetName: data.streetShipping,
-    //       postalCode: data.postalCodeShipping,
-    //     },
-    //     {
-    //       country: data.countryBilling,
-    //       city: data.cityBilling,
-    //       streetName: data.streetBilling,
-    //       postalCode: data.postalCodeBilling,
-    //     },
-    //   ],
-    //   defaultBillingAddress: data.shippingIsDefaultBilling ? 0 : data.billingIsDefaultBilling ? 1 : undefined,
-    //   defaultShippingAddress: data.shippingIsDefaultShipping ? 0 : undefined,
-    //   billingAddresses: [data.shippingIsDefaultBilling ? 0 : 1],
-    //   shippingAddresses: [0],
-    // };
+    const customerDraft: CustomCustomerDraft = {
+      email: data.email,
+      password: data.password,
+      firstName: data.firstname,
+      lastName: data.lastname,
+      dateOfBirth: data.dateOfBirth.split('T')[0],
+      addresses: [
+        {
+          country: data.countryShipping,
+          city: data.cityShipping,
+          streetName: data.streetShipping,
+          postalCode: data.postalCodeShipping,
+        },
+        {
+          country: data.countryBilling,
+          city: data.cityBilling,
+          streetName: data.streetBilling,
+          postalCode: data.postalCodeBilling,
+        },
+      ],
+      defaultBillingAddress: data.shippingIsDefaultBilling ? 0 : data.billingIsDefaultBilling ? 1 : undefined,
+      defaultShippingAddress: data.shippingIsDefaultShipping ? 0 : undefined,
+      billingAddresses: [data.shippingIsDefaultBilling ? 0 : 1],
+      shippingAddresses: [0],
+    };
+
+    console.log('дата для тебя', customerDraft);
 
     const result = await signupCustomer(customerDraft);
 
