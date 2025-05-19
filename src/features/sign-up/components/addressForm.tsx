@@ -45,12 +45,12 @@ export function AddressForm<T extends FieldValues>({
           render={({ field, fieldState }) => (
             <>
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger className="text-foreground w-[180px]">
+                <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Choose a country">
                     {field.value === 'GB' ? 'United Kingdom' : field.value || ''}
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent className="bg-background">
+                <SelectContent>
                   <SelectGroup>
                     <SelectItem value="GB">United Kingdom</SelectItem>
                   </SelectGroup>
