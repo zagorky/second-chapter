@@ -1,7 +1,8 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2024", //
+    "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
@@ -10,20 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
     "sourceMap": true,
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["src/*"],
-      "~components/*": ["src/components/*"],
-      "~config/*": ["src/config/*"],
-      "~features/*": ["src/features/*"],
-      "~hooks/*": ["src/hooks/*"],
-      "~lib/*": ["src/lib/*"],
-      "~stores/*": ["src/stores/*"],
-      "~testing/*": ["src/testing/*"],
-      "~types/*": ["src/types/*"],
-      "~utils/*": ["src/utils/*"],
-      "~app/*": ["src/app/*"]
-    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -39,8 +26,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    "types": ["vitest/globals", "vite/client"]
   },
-  "include": ["src", "vitest.setupTests.ts", "eslint.config.ts"],
+  "include": ["src", "vitest.setupTests.ts"],
   "exclude": ["node_modules", "dist"]
 }

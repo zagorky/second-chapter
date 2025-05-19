@@ -8,13 +8,14 @@ import prettierConfig from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import-x';
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import unicornPlugin from 'eslint-plugin-unicorn';
-import reactDom from 'eslint-plugin-react-dom';
 import react from 'eslint-plugin-react-x';
+import reactDom from 'eslint-plugin-react-dom';
+import reactPlugin from 'eslint-plugin-react';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import testingLibrary from 'eslint-plugin-testing-library';
-import reactPlugin from 'eslint-plugin-react';
 import jestDom from 'eslint-plugin-jest-dom';
 import vitest from '@vitest/eslint-plugin';
+import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 
 export default tseslint.config(
   configs.stylisticTypeChecked,
@@ -22,7 +23,7 @@ export default tseslint.config(
   unicornPlugin.configs.recommended,
   { ignores: ['**/*.js', '**/*.config.js', '**/*.config.ts'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, react.configs.recommended],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended, react.configs.recommended, eslintPluginPrettier],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
@@ -55,10 +56,7 @@ export default tseslint.config(
       '@stylistic/ts': stylisticTs,
       'jsx-a11y': jsxA11y,
       'react-dom': reactDom,
-      'testing-library': testingLibrary,
       react: reactPlugin,
-      'jest-dom': jestDom,
-      vitest: vitest,
     },
     linterOptions: {
       noInlineConfig: true,
@@ -68,10 +66,7 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       ...jsxA11y.configs.recommended.rules,
       ...reactDom.configs.recommended.rules,
-      ...testingLibrary.configs.react.rules,
       ...reactPlugin.configs.recommended.rules,
-      ...jestDom.configs.recommended.rules,
-      ...vitest.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'no-console': ['error', { allow: ['error'] }],
       'no-empty': 'warn',
@@ -82,7 +77,7 @@ export default tseslint.config(
       'prefer-arrow-callback': 'error',
       'no-confusing-arrow': ['error', { allowParens: true }],
       '@typescript-eslint/no-explicit-any': 'error',
-      'import/extensions': ['off'],
+      'import/extensions': ['error', { ts: 'never', tsx: 'never' }],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       'import/no-cycle': ['error', { maxDepth: Infinity }],
       'import/first': 'error',
@@ -142,6 +137,7 @@ export default tseslint.config(
             props: true,
             Props: true,
             args: true,
+            ImportMetaEnv: true,
           },
         },
       ],
@@ -152,15 +148,25 @@ export default tseslint.config(
             camelCase: true,
             pascalCase: true,
           },
+          ignore: ['vite-env.d.ts'],
         },
       ],
       'react/jsx-uses-react': 'off',
       'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
     },
   },
   {
     files: ['**/*.test.{js,ts,jsx,tsx}', '**/*.spec.{js,ts,jsx,tsx}'],
+    plugins: {
+      'testing-library': testingLibrary,
+      'jest-dom': jestDom,
+      vitest: vitest,
+    },
     rules: {
+      ...testingLibrary.configs.react.rules,
+      ...jestDom.configs.recommended.rules,
+      ...vitest.configs.recommended.rules,
       '@typescript-eslint/no-magic-numbers': 'off',
       'no-undef': 'off',
       'no-unused-expressions': 'off',
