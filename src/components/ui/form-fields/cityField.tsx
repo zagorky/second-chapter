@@ -18,7 +18,7 @@ export const CityField = ({ name, label = 'City', placeholder = 'London' }: City
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="grow">
           <div className="grid gap-3">
             <FormLabel htmlFor={name} className={'text-left'}>
               {label}

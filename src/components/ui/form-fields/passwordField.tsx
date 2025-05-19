@@ -28,7 +28,7 @@ export const PasswordField = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="grow">
           <FormLabel className={'text-left'}>{label}</FormLabel>
           <div className={'relative'}>
             <FormControl>

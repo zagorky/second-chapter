@@ -108,8 +108,8 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
   const isShippingIsDefaultBilling = form.watch('shippingIsDefaultBilling');
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <Card>
+    <div className={cn('flex w-[calc(100%-32px)] max-w-full flex-col gap-6', className)} {...props}>
+      <Card className="">
         <CardHeader>
           <CardTitle>Create account</CardTitle>
           <CardDescription>Enter your details to create your account.</CardDescription>
@@ -118,80 +118,82 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
           <Form {...form}>
             <form onSubmit={(event) => void form.handleSubmit(handleSubmit)(event)}>
               <div className="flex flex-col gap-6">
-                <FirstnameField />
-                <LastnameField />
-                <StyledDatePicker name="dateOfBirth" label="Date of birth" />
-                <EmailField />
-                <PasswordField />
-                <AddressForm
-                  streetPrefix="streetShipping"
-                  cityPrefix="cityShipping"
-                  postalCodePrefix="postalCodeShipping"
-                  countryPrefix="countryShipping"
-                  control={form.control}
-                  title="Shipping Address"
-                />
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="shippingIsDefaultShipping"
-                    {...form.register('shippingIsDefaultShipping')}
-                    checked={form.watch('shippingIsDefaultShipping')}
-                    onCheckedChange={(value) => {
-                      form.setValue('shippingIsDefaultShipping', value === true, { shouldDirty: true });
-                    }}
-                  />
-                  <label
-                    htmlFor="shippingIsDefaultShipping"
-                    className="text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Use this as my <span className="font-black">default shipping</span> address
-                  </label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="shippingIsDefaultBilling"
-                    {...form.register('shippingIsDefaultBilling')}
-                    checked={form.watch('shippingIsDefaultBilling')}
-                    onCheckedChange={(value) => {
-                      form.setValue('shippingIsDefaultBilling', value === true);
-                    }}
-                  />
-                  <label
-                    htmlFor="shippingIsDefaultBilling"
-                    className="text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Use this shipping address as my <span className="font-black">billing</span> address
-                  </label>
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:flex-row">
+                  <FirstnameField />
+                  <LastnameField />
+                  <StyledDatePicker name="dateOfBirth" label="Date of birth" />
                 </div>
 
-                {!isShippingIsDefaultBilling && (
-                  <>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <EmailField />
+                  <PasswordField />
+                </div>
+
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grow">
                     <AddressForm
-                      streetPrefix="streetBilling"
-                      cityPrefix="cityBilling"
-                      postalCodePrefix="postalCodeBilling"
-                      countryPrefix="countryBilling"
+                      streetPrefix="streetShipping"
+                      cityPrefix="cityShipping"
+                      postalCodePrefix="postalCodeShipping"
+                      countryPrefix="countryShipping"
                       control={form.control}
-                      title="Billing Address"
+                      title="Shipping Address"
                     />
-                    <div className="flex items-center space-x-2">
+                    <div className="checkbox-wrapper mb-2">
                       <Checkbox
-                        id="billingIsDefaultBilling"
-                        {...form.register('billingIsDefaultBilling')}
-                        checked={form.watch('billingIsDefaultBilling')}
+                        id="shippingIsDefaultShipping"
+                        {...form.register('shippingIsDefaultShipping')}
+                        checked={form.watch('shippingIsDefaultShipping')}
                         onCheckedChange={(value) => {
-                          form.setValue('billingIsDefaultBilling', value === true);
+                          form.setValue('shippingIsDefaultShipping', value === true, { shouldDirty: true });
                         }}
                       />
-                      <label
-                        htmlFor="billingIsDefaultBilling"
-                        className="text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                        Use this billing address as my <span className="font-black">default billing</span> address
+                      <label htmlFor="shippingIsDefaultShipping" className="checkbox-label">
+                        Use this as my <span className="font-black">default shipping</span> address
                       </label>
                     </div>
-                  </>
-                )}
+                    <div className="checkbox-wrapper">
+                      <Checkbox
+                        id="shippingIsDefaultBilling"
+                        {...form.register('shippingIsDefaultBilling')}
+                        checked={form.watch('shippingIsDefaultBilling')}
+                        onCheckedChange={(value) => {
+                          form.setValue('shippingIsDefaultBilling', value === true);
+                        }}
+                      />
+                      <label htmlFor="shippingIsDefaultBilling" className="checkbox-label">
+                        Use this shipping address as my <span className="font-black">billing</span> address
+                      </label>
+                    </div>
+                  </div>
+
+                  {!isShippingIsDefaultBilling && (
+                    <div className="grow">
+                      <AddressForm
+                        streetPrefix="streetBilling"
+                        cityPrefix="cityBilling"
+                        postalCodePrefix="postalCodeBilling"
+                        countryPrefix="countryBilling"
+                        control={form.control}
+                        title="Billing Address"
+                      />
+                      <div className="checkbox-wrapper">
+                        <Checkbox
+                          id="billingIsDefaultBilling"
+                          {...form.register('billingIsDefaultBilling')}
+                          checked={form.watch('billingIsDefaultBilling')}
+                          onCheckedChange={(value) => {
+                            form.setValue('billingIsDefaultBilling', value === true);
+                          }}
+                        />
+                        <label htmlFor="billingIsDefaultBilling" className="checkbox-label">
+                          Use this billing address as my <span className="font-black">default billing</span> address
+                        </label>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 <div className="flex flex-col gap-3">
                   <Button variant="default" className="min-w-[10rem]">
                     {isLoading ? <Spinner size="md" /> : 'Begin your journey'}

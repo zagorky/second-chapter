@@ -22,7 +22,7 @@ export const FirstnameField = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="">
           <div className="grid gap-3">
             <FormLabel htmlFor={name} className={'text-left'}>
               {label}

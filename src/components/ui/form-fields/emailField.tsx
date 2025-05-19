@@ -19,7 +19,7 @@ export const EmailField = ({ name = 'email', label = 'Email', placeholder = 'use
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="grow">
           <div className="grid gap-3">
             <FormLabel className={'text-left'}>{label}</FormLabel>
             <FormControl>

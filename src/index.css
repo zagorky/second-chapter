@@ -2,6 +2,7 @@
 @import 'tw-animate-css';
 @import './styles/typography.css';
 @import './styles/colors.css';
+@import './styles/checkbox.css';
 
 @layer base {
   * {

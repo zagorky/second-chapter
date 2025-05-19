@@ -33,9 +33,9 @@ export function AddressForm<T extends FieldValues>({
       <h2>{props.title}</h2>
       <StreetField name={streetPrefix} />
       <CityField name={cityPrefix} />
-      <PostalCodeField name={postalCodePrefix} />
 
-      <div className="grid gap-3">
+      <PostalCodeField name={postalCodePrefix} />
+      <div className="grid grow gap-3">
         <div className="flex items-center">
           <Label htmlFor="country">Country</Label>
         </div>
