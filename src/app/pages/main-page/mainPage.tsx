@@ -11,20 +11,20 @@ const MainPage = () => {
       <h1 className={'heading-1'} {...withDataTestId('main-page-header')}>
         Second Chapter Store
       </h1>
-      <div className="mt-6 flex items-center justify-center gap-3">
-        <Button variant="default" className="hidden sm:inline-flex" asChild>
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <Button variant="default" className="inline-flex" asChild>
           <Link to={about.path}>{about.title}</Link>
         </Button>
-        <Button variant="default" className="hidden sm:inline-flex" asChild>
+        <Button variant="default" className="inline-flex" asChild>
           <Link to={catalog.path}>{catalog.title}</Link>
         </Button>
-        <Button variant="default" className="hidden sm:inline-flex" asChild>
+        <Button variant="default" className="inline-flex" asChild>
           <Link to={cart.path}>{cart.title}</Link>
         </Button>
-        <Button variant="default" className="hidden sm:inline-flex" asChild>
+        <Button variant="default" className="inline-flex" asChild>
           <Link to={login.path}>{login.title}</Link>
         </Button>
-        <Button variant="default" className="hidden sm:inline-flex" asChild>
+        <Button variant="default" className="inline-flex" asChild>
           <Link to={signup.path}>{signup.title}</Link>
         </Button>
       </div>
