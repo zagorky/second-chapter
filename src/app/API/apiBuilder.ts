@@ -39,6 +39,8 @@ export class ApiBuilder {
     } else {
       this.client = this.buildAnonymousClient();
     }
+
+    useAppStore.getState().setIsClientVerified(true);
   };
 
   public login = async (

@@ -20,6 +20,7 @@ const retrieveStoreFromLS = () => {
 
     if (result.success) {
       return {
+        isAuthenticated: result.data.state.isAuthenticated,
         tokenStore: result.data.state.tokenStore,
       };
     } else {
@@ -39,7 +40,7 @@ export const useAppStore = create<StateStore>()(
   persist(
     (set, get) => ({
       isClientVerified: false,
-      isAuthenticated: false,
+      isAuthenticated: retrieveStoreFromLS()?.isAuthenticated ?? false,
       tokenStore: retrieveStoreFromLS()?.tokenStore ?? emptyStore,
       getIsAuthenticated: () => get().isAuthenticated,
       setIsAuthenticated: (nextAuthenticatedStatus: boolean) => {
@@ -76,6 +77,7 @@ export const useAppStore = create<StateStore>()(
     {
       name: API_CONFIG.LS_KEY,
       partialize: (state) => ({
+        isAuthenticated: state.isAuthenticated,
         refreshToken: state.refreshToken,
         tokenStore: state.tokenStore,
       }),
