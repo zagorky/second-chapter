@@ -1,56 +1,65 @@
-import { AddressField } from '~components/ui/form-fields/addressField';
+import type { Control, FieldValues, Path } from 'react-hook-form';
+
+import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
+import { Controller } from 'react-hook-form';
 
 import { CityField } from '~/components/ui/form-fields/cityField';
 import { PostalCodeField } from '~/components/ui/form-fields/postalcodeFields';
+import { StreetField } from '~/components/ui/form-fields/streetField';
 import { Label } from '~/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { cn } from '~/lib/utilities';
 
-type AddressFormProps = React.ComponentProps<'div'> & {
-  addressPrefix?: string;
-  cityPrefix?: string;
-  postalCodePrefix?: string;
-  title?: string;
+type AddressFormProps<T extends FieldValues> = React.ComponentProps<'div'> & {
+  streetPrefix: Path<T>;
+  cityPrefix: Path<T>;
+  postalCodePrefix: Path<T>;
+  countryPrefix: Path<T>;
+  title: string;
+  control: Control<T>;
 };
 
-export function AddressForm({
+export function AddressForm<T extends FieldValues>({
   className,
-  addressPrefix = '',
-  cityPrefix = '',
-  postalCodePrefix = '',
+  streetPrefix,
+  cityPrefix,
+  postalCodePrefix,
+  countryPrefix,
+  control,
   ...props
-}: AddressFormProps) {
+}: AddressFormProps<T>) {
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <h2>{props.title}</h2>
-      <AddressField name={addressPrefix} />
-
+      <StreetField name={streetPrefix} />
       <CityField name={cityPrefix} />
-
       <PostalCodeField name={postalCodePrefix} />
+
       <div className="grid gap-3">
         <div className="flex items-center">
           <Label htmlFor="country">Country</Label>
         </div>
-        <Select>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="UK" />
-          </SelectTrigger>
-          <SelectContent className="bg-primary">
-            <SelectGroup>
-              <SelectLabel>Available Countries</SelectLabel>
-              <SelectItem value="UK">United Kingdom</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <Controller
+          control={control}
+          name={countryPrefix}
+          render={({ field, fieldState }) => (
+            <>
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger className="text-foreground w-[180px]">
+                  <SelectValue placeholder="Choose a country">
+                    {field.value === 'GB' ? 'United Kingdom' : field.value || ''}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent className="bg-background">
+                  <SelectGroup>
+                    <SelectItem value="GB">United Kingdom</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FixedFormErrorMessage>{fieldState.error ? fieldState.error.message : ''}</FixedFormErrorMessage>{' '}
+            </>
+          )}
+        />
       </div>
     </div>
   );

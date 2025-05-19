@@ -1,27 +1,18 @@
 import { createApiBuilderFromCtpClient, type Customer } from '@commercetools/platform-sdk';
 import { ClientBuilder, type HttpMiddlewareOptions, type UserAuthOptions, type Client } from '@commercetools/ts-client';
+import { API_CONFIG } from '~app/API/config/apiConfig';
 import { useAppStore } from '~stores/store';
 
-import { API_CONFIG } from '~/app/API/config/apiConfig';
+import { normalizeError } from '~/utils/normalizeError';
 
 import { createTokenCache } from './utils/createTokenCache';
+import { getBaseFlowConfig } from './utils/getBaseFlowConfig';
+import { verifyAuthenticatedClient } from './utils/verifyAuthenticatedClient';
+import { verifyUnauthenticatedClient } from './utils/verifyUnauthenticatedClient';
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
   host: API_CONFIG.API_URL,
   httpClient: fetch,
-};
-
-const getBaseFlowConfig = () => {
-  return {
-    host: API_CONFIG.AUTH_URL,
-    projectKey: API_CONFIG.PROJECT_KEY,
-    scopes: API_CONFIG.SCOPES,
-    tokenCache: createTokenCache(),
-    credentials: {
-      clientId: API_CONFIG.CLIENT_ID,
-      clientSecret: API_CONFIG.CLIENT_SECRET,
-    },
-  };
 };
 
 export class ApiBuilder {
@@ -30,82 +21,159 @@ export class ApiBuilder {
   private readonly baseFlowConfig = getBaseFlowConfig();
 
   constructor() {
-    const storedToken = useAppStore.getState().store;
-
-    const clientBase: ClientBuilder = this.buildBase();
-
-    this.client =
-      storedToken.refreshToken && storedToken.token
-        ? this.buildExistingTokenClient(clientBase, storedToken.token)
-        : this.buildAnonymousClient(clientBase);
+    this.client = this.buildPlaceholderClient();
   }
-
   public get root() {
     return createApiBuilderFromCtpClient(this.client).withProjectKey({ projectKey: API_CONFIG.PROJECT_KEY });
   }
 
-  public async login(
-    user: UserAuthOptions
-  ): Promise<{ success: true; payload: Customer } | { success: false; error: unknown }> {
-    const previousClient = this.client;
+  public init = async () => {
+    const state = useAppStore.getState();
+    const storedToken = state.tokenStore;
+    const refreshToken = state.tokenStore.refreshToken ?? state.refreshToken;
 
-    this.client = this.buildBase()
+    if (storedToken.token && storedToken.expirationTime > Date.now()) {
+      this.client = await this.buildExistingTokenClient(storedToken.token);
+    } else if (refreshToken) {
+      this.client = await this.buildRefreshTokenClient(refreshToken);
+    } else {
+      this.client = this.buildAnonymousClient();
+    }
+  };
+
+  public login = async (
+    user: UserAuthOptions
+  ): Promise<{ success: true; payload: Customer } | { success: false; error: Error }> => {
+    const backupTokenStore = useAppStore.getState().tokenStore;
+
+    useAppStore.getState().resetTokenStore();
+
+    const nextClient = this.buildBase()
       .withPasswordFlow({
         ...this.baseFlowConfig,
         credentials: {
           ...this.baseFlowConfig.credentials,
           user,
         },
+        tokenCache: createTokenCache(),
       })
       .build();
 
     try {
-      const { body: payload } = await createApiBuilderFromCtpClient(this.client)
+      const { body: payload } = await createApiBuilderFromCtpClient(nextClient)
         .withProjectKey({ projectKey: API_CONFIG.PROJECT_KEY })
         .me()
         .get()
         .execute();
 
-      useAppStore.getState().setIsAuthenticated(true);
+      this.updateAuthenticationStatus(true);
+
+      this.client = nextClient;
 
       return { success: true, payload };
     } catch (error: unknown) {
-      this.client = previousClient;
+      useAppStore.getState().setTokenStore(backupTokenStore);
 
-      return { success: false, error };
+      return { success: false, error: normalizeError(error) };
     }
-  }
+  };
 
-  public logout(): void {
-    useAppStore.getState().setIsAuthenticated(false);
-    this.client = this.buildAnonymousClient(this.buildBase());
-  }
-
-  private buildBase(): ClientBuilder {
+  public logout = () => {
+    this.client = this.buildAnonymousClient();
+  };
+  private readonly buildBase = (): ClientBuilder => {
     return new ClientBuilder().withProjectKey(API_CONFIG.PROJECT_KEY).withHttpMiddleware(httpMiddlewareOptions);
-  }
+  };
 
-  private buildAnonymousClient(client: ClientBuilder, anonymousId?: string) {
-    useAppStore.getState().setStore({
-      token: '',
-      expirationTime: 0,
-      refreshToken: '',
-    });
+  private readonly updateAuthenticationStatus = (isAuthenticated: boolean) => {
+    const store = useAppStore.getState();
 
-    return client
+    if (store.isAuthenticated !== isAuthenticated) {
+      store.setIsAuthenticated(isAuthenticated);
+    }
+  };
+
+  private readonly buildPlaceholderClient = (): Client => {
+    return this.buildBase().build();
+  };
+
+  private readonly buildAnonymousClient = () => {
+    useAppStore.getState().resetStore();
+    this.updateAuthenticationStatus(false);
+
+    return this.buildBase()
       .withAnonymousSessionFlow({
         ...this.baseFlowConfig,
         credentials: {
           ...this.baseFlowConfig.credentials,
-          anonymousId,
         },
+        tokenCache: createTokenCache(),
       })
       .build();
-  }
+  };
 
-  private buildExistingTokenClient(client: ClientBuilder, accessToken: string) {
-    return client.withExistingTokenFlow(`Bearer ${accessToken}`, { force: true }).build();
-  }
+  private readonly checkClientAuthStatus = async (
+    client: Client
+  ): Promise<{ success: true } | { success: false; error: Error }> => {
+    const authCheckResult = await verifyAuthenticatedClient(client);
+
+    if (authCheckResult.success) {
+      this.updateAuthenticationStatus(true);
+
+      return { success: true };
+    }
+
+    this.updateAuthenticationStatus(false);
+    const unauthCheckResult = await verifyUnauthenticatedClient(client);
+
+    if (unauthCheckResult.success) {
+      return { success: true };
+    }
+    const { error } = unauthCheckResult;
+
+    return { success: false, error: normalizeError(error) };
+  };
+
+  private readonly buildExistingTokenClient = async (accessToken: string): Promise<Client> => {
+    const nextClient = this.buildBase().withExistingTokenFlow(`Bearer ${accessToken}`, { force: true }).build();
+
+    const response = await this.checkClientAuthStatus(nextClient);
+
+    if (response.success) {
+      return nextClient;
+    } else {
+      console.error('Invalid access token from local storage', response.error);
+
+      return this.buildAnonymousClient();
+    }
+  };
+
+  private readonly buildRefreshTokenClient = async (refreshToken: string) => {
+    useAppStore.getState().resetTokenStore();
+
+    const nextClient = this.buildBase()
+      .withRefreshTokenFlow({
+        ...this.baseFlowConfig,
+        credentials: {
+          ...this.baseFlowConfig.credentials,
+        },
+        tokenCache: createTokenCache(),
+        refreshToken,
+      })
+      .build();
+
+    const response = await this.checkClientAuthStatus(nextClient);
+
+    if (response.success) {
+      useAppStore.getState().setRefreshToken(refreshToken);
+
+      return nextClient;
+    } else {
+      console.error('Invalid refresh token from local storage', response.error);
+
+      return this.buildAnonymousClient();
+    }
+  };
 }
 
-export const api = new ApiBuilder();
+export const apiInstance = new ApiBuilder();

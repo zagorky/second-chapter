@@ -15,24 +15,9 @@ const nameSchema = z
   .max(MAX_LENGTH)
   .refine((value) => /^[A-Za-z]*$/.test(value), {
     message: 'Please use only letters from the Latin alphabet.',
-  })
-  .refine((value) => /^[A-Z][a-z]*$/.test(value), {
-    message: 'The field must begin with an uppercase letter, the rest are lowercase',
   });
 
-const addressSchema = z
-  .string()
-  .min(MIN_LENGTH, 'This field cannot be empty')
-  .max(MAX_LENGTH)
-  .refine((value) => /^[^,]/.test(value), {
-    message: "The text shouldn't begin with a comma",
-  })
-  .refine((value) => /^[A-Za-z0-9, ]*$/.test(value), {
-    message: 'Please don’t use special characters like @, #, $, %, etc',
-  })
-  .refine((value) => /^(?!,)[A-Z].*/.test(value), {
-    message: 'Please start with a capital letter',
-  });
+const streetSchema = z.string().min(MIN_LENGTH, 'This field cannot be empty').max(MAX_LENGTH);
 
 const cityShema = z
   .string()
@@ -48,7 +33,7 @@ const postalCodeShema = z
   .max(MAX_POSTALCODE_LENGTH)
   .refine((value) => value === value.toUpperCase(), { message: 'Please use capital letters for your postcode' })
   .refine((value) => /^[A-Za-z0-9, ]*$/.test(value), {
-    message: 'Please don’t use special characters like @, #, $, %, etc',
+    message: 'Please use only letters from the Latin alphabet.',
   })
   .refine((value) => value === value.trim(), {
     message: 'Please remove any spaces at the beginning or end of the postcodeNo spaces allowed at the start or end',
@@ -89,17 +74,28 @@ const dateOfBirthSchema = z
       return { message: 'Invalid date of birth' };
     }
   );
+const shippingIsDefaultShippingShema = z.boolean().optional();
+const shippingIsDefaultBillingShema = z.boolean().optional();
+const billingIsDefaultBillingShema = z.boolean().optional();
+const countryShema = z.literal('GB', {
+  errorMap: () => ({ message: 'Country is required' }),
+});
 
 export const registrationSchema = z.object({
   firstname: nameSchema,
   lastname: nameSchema,
   email: emailSchema,
   password: passwordSchema,
-  addressShipping: addressSchema,
+  streetShipping: streetSchema,
   cityShipping: cityShema,
   postalCodeShipping: postalCodeShema,
-  addressBilling: addressSchema,
+  streetBilling: streetSchema,
   cityBilling: cityShema,
   postalCodeBilling: postalCodeShema,
   dateOfBirth: dateOfBirthSchema,
+  countryShipping: countryShema,
+  countryBilling: countryShema,
+  shippingIsDefaultShipping: shippingIsDefaultShippingShema,
+  shippingIsDefaultBilling: shippingIsDefaultBillingShema,
+  billingIsDefaultBilling: billingIsDefaultBillingShema,
 });

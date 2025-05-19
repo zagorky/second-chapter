@@ -10,6 +10,7 @@ import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
 import { EmailField } from '~components/ui/form-fields/emailField';
 import { PasswordField } from '~components/ui/form-fields/passwordField';
 import { Form } from '~components/ui/form/form';
+import { Spinner } from '~components/ui/spinner/spinner';
 import { navigationRoutes } from '~config/navigation';
 import { useAuth } from '~features/sign-in/hooks/useAuth';
 import { loginSchema } from '~features/sign-in/types/schemas';
@@ -66,7 +67,7 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
                 <EmailField />
                 <PasswordField />
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? 'Loading...' : 'Submit'}
+                  {isLoading ? <Spinner size="md" /> : 'Submit'}
                 </Button>
                 <FixedFormErrorMessage>{form.formState.errors.root?.authError.message}</FixedFormErrorMessage>
                 <div className="mt-4 text-center text-sm">

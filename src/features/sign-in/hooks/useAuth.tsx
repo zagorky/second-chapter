@@ -1,18 +1,19 @@
 import type { LoginFormFieldValues } from '~features/sign-in/types/types';
 
-import { api } from '~app/API/apiBuilder';
+import { apiInstance } from '~app/API/apiBuilder';
 import { useAppStore } from '~stores/store';
 import { useCallback, useState } from 'react';
 
 export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const isAuthenticated = useAppStore((store) => store.isAuthenticated);
+  const isClientVerified = useAppStore((store) => store.isClientVerified);
 
   const login = useCallback(async (credentials: LoginFormFieldValues) => {
     setIsLoading(true);
 
     try {
-      return await api.login({
+      return await apiInstance.login({
         username: credentials.email,
         password: credentials.password,
       });
@@ -24,7 +25,7 @@ export const useAuth = () => {
   }, []);
 
   const logout = useCallback(() => {
-    api.logout();
+    apiInstance.logout();
   }, []);
 
   return {
@@ -32,5 +33,6 @@ export const useAuth = () => {
     logout,
     isLoading,
     isAuthenticated,
+    isClientVerified,
   };
 };

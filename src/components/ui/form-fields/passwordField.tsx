@@ -1,11 +1,12 @@
 import { Button } from '~components/ui/button/button';
 import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
-import { FormField, FormItem, FormLabel } from '~components/ui/form/form';
-import { Input } from '~components/ui/input';
+import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { withDataTestId } from '~utils/helpers';
 import { Eye, EyeOff } from 'lucide-react';
 import { useReducer } from 'react';
 import { useFormContext } from 'react-hook-form';
+
+import { Input } from '~/components/ui/input';
 
 type PasswordFieldProps = {
   name?: string;
@@ -30,13 +31,15 @@ export const PasswordField = ({
         <FormItem>
           <FormLabel className={'text-left'}>{label}</FormLabel>
           <div className={'relative'}>
-            <Input
-              placeholder={placeholder}
-              {...field}
-              autoComplete="current-password"
-              type={showPassword ? 'text' : 'password'}
-              {...withDataTestId(`${name}-input`)}
-            />
+            <FormControl>
+              <Input
+                placeholder={placeholder}
+                autoComplete="current-password"
+                {...field}
+                type={showPassword ? 'text' : 'password'}
+                {...withDataTestId(`${name}-input`)}
+              />
+            </FormControl>
             <Button
               type="button"
               variant="ghost"

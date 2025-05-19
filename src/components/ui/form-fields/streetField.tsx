@@ -4,13 +4,13 @@ import { Input } from '~components/ui/input';
 import { withDataTestId } from '~utils/helpers';
 import { useFormContext } from 'react-hook-form';
 
-type AddressFieldProps = {
+type StreetFieldProps = {
   name: string;
   label?: string;
   placeholder?: string;
 };
 
-export const AddressField = ({ name, label = 'Address', placeholder = 'Abbey Road' }: AddressFieldProps) => {
+export const StreetField = ({ name, label = 'Street', placeholder = 'Abbey Road' }: StreetFieldProps) => {
   const form = useFormContext();
 
   return (

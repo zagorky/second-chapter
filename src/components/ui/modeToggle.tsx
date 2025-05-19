@@ -8,7 +8,7 @@ export function ModeToggle() {
 
   return (
     <Button
-      variant="outline"
+      variant="neutral"
       size="icon"
       onClick={() => {
         setTheme(theme === 'light' ? 'dark' : 'light');
