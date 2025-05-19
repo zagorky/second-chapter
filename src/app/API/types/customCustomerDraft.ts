@@ -2,7 +2,7 @@ import type { MyCustomerDraft, BaseAddress } from '@commercetools/platform-sdk';
 
 import type { WithRequired } from '~/types/utils/withRequired';
 
-export type SupportedCountries = 'GB';
+type SupportedCountries = 'GB';
 
 type RequiredBaseAddressKeys = 'country' | 'streetName' | 'postalCode' | 'city';
 type RequiredCustomerDraftKeys = 'email' | 'password' | 'firstName' | 'lastName' | 'dateOfBirth';

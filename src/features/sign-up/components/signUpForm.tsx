@@ -5,7 +5,6 @@ import { FirstnameField } from '~components/ui/form-fields/firstnameField';
 import { LastnameField } from '~components/ui/form-fields/lastnameField';
 import { PasswordField } from '~components/ui/form-fields/passwordField';
 import { Form } from '~components/ui/form/form';
-import dayjs from 'dayjs';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
