@@ -121,12 +121,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
               <div className="flex flex-col gap-6">
                 <FirstnameField />
                 <LastnameField />
-                <StyledDatePicker
-                  value={form.watch('dateOfBirth') ? dayjs(form.watch('dateOfBirth')) : null}
-                  onChange={(date) => {
-                    form.setValue('dateOfBirth', date ? date.toISOString() : '');
-                  }}
-                />
+                <StyledDatePicker name="dateOfBirth" label="Date of birth" />
                 <EmailField />
                 <PasswordField />
                 <AddressForm
