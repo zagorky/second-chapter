@@ -1,5 +1,6 @@
-import SignUpForm from '~/features/sign-up/components/signUpForm';
-import { withDataTestId } from '~/utils/helpers';
+import { withDataTestId } from '~utils/helpers';
+
+import { SignUpForm } from '~/features/sign-up/components/signUpForm';
 
 const SignUpPage = () => {
   return (
@@ -7,7 +8,7 @@ const SignUpPage = () => {
       <h1 className={'text-primary heading-1'} {...withDataTestId('signup-header')}>
         Sign Up
       </h1>
-      <SignUpForm />
+      <SignUpForm {...withDataTestId('signup-form')} />
     </div>
   );
 };

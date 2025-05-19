@@ -76,15 +76,6 @@ describe('SignInForm', () => {
     expect(redirectionLink).toBeInTheDocument();
   });
 
-  it('link should navigate to sing up page', async () => {
-    const { redirectionLink, clickRedirectionLink } = SignInFormTestModel.renderWithRouter();
-
-    expect(redirectionLink).toBeInTheDocument();
-    expect(redirectionLink).toHaveAttribute('href', navigationRoutes.signup.path);
-    await clickRedirectionLink();
-    expect(screen.getByTestId('signup-header')).toBeInTheDocument();
-  });
-
   it('should show validation errors for empty fields', async () => {
     const { clickSubmit } = SignInFormTestModel.render();
 

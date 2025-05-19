@@ -29,6 +29,7 @@ export const AppRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.signup.path,
+        loader: authenticatedUserGuard,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <SignUpPage />

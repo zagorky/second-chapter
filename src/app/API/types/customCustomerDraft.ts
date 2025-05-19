@@ -7,7 +7,7 @@ type SupportedCountries = 'GB';
 type RequiredBaseAddressKeys = 'country' | 'streetName' | 'postalCode' | 'city';
 type RequiredCustomerDraftKeys = 'email' | 'password' | 'firstName' | 'lastName' | 'dateOfBirth';
 
-type CustomCustomerAddress = {
+export type CustomCustomerAddress = {
   country: SupportedCountries;
 } & WithRequired<BaseAddress, RequiredBaseAddressKeys>;
 
