@@ -109,7 +109,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
 
   return (
     <div className={cn('flex w-[calc(100%-32px)] max-w-full flex-col gap-6', className)} {...props}>
-      <Card>
+      <Card className="">
         <CardHeader>
           <CardTitle>Create account</CardTitle>
           <CardDescription>Enter your details to create your account.</CardDescription>
@@ -118,18 +118,18 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
           <Form {...form}>
             <form onSubmit={(event) => void form.handleSubmit(handleSubmit)(event)}>
               <div className="flex flex-col gap-6">
-                <div className="flex gap-2">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:flex-row">
                   <FirstnameField />
                   <LastnameField />
                   <StyledDatePicker name="dateOfBirth" label="Date of birth" />
                 </div>
 
-                <div className="flex gap-2">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <EmailField />
                   <PasswordField />
                 </div>
 
-                <div className="flex space-x-10">
+                <div className="grid gap-6 md:grid-cols-2">
                   <div className="grow">
                     <AddressForm
                       streetPrefix="streetShipping"
@@ -139,7 +139,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                       control={form.control}
                       title="Shipping Address"
                     />
-                    <div className="flex items-center space-y-2 space-x-2">
+                    <div className="checkbox-wrapper mb-2">
                       <Checkbox
                         id="shippingIsDefaultShipping"
                         {...form.register('shippingIsDefaultShipping')}
@@ -148,14 +148,11 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                           form.setValue('shippingIsDefaultShipping', value === true, { shouldDirty: true });
                         }}
                       />
-                      <label
-                        htmlFor="shippingIsDefaultShipping"
-                        className="text-left text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
+                      <label htmlFor="shippingIsDefaultShipping" className="checkbox-label">
                         Use this as my <span className="font-black">default shipping</span> address
                       </label>
                     </div>
-                    <div className="flex items-center space-y-4 space-x-2">
+                    <div className="checkbox-wrapper">
                       <Checkbox
                         id="shippingIsDefaultBilling"
                         {...form.register('shippingIsDefaultBilling')}
@@ -164,10 +161,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                           form.setValue('shippingIsDefaultBilling', value === true);
                         }}
                       />
-                      <label
-                        htmlFor="shippingIsDefaultBilling"
-                        className="text-left text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
+                      <label htmlFor="shippingIsDefaultBilling" className="checkbox-label">
                         Use this shipping address as my <span className="font-black">billing</span> address
                       </label>
                     </div>
@@ -183,7 +177,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                         control={form.control}
                         title="Billing Address"
                       />
-                      <div className="flex items-center space-y-2 space-x-2">
+                      <div className="checkbox-wrapper">
                         <Checkbox
                           id="billingIsDefaultBilling"
                           {...form.register('billingIsDefaultBilling')}
@@ -192,10 +186,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                             form.setValue('billingIsDefaultBilling', value === true);
                           }}
                         />
-                        <label
-                          htmlFor="billingIsDefaultBilling"
-                          className="text-left text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
+                        <label htmlFor="billingIsDefaultBilling" className="checkbox-label">
                           Use this billing address as my <span className="font-black">default billing</span> address
                         </label>
                       </div>

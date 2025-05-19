@@ -55,7 +55,7 @@ export const SignInForm = ({ className, ...props }: ComponentProps<'div'>) => {
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <Card>
+      <Card className="min-w-[360px]">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>Enter your email below to sign in to your account</CardDescription>
