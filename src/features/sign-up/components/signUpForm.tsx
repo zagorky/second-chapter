@@ -67,9 +67,9 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       streetShipping: '',
       cityShipping: '',
       postalCodeShipping: '',
-      streetBilling: '',
-      cityBilling: '',
-      postalCodeBilling: '',
+      streetBilling: undefined,
+      cityBilling: undefined,
+      postalCodeBilling: undefined,
       countryShipping: undefined,
       countryBilling: undefined,
       shippingIsDefaultShipping: false,
@@ -110,6 +110,8 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
     void signupCustomer(customerDraft);
   };
 
+  const shippingIsDefaultBilling = form.watch('shippingIsDefaultBilling');
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
@@ -123,17 +125,14 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
               <div className="flex flex-col gap-6">
                 <FirstnameField />
                 <LastnameField />
-
                 <StyledDatePicker
                   value={form.watch('dateOfBirth') ? dayjs(form.watch('dateOfBirth')) : null}
                   onChange={(date) => {
                     form.setValue('dateOfBirth', date ? date.toISOString() : '');
                   }}
                 />
-
                 <EmailField />
                 <PasswordField />
-
                 <AddressForm
                   streetPrefix="streetShipping"
                   cityPrefix="cityShipping"
@@ -142,7 +141,6 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                   control={form.control}
                   title="Shipping Address"
                 />
-
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="shippingIsDefaultShipping"
@@ -159,7 +157,6 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                     Use this as my <span className="font-black">default shipping</span> address
                   </label>
                 </div>
-
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="shippingIsDefaultBilling"
@@ -177,31 +174,34 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
                   </label>
                 </div>
 
-                <AddressForm
-                  streetPrefix="streetBilling"
-                  cityPrefix="cityBilling"
-                  postalCodePrefix="postalCodeBilling"
-                  countryPrefix="countryBilling"
-                  control={form.control}
-                  title="Billing Address"
-                />
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="billingIsDefaultBilling"
-                    {...form.register('billingIsDefaultBilling')}
-                    checked={form.watch('billingIsDefaultBilling')}
-                    onCheckedChange={(value) => {
-                      form.setValue('billingIsDefaultBilling', value === true);
-                    }}
-                  />
-                  <label
-                    htmlFor="billingIsDefaultBilling"
-                    className="text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Use this billing address as my <span className="font-black">default billing</span> address
-                  </label>
-                </div>
-
+                {!shippingIsDefaultBilling && (
+                  <>
+                    <AddressForm
+                      streetPrefix="streetBilling"
+                      cityPrefix="cityBilling"
+                      postalCodePrefix="postalCodeBilling"
+                      countryPrefix="countryBilling"
+                      control={form.control}
+                      title="Billing Address"
+                    />
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="billingIsDefaultBilling"
+                        {...form.register('billingIsDefaultBilling')}
+                        checked={form.watch('billingIsDefaultBilling')}
+                        onCheckedChange={(value) => {
+                          form.setValue('billingIsDefaultBilling', value === true);
+                        }}
+                      />
+                      <label
+                        htmlFor="billingIsDefaultBilling"
+                        className="text-sm leading-none font-thin peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Use this billing address as my <span className="font-black">default billing</span> address
+                      </label>
+                    </div>
+                  </>
+                )}
                 <div className="flex flex-col gap-3">
                   <Button variant="default" className="min-w-[10rem]">
                     {isLoading ? <Spinner size="md" /> : 'Begin your journey'}

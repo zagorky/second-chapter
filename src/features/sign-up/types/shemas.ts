@@ -42,6 +42,33 @@ const postalCodeShema = z
     message: 'Enter a valid UK postcode, such as: NW8 9AY, EC1A 1BB, M1 1AE',
   });
 
+const streetSchemaBilling = z.string().min(MIN_LENGTH, 'This field cannot be empty').max(MAX_LENGTH).optional();
+
+const cityShemaBilling = z
+  .string()
+  .min(MIN_LENGTH, 'This field cannot be empty')
+  .max(MAX_LENGTH)
+  .refine((value) => /^[A-Za-z]*$/.test(value), {
+    message: 'Please use only letters from the Latin alphabet.',
+  })
+  .optional();
+
+const postalCodeShemaBilling = z
+  .string()
+  .min(MIN_POSTALCODE_LENGTH, 'Enter a valid UK postcode, such as: NW8 9AY, EC1A 1BB, M1 1AE')
+  .max(MAX_POSTALCODE_LENGTH)
+  .refine((value) => value === value.toUpperCase(), { message: 'Please use capital letters for your postcode' })
+  .refine((value) => /^[A-Za-z0-9, ]*$/.test(value), {
+    message: 'Please use only letters from the Latin alphabet.',
+  })
+  .refine((value) => value === value.trim(), {
+    message: 'Please remove any spaces at the beginning or end of the postcodeNo spaces allowed at the start or end',
+  })
+  .refine((value) => /^(GIR ?0AA|[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2})$/.test(value), {
+    message: 'Enter a valid UK postcode, such as: NW8 9AY, EC1A 1BB, M1 1AE',
+  })
+  .optional();
+
 const dateOfBirthSchema = z
   .string()
   .nonempty({ message: 'Date of birth is required' })
@@ -80,6 +107,11 @@ const billingIsDefaultBillingShema = z.boolean().optional();
 const countryShema = z.literal('GB', {
   errorMap: () => ({ message: 'Country is required' }),
 });
+const countrySchemaBilling = z
+  .literal('GB', {
+    errorMap: () => ({ message: 'Country is required' }),
+  })
+  .optional();
 
 export const registrationSchema = z.object({
   firstname: nameSchema,
@@ -89,12 +121,12 @@ export const registrationSchema = z.object({
   streetShipping: streetSchema,
   cityShipping: cityShema,
   postalCodeShipping: postalCodeShema,
-  streetBilling: streetSchema,
-  cityBilling: cityShema,
-  postalCodeBilling: postalCodeShema,
+  streetBilling: streetSchemaBilling,
+  cityBilling: cityShemaBilling,
+  postalCodeBilling: postalCodeShemaBilling,
   dateOfBirth: dateOfBirthSchema,
   countryShipping: countryShema,
-  countryBilling: countryShema,
+  countryBilling: countrySchemaBilling,
   shippingIsDefaultShipping: shippingIsDefaultShippingShema,
   shippingIsDefaultBilling: shippingIsDefaultBillingShema,
   billingIsDefaultBilling: billingIsDefaultBillingShema,
