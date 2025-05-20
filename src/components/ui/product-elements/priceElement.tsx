@@ -1,6 +1,6 @@
 type PriceProps = {
   originalPrice: number;
-  discountedPrice?: number;
+  discountedPrice: number;
 };
 
 const PENCE_PER_POUND = 100;

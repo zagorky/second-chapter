@@ -27,7 +27,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
             </CardHeader>
             <PriceElement
               originalPrice={product.masterVariant.prices?.[0]?.value.centAmount ?? 0}
-              discountedPrice={800}
+              discountedPrice={product.masterVariant.prices?.[1]?.value.centAmount ?? 0}
             />
             <div className="line-clamp-2 pt-2">{product.description?.[DEFAULT_STORE_LANGUAGE] ?? ''}</div>
           </CardContent>
