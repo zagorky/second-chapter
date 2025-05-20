@@ -14,9 +14,9 @@ type ProductItemProps = {
 
 export const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <div key={product.id} className="flex max-w-[300px] flex-col justify-center gap-6">
+    <div key={product.slug[DEFAULT_STORE_LANGUAGE]} className="flex max-w-[300px] flex-col justify-center gap-6">
       <Link
-        to={`${navigationRoutes.catalog.path}/${product.id}`}
+        to={`${navigationRoutes.catalog.path}/${product.slug[DEFAULT_STORE_LANGUAGE]}`}
         className="rounded-lg transition-all hover:scale-[1.01] hover:shadow-sm"
       >
         <Card className="gap-2 py-2.5">

@@ -12,7 +12,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
     <div>
       <h1 className={'heading-1'}>Product Page</h1>
       {product}
-      <Button variant="default" className="inline-flex">
+      <Button variant="default" className="inline-flex" asChild>
         <Link to=".." relative="path">
           Go back
         </Link>
