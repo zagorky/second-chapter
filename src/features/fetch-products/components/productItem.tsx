@@ -2,7 +2,8 @@ import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { Button } from '~components/ui/button/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~components/ui/card';
-import { ProductImg } from '~components/ui/productElements/productImg';
+import { PriceElement } from '~components/ui/product-elements/priceElement';
+import { ProductImg } from '~components/ui/product-elements/productImg';
 import { navigationRoutes } from '~config/navigation';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
 import { Link } from 'react-router';
@@ -24,13 +25,9 @@ export const ProductItem = ({ product }: ProductItemProps) => {
             <CardHeader>
               <CardTitle>{product.name[DEFAULT_STORE_LANGUAGE]}</CardTitle>
             </CardHeader>
-            <div>
-              💷 <span className="font-bold">Price</span> &pound;54.00
-            </div>
-
+            <PriceElement price={product.masterVariant.prices?.[0]?.value.centAmount ?? 0} />
             <div className="line-clamp-2 pt-2">{product.description?.[DEFAULT_STORE_LANGUAGE] ?? ''}</div>
           </CardContent>
-
           <CardFooter className="flex-col gap-2">
             <Button type="submit" className="w-full" disabled={true}>
               Add to Cart

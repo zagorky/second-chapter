@@ -1,13 +1,13 @@
 import { cn } from '~/lib/utilities';
 
-type Props = {
+type ImgProps = {
   imageUrl: string;
   caption?: string;
   className?: string;
   alt?: string;
 };
 
-export const ProductImg = ({ imageUrl, alt, className, caption }: Props) => {
+export const ProductImg = ({ imageUrl, alt, className, caption }: ImgProps) => {
   return (
     <figure
       className={cn(
