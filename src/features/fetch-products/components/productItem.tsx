@@ -25,7 +25,10 @@ export const ProductItem = ({ product }: ProductItemProps) => {
             <CardHeader>
               <CardTitle>{product.name[DEFAULT_STORE_LANGUAGE]}</CardTitle>
             </CardHeader>
-            <PriceElement price={product.masterVariant.prices?.[0]?.value.centAmount ?? 0} />
+            <PriceElement
+              originalPrice={product.masterVariant.prices?.[0]?.value.centAmount ?? 0}
+              discountedPrice={800}
+            />
             <div className="line-clamp-2 pt-2">{product.description?.[DEFAULT_STORE_LANGUAGE] ?? ''}</div>
           </CardContent>
           <CardFooter className="flex-col gap-2">
