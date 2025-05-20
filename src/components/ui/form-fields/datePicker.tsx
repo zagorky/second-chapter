@@ -43,7 +43,7 @@ export const StyledDatePicker = <T extends FieldValues>({
                     {...field}
                     value={value}
                     onChange={(date) => {
-                      field.onChange(date ? date.toISOString() : null);
+                      field.onChange(date?.isValid() ? date.toISOString() : '');
                     }}
                     disableFuture
                     slotProps={{
