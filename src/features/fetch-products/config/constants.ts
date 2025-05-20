@@ -1,2 +1,2 @@
 export const CACHE_KEY = 'second-chapter-products';
-export const LANGUAGE = 'en-GB';
+export const DEFAULT_STORE_LANGUAGE = 'en-GB';
