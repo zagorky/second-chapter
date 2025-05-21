@@ -13,7 +13,7 @@ export const ProductList = () => {
 
   return (
     <ul
-      className="m-2 grid grid-cols-1 place-items-center gap-2 md:grid-cols-2 lg:grid-cols-3"
+      className="m-2 grid grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3"
       {...withDataTestId('catalog-page-product-list')}
     >
       {products.map((product) => {
