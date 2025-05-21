@@ -65,7 +65,13 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       },
     ];
 
-    if (data.countryBilling && data.cityBilling && data.streetBilling && data.postalCodeBilling) {
+    if (
+      !data.shippingIsDefaultBilling &&
+      data.countryBilling &&
+      data.cityBilling &&
+      data.streetBilling &&
+      data.postalCodeBilling
+    ) {
       addresses.push({
         country: data.countryBilling,
         city: data.cityBilling,
@@ -81,7 +87,8 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       lastName: data.lastname,
       dateOfBirth: data.dateOfBirth.split('T')[0],
       addresses,
-      defaultBillingAddress: data.billingIsDefaultBilling ? 1 : undefined,
+      defaultBillingAddress:
+        isShippingIsDefaultBilling && data.billingIsDefaultBilling ? 0 : data.billingIsDefaultBilling ? 1 : undefined,
       defaultShippingAddress: data.shippingIsDefaultShipping ? 0 : undefined,
       billingAddresses: [data.shippingIsDefaultBilling ? 0 : 1],
       shippingAddresses: [0],
