@@ -14,7 +14,7 @@ type ProductItemProps = {
 
 export const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <div key={product.slug[DEFAULT_STORE_LANGUAGE]} className="flex max-w-[300px] flex-col justify-center gap-6">
+    <li key={product.slug[DEFAULT_STORE_LANGUAGE]} className="flex max-w-[300px] flex-col justify-center gap-6">
       <Link
         to={`${navigationRoutes.catalog.path}/${product.slug[DEFAULT_STORE_LANGUAGE]}`}
         className="rounded-lg transition-all hover:scale-[1.01] hover:shadow-sm"
@@ -38,6 +38,6 @@ export const ProductItem = ({ product }: ProductItemProps) => {
           </CardFooter>
         </Card>
       </Link>
-    </div>
+    </li>
   );
 };
