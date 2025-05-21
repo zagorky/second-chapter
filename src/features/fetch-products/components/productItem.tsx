@@ -6,6 +6,7 @@ import { ImgElement } from '~components/ui/product-elements/imgElement';
 import { PriceElement } from '~components/ui/product-elements/priceElement';
 import { navigationRoutes } from '~config/navigation';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
+import { withDataTestId } from '~utils/helpers';
 import { Link } from 'react-router';
 
 type ProductItemProps = {
@@ -14,7 +15,11 @@ type ProductItemProps = {
 
 export const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <li key={product.slug[DEFAULT_STORE_LANGUAGE]} className="flex max-w-[300px] flex-col justify-center gap-6">
+    <li
+      key={product.slug[DEFAULT_STORE_LANGUAGE]}
+      {...withDataTestId(product.slug[DEFAULT_STORE_LANGUAGE])}
+      className="flex max-w-[300px] flex-col justify-center gap-6"
+    >
       <Link
         to={`${navigationRoutes.catalog.path}/${product.slug[DEFAULT_STORE_LANGUAGE]}`}
         className="rounded-lg transition-all hover:scale-[1.01] hover:shadow-sm"
