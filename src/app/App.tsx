@@ -8,8 +8,15 @@ import { Toaster } from '~/components/ui/sonner';
 export const App = () => {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-      <SWRConfig value={{ dedupingInterval: 3000, revalidateOnFocus: false, revalidateOnReconnect: false }}>
-        <RouterProvider router={AppRouter} />{' '}
+      <SWRConfig
+        value={{
+          dedupingInterval: 3000,
+          revalidateOnFocus: false,
+          revalidateOnReconnect: false,
+          errorRetryCount: 0,
+        }}
+      >
+        <RouterProvider router={AppRouter} />
       </SWRConfig>
       <Toaster />
     </ThemeProvider>

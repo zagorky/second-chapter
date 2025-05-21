@@ -8,6 +8,19 @@ type ImgProps = {
 };
 
 export const ImgElement = ({ imageUrl, alt, className, caption }: ImgProps) => {
+  if (!imageUrl) {
+    return (
+      <div
+        className={cn(
+          'rounded-base border-border flex aspect-[9/10] items-center justify-center border-2 bg-gray-200',
+          className
+        )}
+      >
+        <span className="text-xl text-pink-600">No image available</span>
+      </div>
+    );
+  }
+
   return (
     <figure
       className={cn(

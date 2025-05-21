@@ -2,18 +2,18 @@ import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { CACHE_KEY } from '~features/fetch-products/config/constants';
 import { fetchProducts } from '~features/fetch-products/utils/fetchProducts';
-import { toast } from 'sonner';
+import { useState } from 'react';
 import useSWR from 'swr';
 
 export const useProductData = () => {
+  const [isLongLoading, setIsLongLoading] = useState(false);
   const {
     data: products,
     error,
-    isLoading,
-    mutate,
+    mutate: refresh,
   } = useSWR<ProductProjection[], Error>(CACHE_KEY, fetchProducts, {
     onLoadingSlow: () => {
-      toast.info(`We've been looking for books for too long... Please, wait a sec`);
+      setIsLongLoading(true);
     },
     loadingTimeout: 2000,
   });
@@ -21,7 +21,7 @@ export const useProductData = () => {
   return {
     products,
     error,
-    isLoading,
-    mutate,
+    refresh,
+    isLongLoading,
   };
 };

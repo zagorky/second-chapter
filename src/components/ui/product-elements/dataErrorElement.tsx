@@ -1,19 +1,19 @@
 import { Button } from '~components/ui/button/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~components/ui/card';
 
-type ErrorProps = {
-  error: Error;
+type DataErrorElementProps = {
+  errorText: string;
   retryAction: () => void;
   title?: string;
   retryText?: string;
 };
 
-export const ErrorElement = ({
-  error,
+export const DataErrorElement = ({
+  errorText,
   retryAction,
   title = 'Something went wrong with fetching data',
   retryText = 'Try once more',
-}: ErrorProps) => {
+}: DataErrorElementProps) => {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <Card className="">
@@ -21,7 +21,7 @@ export const ErrorElement = ({
           <CardTitle>{title}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p>{error.message}</p>
+          <p>{errorText}</p>
         </CardContent>
         <CardFooter>
           <Button onClick={retryAction}>{retryText}</Button>
