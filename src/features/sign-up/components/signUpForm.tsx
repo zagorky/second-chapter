@@ -42,9 +42,9 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       streetShipping: '',
       cityShipping: '',
       postalCodeShipping: '',
-      streetBilling: undefined,
-      cityBilling: undefined,
-      postalCodeBilling: undefined,
+      streetBilling: '',
+      cityBilling: '',
+      postalCodeBilling: '',
       countryShipping: undefined,
       countryBilling: undefined,
       shippingIsDefaultShipping: false,
@@ -65,13 +65,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       },
     ];
 
-    if (
-      !data.shippingIsDefaultBilling &&
-      data.countryBilling &&
-      data.cityBilling &&
-      data.streetBilling &&
-      data.postalCodeBilling
-    ) {
+    if (data.countryBilling && data.cityBilling && data.streetBilling && data.postalCodeBilling) {
       addresses.push({
         country: data.countryBilling,
         city: data.cityBilling,
@@ -106,6 +100,16 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
   };
 
   const isShippingIsDefaultBilling = form.watch('shippingIsDefaultBilling');
+
+  React.useEffect(() => {
+    if (isShippingIsDefaultBilling) {
+      form.setValue('streetBilling', form.getValues().streetShipping);
+      form.setValue('cityBilling', form.getValues().cityShipping);
+      form.setValue('postalCodeBilling', form.getValues().postalCodeShipping);
+      form.setValue('countryBilling', 'GB');
+      void form.trigger();
+    }
+  }, [isShippingIsDefaultBilling, form]);
 
   return (
     <div className={cn('flex w-[calc(100%-32px)] max-w-full flex-col gap-6', className)} {...props}>
