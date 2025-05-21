@@ -15,6 +15,12 @@ export const useProductData = () => {
     onLoadingSlow: () => {
       setIsLongLoading(true);
     },
+    onSuccess: () => {
+      setIsLongLoading(false);
+    },
+    onError: () => {
+      setIsLongLoading(false);
+    },
     loadingTimeout: 2000,
   });
 

@@ -2,6 +2,7 @@ import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { Button } from '~components/ui/button/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~components/ui/card';
+import { AuthorElement } from '~components/ui/product-elements/authorElement';
 import { ImgElement } from '~components/ui/product-elements/imgElement';
 import { PriceElement } from '~components/ui/product-elements/priceElement';
 import { navigationRoutes } from '~config/navigation';
@@ -34,6 +35,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
               originalPrice={product.masterVariant.prices?.[0]?.value.centAmount ?? 0}
               discountedPrice={product.masterVariant.prices?.[0]?.discounted?.value.centAmount ?? 0}
             />
+            <AuthorElement prop={product.masterVariant.attributes?.[0]} />
             <div className="line-clamp-2 pt-2">{product.description?.[DEFAULT_STORE_LANGUAGE] ?? ''}</div>
           </CardContent>
           <CardFooter className="flex-col gap-2">

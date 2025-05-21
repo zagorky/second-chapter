@@ -12,7 +12,7 @@ export const ImgElement = ({ imageUrl, alt, className, caption }: ImgProps) => {
     return (
       <div
         className={cn(
-          'rounded-base border-border flex aspect-[9/10] items-center justify-center border-2 bg-gray-200',
+          'rounded-base border-border flex aspect-square items-center justify-center border-2 bg-gray-200',
           className
         )}
       >
@@ -28,7 +28,7 @@ export const ImgElement = ({ imageUrl, alt, className, caption }: ImgProps) => {
         className
       )}
     >
-      <img className="card-img aspect-[9/10] w-full object-cover" src={imageUrl} alt={alt} />
+      <img className="card-img aspect-square w-full object-cover" src={imageUrl} alt={alt} />
       {caption && (
         <figcaption className="text-main-foreground border-border line-clamp-3 border-t-2">{caption}</figcaption>
       )}
