@@ -2,8 +2,8 @@ import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { Button } from '~components/ui/button/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~components/ui/card';
+import { ImgElement } from '~components/ui/product-elements/imgElement';
 import { PriceElement } from '~components/ui/product-elements/priceElement';
-import { ProductImg } from '~components/ui/product-elements/productImg';
 import { navigationRoutes } from '~config/navigation';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
 import { Link } from 'react-router';
@@ -21,7 +21,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
       >
         <Card className="gap-2 py-2.5">
           <CardContent className="flex flex-col gap-1 px-2.5">
-            <ProductImg imageUrl={product.masterVariant.images?.[0]?.url ?? ''}></ProductImg>
+            <ImgElement imageUrl={product.masterVariant.images?.[0]?.url ?? ''}></ImgElement>
             <CardHeader>
               <CardTitle>{product.name[DEFAULT_STORE_LANGUAGE]}</CardTitle>
             </CardHeader>

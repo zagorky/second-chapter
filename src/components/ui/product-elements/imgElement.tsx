@@ -7,7 +7,7 @@ type ImgProps = {
   alt?: string;
 };
 
-export const ProductImg = ({ imageUrl, alt, className, caption }: ImgProps) => {
+export const ImgElement = ({ imageUrl, alt, className, caption }: ImgProps) => {
   return (
     <figure
       className={cn(
