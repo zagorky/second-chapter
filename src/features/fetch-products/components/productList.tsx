@@ -1,6 +1,6 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-import { ErrorFallback } from '~components/ui/error-fallback/errorFallback';
+import { ErrorElement } from '~components/ui/product-elements/errorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
 import { ProductItem } from '~features/fetch-products/components/productItem';
 import { CACHE_KEY } from '~features/fetch-products/config/constants';
@@ -11,7 +11,7 @@ import useSWR from 'swr';
 export const ProductList = () => {
   const { data: products, error, isLoading, mutate } = useSWR<ProductProjection[], Error>(CACHE_KEY, fetchProducts);
 
-  if (error) return <ErrorFallback error={error} resetErrorBoundary={() => void mutate()} />;
+  if (error) return <ErrorElement error={error} retryAction={() => void mutate()} />;
   if (isLoading && !products) return <Spinner />;
 
   return (
