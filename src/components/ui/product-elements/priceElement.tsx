@@ -1,14 +1,13 @@
+import { formatPrice } from '~features/fetch-products/utils/formatPrice';
+
 type PriceProps = {
   originalPrice: number;
   discountedPrice: number;
 };
 
-const PENCE_PER_POUND = 100;
-const CURRENCY_DECIMALS = 2;
-
 export const PriceElement = ({ originalPrice, discountedPrice }: PriceProps) => {
-  const computedOriginalPrice = (originalPrice / PENCE_PER_POUND).toFixed(CURRENCY_DECIMALS);
-  const computedDiscountedPrice = (discountedPrice / PENCE_PER_POUND).toFixed(CURRENCY_DECIMALS);
+  const computedOriginalPrice = formatPrice(originalPrice);
+  const computedDiscountedPrice = formatPrice(discountedPrice);
 
   if (discountedPrice) {
     return (
