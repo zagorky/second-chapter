@@ -11,10 +11,10 @@ export const ProductList = () => {
   const { data: products, error, isLoading, mutate } = useSWR<ProductProjection[], Error>(CACHE_KEY, fetchProducts);
 
   if (error) return <ErrorFallback error={error} resetErrorBoundary={() => void mutate()} />;
-  if (isLoading) return <Spinner />;
+  if (isLoading && !products) return <Spinner />;
 
   return (
-    <ul>
+    <ul className="grid grid-cols-1 place-items-center gap-2 sm:grid-cols-2 md:grid-cols-3">
       {products?.map((product) => {
         return <ProductItem product={product} key={product.id} />;
       })}

@@ -32,8 +32,8 @@ export const ProductItem = ({ product }: ProductItemProps) => {
             <div className="line-clamp-2 pt-2">{product.description?.[DEFAULT_STORE_LANGUAGE] ?? ''}</div>
           </CardContent>
           <CardFooter className="flex-col gap-2">
-            <Button type="submit" className="w-full" disabled={true}>
-              Add to Cart
+            <Button type="submit" variant="default" className="w-full">
+              Learn more
             </Button>
           </CardFooter>
         </Card>
