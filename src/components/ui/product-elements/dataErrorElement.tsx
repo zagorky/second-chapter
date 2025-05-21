@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~component
 
 type DataErrorElementProps = {
   errorText: string;
-  retryAction: () => void;
+  retryAction: () => unknown;
   title?: string;
   retryText?: string;
 };

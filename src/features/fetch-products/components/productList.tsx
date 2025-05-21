@@ -8,15 +8,15 @@ import { normalizeError } from '~utils/normalizeError';
 export const ProductList = () => {
   const { products, error, isLongLoading, refresh } = useProductData();
 
-  if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={() => void refresh()} />;
-  if (!products || isLongLoading) return <Spinner className="m-auto" size="xl" />;
+  if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
+  if (isLongLoading) return <Spinner className="m-auto" size="xl" />;
 
   return (
     <ul
       className="m-2 grid grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3"
       {...withDataTestId('catalog-page-product-list')}
     >
-      {products.map((product) => {
+      {products?.map((product) => {
         return <ProductItem product={product} key={product.id} />;
       })}
     </ul>
