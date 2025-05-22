@@ -1,4 +1,4 @@
-import { DataErrorElement } from '~components/ui/product-elements/dataErrorElement';
+import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
 import { ProductItem } from '~features/fetch-products/components/productItem';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';

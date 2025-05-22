@@ -12,11 +12,11 @@ export const ImgElement = ({ imageUrl, alt, className, caption }: ImgProps) => {
     return (
       <div
         className={cn(
-          'rounded-base border-border flex aspect-square items-center justify-center border-2 bg-gray-200',
+          'rounded-base border-border bg-secondary-background flex aspect-square items-center justify-center border-2',
           className
         )}
       >
-        <span className="text-xl text-pink-600">No image available</span>
+        <span className="text-chart-1 text-xl">No image available</span>
       </div>
     );
   }

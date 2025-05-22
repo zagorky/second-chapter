@@ -1,12 +1,13 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-import { Button } from '~components/ui/button/button';
+import { Badge } from '~components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~components/ui/card';
 import { AuthorElement } from '~components/ui/product-elements/authorElement';
 import { ImgElement } from '~components/ui/product-elements/imgElement';
 import { PriceElement } from '~components/ui/product-elements/priceElement';
 import { navigationRoutes } from '~config/navigation';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
+import { isLabelAttribute, isStringAttribute } from '~types/utils/attributesGuards';
 import { withDataTestId } from '~utils/helpers';
 import { Link } from 'react-router';
 
@@ -15,6 +16,14 @@ type ProductItemProps = {
 };
 
 export const ProductItem = ({ product }: ProductItemProps) => {
+  const author = isStringAttribute(product.masterVariant.attributes?.[0])
+    ? product.masterVariant.attributes[0]?.value
+    : 'Unknown';
+
+  const conditionLabel = isLabelAttribute(product.masterVariant.attributes?.[1])
+    ? product.masterVariant.attributes[1].value.label
+    : 'Unknown';
+
   return (
     <li
       key={product.slug[DEFAULT_STORE_LANGUAGE]}
@@ -29,19 +38,18 @@ export const ProductItem = ({ product }: ProductItemProps) => {
           <CardContent className="flex flex-col gap-1 px-2.5">
             <ImgElement imageUrl={product.masterVariant.images?.[0]?.url ?? ''}></ImgElement>
             <CardHeader>
-              <CardTitle>{product.name[DEFAULT_STORE_LANGUAGE]}</CardTitle>
+              <CardTitle className="h-6">{product.name[DEFAULT_STORE_LANGUAGE]}</CardTitle>
             </CardHeader>
             <PriceElement
               originalPrice={product.masterVariant.prices?.[0]?.value.centAmount ?? 0}
               discountedPrice={product.masterVariant.prices?.[0]?.discounted?.value.centAmount ?? 0}
             />
-            <AuthorElement author={String(product.masterVariant.attributes?.[0]?.value)} />
+            <AuthorElement author={author} />
             <div className="line-clamp-2 pt-2">{product.description?.[DEFAULT_STORE_LANGUAGE] ?? ''}</div>
           </CardContent>
-          <CardFooter className="flex-col gap-2">
-            <Button type="submit" variant="default" className="w-full">
-              Learn more
-            </Button>
+          <CardFooter className="flex-row gap-2">
+            {product.masterVariant.prices?.[0]?.discounted && <Badge>Sale</Badge>}
+            <Badge className="bg-chart-5">{conditionLabel}</Badge>
           </CardFooter>
         </Card>
       </Link>

@@ -13,7 +13,7 @@ export const PriceElement = ({ originalPrice, discountedPrice }: PriceProps) => 
     return (
       <div>
         💷 <span className="font-bold">Price</span>{' '}
-        <span className="font-bold text-red-700">&pound;{computedDiscountedPrice}</span>
+        <span className="text-destructive font-bold">&pound;{computedDiscountedPrice}</span>
         <span className="text-foreground text-sm">
           &nbsp;
           <span className="line-through">&pound;{computedOriginalPrice}</span>
