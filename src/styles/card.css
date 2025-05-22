@@ -1,0 +1,3 @@
+.card-img {
+  @apply hue-rotate-[-23deg];
+}

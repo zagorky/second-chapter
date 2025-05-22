@@ -1,4 +1,13 @@
-import { AboutPage, CartPage, CatalogPage, MainPage, ErrorPage, SignInPage, SignUpPage } from '~app/pages/lazy';
+import {
+  AboutPage,
+  CartPage,
+  CatalogPage,
+  MainPage,
+  ErrorPage,
+  SignInPage,
+  SignUpPage,
+  ProductPage,
+} from '~app/pages/lazy';
 import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
 import { authenticatedUserGuard, navigationRoutes } from '~config/navigation';
 import { Suspense } from 'react';
@@ -65,6 +74,14 @@ export const AppRouter = createBrowserRouter([
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <ErrorPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: navigationRoutes.catalog.path + '/:slug',
+        element: (
+          <Suspense fallback={<PageSkeleton />}>
+            <ProductPage />
           </Suspense>
         ),
       },
