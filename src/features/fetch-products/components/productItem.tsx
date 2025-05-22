@@ -1,6 +1,6 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-import { Badge } from '~components/ui/badge';
+import { Badge } from '~components/ui/badge/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~components/ui/card';
 import { navigationRoutes } from '~config/navigation';
 import { AuthorElement } from '~features/fetch-products/components/product-elements/authorElement';
