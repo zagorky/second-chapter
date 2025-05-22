@@ -1,5 +1,6 @@
 import { Button } from '~components/ui/button/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~components/ui/card';
+import { withDataTestId } from '~utils/helpers';
 
 type DataErrorElementProps = {
   errorText: string;
@@ -15,7 +16,7 @@ export const DataErrorElement = ({
   retryText = 'Try once more',
 }: DataErrorElementProps) => {
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center" {...withDataTestId('data-error-element')}>
       <Card>
         <CardHeader>
           <CardTitle>{title}</CardTitle>

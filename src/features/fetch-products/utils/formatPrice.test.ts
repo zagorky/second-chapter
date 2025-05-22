@@ -2,13 +2,13 @@ import { formatPrice } from './formatPrice';
 
 describe('formatPrice', () => {
   it('should converts pence to pounds correctly', () => {
-    expect(formatPrice(1000)).toBe('10.00');
+    expect(formatPrice(1000)).toBe('&pound;10.00');
   });
   it('should formats with exactly two decimal places', () => {
-    expect(formatPrice(123)).toBe('1.23');
+    expect(formatPrice(123)).toBe('&pound;1.23');
   });
   it('should handles floating point pence values', () => {
-    expect(formatPrice(12.11)).toBe('0.12');
+    expect(formatPrice(12.11)).toBe('&pound;0.12');
   });
   it('should handle zero price', () => {
     expect(formatPrice(0)).toBe('Incorrect Price');

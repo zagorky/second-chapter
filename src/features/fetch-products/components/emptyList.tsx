@@ -1,10 +1,11 @@
 import { Button } from '~components/ui/button/button';
 import { navigationRoutes } from '~config/navigation';
+import { withDataTestId } from '~utils/helpers';
 import { Link } from 'react-router';
 
 export const EmptyList = () => {
   return (
-    <div className="flex h-[calc(100vh-200px)] flex-col items-center justify-center">
+    <div className="flex h-[calc(100vh-200px)] flex-col items-center justify-center" {...withDataTestId('empty-list')}>
       <div className="m-auto max-w-xl p-10">
         <h3>Fear not, intrepid reader!</h3>
         <p>

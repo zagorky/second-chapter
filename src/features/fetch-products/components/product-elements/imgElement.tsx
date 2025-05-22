@@ -1,16 +1,18 @@
 import { cn } from '~lib/utilities';
+import { withDataTestId } from '~utils/helpers';
 
 type ImgProps = {
   imageUrl: string;
   caption?: string;
   className?: string;
-  alt?: string;
+  alt: string;
 };
 
 export const ImgElement = ({ imageUrl, alt, className, caption }: ImgProps) => {
   if (!imageUrl) {
     return (
       <div
+        {...withDataTestId(`${alt}-img`)}
         className={cn(
           'rounded-base border-border bg-secondary-background flex aspect-square items-center justify-center border-2',
           className
@@ -23,6 +25,7 @@ export const ImgElement = ({ imageUrl, alt, className, caption }: ImgProps) => {
 
   return (
     <figure
+      {...withDataTestId(`${alt}-img`)}
       className={cn(
         'rounded-base border-border bg-main font-base max-h-[400px] w-full overflow-hidden border-2',
         className
