@@ -1,4 +1,4 @@
-import { cn } from '~/lib/utilities';
+import { cn } from '~lib/utilities';
 
 type ImgProps = {
   imageUrl: string;

@@ -2,10 +2,10 @@ import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { Badge } from '~components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~components/ui/card';
-import { AuthorElement } from '~components/ui/product-elements/authorElement';
-import { ImgElement } from '~components/ui/product-elements/imgElement';
-import { PriceElement } from '~components/ui/product-elements/priceElement';
 import { navigationRoutes } from '~config/navigation';
+import { AuthorElement } from '~features/fetch-products/components/product-elements/authorElement';
+import { ImgElement } from '~features/fetch-products/components/product-elements/imgElement';
+import { PriceElement } from '~features/fetch-products/components/product-elements/priceElement';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
 import { isLabelAttribute, isStringAttribute } from '~types/utils/attributesGuards';
 import { withDataTestId } from '~utils/helpers';
