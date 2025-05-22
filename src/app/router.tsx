@@ -78,7 +78,7 @@ export const AppRouter = createBrowserRouter([
         ),
       },
       {
-        path: navigationRoutes.catalog.path + '/:id',
+        path: navigationRoutes.catalog.path + '/:slug',
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <ProductPage />
