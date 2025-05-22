@@ -16,7 +16,7 @@ export const DataErrorElement = ({
 }: DataErrorElementProps) => {
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <Card className="">
+      <Card>
         <CardHeader>
           <CardTitle>{title}</CardTitle>
         </CardHeader>
