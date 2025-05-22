@@ -28,7 +28,7 @@ describe('ProductList', () => {
     const testError = new Error('Test error message');
 
     mockUseProductData.mockReturnValue({
-      products: undefined,
+      products: [],
       error: testError,
       isLongLoading: false,
       refresh: vi.fn(),
@@ -44,7 +44,7 @@ describe('ProductList', () => {
 
   it('should render spinner when loading', () => {
     mockUseProductData.mockReturnValue({
-      products: undefined,
+      products: [],
       error: undefined,
       isLongLoading: true,
       refresh: vi.fn(),
@@ -60,7 +60,7 @@ describe('ProductList', () => {
 
   it('should render empty list when no products', () => {
     mockUseProductData.mockReturnValue({
-      products: undefined,
+      products: [],
       error: undefined,
       isLongLoading: false,
       refresh: vi.fn(),

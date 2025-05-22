@@ -10,9 +10,11 @@ export const ProductList = () => {
   const { products, error, isLongLoading, refresh } = useProductData();
 
   if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
-  if (isLongLoading) return <Spinner className="m-auto" size="xl" />;
+  if (isLongLoading || !products) return <Spinner className="m-auto" size="xl" />;
 
-  return products ? (
+  if (products.length === 0) return <EmptyList />;
+
+  return (
     <ul
       className="m-2 grid grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3"
       {...withDataTestId('catalog-page-product-list')}
@@ -21,7 +23,5 @@ export const ProductList = () => {
         return <ProductItem product={product} key={product.id} />;
       })}
     </ul>
-  ) : (
-    <EmptyList />
   );
 };

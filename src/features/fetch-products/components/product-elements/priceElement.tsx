@@ -15,10 +15,10 @@ export const PriceElement = ({ originalPrice, discountedPrice, id }: PriceProps)
     return (
       <div {...withDataTestId(`${id}-price`)}>
         💷 <span className="font-bold">Price</span>{' '}
-        <span className="text-destructive font-bold">{computedDiscountedPrice}</span>
+        <span className="text-destructive font-bold">&pound;{computedDiscountedPrice}</span>
         <span className="text-foreground text-sm">
           &nbsp;
-          <span className="line-through">{computedOriginalPrice}</span>
+          <span className="line-through">&pound;{computedOriginalPrice}</span>
         </span>
       </div>
     );
