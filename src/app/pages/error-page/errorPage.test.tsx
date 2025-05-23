@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import ErrorPage from '~app/pages/error-page/errorPage';
 import MainPage from '~app/pages/main-page/mainPage';
 import { navigationRoutes } from '~config/navigation';
-import { ErrorBoundary } from 'react-error-boundary';
 import { createMemoryRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
@@ -13,20 +12,14 @@ describe('ErrorPage', () => {
         {
           path: '/',
           element: <ErrorPage />,
-          errorElement: <ErrorPage />,
         },
       ],
       {
         initialEntries: ['/'],
-        initialIndex: 0,
       }
     );
 
-    render(
-      <ErrorBoundary fallback={<ErrorPage />}>
-        <RouterProvider router={router} />
-      </ErrorBoundary>
-    );
+    render(<RouterProvider router={router} />);
 
     expect(screen.getByTestId('not-found-page-header')).toBeInTheDocument();
   });
@@ -41,22 +34,13 @@ describe('ErrorPage', () => {
           element: <MainPage />,
           errorElement: <ErrorPage />,
         },
-        {
-          path: navigationRoutes.error.path,
-          element: <ErrorPage />,
-        },
       ],
       {
-        initialEntries: [navigationRoutes.main.path, brokenLink],
-        initialIndex: 1,
+        initialEntries: [brokenLink],
       }
     );
 
-    render(
-      <ErrorBoundary fallback={<ErrorPage />}>
-        <RouterProvider router={router} />
-      </ErrorBoundary>
-    );
+    render(<RouterProvider router={router} />);
 
     expect(screen.getByTestId('not-found-page-header')).toBeInTheDocument();
   });
