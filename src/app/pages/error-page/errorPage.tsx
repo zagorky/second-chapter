@@ -1,15 +1,19 @@
 import { Button } from '~components/ui/button/button';
 import { navigationRoutes } from '~config/navigation';
 import { withDataTestId } from '~utils/helpers';
-import { Link } from 'react-router';
+import { Link, useRouteError } from 'react-router';
 
 const ErrorPage = () => {
+  const error = useRouteError();
+  const errorName = error instanceof Error ? error.name : '404: A Literary Dead End';
+  const errorMessage = error instanceof Error ? error.message : 'the chapter was not found';
+
   return (
     <div className="flex h-[calc(100vh-200px)] flex-col items-center justify-center">
       <h1 className={'heading-1'} {...withDataTestId('not-found-page-header')}>
-        404: A Literary Dead End
+        {errorName}
       </h1>
-      <h2>the chapter was not found</h2>
+      <h2>{errorMessage}</h2>
       <div>
         <div className="m-auto max-w-xl p-10">
           <h3>Fear not, intrepid reader!</h3>
