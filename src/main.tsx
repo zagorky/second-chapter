@@ -1,7 +1,6 @@
 import { apiInstance } from '~app/API/apiBuilder';
 import { App } from '~app/App';
 import { ErrorFallback } from '~components/ui/error-fallback/errorFallback';
-import { AuthProvider } from '~features/auth-provider/authProvider';
 import { useAppStore } from '~stores/store';
 import { assertIsNonNullable } from '~utils/helpers';
 import { StrictMode } from 'react';
@@ -28,9 +27,7 @@ createRoot(rootElement).render(
         console.error('Uncaught error:', error, info);
       }}
     >
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <App />
     </ErrorBoundary>
   </StrictMode>
 );

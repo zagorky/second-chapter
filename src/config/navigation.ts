@@ -12,11 +12,29 @@ export const navigationRoutes = {
 } as const;
 
 export const authenticatedUserGuard = () => {
-  const isAuthenticated = useAppStore.getState().isAuthenticated;
-
-  if (isAuthenticated) {
+  if (useAppStore.getState().isAuthenticated) {
     return redirect(navigationRoutes.main.path);
   }
 
   return null;
+};
+
+export const verifiedUserGuard = async () => {
+  const isClientVerified = useAppStore.getState().isClientVerified;
+
+  if (isClientVerified) {
+    return;
+  }
+
+  await new Promise<void>((resolve) => {
+    const unsubscribe = useAppStore.subscribe(
+      (state) => state.isClientVerified,
+      (isVerified) => {
+        if (isVerified) {
+          unsubscribe();
+          resolve();
+        }
+      }
+    );
+  });
 };

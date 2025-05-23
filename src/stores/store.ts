@@ -1,7 +1,7 @@
 import type { TokenStore } from '@commercetools/ts-client';
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, subscribeWithSelector } from 'zustand/middleware';
 
 import { API_CONFIG } from '~/app/API/config/apiConfig';
 
@@ -36,49 +36,51 @@ const emptyStore = {
 };
 
 export const useAppStore = create<StateStore>()(
-  persist(
-    (set, get) => ({
-      isClientVerified: false,
-      isAuthenticated: false,
-      tokenStore: retrieveStoreFromLS()?.tokenStore ?? emptyStore,
-      getIsAuthenticated: () => get().isAuthenticated,
-      setIsAuthenticated: (nextAuthenticatedStatus: boolean) => {
-        set({ isAuthenticated: nextAuthenticatedStatus });
-      },
-      setTokenStore: (nextStore?: TokenStore) => {
-        set({ tokenStore: nextStore });
-      },
-      getTokenStore: () => get().tokenStore,
-      forceTokenExpiration: () => {
-        const currentStore = get().tokenStore;
+  subscribeWithSelector(
+    persist(
+      (set, get) => ({
+        isClientVerified: false,
+        isAuthenticated: false,
+        tokenStore: retrieveStoreFromLS()?.tokenStore ?? emptyStore,
+        getIsAuthenticated: () => get().isAuthenticated,
+        setIsAuthenticated: (nextAuthenticatedStatus: boolean) => {
+          set({ isAuthenticated: nextAuthenticatedStatus });
+        },
+        setTokenStore: (nextStore?: TokenStore) => {
+          set({ tokenStore: nextStore });
+        },
+        getTokenStore: () => get().tokenStore,
+        forceTokenExpiration: () => {
+          const currentStore = get().tokenStore;
 
-        currentStore.expirationTime = 0;
-        set({ tokenStore: currentStore });
-      },
-      setRefreshToken: (refreshToken: string) => {
-        set({ refreshToken });
-      },
-      resetTokenStore: () => {
-        set({ tokenStore: emptyStore });
-      },
-      resetStore: () => {
-        set({ isAuthenticated: false });
-        set({ tokenStore: emptyStore });
-        set({ refreshToken: undefined });
-      },
-      setStore: (nextState: StateStore) => {
-        set(() => nextState);
-      },
-      setIsClientVerified: (nextState: boolean) => {
-        set({ isClientVerified: nextState });
-      },
-    }),
-    {
-      name: API_CONFIG.LS_KEY,
-      partialize: (state) => ({
-        refreshToken: state.refreshToken,
-        tokenStore: state.tokenStore,
+          currentStore.expirationTime = 0;
+          set({ tokenStore: currentStore });
+        },
+        setRefreshToken: (refreshToken: string) => {
+          set({ refreshToken });
+        },
+        resetTokenStore: () => {
+          set({ tokenStore: emptyStore });
+        },
+        resetStore: () => {
+          set({ isAuthenticated: false });
+          set({ tokenStore: emptyStore });
+          set({ refreshToken: undefined });
+        },
+        setStore: (nextState: StateStore) => {
+          set(() => nextState);
+        },
+        setIsClientVerified: (nextState: boolean) => {
+          set({ isClientVerified: nextState });
+        },
       }),
-    }
+      {
+        name: API_CONFIG.LS_KEY,
+        partialize: (state) => ({
+          refreshToken: state.refreshToken,
+          tokenStore: state.tokenStore,
+        }),
+      }
+    )
   )
 );

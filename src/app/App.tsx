@@ -6,6 +6,8 @@ import { SWRConfig } from 'swr';
 import { Toaster } from '~/components/ui/sonner';
 
 export const App = () => {
+  const router = AppRouter();
+
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <SWRConfig
@@ -16,7 +18,7 @@ export const App = () => {
           errorRetryCount: 0,
         }}
       >
-        <RouterProvider router={AppRouter} />
+        <RouterProvider router={router} />
       </SWRConfig>
       <Toaster />
     </ThemeProvider>
