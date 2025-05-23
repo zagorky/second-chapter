@@ -31,6 +31,7 @@ describe('ProductList', () => {
       products: [],
       error: testError,
       isLongLoading: false,
+      isLoading: false,
       refresh: vi.fn(),
     });
 
@@ -47,6 +48,7 @@ describe('ProductList', () => {
       products: [],
       error: undefined,
       isLongLoading: true,
+      isLoading: true,
       refresh: vi.fn(),
     });
 
@@ -63,6 +65,7 @@ describe('ProductList', () => {
       products: [],
       error: undefined,
       isLongLoading: false,
+      isLoading: false,
       refresh: vi.fn(),
     });
 
@@ -79,6 +82,7 @@ describe('ProductList', () => {
       products: mockProducts,
       error: undefined,
       isLongLoading: false,
+      isLoading: false,
       refresh: vi.fn(),
     });
 
