@@ -39,6 +39,7 @@ describe('ErrorPage', () => {
         {
           path: navigationRoutes.main.path,
           element: <MainPage />,
+          errorElement: <ErrorPage />,
         },
         {
           path: navigationRoutes.error.path,

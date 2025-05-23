@@ -80,7 +80,6 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.error.path,
-        errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <ErrorPage />
