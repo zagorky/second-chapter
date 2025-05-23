@@ -21,6 +21,7 @@ export const appRouter = createBrowserRouter([
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     loader: appInitializer.initialize,
+    hydrateFallbackElement: <></>,
     children: [
       {
         path: navigationRoutes.main.path,
