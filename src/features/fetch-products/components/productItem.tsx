@@ -7,7 +7,7 @@ import { AuthorElement } from '~features/fetch-products/components/product-eleme
 import { ImgElement } from '~features/fetch-products/components/product-elements/imgElement';
 import { PriceElement } from '~features/fetch-products/components/product-elements/priceElement';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
-import { isLabelAttribute, isStringAttribute } from '~types/utils/attributesGuards';
+import { getLabelAttribute, getStringAttribute } from '~types/utils/attributesGuards';
 import { withDataTestId } from '~utils/helpers';
 import { Link } from 'react-router';
 
@@ -16,13 +16,8 @@ type ProductItemProps = {
 };
 
 export const ProductItem = ({ product }: ProductItemProps) => {
-  const author = isStringAttribute(product.masterVariant.attributes?.[0])
-    ? product.masterVariant.attributes[0]?.value
-    : 'Unknown';
-
-  const conditionLabel = isLabelAttribute(product.masterVariant.attributes?.[1])
-    ? product.masterVariant.attributes[1].value.label
-    : 'Unknown';
+  const author = getStringAttribute(product.masterVariant.attributes, 'author');
+  const conditionLabel = getLabelAttribute(product.masterVariant.attributes, 'condition');
 
   const identifier = product.slug[DEFAULT_STORE_LANGUAGE];
 
