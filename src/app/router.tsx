@@ -1,3 +1,4 @@
+import { appInitializer } from '~app/appInitializer';
 import {
   AboutPage,
   CartPage,
@@ -9,17 +10,17 @@ import {
   SignUpPage,
 } from '~app/pages/lazy';
 import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
-import { authenticatedUserGuard, initialize, navigationRoutes } from '~config/navigation';
+import { authenticatedUserGuard, navigationRoutes } from '~config/navigation';
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router';
 
 import { MainLayout } from '~/components/layouts/mainLayout';
 
-export const AppRouter = createBrowserRouter([
+export const appRouter = createBrowserRouter([
   {
     element: <MainLayout />,
     errorElement: <ErrorPage />,
-    loader: initialize,
+    loader: appInitializer.initialize,
     children: [
       {
         path: navigationRoutes.main.path,

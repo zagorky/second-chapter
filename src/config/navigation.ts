@@ -1,5 +1,4 @@
-import { apiInstance } from '~app/API/apiBuilder';
-import { useAppStore } from '~stores/store';
+import { appInitializer } from '~app/appInitializer';
 import { redirect } from 'react-router';
 
 export const navigationRoutes = {
@@ -12,20 +11,8 @@ export const navigationRoutes = {
   error: { path: '/*', title: 'Page not Found' },
 } as const;
 
-export const initialize = async () => {
-  if (!useAppStore.getState().isClientVerified) {
-    await useAppStore.persist.rehydrate();
-    await apiInstance.init();
-  }
-
-  return {
-    isClientVerified: useAppStore.getState().isClientVerified,
-    isAuthenticated: useAppStore.getState().isAuthenticated,
-  };
-};
-
 export const authenticatedUserGuard = async () => {
-  const { isAuthenticated } = await initialize();
+  const { isAuthenticated } = await appInitializer.initialize();
 
   if (isAuthenticated) {
     return redirect(navigationRoutes.main.path);
