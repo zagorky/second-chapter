@@ -13,7 +13,6 @@ type TokenStore = z.infer<typeof TokenStoreSchema>;
 
 export const ZustandStoreSchema = z.object({
   state: z.object({
-    isAuthenticated: z.boolean(),
     refreshToken: z.string().optional(),
     tokenStore: TokenStoreSchema.optional(),
   }),
