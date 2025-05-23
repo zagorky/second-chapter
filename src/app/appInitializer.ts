@@ -9,7 +9,7 @@ const initApp = () =>
 class AppInitializer {
   private apiInstanceInit?: Promise<void>;
   public initialize = async () => {
-    if (this.apiInstanceInit) {
+    if (!this.apiInstanceInit) {
       await (this.apiInstanceInit ??= initApp());
     }
     await this.apiInstanceInit;

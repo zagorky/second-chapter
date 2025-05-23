@@ -24,6 +24,7 @@ export const appRouter = createBrowserRouter([
     children: [
       {
         path: navigationRoutes.main.path,
+        errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <MainPage />
@@ -32,6 +33,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.login.path,
+        errorElement: <ErrorPage />,
         loader: authenticatedUserGuard,
         element: (
           <Suspense fallback={<PageSkeleton />}>
@@ -42,6 +44,7 @@ export const appRouter = createBrowserRouter([
       {
         path: navigationRoutes.signup.path,
         loader: authenticatedUserGuard,
+        errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <SignUpPage />
@@ -50,6 +53,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.about.path,
+        errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <AboutPage />
@@ -58,6 +62,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.catalog.path,
+        errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <CatalogPage />
@@ -66,6 +71,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.cart.path,
+        errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <CartPage />
@@ -74,6 +80,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.error.path,
+        errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <ErrorPage />
@@ -82,6 +89,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: navigationRoutes.catalog.path + '/:slug',
+        errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <ProductPage />

@@ -7,19 +7,18 @@ import { withDataTestId } from '~utils/helpers';
 import { normalizeError } from '~utils/normalizeError';
 
 export const ProductList = () => {
-  const { products, error, isLongLoading, refresh } = useProductData();
+  const { products, error, isLongLoading, isLoading, refresh } = useProductData();
 
   if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
-  if (isLongLoading || !products) return <Spinner className="m-auto" size="xl" />;
-
-  if (products.length === 0) return <EmptyList />;
+  if (isLongLoading) return <Spinner className="m-auto" size="xl" />;
+  if (!isLoading && products && products.length === 0) return <EmptyList />;
 
   return (
     <ul
       className="m-2 grid grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3"
       {...withDataTestId('catalog-page-product-list')}
     >
-      {products.map((product) => {
+      {products?.map((product) => {
         return <ProductItem product={product} key={product.id} />;
       })}
     </ul>
