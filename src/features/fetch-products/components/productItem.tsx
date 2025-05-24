@@ -24,7 +24,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
   return (
     <li key={identifier} {...withDataTestId(identifier)} className="flex max-w-[300px] flex-col justify-center gap-6">
       <Link
-        to={`${navigationRoutes.catalog.path}/${identifier}`}
+        to={`${navigationRoutes.product.path}/${identifier}`}
         className="rounded-lg transition-all hover:scale-[1.01] hover:shadow-sm"
       >
         <Card className="gap-2 py-2.5">

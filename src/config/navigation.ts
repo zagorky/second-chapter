@@ -9,6 +9,7 @@ export const navigationRoutes = {
   login: { path: '/login', title: 'Sign In' },
   signup: { path: '/signup', title: 'Sign Up' },
   error: { path: '/*', title: 'Page not Found' },
+  product: { path: '/product/', title: 'Product Page' },
 } as const;
 
 export const authenticatedUserGuard = async () => {
