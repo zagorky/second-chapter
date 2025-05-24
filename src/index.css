@@ -3,7 +3,7 @@
 @import './styles/typography.css';
 @import './styles/colors.css';
 @import './styles/checkbox.css';
-@import './styles/card.css';
+@import './styles/filter.css';
 
 @layer base {
   * {

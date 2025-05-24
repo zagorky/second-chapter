@@ -1,7 +1,7 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { Badge } from '~components/ui/badge/badge';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~components/ui/card';
+import { Card, CardContent, CardTitle } from '~components/ui/card';
 import { navigationRoutes } from '~config/navigation';
 import { AuthorElement } from '~features/fetch-products/components/product-elements/authorElement';
 import { ImgElement } from '~features/fetch-products/components/product-elements/imgElement';
@@ -22,35 +22,36 @@ export const ProductItem = ({ product }: ProductItemProps) => {
   const identifier = product.slug[DEFAULT_STORE_LANGUAGE];
 
   return (
-    <li key={identifier} {...withDataTestId(identifier)} className="flex max-w-[300px] flex-col justify-center gap-6">
+    <li key={identifier} {...withDataTestId(identifier)} className="contents">
       <Link
         to={`${navigationRoutes.product.path}/${identifier}`}
-        className="rounded-lg transition-all hover:scale-[1.01] hover:shadow-sm"
+        className="transition-all hover:scale-[1.01] hover:shadow-sm"
       >
-        <Card className="gap-2 py-2.5">
-          <CardContent className="flex flex-col gap-1 px-2.5">
-            <ImgElement imageUrl={product.masterVariant.images?.[0]?.url ?? ''} alt={identifier}></ImgElement>
-            <CardHeader>
-              <CardTitle className="h-6" {...withDataTestId(`${identifier}-name`)}>
+        <Card className="relative flex h-full max-w-[300px] flex-col justify-start gap-2 rounded-lg p-2.5">
+          <PriceElement
+            className="absolute top-6 left-0 z-1 py-1 pr-4 pl-5"
+            id={identifier}
+            originalPrice={product.masterVariant.prices?.[0]?.value.centAmount ?? 0}
+            discountedPrice={product.masterVariant.prices?.[0]?.discounted?.value.centAmount ?? 0}
+          />
+          <ImgElement imageUrl={product.masterVariant.images?.[0]?.url ?? ''} alt={identifier}></ImgElement>
+          <CardContent className="flex grow flex-col justify-between gap-3 p-2.5">
+            <div>
+              <CardTitle className="line-clamp-2 text-lg leading-tight" {...withDataTestId(`${identifier}-name`)}>
                 {product.name[DEFAULT_STORE_LANGUAGE]}
               </CardTitle>
-            </CardHeader>
-            <PriceElement
-              id={identifier}
-              originalPrice={product.masterVariant.prices?.[0]?.value.centAmount ?? 0}
-              discountedPrice={product.masterVariant.prices?.[0]?.discounted?.value.centAmount ?? 0}
-            />
-            <AuthorElement author={author} id={identifier} />
-            <div className="line-clamp-2 pt-2" {...withDataTestId(`${identifier}-description`)}>
+              <AuthorElement author={author} id={identifier} />
+            </div>
+            <div className="line-clamp-2" {...withDataTestId(`${identifier}-description`)}>
               {product.description?.[DEFAULT_STORE_LANGUAGE] ?? ''}
             </div>
+            <div className="flex flex-row gap-2 self-start">
+              {product.masterVariant.prices?.[0]?.discounted && <Badge>Sale</Badge>}
+              <Badge className="bg-chart-5" {...withDataTestId(`${identifier}-condition`)}>
+                {conditionLabel}
+              </Badge>
+            </div>
           </CardContent>
-          <CardFooter className="flex-row gap-2">
-            {product.masterVariant.prices?.[0]?.discounted && <Badge>Sale</Badge>}
-            <Badge className="bg-chart-5" {...withDataTestId(`${identifier}-condition`)}>
-              {conditionLabel}
-            </Badge>
-          </CardFooter>
         </Card>
       </Link>
     </li>
