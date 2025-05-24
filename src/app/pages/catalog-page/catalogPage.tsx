@@ -1,4 +1,6 @@
 import { ProductList } from '~features/fetch-products/components/productList';
+import { SearchBar } from '~features/fetch-products/components/searchBar';
+import { SortBar } from '~features/fetch-products/components/sortBar';
 import { withDataTestId } from '~utils/helpers';
 
 const CatalogPage = () => {
@@ -7,7 +9,20 @@ const CatalogPage = () => {
       <h1 className={'heading-1'} {...withDataTestId('catalog-page-header')}>
         Catalog
       </h1>
-      <ProductList />
+      <div className="flex flex-col gap-4">
+        <div className="flex-1"></div>
+        <div className="flex-3">
+          <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 sm:flex-row sm:justify-between">
+            <SearchBar />
+            <SortBar
+              onSortChange={() => {
+                console.error('sort');
+              }}
+            />
+          </div>
+          <ProductList />
+        </div>
+      </div>
     </>
   );
 };
