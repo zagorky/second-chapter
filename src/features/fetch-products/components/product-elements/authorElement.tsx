@@ -7,9 +7,8 @@ type AuthorElementProps = {
 
 export const AuthorElement = ({ author, id }: AuthorElementProps) => {
   return (
-    <div {...withDataTestId(`${id}-author`)}>
-      <span className="font-bold">Author: </span>
-      {author}
+    <div className="font-bold" {...withDataTestId(`${id}-author`)}>
+      By {author}
     </div>
   );
 };

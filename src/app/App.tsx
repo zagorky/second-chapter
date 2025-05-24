@@ -1,4 +1,4 @@
-import { AppRouter } from '~app/router';
+import { appRouter } from '~app/router';
 import { ThemeProvider } from '~features/theme-provider/components/themeProvider';
 import { RouterProvider } from 'react-router/dom';
 import { SWRConfig } from 'swr';
@@ -16,7 +16,7 @@ export const App = () => {
           errorRetryCount: 0,
         }}
       >
-        <RouterProvider router={AppRouter} />
+        <RouterProvider router={appRouter} />
       </SWRConfig>
       <Toaster />
     </ThemeProvider>

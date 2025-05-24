@@ -28,9 +28,10 @@ describe('ProductList', () => {
     const testError = new Error('Test error message');
 
     mockUseProductData.mockReturnValue({
-      products: undefined,
+      products: [],
       error: testError,
       isLongLoading: false,
+      isLoading: false,
       refresh: vi.fn(),
     });
 
@@ -44,9 +45,10 @@ describe('ProductList', () => {
 
   it('should render spinner when loading', () => {
     mockUseProductData.mockReturnValue({
-      products: undefined,
+      products: [],
       error: undefined,
       isLongLoading: true,
+      isLoading: true,
       refresh: vi.fn(),
     });
 
@@ -60,9 +62,10 @@ describe('ProductList', () => {
 
   it('should render empty list when no products', () => {
     mockUseProductData.mockReturnValue({
-      products: undefined,
+      products: [],
       error: undefined,
       isLongLoading: false,
+      isLoading: false,
       refresh: vi.fn(),
     });
 
@@ -79,6 +82,7 @@ describe('ProductList', () => {
       products: mockProducts,
       error: undefined,
       isLongLoading: false,
+      isLoading: false,
       refresh: vi.fn(),
     });
 

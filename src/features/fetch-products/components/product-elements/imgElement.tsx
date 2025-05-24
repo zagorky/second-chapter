@@ -31,7 +31,7 @@ export const ImgElement = ({ imageUrl, alt, className, caption }: ImgProps) => {
         className
       )}
     >
-      <img className="card-img aspect-square w-full object-cover" src={imageUrl} alt={alt} />
+      <img className="custom-filter aspect-square w-full object-cover" src={imageUrl} alt={alt} />
       {caption && (
         <figcaption className="text-main-foreground border-border line-clamp-3 border-t-2">{caption}</figcaption>
       )}

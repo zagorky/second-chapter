@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc -b --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint:knip": "knip --config knip.config.json",

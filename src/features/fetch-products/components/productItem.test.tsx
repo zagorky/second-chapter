@@ -17,8 +17,8 @@ describe('ProductItem', () => {
     expect(screen.getByTestId('test-product-slug-name')).toHaveTextContent('Test Product Name');
     expect(screen.getByTestId('test-product-slug-description')).toHaveTextContent('Test product description');
     expect(screen.getByTestId('test-product-slug-price')).toBeInTheDocument();
-    expect(screen.getByText(/&pound;10.00/)).toBeInTheDocument();
-    expect(screen.getByText(/&pound;8.00/)).toBeInTheDocument();
+    expect(screen.getByText(/£10.00/)).toBeInTheDocument();
+    expect(screen.getByText(/£8.00/)).toBeInTheDocument();
     expect(screen.getByTestId('test-product-slug-author')).toHaveTextContent('Test Author');
     expect(screen.getByText('Sale')).toBeInTheDocument();
     expect(screen.getByTestId('test-product-slug-condition')).toHaveTextContent('Like New');

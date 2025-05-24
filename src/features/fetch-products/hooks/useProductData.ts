@@ -13,6 +13,7 @@ export const useProductData = (parameters?: FetchProductsParameters) => {
     data: products,
     error,
     mutate: refresh,
+    isLoading,
   } = useSWR<ProductProjection[], Error>(actualParameters, fetchProducts, {
     onLoadingSlow: () => {
       setIsLongLoading(true);
@@ -23,7 +24,7 @@ export const useProductData = (parameters?: FetchProductsParameters) => {
     onError: () => {
       setIsLongLoading(false);
     },
-    loadingTimeout: 2000,
+    loadingTimeout: 500,
   });
 
   return {
@@ -31,5 +32,6 @@ export const useProductData = (parameters?: FetchProductsParameters) => {
     error,
     refresh,
     isLongLoading,
+    isLoading,
   };
 };
