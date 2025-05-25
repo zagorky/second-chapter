@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '~components/ui/button/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Input } from '~components/ui/input';
-import { searchBarSchema } from '~features/fetch-products/types/schemas';
+import { searchBarSchema } from '~features/search/types/schemas';
 import { useForm } from 'react-hook-form';
 
 export const SearchBar = () => {

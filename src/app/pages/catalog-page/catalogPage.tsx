@@ -1,6 +1,6 @@
 import { ProductList } from '~features/fetch-products/components/productList';
-import { SearchBar } from '~features/fetch-products/components/searchBar';
-import { SortBar } from '~features/fetch-products/components/sortBar';
+import { SearchBar } from '~features/search/components/searchBar';
+import { SortBar } from '~features/sort/components/sortBar';
 import { withDataTestId } from '~utils/helpers';
 
 const CatalogPage = () => {

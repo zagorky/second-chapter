@@ -7,8 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~components/ui/select';
-import { SORT_OPTIONS } from '~features/fetch-products/config/constants';
-import { validateSortKey } from '~features/fetch-products/utils/validateSortKey';
+import { SORT_OPTIONS } from '~features/sort/config/constants';
+import { validateSortKey } from '~features/sort/utils/validateSortKey';
 import { useSearchParams } from 'react-router';
 
 export const SortBar = () => {

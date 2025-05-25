@@ -3,7 +3,7 @@ import { Spinner } from '~components/ui/spinner/spinner';
 import { EmptyList } from '~features/fetch-products/components/emptyList';
 import { ProductItem } from '~features/fetch-products/components/productItem';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
-import { validateSortKey } from '~features/fetch-products/utils/validateSortKey';
+import { validateSortKey } from '~features/sort/utils/validateSortKey';
 import { withDataTestId } from '~utils/helpers';
 import { normalizeError } from '~utils/normalizeError';
 import { useSearchParams } from 'react-router';
