@@ -1,26 +1,15 @@
-import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
-import { Spinner } from '~components/ui/spinner/spinner';
+import type { ProductProjection } from '@commercetools/platform-sdk';
+
 import { EmptyList } from '~features/fetch-products/components/emptyList';
 import { ProductItem } from '~features/fetch-products/components/productItem';
-import { useProductData } from '~features/fetch-products/hooks/useProductData';
-import { buildSearchQueryParameters } from '~features/search/utils/buildSearchQueryParameters';
-import { buildSortQueryParameters } from '~features/sort/utils/buildSortQueryParameters';
 import { withDataTestId } from '~utils/helpers';
-import { normalizeError } from '~utils/normalizeError';
-import { useSearchParams } from 'react-router';
 
-export const ProductList = () => {
-  const [searchParameters] = useSearchParams();
-  const sortData = buildSortQueryParameters(searchParameters.get('sort') ?? 'name-asc');
-  const searchData = buildSearchQueryParameters(searchParameters.get('search') ?? '');
+type ProductListProps = {
+  products: ProductProjection[] | null | undefined;
+  isLoading: boolean;
+};
 
-  const { products, error, isLongLoading, isLoading, refresh } = useProductData({
-    ...sortData,
-    ...searchData,
-  });
-
-  if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
-  if (isLongLoading) return <Spinner className="m-auto" size="xl" />;
+export const ProductList = ({ products, isLoading }: ProductListProps) => {
   if (!isLoading && products && products.length === 0) return <EmptyList />;
 
   return (

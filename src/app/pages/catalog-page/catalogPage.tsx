@@ -1,10 +1,29 @@
+import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
+import { Spinner } from '~components/ui/spinner/spinner';
 import { CategoriesBar } from '~features/categories/components/categoriesBar';
 import { ProductList } from '~features/fetch-products/components/productList';
+import { useProductData } from '~features/fetch-products/hooks/useProductData';
 import { SearchBar } from '~features/search/components/searchBar';
+import { buildSearchQueryParameters } from '~features/search/utils/buildSearchQueryParameters';
 import { SortBar } from '~features/sort/components/sortBar';
+import { buildSortQueryParameters } from '~features/sort/utils/buildSortQueryParameters';
 import { withDataTestId } from '~utils/helpers';
+import { normalizeError } from '~utils/normalizeError';
+import { useSearchParams } from 'react-router';
 
 const CatalogPage = () => {
+  const [searchParameters] = useSearchParams();
+  const sortData = buildSortQueryParameters(searchParameters.get('sort') ?? 'name-asc');
+  const searchData = buildSearchQueryParameters(searchParameters.get('search') ?? '');
+
+  const { products, error, isLongLoading, isLoading, refresh } = useProductData({
+    ...sortData,
+    ...searchData,
+  });
+
+  if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
+  if (isLongLoading) return <Spinner className="m-auto" size="xl" />;
+
   return (
     <>
       <h1 className={'heading-1'} {...withDataTestId('catalog-page-header')}>
@@ -12,14 +31,14 @@ const CatalogPage = () => {
       </h1>
       <div className="flex flex-col gap-4">
         <div className="flex-1">
-          <CategoriesBar />
+          <CategoriesBar products={products} />
         </div>
         <div className="flex-3">
           <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 md:flex-row md:justify-between">
             <SearchBar />
             <SortBar />
           </div>
-          <ProductList />
+          <ProductList products={products} isLoading={isLoading} />
         </div>
       </div>
     </>
