@@ -3,13 +3,13 @@ import type { SortOption } from '~features/sort/types/types';
 export const SORT_OPTIONS: SortOption[] = [
   {
     shortKey: 'price-asc',
-    commercetoolsParameter: 'masterVariant.prices.value.centAmount asc',
+    commercetoolsParameter: 'price asc',
     label: 'Price (Low to High)',
     requiresCurrency: true,
   },
   {
     shortKey: 'price-desc',
-    commercetoolsParameter: 'masterVariant.prices.value.centAmount desc',
+    commercetoolsParameter: 'price desc',
     label: 'Price (High to Low)',
     requiresCurrency: true,
   },
