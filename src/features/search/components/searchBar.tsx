@@ -5,6 +5,7 @@ import { Button } from '~components/ui/button/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Input } from '~components/ui/input';
 import { searchBarSchema } from '~features/search/types/schemas';
+import { Search } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router';
 
@@ -40,8 +41,8 @@ export const SearchBar = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-1/4">
-          Search
+        <Button type="submit">
+          <Search />
         </Button>
       </form>
     </Form>

@@ -4,6 +4,6 @@ export const buildSearchQueryParameters = (value: string) => {
     : {
         'text.en-GB': `*${value}*`,
         fuzzy: true,
-        fuzzyLevel: 0,
+        fuzzyLevel: 1,
       };
 };
