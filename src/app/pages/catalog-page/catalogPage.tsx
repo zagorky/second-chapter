@@ -29,11 +29,11 @@ const CatalogPage = () => {
       <h1 className={'heading-1'} {...withDataTestId('catalog-page-header')}>
         Catalog
       </h1>
-      <div className="flex flex-col gap-4">
-        <div className="flex-1">
-          <CategoriesBar products={products} />
+      <div className="flex flex-col gap-4 md:flex-row">
+        <div className="w-1/5">
+          <CategoriesBar />
         </div>
-        <div className="flex-3">
+        <div className="w-4/5">
           <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 md:flex-row md:justify-between">
             <SearchBar />
             <SortBar />
