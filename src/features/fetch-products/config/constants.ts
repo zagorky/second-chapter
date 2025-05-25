@@ -1,1 +1,30 @@
+import type { SortOption } from '~features/fetch-products/types/types';
+
 export const DEFAULT_STORE_LANGUAGE = 'en-GB';
+
+export const SORT_OPTIONS: SortOption[] = [
+  {
+    shortKey: 'price-asc',
+    commercetoolsParameter: 'masterVariant.prices.value.centAmount asc',
+    label: 'Price (Low to High)',
+    requiresCurrency: true,
+  },
+  {
+    shortKey: 'price-desc',
+    commercetoolsParameter: 'masterVariant.prices.value.centAmount desc',
+    label: 'Price (High to Low)',
+    requiresCurrency: true,
+  },
+  {
+    shortKey: 'name-asc',
+    commercetoolsParameter: 'name.en-GB asc',
+    label: 'Name (A-Z)',
+    requiresCurrency: false,
+  },
+  {
+    shortKey: 'name-desc',
+    commercetoolsParameter: 'name.en-GB desc',
+    label: 'Name (Z-A)',
+    requiresCurrency: false,
+  },
+] as const;

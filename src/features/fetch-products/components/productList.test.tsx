@@ -5,6 +5,7 @@ import { ProductList } from '~features/fetch-products/components/productList';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
 import { mockProducts } from '~features/fetch-products/config/mockProducts';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
+import { MemoryRouter } from 'react-router';
 
 vi.mock('~features/fetch-products/hooks/useProductData');
 vi.mock('~features/fetch-products/components/emptyList', () => ({
@@ -35,7 +36,11 @@ describe('ProductList', () => {
       refresh: vi.fn(),
     });
 
-    render(<ProductList />);
+    render(
+      <MemoryRouter>
+        <ProductList />
+      </MemoryRouter>
+    );
 
     expect(screen.getByTestId('data-error-element')).toBeInTheDocument();
     expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
@@ -52,7 +57,11 @@ describe('ProductList', () => {
       refresh: vi.fn(),
     });
 
-    render(<ProductList />);
+    render(
+      <MemoryRouter>
+        <ProductList />
+      </MemoryRouter>
+    );
 
     expect(screen.getByTestId('spinner')).toBeInTheDocument();
     expect(screen.queryByTestId('data-error-element')).not.toBeInTheDocument();
@@ -69,7 +78,11 @@ describe('ProductList', () => {
       refresh: vi.fn(),
     });
 
-    render(<ProductList />);
+    render(
+      <MemoryRouter>
+        <ProductList />
+      </MemoryRouter>
+    );
 
     expect(screen.getByTestId('empty-list')).toBeInTheDocument();
     expect(screen.queryByTestId('data-error-element')).not.toBeInTheDocument();
@@ -86,7 +99,11 @@ describe('ProductList', () => {
       refresh: vi.fn(),
     });
 
-    render(<ProductList />);
+    render(
+      <MemoryRouter>
+        <ProductList />
+      </MemoryRouter>
+    );
 
     expect(screen.getByTestId('catalog-page-product-list')).toBeInTheDocument();
     expect(screen.getByTestId('product-test-id-1')).toHaveTextContent('Test Product Name');

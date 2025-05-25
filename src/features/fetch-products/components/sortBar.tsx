@@ -7,25 +7,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~components/ui/select';
+import { SORT_OPTIONS } from '~features/fetch-products/config/constants';
+import { validateSortKey } from '~features/fetch-products/utils/validateSortKey';
+import { useSearchParams } from 'react-router';
 
-type SortBarProps = {
-  onSortChange: (value: string) => void;
-};
+export const SortBar = () => {
+  const [searchParameters, setSearchParameters] = useSearchParams();
+  const sortParameter = validateSortKey(searchParameters.get('sort') ?? 'name-asc');
 
-export const SortBar = ({ onSortChange }: SortBarProps) => {
+  const handleSortChange = (value: string) => {
+    const newParameter = new URLSearchParams(searchParameters.toString());
+
+    newParameter.set('sort', validateSortKey(value).shortKey);
+    setSearchParameters(newParameter);
+  };
+
   return (
     <div className="flex flex-1">
-      <Select onValueChange={onSortChange}>
+      <Select value={sortParameter.shortKey} onValueChange={handleSortChange}>
         <SelectTrigger>
           <SelectValue placeholder="Sort by..." />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Sort by...</SelectLabel>
-            <SelectItem value="price asc">Price (Low to High)</SelectItem>
-            <SelectItem value="price desc">Price (High to Low)</SelectItem>
-            <SelectItem value="name.en asc">Name (A-Z)</SelectItem>
-            <SelectItem value="name.en desc">Name (Z-A)</SelectItem>
+            {SORT_OPTIONS.map((option) => (
+              <SelectItem key={option.shortKey} value={option.shortKey}>
+                {option.label}
+              </SelectItem>
+            ))}
           </SelectGroup>
         </SelectContent>
       </Select>

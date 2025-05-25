@@ -14,11 +14,7 @@ const CatalogPage = () => {
         <div className="flex-3">
           <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 sm:flex-row sm:justify-between">
             <SearchBar />
-            <SortBar
-              onSortChange={() => {
-                console.error('sort');
-              }}
-            />
+            <SortBar />
           </div>
           <ProductList />
         </div>
