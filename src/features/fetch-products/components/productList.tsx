@@ -3,19 +3,21 @@ import { Spinner } from '~components/ui/spinner/spinner';
 import { EmptyList } from '~features/fetch-products/components/emptyList';
 import { ProductItem } from '~features/fetch-products/components/productItem';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
-import { validateSortKey } from '~features/sort/utils/validateSortKey';
+import { buildSearchQueryParameters } from '~features/search/utils/buildSearchQueryParameters';
+import { buildSortQueryParameters } from '~features/sort/utils/buildSortQueryParameters';
 import { withDataTestId } from '~utils/helpers';
 import { normalizeError } from '~utils/normalizeError';
 import { useSearchParams } from 'react-router';
 
 export const ProductList = () => {
   const [searchParameters] = useSearchParams();
-  const sortParameter = validateSortKey(searchParameters.get('sort') ?? 'name-asc');
-  const baseParameters = {
-    sort: sortParameter.commercetoolsParameter,
-  };
-  const queryParameters = sortParameter.requiresCurrency ? { ...baseParameters, priceCurrency: 'GBP' } : baseParameters;
-  const { products, error, isLongLoading, isLoading, refresh } = useProductData(queryParameters);
+  const sortData = buildSortQueryParameters(searchParameters.get('sort') ?? 'name-asc');
+  const searchData = buildSearchQueryParameters(searchParameters.get('search') ?? '');
+
+  const { products, error, isLongLoading, isLoading, refresh } = useProductData({
+    ...sortData,
+    ...searchData,
+  });
 
   if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
   if (isLongLoading) return <Spinner className="m-auto" size="xl" />;

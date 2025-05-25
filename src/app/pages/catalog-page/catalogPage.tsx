@@ -12,7 +12,7 @@ const CatalogPage = () => {
       <div className="flex flex-col gap-4">
         <div className="flex-1"></div>
         <div className="flex-3">
-          <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 sm:flex-row sm:justify-between">
+          <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 md:flex-row md:justify-between">
             <SearchBar />
             <SortBar />
           </div>

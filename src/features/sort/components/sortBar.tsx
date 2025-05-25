@@ -13,7 +13,6 @@ import { useSearchParams } from 'react-router';
 
 export const SortBar = () => {
   const [searchParameters, setSearchParameters] = useSearchParams();
-  const sortParameter = validateSortKey(searchParameters.get('sort') ?? 'name-asc');
 
   const handleSortChange = (value: string) => {
     const newParameter = new URLSearchParams(searchParameters.toString());
@@ -24,7 +23,7 @@ export const SortBar = () => {
 
   return (
     <div className="flex flex-1">
-      <Select value={sortParameter.shortKey} onValueChange={handleSortChange}>
+      <Select onValueChange={handleSortChange}>
         <SelectTrigger>
           <SelectValue placeholder="Sort by..." />
         </SelectTrigger>
