@@ -1,6 +1,6 @@
 import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
-import { CategoriesBar } from '~features/categories/components/categoriesBar';
+import { CategoryBar } from '~features/categories/components/categoryBar';
 import { ProductList } from '~features/fetch-products/components/productList';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
 import { SearchBar } from '~features/search/components/searchBar';
@@ -31,7 +31,7 @@ const CatalogPage = () => {
       </h1>
       <div className="flex flex-col gap-4 md:flex-row">
         <div className="w-1/5">
-          <CategoriesBar products={products} />
+          <CategoryBar products={products} />
         </div>
         <div className="w-4/5">
           <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 md:flex-row md:justify-between">
