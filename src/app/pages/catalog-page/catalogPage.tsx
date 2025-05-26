@@ -31,7 +31,7 @@ const CatalogPage = () => {
       </h1>
       <div className="flex flex-col gap-4 md:flex-row">
         <div className="w-1/5">
-          <CategoriesBar />
+          <CategoriesBar products={products} />
         </div>
         <div className="w-4/5">
           <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 md:flex-row md:justify-between">

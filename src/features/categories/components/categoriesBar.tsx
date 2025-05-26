@@ -1,15 +1,19 @@
-import { Card, CardHeader, CardTitle } from '~components/ui/card';
-import { buildCategoriesMap } from '~features/categories/utils/buildCategoriesMap';
-import { useProductData } from '~features/fetch-products/hooks/useProductData';
-import { Link, useSearchParams } from 'react-router';
+import type { ProductProjection } from '@commercetools/platform-sdk';
+import type { CategoryInfo } from '~features/categories/utils/buildCategories';
 
-export const CategoriesBar = () => {
-  const { products } = useProductData();
+import { Button } from '~components/ui/button/button';
+import { Card, CardHeader, CardTitle } from '~components/ui/card';
+import { buildCategoriesMap, buildCategoriesTree } from '~features/categories/utils/buildCategories';
+import { useSearchParams } from 'react-router';
+
+type CategoriesBarProps = {
+  products: ProductProjection[] | undefined;
+};
+
+export const CategoriesBar = ({ products }: CategoriesBarProps) => {
   const [searchParameters, setSearchParameters] = useSearchParams();
 
-  if (!products) return null;
-
-  const categories = [...buildCategoriesMap(products).entries()];
+  const categoriesTree = buildCategoriesTree(buildCategoriesMap(products));
 
   const handleOnClick = (value: string) => {
     const newParameter = new URLSearchParams(searchParameters.toString());
@@ -18,26 +22,31 @@ export const CategoriesBar = () => {
     setSearchParameters(newParameter);
   };
 
+  const renderCategories = (categories: CategoryInfo[]) => {
+    return (
+      <ul>
+        {categories.map((category) => (
+          <li key={category.name}>
+            <Button
+              onClick={() => {
+                handleOnClick(category.name);
+              }}
+            >
+              {category.name} ({category.count})
+            </Button>
+            {category.children.length > 0 && renderCategories(category.children)}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Categories</CardTitle>
       </CardHeader>
-      <ul>
-        {categories.map(([id, { name, count }]) => (
-          <li key={id}>
-            <Link
-              to={`/categories/${id}`}
-              className="flex items-center gap-2"
-              onClick={() => {
-                handleOnClick(id);
-              }}
-            >
-              {name} <span>{count}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {renderCategories(categoriesTree)}
     </Card>
   );
 };
