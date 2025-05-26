@@ -41,8 +41,8 @@
   --chart-1: #fc64ab;
   --chart-2: #facc00;
   --chart-3: #ff7a05;
-  --chart-4: #ff4d50;
-  --chart-5: #7a83ff;
+  --chart-4: #7a83ff;
+  --chart-5: #29dca6;
   --chart-active-dot: #000;
   --destructive: oklch(57.7% 0.245 27.325deg);
 }
@@ -59,8 +59,8 @@
   --chart-1: #fb3290;
   --chart-2: #e0b700;
   --chart-3: #eb6d00;
-  --chart-4: #ff6669;
-  --chart-5: #7a83ff;
+  --chart-4: #7a83ff;
+  --chart-5: #53ffc0;
   --chart-active-dot: #fff;
   --destructive: oklch(70.4% 0.191 22.216deg);
 }
