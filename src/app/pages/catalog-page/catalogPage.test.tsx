@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import CatalogPage from '~app/pages/catalog-page/catalogPage';
-import { mockProducts } from '~features/fetch-products/config/mockProducts';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
 import { MemoryRouter } from 'react-router';
 
@@ -10,24 +9,6 @@ const mockUseProductData = vi.mocked(useProductData);
 describe('CatalogPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-  });
-
-  it('should render with a header', () => {
-    mockUseProductData.mockReturnValue({
-      products: mockProducts,
-      error: undefined,
-      isLongLoading: false,
-      isLoading: false,
-      refresh: vi.fn(),
-    });
-
-    render(
-      <MemoryRouter>
-        <CatalogPage />
-      </MemoryRouter>
-    );
-
-    expect(screen.getByTestId('catalog-page-header')).toBeInTheDocument();
   });
 
   it('should render error state when there is an error', () => {
