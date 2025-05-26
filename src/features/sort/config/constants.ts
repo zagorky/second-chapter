@@ -2,6 +2,12 @@ import type { SortOption } from '~features/sort/types/types';
 
 export const SORT_OPTIONS: SortOption[] = [
   {
+    shortKey: 'default',
+    commercetoolsParameter: '',
+    label: 'Default',
+    requiresCurrency: false,
+  },
+  {
     shortKey: 'price-asc',
     commercetoolsParameter: 'price asc',
     label: 'Price (Low to High)',

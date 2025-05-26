@@ -1,6 +1,7 @@
 import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
 import { CategoryBar } from '~features/categories/components/categoryBar';
+import { buildCategoryQueryParameters } from '~features/categories/utils/buildCategoryQueryParameters';
 import { ProductList } from '~features/fetch-products/components/productList';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
 import { SearchBar } from '~features/search/components/searchBar';
@@ -13,12 +14,16 @@ import { useSearchParams } from 'react-router';
 
 const CatalogPage = () => {
   const [searchParameters] = useSearchParams();
-  const sortData = buildSortQueryParameters(searchParameters.get('sort') ?? 'name-asc');
+  const sortData = buildSortQueryParameters(searchParameters.get('sort') ?? '');
   const searchData = buildSearchQueryParameters(searchParameters.get('search') ?? '');
-
+  const categoryData = buildCategoryQueryParameters(
+    searchParameters.get('category') ?? '',
+    searchParameters.get('subcategory') ?? ''
+  );
   const { products, error, isLongLoading, isLoading, refresh } = useProductData({
     ...sortData,
     ...searchData,
+    ...categoryData,
   });
 
   if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;

@@ -17,7 +17,11 @@ export const SortBar = () => {
   const handleSortChange = (value: string) => {
     const newParameter = new URLSearchParams(searchParameters.toString());
 
-    newParameter.set('sort', validateSortKey(value).shortKey);
+    if (value === 'default') {
+      newParameter.delete('sort');
+    } else {
+      newParameter.set('sort', validateSortKey(value).shortKey);
+    }
     setSearchParameters(newParameter);
   };
 
