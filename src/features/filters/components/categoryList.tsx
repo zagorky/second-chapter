@@ -1,4 +1,4 @@
-import type { CategoryInfo } from '~features/filters/utils/buildCategories';
+import type { CategoryInfo } from '~features/filters/types/types';
 
 import { CategoryItem } from '~features/filters/components/categoryItem';
 import { useSearchParams } from 'react-router';

@@ -1,4 +1,4 @@
-import type { CategoryInfo } from '~features/filters/utils/buildCategories';
+import type { CategoryInfo } from '~features/filters/types/types';
 
 import { Button } from '~components/ui/button/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '~components/ui/collapsible';

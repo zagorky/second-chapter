@@ -1,16 +1,9 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
+import type { CategoryInfo } from '~features/filters/types/types';
 
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
 
-export type CategoryInfo = {
-  id: string;
-  name: string;
-  count: number;
-  parentId?: string;
-  children: CategoryInfo[];
-};
-
-export const buildCategoriesMap = (products: ProductProjection[] = []) => {
+export const buildCategoriesMap = (products: ProductProjection[]) => {
   const categoriesMap = new Map<string, CategoryInfo>();
 
   products.forEach((product) => {
