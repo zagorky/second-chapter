@@ -10,10 +10,13 @@ type CategoryTreeProps = {
 export const CategoryList = ({ categories }: CategoryTreeProps) => {
   const [searchParameters, setSearchParameters] = useSearchParams();
 
-  const handleOnClick = (value: string) => {
+  const handleOnClick = (category: string, subcategory: string) => {
     const newParameter = new URLSearchParams(searchParameters.toString());
 
-    newParameter.set('subcategory', value);
+    newParameter.delete('subcategory');
+    newParameter.delete('category');
+    newParameter.set('category', category);
+    newParameter.set('subcategory', subcategory);
     setSearchParameters(newParameter);
   };
 
@@ -27,7 +30,7 @@ export const CategoryList = ({ categories }: CategoryTreeProps) => {
             <button
               type="button"
               onClick={() => {
-                handleOnClick(category.name);
+                handleOnClick(category.parentId ?? '', category.id);
               }}
               className="hover:bg-background/80 w-full cursor-pointer rounded-sm p-2 text-left"
             >

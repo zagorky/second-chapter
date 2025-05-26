@@ -18,6 +18,8 @@ export const CategoryItem = ({ category }: CategoryItemProps) => {
   const handleOnClick = (value: string) => {
     const newParameter = new URLSearchParams(searchParameters.toString());
 
+    newParameter.delete('category');
+    newParameter.delete('subcategory');
     newParameter.set('category', value);
     setSearchParameters(newParameter);
   };
@@ -29,7 +31,7 @@ export const CategoryItem = ({ category }: CategoryItemProps) => {
           type="button"
           className="flex w-full cursor-pointer items-center justify-between text-sm"
           onClick={() => {
-            handleOnClick(category.name);
+            handleOnClick(category.id);
           }}
         >
           {category.name} ({category.count})

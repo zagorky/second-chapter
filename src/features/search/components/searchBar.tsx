@@ -22,7 +22,11 @@ export const SearchBar = () => {
   function onSubmit(value: z.infer<typeof searchBarSchema>) {
     const newParameter = new URLSearchParams(searchParameters.toString());
 
-    newParameter.set('search', value.search);
+    if (value.search.trim() === '') {
+      newParameter.delete('search');
+    } else {
+      newParameter.set('search', value.search);
+    }
     setSearchParameters(newParameter);
   }
 

@@ -1,6 +1,6 @@
 import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
-import { CategoryBar } from '~features/categories/components/categoryBar';
+import { FilterBar } from '~features/categories/components/filterBar';
 import { buildCategoryQueryParameters } from '~features/categories/utils/buildCategoryQueryParameters';
 import { ProductList } from '~features/fetch-products/components/productList';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
@@ -17,8 +17,8 @@ const CatalogPage = () => {
   const sortData = buildSortQueryParameters(searchParameters.get('sort') ?? '');
   const searchData = buildSearchQueryParameters(searchParameters.get('search') ?? '');
   const categoryData = buildCategoryQueryParameters(
-    searchParameters.get('category') ?? '',
-    searchParameters.get('subcategory') ?? ''
+    searchParameters.get('subcategory') ?? '',
+    searchParameters.get('category') ?? ''
   );
   const { products, error, isLongLoading, isLoading, refresh } = useProductData({
     ...sortData,
@@ -36,7 +36,7 @@ const CatalogPage = () => {
       </h1>
       <div className="flex flex-col gap-4 md:flex-row">
         <div className="w-1/5">
-          <CategoryBar products={products} />
+          <FilterBar products={products} />
         </div>
         <div className="w-4/5">
           <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 md:flex-row md:justify-between">
