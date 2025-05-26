@@ -1,11 +1,11 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-import { CategoryList } from '~features/categories/components/categoryList';
-import { ResetButton } from '~features/categories/components/resetButton';
-import { buildCategoriesMap, buildCategoriesTree } from '~features/categories/utils/buildCategories';
+import { CategoryList } from '~features/filters/components/categoryList';
+import { ResetButton } from '~features/filters/components/resetButton';
+import { buildCategoriesMap, buildCategoriesTree } from '~features/filters/utils/buildCategories';
 
 type CategoriesBarProps = {
-  products: ProductProjection[] | undefined;
+  products: ProductProjection[];
 };
 
 export const FilterBar = ({ products }: CategoriesBarProps) => {

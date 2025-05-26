@@ -47,6 +47,7 @@ describe('CatalogPage', () => {
       </MemoryRouter>
     );
 
+    expect(screen.queryByTestId('empty-list')).not.toBeInTheDocument();
     expect(screen.getByTestId('data-error-element')).toBeInTheDocument();
     expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
     expect(screen.queryByTestId('catalog-page-product-list')).not.toBeInTheDocument();
@@ -67,7 +68,28 @@ describe('CatalogPage', () => {
       </MemoryRouter>
     );
 
+    expect(screen.queryByTestId('empty-list')).not.toBeInTheDocument();
     expect(screen.getByTestId('spinner')).toBeInTheDocument();
+    expect(screen.queryByTestId('data-error-element')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('catalog-page-product-list')).not.toBeInTheDocument();
+  });
+
+  it('should render empty list when no products', () => {
+    mockUseProductData.mockReturnValue({
+      products: [],
+      error: undefined,
+      isLongLoading: false,
+      isLoading: false,
+      refresh: vi.fn(),
+    });
+
+    render(
+      <MemoryRouter>
+        <CatalogPage />
+      </MemoryRouter>
+    );
+    expect(screen.getByTestId('empty-list')).toBeInTheDocument();
+    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
     expect(screen.queryByTestId('data-error-element')).not.toBeInTheDocument();
     expect(screen.queryByTestId('catalog-page-product-list')).not.toBeInTheDocument();
   });

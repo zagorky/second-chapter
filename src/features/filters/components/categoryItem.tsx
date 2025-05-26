@@ -1,8 +1,8 @@
-import type { CategoryInfo } from '~features/categories/utils/buildCategories';
+import type { CategoryInfo } from '~features/filters/utils/buildCategories';
 
 import { Button } from '~components/ui/button/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '~components/ui/collapsible';
-import { CategoryList } from '~features/categories/components/categoryList';
+import { CategoryList } from '~features/filters/components/categoryList';
 import { ChevronsUpDown } from 'lucide-react';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router';

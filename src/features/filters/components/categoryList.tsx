@@ -1,6 +1,6 @@
-import type { CategoryInfo } from '~features/categories/utils/buildCategories';
+import type { CategoryInfo } from '~features/filters/utils/buildCategories';
 
-import { CategoryItem } from '~features/categories/components/categoryItem';
+import { CategoryItem } from '~features/filters/components/categoryItem';
 import { useSearchParams } from 'react-router';
 
 type CategoryTreeProps = {

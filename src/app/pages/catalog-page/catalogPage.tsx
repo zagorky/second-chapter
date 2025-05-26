@@ -1,9 +1,10 @@
 import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
-import { FilterBar } from '~features/categories/components/filterBar';
-import { buildCategoryQueryParameters } from '~features/categories/utils/buildCategoryQueryParameters';
+import { EmptyList } from '~features/fetch-products/components/emptyList';
 import { ProductList } from '~features/fetch-products/components/productList';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
+import { FilterBar } from '~features/filters/components/filterBar';
+import { buildCategoryQueryParameters } from '~features/filters/utils/buildCategoryQueryParameters';
 import { SearchBar } from '~features/search/components/searchBar';
 import { buildSearchQueryParameters } from '~features/search/utils/buildSearchQueryParameters';
 import { SortBar } from '~features/sort/components/sortBar';
@@ -27,7 +28,8 @@ const CatalogPage = () => {
   });
 
   if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
-  if (isLongLoading) return <Spinner className="m-auto" size="xl" />;
+  if (isLongLoading || products === undefined) return <Spinner className="m-auto" size="xl" />;
+  if (!isLoading && products.length === 0) return <EmptyList />;
 
   return (
     <>
@@ -43,7 +45,7 @@ const CatalogPage = () => {
             <SearchBar />
             <SortBar />
           </div>
-          <ProductList products={products} isLoading={isLoading} />
+          <ProductList products={products} />
         </div>
       </div>
     </>
