@@ -1,17 +1,25 @@
 import { Button } from '~components/ui/button/button';
+import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import * as React from 'react';
+import React from 'react';
 
 import { cn } from '~/lib/utilities';
 
+import { DotButton } from './dotButton';
+import { useDotButton } from './useDotButton';
+
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
-type CarouselOptions = UseCarouselParameters[0];
+type BaseCarouselOptions = UseCarouselParameters[0];
 type CarouselPlugin = UseCarouselParameters[1];
 
+type CarouselOptions = BaseCarouselOptions & {
+  autoplay?: boolean | { delay?: number; stopOnInteraction?: boolean };
+};
+
 type CarouselProps = {
-  opts?: CarouselOptions;
+  options?: CarouselOptions;
   plugins?: CarouselPlugin;
   orientation?: 'horizontal' | 'vertical';
   setApi?: (api: CarouselApi) => void;
@@ -25,6 +33,9 @@ type CarouselContextProps = {
   canScrollPrev: boolean;
   canScrollNext: boolean;
   plugins?: CarouselPlugin;
+  selectedIndex: number;
+  scrollSnaps: number[];
+  onDotButtonClick: (index: number) => void;
 } & CarouselProps;
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
@@ -41,19 +52,46 @@ function useCarousel() {
 
 function Carousel({
   orientation = 'horizontal',
-  opts,
+  options,
   setApi,
   plugins,
   className,
   children,
   ...props
 }: React.ComponentProps<'div'> & CarouselProps) {
+  const autoplayPlugin = React.useMemo(() => {
+    const autoplayConfig = options?.autoplay;
+
+    if (!autoplayConfig) return;
+
+    const DEFAULT_DELAY = 3000;
+
+    if (typeof autoplayConfig === 'boolean') {
+      return Autoplay({ delay: DEFAULT_DELAY, stopOnInteraction: false });
+    }
+
+    return Autoplay({
+      delay: autoplayConfig.delay ?? DEFAULT_DELAY,
+      stopOnInteraction: autoplayConfig.stopOnInteraction ?? true,
+    });
+  }, [options?.autoplay]);
+
+  const allPlugins = React.useMemo(() => {
+    const pluginArray = plugins ? (Array.isArray(plugins) ? plugins : [plugins]) : [];
+
+    if (autoplayPlugin) {
+      pluginArray.push(autoplayPlugin);
+    }
+
+    return pluginArray;
+  }, [plugins, autoplayPlugin]);
+
   const [carouselReference, api] = useEmblaCarousel(
     {
-      ...opts,
+      ...options,
       axis: orientation === 'horizontal' ? 'x' : 'y',
     },
-    plugins
+    allPlugins
   );
   const [canScrollPrevious, setCanScrollPrevious] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
@@ -74,6 +112,18 @@ function Carousel({
   const scrollNext = React.useCallback(() => {
     api?.scrollNext();
   }, [api]);
+
+  const onNavButtonClick = React.useCallback((emblaApi: CarouselApi) => {
+    if (!emblaApi) return;
+
+    const autoplay = emblaApi.plugins().autoplay;
+
+    const resetOrStop = autoplay.options.stopOnInteraction === false ? autoplay.reset : autoplay.stop;
+
+    resetOrStop();
+  }, []);
+
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api, onNavButtonClick);
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -106,23 +156,41 @@ function Carousel({
     api.on('select', onSelect);
 
     return () => {
-      api?.off('select', onSelect);
+      api.off('select', onSelect);
     };
   }, [api, onSelect]);
 
+  const contextValue = React.useMemo(
+    () => ({
+      carouselRef: carouselReference,
+      api: api,
+      options,
+      orientation,
+      scrollPrev: scrollPrevious,
+      scrollNext,
+      canScrollPrev: canScrollPrevious,
+      canScrollNext,
+      selectedIndex,
+      scrollSnaps,
+      onDotButtonClick,
+    }),
+    [
+      carouselReference,
+      api,
+      options,
+      orientation,
+      scrollPrevious,
+      scrollNext,
+      canScrollPrevious,
+      canScrollNext,
+      selectedIndex,
+      scrollSnaps,
+      onDotButtonClick,
+    ]
+  );
+
   return (
-    <CarouselContext
-      value={{
-        carouselRef: carouselReference,
-        api: api,
-        opts,
-        orientation: orientation || (opts?.axis === 'y' ? 'vertical' : 'horizontal'),
-        scrollPrev: scrollPrevious,
-        scrollNext,
-        canScrollPrev: canScrollPrevious,
-        canScrollNext,
-      }}
-    >
+    <CarouselContext value={contextValue}>
       <div
         onKeyDownCapture={handleKeyDown}
         className={cn('relative', className)}
@@ -167,20 +235,14 @@ function CarouselPrevious({
   size = 'icon',
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { orientation, scrollPrev, canScrollPrev } = useCarousel();
+  const { scrollPrev, canScrollPrev } = useCarousel();
 
   return (
     <Button
       data-slot="carousel-previous"
       variant={variant}
       size={size}
-      className={cn(
-        'rounded-base absolute size-8',
-        orientation === 'horizontal'
-          ? 'top-1/2 -left-12 -translate-y-1/2'
-          : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
-        className
-      )}
+      className={cn('rounded-base size-8', className)}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
@@ -197,20 +259,14 @@ function CarouselNext({
   size = 'icon',
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { orientation, scrollNext, canScrollNext } = useCarousel();
+  const { scrollNext, canScrollNext } = useCarousel();
 
   return (
     <Button
       data-slot="carousel-next"
       variant={variant}
       size={size}
-      className={cn(
-        'rounded-base absolute h-8 w-8',
-        orientation === 'horizontal'
-          ? 'top-1/2 -right-12 -translate-y-1/2'
-          : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
-        className
-      )}
+      className={cn('rounded-base h-8 w-8', className)}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
@@ -220,5 +276,23 @@ function CarouselNext({
     </Button>
   );
 }
+function CarouselDots({ className, ...props }: React.ComponentProps<'div'>) {
+  const { scrollSnaps, selectedIndex, onDotButtonClick } = useCarousel();
 
-export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext };
+  return (
+    <div data-slot="carousel-dots" className={cn('flex justify-center gap-2 p-2', className)} {...props}>
+      {scrollSnaps.map((_, index) => (
+        <DotButton
+          key={`carousel-dot-${String(index)}`}
+          onClick={() => {
+            onDotButtonClick(index);
+          }}
+          className={cn(index === selectedIndex ? 'bg-main' : 'bg-transparent')}
+          aria-label={`Go to slide ${String(index + 1)}`}
+        />
+      ))}
+    </div>
+  );
+}
+
+export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselDots };

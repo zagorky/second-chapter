@@ -24,5 +24,5 @@ export const getEnumAttribute = (attributes: Attribute[] | undefined, key: strin
     };
   }
 
-  return { label: 'unknown', key: 'unknown' };
+  return { label: 'Unknown', key: 'Unknown' };
 };
