@@ -6,4 +6,6 @@ export const filterFormSchema = z.object({
     subcategory: z.array(z.string()),
   }),
   conditions: z.array(z.string()),
+  price: z.array(z.number()),
+  sale: z.boolean(),
 });

@@ -20,7 +20,9 @@ const CatalogPage = () => {
   const filterData = buildFilterQueryParameters(
     searchParameters.get('subcategory') ?? '',
     searchParameters.get('category') ?? '',
-    searchParameters.get('conditions') ?? ''
+    searchParameters.get('conditions') ?? '',
+    searchParameters.get('sale') ?? '',
+    searchParameters.get('price') ?? ''
   );
   const { products, error, isLongLoading, isLoading, refresh } = useProductData({
     ...sortData,

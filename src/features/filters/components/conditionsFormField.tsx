@@ -14,35 +14,29 @@ export const ConditionsFormField = ({ conditions }: ConditionListProps) => {
   return (
     <FormField
       name="conditions"
-      render={() => (
+      control={form.control}
+      render={({ field }) => (
         <FormItem>
           <FormLabel>Conditions</FormLabel>
           <div className="space-y-2">
             {conditions.map(([label, { id, count }]) => (
-              <FormField
-                key={id}
-                control={form.control}
-                name="conditions"
-                render={({ field }) => (
-                  <FormItem className="flex items-center space-x-2">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value.includes(label)}
-                        onCheckedChange={(checked) => {
-                          if (checked) {
-                            field.onChange([...field.value, label]);
-                          } else {
-                            field.onChange(field.value.filter((item: string) => item !== label));
-                          }
-                        }}
-                      />
-                    </FormControl>
-                    <FormLabel className="text-sm font-normal">
-                      {label} ({count})
-                    </FormLabel>
-                  </FormItem>
-                )}
-              />
+              <FormItem key={id} className="flex items-center space-x-2">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value.includes(label)}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        field.onChange([...field.value, label]);
+                      } else {
+                        field.onChange(field.value.filter((item: string) => item !== label));
+                      }
+                    }}
+                  />
+                </FormControl>
+                <FormLabel className="text-sm font-normal">
+                  {label} ({count})
+                </FormLabel>
+              </FormItem>
             ))}
           </div>
         </FormItem>

@@ -6,9 +6,11 @@ import { Button } from '~components/ui/button/button';
 import { Form } from '~components/ui/form/form';
 import { ConditionsFormField } from '~features/filters/components/conditionsFormField';
 import { GenresFormField } from '~features/filters/components/genresFormField';
+import { PriceFormField } from '~features/filters/components/priceFormField';
 import { filterFormSchema } from '~features/filters/types/schemas';
 import { buildCategoriesMap, buildCategoriesTree } from '~features/filters/utils/buildCategories';
 import { buildConditionsMap, buildConditionsTree } from '~features/filters/utils/buildConditions';
+import { getPriceFilterData } from '~features/filters/utils/getPriceFilterData';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router';
 
@@ -19,6 +21,7 @@ type CategoriesBarProps = {
 export const FilterBar = ({ products }: CategoriesBarProps) => {
   const categories = buildCategoriesTree(buildCategoriesMap(products));
   const conditions = buildConditionsTree(buildConditionsMap(products));
+  const prices = getPriceFilterData(products);
 
   const [searchParameters, setSearchParameters] = useSearchParams();
 
@@ -30,6 +33,8 @@ export const FilterBar = ({ products }: CategoriesBarProps) => {
         subcategory: searchParameters.get('subcategory')?.split(',') ?? [],
       },
       conditions: searchParameters.get('conditions')?.split(',') ?? [],
+      price: searchParameters.get('price')?.split('-').map(Number) ?? [prices.min, prices.max],
+      sale: searchParameters.get('sale') === 'true',
     },
   });
 
@@ -45,21 +50,21 @@ export const FilterBar = ({ products }: CategoriesBarProps) => {
     if (values.conditions.length > 0) {
       newParameter.set('conditions', values.conditions.join(','));
     }
+    if (values.sale) {
+      newParameter.set('sale', 'true');
+    }
 
+    if (values.price[0] !== prices.min || values.price[1] !== prices.max) {
+      newParameter.set('price', values.price.join('-'));
+    }
     setSearchParameters(newParameter);
   };
 
   const onReset = () => {
-    const newParameter = new URLSearchParams(searchParameters.toString());
-
-    newParameter.delete('category');
-    newParameter.delete('subcategory');
-    newParameter.delete('conditions');
-    newParameter.delete('price');
-    newParameter.delete('isSale');
-    newParameter.delete('search');
+    const newParameter = new URLSearchParams();
 
     setSearchParameters(newParameter);
+    form.reset();
   };
 
   return (
@@ -68,6 +73,7 @@ export const FilterBar = ({ products }: CategoriesBarProps) => {
         <form onSubmit={(event) => void form.handleSubmit(onApply)(event)} className="space-y-8">
           <GenresFormField categories={categories} />
           <ConditionsFormField conditions={conditions} />
+          <PriceFormField prices={prices} />
           <Button type="submit">Apply</Button>
           <Button type="reset" onClick={onReset}>
             Reset
