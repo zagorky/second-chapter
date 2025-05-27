@@ -2,8 +2,14 @@
 
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '~components/carousel/carousel';
-import { CarouselDots } from '~components/carousel/carousel';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  CarouselDots,
+} from '~components/carousel/carousel';
 import { Badge } from '~components/ui/badge/badge';
 import { Button } from '~components/ui/button/button';
 import { Card, CardContent, CardHeader, CardTitle } from '~components/ui/card';

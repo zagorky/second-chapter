@@ -1,3 +1,5 @@
+import type { EmblaCarouselType, EmblaEventType } from 'embla-carousel';
+
 import { Button } from '~components/ui/button/button';
 import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react';
@@ -50,6 +52,12 @@ function useCarousel() {
   return context;
 }
 
+const TWEEN_FACTOR_BASE = 0.9;
+const SCALE = 0.3;
+const TRANSITION_DURATION = 0.5;
+
+const numberWithinRange = (number: number, min: number, max: number): number => Math.min(Math.max(number, min), max);
+
 function Carousel({
   orientation = 'horizontal',
   options,
@@ -64,7 +72,7 @@ function Carousel({
 
     if (!autoplayConfig) return;
 
-    const DEFAULT_DELAY = 3000;
+    const DEFAULT_DELAY = 4000;
 
     if (typeof autoplayConfig === 'boolean') {
       return Autoplay({ delay: DEFAULT_DELAY, stopOnInteraction: false });
@@ -95,6 +103,61 @@ function Carousel({
   );
   const [canScrollPrevious, setCanScrollPrevious] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
+
+  const tweenFactor = React.useRef(0);
+  const tweenNodes = React.useRef<HTMLElement[]>([]);
+
+  const setTweenNodes = React.useCallback((emblaApi: EmblaCarouselType): void => {
+    tweenNodes.current = emblaApi.slideNodes().map((slideNode) => {
+      return slideNode.querySelector('[data-carousel-scale-target]') ?? slideNode;
+    });
+  }, []);
+
+  const setTweenFactor = React.useCallback((emblaApi: EmblaCarouselType) => {
+    const slideCount = emblaApi.scrollSnapList().length;
+
+    tweenFactor.current = TWEEN_FACTOR_BASE * slideCount;
+  }, []);
+
+  const tweenScale = React.useCallback((emblaApi: EmblaCarouselType, eventName?: EmblaEventType) => {
+    const engine = emblaApi.internalEngine();
+    const scrollProgress = emblaApi.scrollProgress();
+    const slidesInView = emblaApi.slidesInView();
+    const isScrollEvent = eventName === 'scroll';
+
+    emblaApi.scrollSnapList().forEach((scrollSnap, snapIndex) => {
+      let diffToTarget = scrollSnap - scrollProgress;
+      const slidesInSnap = engine.slideRegistry[snapIndex];
+
+      slidesInSnap.forEach((slideIndex) => {
+        if (isScrollEvent && !slidesInView.includes(slideIndex)) return;
+
+        if (engine.options.loop) {
+          engine.slideLooper.loopPoints.forEach((loopItem) => {
+            const target = loopItem.target();
+
+            if (slideIndex === loopItem.index && target !== 0) {
+              const sign = Math.sign(target);
+
+              if (sign === -1) {
+                diffToTarget = scrollSnap - (1 + scrollProgress);
+              }
+              if (sign === 1) {
+                diffToTarget = scrollSnap + (1 - scrollProgress);
+              }
+            }
+          });
+        }
+
+        const tweenValue = 1 - Math.abs(diffToTarget * tweenFactor.current);
+        const scale = numberWithinRange(tweenValue, SCALE, 1).toString();
+        const tweenNode = tweenNodes.current[slideIndex];
+
+        tweenNode.style.transform = `scale(${scale})`;
+        tweenNode.style.transition = isScrollEvent ? 'none' : `transform ${String(TRANSITION_DURATION)}s ease-out`;
+      });
+    });
+  }, []);
 
   const onSelect = React.useCallback((api: CarouselApi) => {
     if (!api) {
@@ -159,6 +222,21 @@ function Carousel({
       api.off('select', onSelect);
     };
   }, [api, onSelect]);
+
+  React.useEffect(() => {
+    if (!api) return;
+
+    setTweenNodes(api);
+    setTweenFactor(api);
+    tweenScale(api);
+
+    api
+      .on('reInit', setTweenNodes)
+      .on('reInit', setTweenFactor)
+      .on('reInit', tweenScale)
+      .on('scroll', tweenScale)
+      .on('slideFocus', tweenScale);
+  }, [api, tweenScale, setTweenNodes, setTweenFactor]);
 
   const contextValue = React.useMemo(
     () => ({
