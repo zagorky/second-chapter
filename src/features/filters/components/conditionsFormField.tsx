@@ -1,0 +1,52 @@
+import type { ConditionInfo, FilterFormValues } from '~features/filters/types/types';
+
+import { Checkbox } from '~components/ui/checkbox';
+import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
+import { useFormContext } from 'react-hook-form';
+
+type ConditionListProps = {
+  conditions: [string, ConditionInfo][];
+};
+
+export const ConditionsFormField = ({ conditions }: ConditionListProps) => {
+  const form = useFormContext<FilterFormValues>();
+
+  return (
+    <FormField
+      name="conditions"
+      render={() => (
+        <FormItem>
+          <FormLabel>Conditions</FormLabel>
+          <div className="space-y-2">
+            {conditions.map(([label, { id, count }]) => (
+              <FormField
+                key={id}
+                control={form.control}
+                name="conditions"
+                render={({ field }) => (
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value.includes(id)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            field.onChange([...field.value, id]);
+                          } else {
+                            field.onChange(field.value.filter((item: string) => item !== id));
+                          }
+                        }}
+                      />
+                    </FormControl>
+                    <FormLabel className="text-sm font-normal">
+                      {label} ({count})
+                    </FormLabel>
+                  </FormItem>
+                )}
+              />
+            ))}
+          </div>
+        </FormItem>
+      )}
+    />
+  );
+};

@@ -1,7 +1,13 @@
-export const buildCategoryQueryParameters = (subcategory: string, category?: string) => {
-  if (!category && !subcategory) return {};
-  if (category && subcategory) return { filter: [`categories.id:"${category}"`, `categories.id:"${subcategory}"`] };
-  if (category) return { filter: [`categories.id:"${category}"`] };
+import { parseParametersToArray } from '~features/filters/utils/parseParameters';
 
-  return { filter: [`categories.id:"${subcategory}"`] };
+export const buildCategoryQueryParameters = (subcategory: string, category: string) => {
+  const allCategories = [...parseParametersToArray(category), ...parseParametersToArray(subcategory)];
+
+  if (allCategories.length === 0) return {};
+
+  const filters = `categories.id:${allCategories.map((id) => `"${id}"`).join(',')}`;
+
+  return {
+    filter: filters,
+  };
 };
