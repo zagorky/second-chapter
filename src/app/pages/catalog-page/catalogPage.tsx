@@ -30,27 +30,31 @@ const CatalogPage = () => {
     ...filterData,
   });
 
-  if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
-  if (isLongLoading || products === undefined) return <Spinner className="m-auto" size="xl" />;
-  if (!isLoading && products.length === 0) return <EmptyList />;
-
   return (
     <>
       <h1 className={'heading-1'} {...withDataTestId('catalog-page-header')}>
         Catalog
       </h1>
-      <div className="flex flex-col gap-4 md:flex-row">
-        <div className="w-1/5">
-          <FilterBar products={products} />
-        </div>
-        <div className="w-4/5">
-          <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 md:flex-row md:justify-between">
-            <SearchBar />
-            <SortBar />
-          </div>
-          <ProductList products={products} />
-        </div>
+      <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 md:flex-row md:justify-between">
+        <SearchBar />
+        <SortBar />
       </div>
+      {error ? (
+        <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />
+      ) : isLongLoading || products === undefined ? (
+        <Spinner className="m-auto" size="xl" />
+      ) : !isLoading && products.length === 0 ? (
+        <EmptyList />
+      ) : (
+        <>
+          <div className="flex flex-col gap-4 md:flex-row">
+            <div className="w-1/5">
+              <FilterBar products={products} />
+            </div>
+            <ProductList products={products} />
+          </div>
+        </>
+      )}
     </>
   );
 };
