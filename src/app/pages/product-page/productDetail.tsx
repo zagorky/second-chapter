@@ -32,30 +32,36 @@ const PRODUCT_DETAIL_TEXTS = {
   DESCRIPTION: 'Description',
 } as const;
 
-const createCarousel = (images: { url: string }[], identifier: string) => (
-  <div className="flex w-full flex-col items-center gap-4">
-    <Carousel className="w-full" options={{ loop: true, autoplay: true }}>
-      <div className="flex items-center gap-4">
-        <CarouselPrevious />
-        <CarouselContent className="max-w-[500px]">
-          {images.map((image, index) => (
-            <CarouselItem key={`${identifier}-carousel-${String(index)}`}>
-              <div className="p-[10px]">
-                <Card className="bg-main text-main-foreground p-0">
-                  <CardContent className="flex aspect-square items-center justify-center p-4">
-                    <ImgElement imageUrl={image.url} alt={`${identifier}-carousel-${String(index)}`} />
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselNext />
-      </div>
-      <CarouselDots />
-    </Carousel>
-  </div>
-);
+const createCarousel = (images: { url: string }[], identifier: string) => {
+  const hasMultipleImages = images.length !== 1;
+
+  return (
+    <div className="flex w-full flex-col items-center gap-4">
+      <Carousel className="w-full" options={{ loop: true, autoplay: true }}>
+        <div className="flex items-center gap-4">
+          {hasMultipleImages && <CarouselPrevious />}
+          <CarouselContent className="max-w-[500px]">
+            {images.map((image, index) => (
+              <CarouselItem key={`${identifier}-carousel-${String(index)}`}>
+                <div className="p-[10px]">
+                  <Card className="bg-main text-main-foreground p-0">
+                    <CardContent className="flex aspect-square items-center justify-center p-4">
+                      <ImgElement imageUrl={image.url} alt={`${identifier}-carousel-${String(index)}`} />
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+
+          {hasMultipleImages && <CarouselNext />}
+        </div>
+
+        {hasMultipleImages && <CarouselDots />}
+      </Carousel>
+    </div>
+  );
+};
 
 export const ProductDetail = ({ product }: ProductDetailProps) => {
   const author = getStringAttribute(product.masterVariant.attributes, 'author');
