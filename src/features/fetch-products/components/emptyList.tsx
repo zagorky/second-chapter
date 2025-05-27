@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 
 export const EmptyList = () => {
   return (
-    <div className="flex h-[calc(100vh-200px)] flex-col items-center justify-center" {...withDataTestId('empty-list')}>
+    <div className="flex flex-col items-center justify-center" {...withDataTestId('empty-list')}>
       <div className="m-auto max-w-xl p-10">
         <h3>Fear not, intrepid reader!</h3>
         <p>
