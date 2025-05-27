@@ -1,20 +1,10 @@
 import { parseParametersToArray } from '~features/filters/utils/parseParameters';
 
-export const buildFilterQueryParameters = (
-  subcategory: string,
-  category: string,
-  conditions: string,
-  isDiscount: string,
-  price: string
-) => {
+export const buildFilterQueryParameters = (conditions: string, isDiscount: string, price: string) => {
   const filters: string[] = [];
 
-  const allCategories = [...parseParametersToArray(category), ...parseParametersToArray(subcategory)];
   const allConditions = parseParametersToArray(conditions);
 
-  if (allCategories.length > 0) {
-    filters.push(`categories.id:${allCategories.map((id) => `"${id}"`).join(',')}`);
-  }
   if (allConditions.length > 0) {
     filters.push(`variants.attributes.condition.label:${allConditions.map((id) => `"${id}"`).join(',')}`);
   }

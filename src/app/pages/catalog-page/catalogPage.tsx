@@ -18,12 +18,11 @@ const CatalogPage = () => {
   const sortData = buildSortQueryParameters(searchParameters.get('sort') ?? '');
   const searchData = buildSearchQueryParameters(searchParameters.get('search') ?? '');
   const filterData = buildFilterQueryParameters(
-    searchParameters.get('subcategory') ?? '',
-    searchParameters.get('category') ?? '',
     searchParameters.get('conditions') ?? '',
     searchParameters.get('sale') ?? '',
     searchParameters.get('price') ?? ''
   );
+
   const { products, error, isLongLoading, isLoading, refresh } = useProductData({
     ...sortData,
     ...searchData,
