@@ -19,7 +19,7 @@ const getPriceRange = (products: ProductProjection[]) => {
   products.forEach((product) => {
     const price = product.masterVariant.prices?.[0];
 
-    if (price && !price.discounted) {
+    if (price) {
       const amount = price.value.centAmount;
 
       if (amount > 0) {
