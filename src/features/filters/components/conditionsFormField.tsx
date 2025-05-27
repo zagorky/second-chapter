@@ -27,12 +27,12 @@ export const ConditionsFormField = ({ conditions }: ConditionListProps) => {
                   <FormItem className="flex items-center space-x-2">
                     <FormControl>
                       <Checkbox
-                        checked={field.value.includes(id)}
+                        checked={field.value.includes(label)}
                         onCheckedChange={(checked) => {
                           if (checked) {
-                            field.onChange([...field.value, id]);
+                            field.onChange([...field.value, label]);
                           } else {
-                            field.onChange(field.value.filter((item: string) => item !== id));
+                            field.onChange(field.value.filter((item: string) => item !== label));
                           }
                         }}
                       />

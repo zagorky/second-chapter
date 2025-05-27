@@ -4,7 +4,7 @@ import { EmptyList } from '~features/fetch-products/components/emptyList';
 import { ProductList } from '~features/fetch-products/components/productList';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
 import { FilterBar } from '~features/filters/components/filterBar';
-import { buildCategoryQueryParameters } from '~features/filters/utils/buildCategoryQueryParameters';
+import { buildFilterQueryParameters } from '~features/filters/utils/buildFilterQueryParameters';
 import { SearchBar } from '~features/search/components/searchBar';
 import { buildSearchQueryParameters } from '~features/search/utils/buildSearchQueryParameters';
 import { SortBar } from '~features/sort/components/sortBar';
@@ -17,14 +17,15 @@ const CatalogPage = () => {
   const [searchParameters] = useSearchParams();
   const sortData = buildSortQueryParameters(searchParameters.get('sort') ?? '');
   const searchData = buildSearchQueryParameters(searchParameters.get('search') ?? '');
-  const categoryData = buildCategoryQueryParameters(
+  const filterData = buildFilterQueryParameters(
     searchParameters.get('subcategory') ?? '',
-    searchParameters.get('category') ?? ''
+    searchParameters.get('category') ?? '',
+    searchParameters.get('conditions') ?? ''
   );
   const { products, error, isLongLoading, isLoading, refresh } = useProductData({
     ...sortData,
     ...searchData,
-    ...categoryData,
+    ...filterData,
   });
 
   if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
