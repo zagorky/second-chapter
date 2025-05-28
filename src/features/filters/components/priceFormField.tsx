@@ -1,4 +1,4 @@
-import type { FilterFormValues, PriceFilterData } from '~features/filters/types/types';
+import type { FilterFormValues } from '~features/filters/types/types';
 
 import { Checkbox } from '~components/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
@@ -7,7 +7,11 @@ import { formatPrice } from '~features/fetch-products/utils/formatPrice';
 import { useFormContext } from 'react-hook-form';
 
 type PriceFilterProps = {
-  prices: PriceFilterData;
+  prices: {
+    discountProductsNumber: number;
+    min: number;
+    max: number;
+  };
 };
 
 export const PriceFormField = ({ prices }: PriceFilterProps) => {

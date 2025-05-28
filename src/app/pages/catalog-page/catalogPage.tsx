@@ -1,9 +1,12 @@
 import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
+import { CategoryBar } from '~features/category/components/categoryBar';
+import { buildCategoryQueryParameters } from '~features/category/utils/buildCategoryQueryParameters';
 import { EmptyList } from '~features/fetch-products/components/emptyList';
 import { ProductList } from '~features/fetch-products/components/productList';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
 import { FilterBar } from '~features/filters/components/filterBar';
+import { useFacetsData } from '~features/filters/hooks/useFacetsData';
 import { buildFilterQueryParameters } from '~features/filters/utils/buildFilterQueryParameters';
 import { SearchBar } from '~features/search/components/searchBar';
 import { buildSearchQueryParameters } from '~features/search/utils/buildSearchQueryParameters';
@@ -22,11 +25,17 @@ const CatalogPage = () => {
     searchParameters.get('sale') ?? '',
     searchParameters.get('price') ?? ''
   );
+  const categoryData = buildCategoryQueryParameters(
+    searchParameters.get('subcategory') ?? '',
+    searchParameters.get('category') ?? ''
+  );
 
+  const { conditions, sale, price, facetsError } = useFacetsData();
   const { products, error, isLongLoading, isLoading, refresh } = useProductData({
     ...sortData,
     ...searchData,
     ...filterData,
+    ...categoryData,
   });
 
   return (
@@ -38,9 +47,9 @@ const CatalogPage = () => {
         <SearchBar />
         <SortBar />
       </div>
-      {error ? (
+      {facetsError || error ? (
         <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />
-      ) : isLongLoading || products === undefined ? (
+      ) : isLongLoading || !sale || !conditions || !price || products === undefined ? (
         <Spinner className="m-auto" size="xl" />
       ) : !isLoading && products.length === 0 ? (
         <EmptyList />
@@ -48,7 +57,8 @@ const CatalogPage = () => {
         <>
           <div className="flex flex-col gap-4 md:flex-row">
             <div className="w-1/5">
-              <FilterBar products={products} />
+              <CategoryBar products={products} />
+              <FilterBar sale={sale} conditions={conditions} price={price} />
             </div>
             <ProductList products={products} />
           </div>

@@ -1,10 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import CatalogPage from '~app/pages/catalog-page/catalogPage';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
+import { useFacetsData } from '~features/filters/hooks/useFacetsData';
 import { MemoryRouter } from 'react-router';
 
 vi.mock('~features/fetch-products/hooks/useProductData');
 const mockUseProductData = vi.mocked(useProductData);
+
+vi.mock('~features/filters/hooks/useFacetsData');
+const mockUseFacetsData = vi.mocked(useFacetsData);
 
 describe('CatalogPage', () => {
   beforeEach(() => {
@@ -20,6 +24,13 @@ describe('CatalogPage', () => {
       isLongLoading: false,
       isLoading: false,
       refresh: vi.fn(),
+    });
+    mockUseFacetsData.mockReturnValue({
+      sale: null,
+      conditions: null,
+      price: null,
+      categories: null,
+      facetsError: testError,
     });
 
     render(
@@ -42,7 +53,13 @@ describe('CatalogPage', () => {
       isLoading: true,
       refresh: vi.fn(),
     });
-
+    mockUseFacetsData.mockReturnValue({
+      sale: null,
+      conditions: null,
+      price: null,
+      categories: null,
+      facetsError: undefined,
+    });
     render(
       <MemoryRouter>
         <CatalogPage />
@@ -63,12 +80,48 @@ describe('CatalogPage', () => {
       isLoading: false,
       refresh: vi.fn(),
     });
+    mockUseFacetsData.mockReturnValue({
+      sale: {
+        type: 'terms',
+        terms: [{ term: 'new', count: 10 }],
+        missing: 0,
+        total: 10,
+        other: 0,
+        dataType: 'number',
+      },
+      conditions: {
+        type: 'terms',
+        terms: [{ term: 'new', count: 10 }],
+        missing: 0,
+        total: 10,
+        other: 0,
+        dataType: 'number',
+      },
+      price: {
+        type: 'terms',
+        terms: [{ term: 'new', count: 10 }],
+        missing: 0,
+        total: 10,
+        other: 0,
+        dataType: 'number',
+      },
+      categories: {
+        type: 'terms',
+        terms: [{ term: 'new', count: 10 }],
+        missing: 0,
+        total: 10,
+        other: 0,
+        dataType: 'number',
+      },
+      facetsError: undefined,
+    });
 
     render(
       <MemoryRouter>
         <CatalogPage />
       </MemoryRouter>
     );
+
     expect(screen.getByTestId('empty-list')).toBeInTheDocument();
     expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
     expect(screen.queryByTestId('data-error-element')).not.toBeInTheDocument();
