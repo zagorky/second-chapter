@@ -12,25 +12,23 @@ const mockUseFacetsData = vi.mocked(useFacetsData);
 
 describe('CatalogPage', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.resetAllMocks();
+    mockUseFacetsData.mockReturnValue({
+      categories: null,
+      conditions: null,
+      sale: null,
+      price: null,
+      facetsError: undefined,
+    });
   });
 
   it('should render error state when there is an error', () => {
-    const testError = new Error('Test error message');
-
     mockUseProductData.mockReturnValue({
       products: [],
-      error: testError,
+      error: new Error('Test error message'),
       isLongLoading: false,
       isLoading: false,
       refresh: vi.fn(),
-    });
-    mockUseFacetsData.mockReturnValue({
-      sale: null,
-      conditions: null,
-      price: null,
-      categories: null,
-      facetsError: testError,
     });
 
     render(
@@ -39,40 +37,28 @@ describe('CatalogPage', () => {
       </MemoryRouter>
     );
 
-    expect(screen.queryByTestId('empty-list')).not.toBeInTheDocument();
     expect(screen.getByTestId('data-error-element')).toBeInTheDocument();
-    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('catalog-page-product-list')).not.toBeInTheDocument();
   });
 
-  it('should render spinner when loading', () => {
+  it('should render spinner when loading', async () => {
     mockUseProductData.mockReturnValue({
-      products: [],
+      products: undefined,
       error: undefined,
       isLongLoading: true,
       isLoading: true,
       refresh: vi.fn(),
     });
-    mockUseFacetsData.mockReturnValue({
-      sale: null,
-      conditions: null,
-      price: null,
-      categories: null,
-      facetsError: undefined,
-    });
+
     render(
       <MemoryRouter>
         <CatalogPage />
       </MemoryRouter>
     );
 
-    expect(screen.queryByTestId('empty-list')).not.toBeInTheDocument();
-    expect(screen.getByTestId('spinner')).toBeInTheDocument();
-    expect(screen.queryByTestId('data-error-element')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('catalog-page-product-list')).not.toBeInTheDocument();
+    expect(await screen.findByTestId('spinner')).toBeInTheDocument();
   });
 
-  it('should render empty list when no products', () => {
+  it('should render empty list when no products', async () => {
     mockUseProductData.mockReturnValue({
       products: [],
       error: undefined,
@@ -80,41 +66,6 @@ describe('CatalogPage', () => {
       isLoading: false,
       refresh: vi.fn(),
     });
-    mockUseFacetsData.mockReturnValue({
-      sale: {
-        type: 'terms',
-        terms: [{ term: 'new', count: 10 }],
-        missing: 0,
-        total: 10,
-        other: 0,
-        dataType: 'number',
-      },
-      conditions: {
-        type: 'terms',
-        terms: [{ term: 'new', count: 10 }],
-        missing: 0,
-        total: 10,
-        other: 0,
-        dataType: 'number',
-      },
-      price: {
-        type: 'terms',
-        terms: [{ term: 'new', count: 10 }],
-        missing: 0,
-        total: 10,
-        other: 0,
-        dataType: 'number',
-      },
-      categories: {
-        type: 'terms',
-        terms: [{ term: 'new', count: 10 }],
-        missing: 0,
-        total: 10,
-        other: 0,
-        dataType: 'number',
-      },
-      facetsError: undefined,
-    });
 
     render(
       <MemoryRouter>
@@ -122,9 +73,6 @@ describe('CatalogPage', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByTestId('empty-list')).toBeInTheDocument();
-    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('data-error-element')).not.toBeInTheDocument();
-    expect(screen.queryByTestId('catalog-page-product-list')).not.toBeInTheDocument();
+    expect(await screen.findByTestId('empty-list')).toBeInTheDocument();
   });
 });

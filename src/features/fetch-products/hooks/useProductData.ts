@@ -24,7 +24,7 @@ export const useProductData = (parameters?: FetchProductsParameters) => {
     onError: () => {
       setIsLongLoading(false);
     },
-    loadingTimeout: 200,
+    loadingTimeout: 500,
   });
 
   return {

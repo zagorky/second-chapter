@@ -25,30 +25,38 @@ export const PriceFormField = ({ prices }: PriceFilterProps) => {
       render={({ field }) => (
         <FormItem>
           <FormLabel>Price</FormLabel>
-          <div className="space-y-2">
-            <FormControl>
-              <Slider
-                value={field.value}
-                onValueChange={field.onChange}
-                min={min}
-                max={max}
-                step={1}
-                minStepsBetweenThumbs={1}
+          <div className="flex flex-col gap-4 md:flex-wrap lg:flex-row">
+            <div className="justify-items-center lg:justify-items-start">
+              <FormField
+                control={form.control}
+                name="sale"
+                render={({ field: saleField }) => (
+                  <FormItem className="flex items-center space-x-2">
+                    <FormControl>
+                      <Checkbox checked={saleField.value} onCheckedChange={saleField.onChange} />
+                    </FormControl>
+                    <FormLabel className="cursor-pointer text-sm font-normal">
+                      Sale ({discountProductsNumber})
+                    </FormLabel>
+                  </FormItem>
+                )}
               />
-            </FormControl>
-            &pound;{formatPrice(field.value[0])} — &pound;{formatPrice(field.value[1])}
-            <FormField
-              control={form.control}
-              name="sale"
-              render={({ field: saleField }) => (
-                <FormItem className="flex items-center space-x-2 py-2">
-                  <FormControl>
-                    <Checkbox checked={saleField.value} onCheckedChange={saleField.onChange} />
-                  </FormControl>
-                  <FormLabel className="cursor-pointer text-sm font-normal">Sale ({discountProductsNumber})</FormLabel>
-                </FormItem>
-              )}
-            />
+            </div>
+            <div className="min-w-[150px] flex-1">
+              <FormControl>
+                <Slider
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  min={min}
+                  max={max}
+                  step={1}
+                  minStepsBetweenThumbs={1}
+                />
+              </FormControl>
+              <div className="mt-2 text-center text-sm">
+                &pound;{formatPrice(field.value[0])} — &pound;{formatPrice(field.value[1])}
+              </div>
+            </div>
           </div>
         </FormItem>
       )}

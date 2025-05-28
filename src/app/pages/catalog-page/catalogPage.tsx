@@ -1,6 +1,5 @@
 import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
-import { CategoryBar } from '~features/category/components/categoryBar';
 import { buildCategoryQueryParameters } from '~features/category/utils/buildCategoryQueryParameters';
 import { EmptyList } from '~features/fetch-products/components/emptyList';
 import { ProductList } from '~features/fetch-products/components/productList';
@@ -43,27 +42,24 @@ const CatalogPage = () => {
       <h1 className={'heading-1'} {...withDataTestId('catalog-page-header')}>
         Catalog
       </h1>
-      <div className="m-2 flex flex-1 flex-col justify-center gap-4 px-6 py-3 md:flex-row md:justify-between">
+      <div className="my-4 flex flex-1 flex-col justify-center gap-4 md:flex-row md:justify-between">
         <SearchBar />
         <SortBar />
       </div>
-      {facetsError || error ? (
-        <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />
-      ) : isLongLoading || !sale || !conditions || !price || products === undefined ? (
-        <Spinner className="m-auto" size="xl" />
-      ) : !isLoading && products.length === 0 ? (
-        <EmptyList />
-      ) : (
-        <>
-          <div className="flex flex-col gap-4 md:flex-row">
-            <div className="w-1/5">
-              <CategoryBar products={products} />
-              <FilterBar sale={sale} conditions={conditions} price={price} />
-            </div>
-            <ProductList products={products} />
-          </div>
-        </>
-      )}
+      <div className="flex flex-col gap-4 lg:flex-row">
+        <div className="w-full lg:w-1/5">
+          {sale && conditions && price && <FilterBar sale={sale} conditions={conditions} price={price} />}
+        </div>
+        {facetsError || error ? (
+          <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />
+        ) : isLongLoading || products === undefined ? (
+          <Spinner className="m-auto" size="xl" />
+        ) : !isLoading && products.length === 0 ? (
+          <EmptyList />
+        ) : (
+          <ProductList products={products} />
+        )}
+      </div>
     </>
   );
 };

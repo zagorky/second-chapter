@@ -22,7 +22,7 @@ export const ConditionsFormField = ({ conditions }: ConditionListProps) => {
       render={({ field }) => (
         <FormItem>
           <FormLabel>Conditions</FormLabel>
-          <div className="space-y-2">
+          <div className="m-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-2 px-6 py-3 md:justify-start md:p-0">
             {conditions.map(({ label, id, count }) => (
               <FormItem key={id} className="flex items-center space-x-2">
                 <FormControl>
