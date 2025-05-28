@@ -27,13 +27,11 @@ export const FilterBar = ({ conditions, sale, price }: FilterBarProps) => {
     count: term.count,
   }));
 
-  const saleCount = sale.total;
-
   const priceRange = getPriceFilterDataFromFacets(price);
   const prices = {
     min: priceRange.minPrice,
     max: priceRange.maxPrice,
-    discountProductsNumber: saleCount,
+    discountProductsNumber: sale.total,
   };
 
   const emptyDefaults: FilterFormValues = {

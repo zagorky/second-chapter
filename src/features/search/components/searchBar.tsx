@@ -5,7 +5,7 @@ import { Button } from '~components/ui/button/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Input } from '~components/ui/input';
 import { searchBarSchema } from '~features/search/types/schemas';
-import { Search } from 'lucide-react';
+import { Search, XIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router';
 
@@ -30,6 +30,14 @@ export const SearchBar = () => {
     setSearchParameters(newParameter);
   }
 
+  const onReset = () => {
+    const newParameter = new URLSearchParams(searchParameters.toString());
+
+    newParameter.delete('search');
+    setSearchParameters(newParameter);
+    form.reset();
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={(event) => void form.handleSubmit(onSubmit)(event)} className="flex w-full flex-2 gap-2">
@@ -47,6 +55,9 @@ export const SearchBar = () => {
         />
         <Button type="submit">
           <Search />
+        </Button>
+        <Button type="reset" onClick={onReset}>
+          <XIcon />
         </Button>
       </form>
     </Form>

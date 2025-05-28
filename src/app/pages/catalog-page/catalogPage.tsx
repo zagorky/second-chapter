@@ -1,6 +1,5 @@
 import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
-import { buildCategoryQueryParameters } from '~features/category/utils/buildCategoryQueryParameters';
 import { EmptyList } from '~features/fetch-products/components/emptyList';
 import { ProductList } from '~features/fetch-products/components/productList';
 import { useProductData } from '~features/fetch-products/hooks/useProductData';
@@ -24,17 +23,12 @@ const CatalogPage = () => {
     searchParameters.get('sale') ?? '',
     searchParameters.get('price') ?? ''
   );
-  const categoryData = buildCategoryQueryParameters(
-    searchParameters.get('subcategory') ?? '',
-    searchParameters.get('category') ?? ''
-  );
 
   const { conditions, sale, price, facetsError } = useFacetsData();
   const { products, error, isLongLoading, isLoading, refresh } = useProductData({
     ...sortData,
     ...searchData,
     ...filterData,
-    ...categoryData,
   });
 
   return (
