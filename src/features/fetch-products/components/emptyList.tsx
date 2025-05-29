@@ -1,7 +1,4 @@
-import { Button } from '~components/ui/button/button';
-import { navigationRoutes } from '~config/navigation';
 import { withDataTestId } from '~utils/helpers';
-import { Link } from 'react-router';
 
 export const EmptyList = () => {
   return (
@@ -13,11 +10,6 @@ export const EmptyList = () => {
           refreshing the page or visit us again soon!
         </p>
       </div>
-      <Button variant="default" className="sm:inline-flex" asChild>
-        <Link to={navigationRoutes.main.path} className="flex items-center gap-2">
-          <span className="sm:inline">Back to {navigationRoutes.main.title}</span>
-        </Link>
-      </Button>
     </div>
   );
 };
