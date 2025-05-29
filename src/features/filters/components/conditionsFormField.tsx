@@ -2,6 +2,7 @@ import type { FilterFormValues } from '~features/filters/types/types';
 
 import { Checkbox } from '~components/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
+import { withDataTestId } from '~utils/helpers';
 import { useFormContext } from 'react-hook-form';
 
 type ConditionListProps = {
@@ -17,6 +18,7 @@ export const ConditionsFormField = ({ conditions }: ConditionListProps) => {
 
   return (
     <FormField
+      {...withDataTestId('conditions-form-field')}
       name="conditions"
       control={form.control}
       render={({ field }) => (

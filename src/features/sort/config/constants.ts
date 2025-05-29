@@ -4,7 +4,7 @@ export const SORT_OPTIONS: SortOption[] = [
   {
     shortKey: 'default',
     commercetoolsParameter: '',
-    label: 'Default',
+    label: 'Sort by default',
     requiresCurrency: false,
   },
   {

@@ -8,7 +8,7 @@ import { ConditionsFormField } from '~features/filters/components/conditionsForm
 import { PriceFormField } from '~features/filters/components/priceFormField';
 import { filterFormSchema } from '~features/filters/types/schemas';
 import { getPriceFilterDataFromFacets } from '~features/filters/utils/getPriceFilterData';
-import { isString } from '~utils/helpers';
+import { isString, withDataTestId } from '~utils/helpers';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router';
 
@@ -34,15 +34,13 @@ export const FilterBar = ({ conditions, sale, price }: FilterBarProps) => {
     discountProductsNumber: sale.total,
   };
 
-  const emptyDefaults: FilterFormValues = {
-    conditions: [],
-    price: [priceRange.minPrice, priceRange.maxPrice],
-    sale: false,
-  };
-
   const form = useForm<FilterFormValues>({
     resolver: zodResolver(filterFormSchema),
-    defaultValues: emptyDefaults,
+    defaultValues: {
+      conditions: searchParameters.get('conditions')?.split(',') ?? [],
+      price: searchParameters.get('price')?.split('-').map(Number) ?? [priceRange.minPrice, priceRange.maxPrice],
+      sale: searchParameters.get('sale') === 'true',
+    },
   });
 
   const onApply = (values: FilterFormValues) => {
@@ -81,13 +79,15 @@ export const FilterBar = ({ conditions, sale, price }: FilterBarProps) => {
 
   return (
     <div>
-      <Form {...form}>
+      <Form {...form} {...withDataTestId('filter-bar-form')}>
         <form onSubmit={(event) => void form.handleSubmit(onApply)(event)} className="space-y-8">
           <ConditionsFormField conditions={conditionsData} />
           <PriceFormField prices={prices} />
           <div className="flex justify-center gap-4">
-            <Button type="submit">Apply</Button>
-            <Button type="reset" onClick={onReset}>
+            <Button {...withDataTestId('apply-button')} type="submit">
+              Apply
+            </Button>
+            <Button {...withDataTestId('reset-button')} type="reset" onClick={onReset}>
               Reset
             </Button>
           </div>
