@@ -8,7 +8,9 @@ export const buildFilterQueryParameters = (conditions: string, isDiscount: strin
   if (allConditions.length > 0) {
     filters.push(`variants.attributes.condition.label:${allConditions.map((id) => `"${id}"`).join(',')}`);
   }
-  if (isDiscount) filters.push(`variants.prices.discounted.value.centAmount:range(1 to *)`);
+  if (isDiscount) {
+    filters.push(`variants.prices.discounted.value.centAmount:range(1 to *)`);
+  }
 
   if (price) {
     const [minPrice, maxPrice] = price.split('-');
