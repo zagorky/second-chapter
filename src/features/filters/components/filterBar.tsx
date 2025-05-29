@@ -50,13 +50,20 @@ export const FilterBar = ({ conditions, sale, price }: FilterBarProps) => {
 
     if (values.conditions.length > 0) {
       newParameter.set('conditions', values.conditions.join(','));
+    } else {
+      newParameter.delete('conditions');
     }
+
     if (values.sale) {
       newParameter.set('sale', 'true');
+    } else {
+      newParameter.delete('sale');
     }
 
     if (values.price[0] !== prices.min || values.price[1] !== prices.max) {
       newParameter.set('price', values.price.join('-'));
+    } else {
+      newParameter.delete('price');
     }
     setSearchParameters(newParameter);
   };
