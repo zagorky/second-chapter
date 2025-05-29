@@ -11,11 +11,12 @@ import { useSearchParams } from 'react-router';
 
 export const SearchBar = () => {
   const [searchParameters, setSearchParameters] = useSearchParams();
+  const searchQuery = searchParameters.get('search') ?? '';
 
   const form = useForm<z.infer<typeof searchBarSchema>>({
     resolver: zodResolver(searchBarSchema),
     defaultValues: {
-      search: '',
+      search: searchQuery,
     },
   });
 
@@ -35,7 +36,7 @@ export const SearchBar = () => {
 
     newParameter.delete('search');
     setSearchParameters(newParameter);
-    form.reset();
+    form.reset({ search: '' });
   };
 
   return (
