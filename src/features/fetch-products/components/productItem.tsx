@@ -24,7 +24,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
 
   return (
     <li key={identifier} {...withDataTestId(identifier)} className="contents">
-      <Link to={`${navigationRoutes.product.path}/${identifier}`} className="">
+      <Link to={`${navigationRoutes.product.path}/${identifier}`}>
         <Card className="hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-main relative flex h-full max-w-[300px] flex-col justify-start gap-2 rounded-lg p-2.5 shadow-none transition-all hover:shadow-none">
           <PriceElement
             className="absolute top-6 left-0 z-1 py-1 pr-4 pl-5"
@@ -32,7 +32,11 @@ export const ProductItem = ({ product }: ProductItemProps) => {
             originalPrice={product.masterVariant.prices?.[0]?.value.centAmount ?? 0}
             discountedPrice={product.masterVariant.prices?.[0]?.discounted?.value.centAmount ?? 0}
           />
-          <ImgElement imageUrl={product.masterVariant.images?.[0]?.url ?? ''} alt={identifier}></ImgElement>
+          <ImgElement
+            imageUrl={product.masterVariant.images?.[0]?.url ?? ''}
+            alt={identifier}
+            aspectRatio="aspect-square"
+          ></ImgElement>
           <CardContent className="flex grow flex-col justify-between gap-3 p-2.5">
             <div>
               <CardTitle className="line-clamp-2 text-lg leading-tight" {...withDataTestId(`${identifier}-name`)}>

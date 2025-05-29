@@ -1,5 +1,3 @@
-import type { EmblaCarouselType, EmblaEventType } from 'embla-carousel';
-
 import { Button } from '~components/ui/button/button';
 import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react';
@@ -52,12 +50,6 @@ function useCarousel() {
   return context;
 }
 
-const TWEEN_FACTOR_BASE = 0.9;
-const SCALE = 0.3;
-const TRANSITION_DURATION = 0.5;
-
-const numberWithinRange = (number: number, min: number, max: number): number => Math.min(Math.max(number, min), max);
-
 function Carousel({
   orientation = 'horizontal',
   options,
@@ -103,62 +95,6 @@ function Carousel({
   );
   const [canScrollPrevious, setCanScrollPrevious] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
-
-  const tweenFactor = React.useRef(0);
-  const tweenNodes = React.useRef<HTMLElement[]>([]);
-
-  const setTweenNodes = React.useCallback((emblaApi: EmblaCarouselType): void => {
-    tweenNodes.current = emblaApi.slideNodes().map((slideNode) => {
-      return slideNode.querySelector('[data-carousel-scale-target]') ?? slideNode;
-    });
-  }, []);
-
-  const setTweenFactor = React.useCallback((emblaApi: EmblaCarouselType) => {
-    const slideCount = emblaApi.scrollSnapList().length;
-
-    tweenFactor.current = TWEEN_FACTOR_BASE * slideCount;
-  }, []);
-
-  const tweenScale = React.useCallback((emblaApi: EmblaCarouselType, eventName?: EmblaEventType) => {
-    const engine = emblaApi.internalEngine();
-    const scrollProgress = emblaApi.scrollProgress();
-    const slidesInView = emblaApi.slidesInView();
-    const isScrollEvent = eventName === 'scroll';
-
-    emblaApi.scrollSnapList().forEach((scrollSnap, snapIndex) => {
-      let diffToTarget = scrollSnap - scrollProgress;
-      const slidesInSnap = engine.slideRegistry[snapIndex];
-
-      slidesInSnap.forEach((slideIndex) => {
-        if (isScrollEvent && !slidesInView.includes(slideIndex)) return;
-
-        if (engine.options.loop) {
-          engine.slideLooper.loopPoints.forEach((loopItem) => {
-            const target = loopItem.target();
-
-            if (slideIndex === loopItem.index && target !== 0) {
-              const sign = Math.sign(target);
-
-              if (sign === -1) {
-                diffToTarget = scrollSnap - (1 + scrollProgress);
-              }
-              if (sign === 1) {
-                diffToTarget = scrollSnap + (1 - scrollProgress);
-              }
-            }
-          });
-        }
-
-        const tweenValue = 1 - Math.abs(diffToTarget * tweenFactor.current);
-        const scale = numberWithinRange(tweenValue, SCALE, 1).toString();
-        const tweenNode = tweenNodes.current[slideIndex];
-
-        tweenNode.style.transform = `scale(${scale})`;
-        tweenNode.style.transition = isScrollEvent ? 'none' : `transform ${String(TRANSITION_DURATION)}s ease-out`;
-      });
-    });
-  }, []);
-
   const onSelect = React.useCallback((api: CarouselApi) => {
     if (!api) {
       return;
@@ -223,21 +159,6 @@ function Carousel({
     };
   }, [api, onSelect]);
 
-  React.useEffect(() => {
-    if (!api) return;
-
-    setTweenNodes(api);
-    setTweenFactor(api);
-    tweenScale(api);
-
-    api
-      .on('reInit', setTweenNodes)
-      .on('reInit', setTweenFactor)
-      .on('reInit', tweenScale)
-      .on('scroll', tweenScale)
-      .on('slideFocus', tweenScale);
-  }, [api, tweenScale, setTweenNodes, setTweenFactor]);
-
   const contextValue = React.useMemo(
     () => ({
       carouselRef: carouselReference,
@@ -288,11 +209,13 @@ function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
 
   return (
     <div ref={carouselRef} className="overflow-hidden" data-slot="carousel-content">
-      <div className={cn('flex', orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col', className)} {...props} />
+      <div
+        className={cn('flex items-center', orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col', className)}
+        {...props}
+      />
     </div>
   );
 }
-
 function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   const { orientation } = useCarousel();
 
@@ -301,7 +224,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
       data-slot="carousel-item"
       role="group"
       aria-roledescription="slide"
-      className={cn('min-w-0 shrink-0 grow-0 basis-full', orientation === 'horizontal' ? 'pl-4' : 'pt-4', className)}
+      className={cn('shrink-0 grow-0 basis-full', orientation === 'horizontal' ? 'pl-4' : 'pt-4', className)}
       {...props}
     />
   );
@@ -320,7 +243,7 @@ function CarouselPrevious({
       data-slot="carousel-previous"
       variant={variant}
       size={size}
-      className={cn('rounded-base size-8', className)}
+      className={cn('rounded-base size-8 p-1', className)}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
@@ -344,7 +267,7 @@ function CarouselNext({
       data-slot="carousel-next"
       variant={variant}
       size={size}
-      className={cn('rounded-base h-8 w-8', className)}
+      className={cn('rounded-base h-8 w-8 p-1', className)}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
@@ -358,7 +281,7 @@ function CarouselDots({ className, ...props }: React.ComponentProps<'div'>) {
   const { scrollSnaps, selectedIndex, onDotButtonClick } = useCarousel();
 
   return (
-    <div data-slot="carousel-dots" className={cn('flex justify-center gap-2 p-2', className)} {...props}>
+    <div data-slot="carousel-dots" className={cn('flex justify-center gap-2', className)} {...props}>
       {scrollSnaps.map((_, index) => (
         <DotButton
           key={`carousel-dot-${String(index)}`}

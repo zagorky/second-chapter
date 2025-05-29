@@ -18,9 +18,11 @@ import { BadgeCondition } from '~features/fetch-products/components/product-elem
 import { ImgElement } from '~features/fetch-products/components/product-elements/imgElement';
 import { PriceElement } from '~features/fetch-products/components/product-elements/priceElement';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
+import { cn } from '~lib/utilities';
 import { getEnumAttribute, getStringAttribute } from '~types/utils/attributesGuards';
 import { withDataTestId } from '~utils/helpers';
 
+import { Dialog, DialogTrigger, DialogContent } from '~/components/ui/dialog/dialog';
 import { Spinner } from '~/components/ui/spinner/spinner';
 
 import { useProductCategories } from './useProductCategories';
@@ -38,34 +40,130 @@ const PRODUCT_DETAIL_TEXTS = {
   DESCRIPTION: 'Description',
 } as const;
 
-const createCarousel = (images: { url: string }[], identifier: string) => {
+const ProductCarouselItem = ({
+  image,
+  identifier,
+  index,
+  aspectRatio,
+  isInDialog = false,
+}: {
+  image: { url: string };
+  identifier: string;
+  index: number;
+  aspectRatio: 'aspect-square' | 'aspect-video' | 'aspect-auto';
+  isInDialog?: boolean;
+}) => (
+  <>
+    {isInDialog ? (
+      <img
+        src={image.url}
+        alt={`${identifier}-carousel-${String(index)}`}
+        className={'rounded-base mx-auto h-full max-h-[80vh] w-auto border-2 object-contain'}
+        data-carousel-scale-target
+      />
+    ) : (
+      <Card className="bg-main text-main-foreground p-0 transition-opacity" data-carousel-scale-target>
+        <CardContent className={cn('flex', 'h-full items-center justify-center p-2')}>
+          <ImgElement
+            aspectRatio={aspectRatio}
+            imageUrl={image.url}
+            alt={`${identifier}-carousel-${String(index)}`}
+            className={''}
+          />
+        </CardContent>
+      </Card>
+    )}
+  </>
+);
+
+const ImageDialog = ({
+  images,
+  identifier,
+  initialIndex = 0,
+}: {
+  images: { url: string }[];
+  identifier: string;
+  initialIndex?: number;
+}) => {
+  return (
+    <DialogContent size="fullscreen">
+      <ProductCarousel
+        images={images}
+        identifier={`${identifier}-dialog`}
+        autoplay={false}
+        aspectRatio="aspect-auto"
+        initialIndex={initialIndex}
+        isInDialog={true}
+      />
+    </DialogContent>
+  );
+};
+
+const ProductCarousel = ({
+  images,
+  identifier,
+  autoplay,
+  aspectRatio,
+  initialIndex = 0,
+  enableDialog = false,
+  isInDialog = false,
+}: {
+  images: { url: string }[];
+  identifier: string;
+  autoplay: boolean;
+  aspectRatio: 'aspect-square' | 'aspect-video' | 'aspect-auto';
+  initialIndex?: number;
+  enableDialog?: boolean;
+  isInDialog?: boolean;
+}) => {
   const hasMultipleImages = images.length !== 1;
 
   return (
-    <div className="flex w-full flex-col items-center gap-4">
-      <Carousel className="w-full" options={{ loop: true, autoplay: true }}>
-        <div className="flex items-center gap-4">
-          {hasMultipleImages && <CarouselPrevious />}
-          <CarouselContent className="max-w-[500px]">
-            {images.map((image, index) => (
-              <CarouselItem key={`${identifier}-carousel-${String(index)}`}>
-                <div className="p-[10px]">
-                  <Card className="bg-main text-main-foreground p-0">
-                    <CardContent className="flex aspect-square items-center justify-center p-4">
-                      <ImgElement imageUrl={image.url} alt={`${identifier}-carousel-${String(index)}`} />
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
+    <Carousel
+      key={`${identifier}-carousel`}
+      className={cn('relative flex flex-col items-stretch gap-4', isInDialog && 'p-4 pt-10')}
+      options={{ loop: true, autoplay, startIndex: initialIndex }}
+    >
+      <div className="flex flex-grow items-center justify-center gap-6">
+        {hasMultipleImages && <CarouselPrevious />}
+        <CarouselContent className="w-fit">
+          {images.map((image, index) => (
+            <CarouselItem key={`${identifier}-carousel-${String(index)}`}>
+              <div>
+                {enableDialog ? (
+                  <Dialog>
+                    <DialogTrigger asChild className="cursor-pointer">
+                      <div>
+                        <ProductCarouselItem
+                          image={image}
+                          identifier={identifier}
+                          index={index}
+                          aspectRatio={aspectRatio}
+                          isInDialog={isInDialog}
+                        />
+                      </div>
+                    </DialogTrigger>
+                    <ImageDialog images={images} identifier={identifier} initialIndex={index} />
+                  </Dialog>
+                ) : (
+                  <ProductCarouselItem
+                    image={image}
+                    identifier={identifier}
+                    index={index}
+                    aspectRatio={aspectRatio}
+                    isInDialog={isInDialog}
+                  />
+                )}
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
 
-          {hasMultipleImages && <CarouselNext />}
-        </div>
+        {hasMultipleImages && <CarouselNext />}
+      </div>
 
-        {hasMultipleImages && <CarouselDots />}
-      </Carousel>
-    </div>
+      {hasMultipleImages && <CarouselDots />}
+    </Carousel>
   );
 };
 
@@ -78,9 +176,17 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
   const { categoryNames, isLoading: categoriesLoading } = useProductCategories(product.categories);
 
   return (
-    <div className="mx-auto max-w-6xl p-4" {...withDataTestId(`${identifier}-detail`)}>
+    <div {...withDataTestId(`${identifier}-detail`)}>
       <div className="grid gap-8 md:grid-cols-2">
-        <div className="space-y-4">{createCarousel(images, identifier)}</div>
+        <div className="space-y-4">
+          <ProductCarousel
+            images={images}
+            identifier={identifier}
+            autoplay={true}
+            aspectRatio="aspect-auto"
+            enableDialog={true}
+          />
+        </div>
 
         <div className="space-y-6">
           <div>
