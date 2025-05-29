@@ -9,3 +9,7 @@ export const withDataTestId = (testID: string) => {
     'data-testid': testID,
   };
 };
+
+export const isString = (value: unknown): value is string => {
+  return typeof value === 'string';
+};
