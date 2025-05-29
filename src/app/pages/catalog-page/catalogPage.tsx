@@ -30,6 +30,21 @@ const CatalogPage = () => {
     ...searchData,
     ...filterData,
   });
+  const renderContent = () => {
+    if (facetsError || error) {
+      return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
+    }
+
+    if (isLongLoading || products === undefined) {
+      return <Spinner className="m-auto" size="xl" />;
+    }
+
+    if (!isLoading && products.length === 0) {
+      return <EmptyList />;
+    }
+
+    return <ProductList products={products} />;
+  };
 
   return (
     <>
@@ -44,15 +59,7 @@ const CatalogPage = () => {
         <div className="w-full lg:w-1/5">
           {sale && conditions && price && <FilterBar sale={sale} conditions={conditions} price={price} />}
         </div>
-        {facetsError || error ? (
-          <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />
-        ) : isLongLoading || products === undefined ? (
-          <Spinner className="m-auto" size="xl" />
-        ) : !isLoading && products.length === 0 ? (
-          <EmptyList />
-        ) : (
-          <ProductList products={products} />
-        )}
+        {renderContent()}
       </div>
     </>
   );
