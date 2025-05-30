@@ -1,6 +1,7 @@
 import type { CategoryNode } from '~features/category/utils/buildCategories';
 
 import { useCategoryData } from '~features/category/hooks/useCategoryData';
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { Button } from '~/components/ui/button/button';
@@ -18,6 +19,11 @@ import {
 export const CategoryMenu = () => {
   const { categories } = useCategoryData();
   const [searchParameters, setSearchParameters] = useSearchParams();
+  const closeButtonReference = useCallback((element: HTMLButtonElement | null) => {
+    if (element) {
+      element.focus();
+    }
+  }, []);
   const handleClick = (category: CategoryNode) => {
     const newParameter = new URLSearchParams(searchParameters);
 
@@ -105,7 +111,9 @@ export const CategoryMenu = () => {
         </ul>
         <DrawerFooter>
           <DrawerClose asChild>
-            <Button variant="neutral">Cancel</Button>
+            <Button ref={closeButtonReference} variant="neutral">
+              Cancel
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
