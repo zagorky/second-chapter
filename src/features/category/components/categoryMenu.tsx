@@ -45,9 +45,7 @@ export const CategoryMenu = () => {
       <DrawerTrigger asChild>
         <Button
           onClick={(event) => {
-            const target = event.currentTarget;
-
-            target.blur();
+            event.currentTarget.blur();
           }}
           className="capitalize"
         >
