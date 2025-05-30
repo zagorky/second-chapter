@@ -17,9 +17,7 @@ import {
 
 export const CategoryMenu = () => {
   const { categories } = useCategoryData();
-
   const [searchParameters, setSearchParameters] = useSearchParams();
-
   const handleClick = (category: CategoryNode) => {
     const newParameter = new URLSearchParams(searchParameters);
 
@@ -45,7 +43,16 @@ export const CategoryMenu = () => {
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
-        <Button className="capitalize">Categories</Button>
+        <Button
+          onClick={(event) => {
+            const target = event.currentTarget;
+
+            target.blur();
+          }}
+          className="capitalize"
+        >
+          Categories
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>

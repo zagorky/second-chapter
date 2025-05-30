@@ -6,6 +6,7 @@ import {
   BreadcrumbSeparator,
 } from '~components/ui/breadcrumb';
 import { useBreadcrumbs } from '~features/breadcrumbs/hooks/useBreadcrumbs';
+import { Fragment } from 'react';
 import { Link } from 'react-router';
 
 export const CategoryBreadcrumb = () => {
@@ -16,14 +17,12 @@ export const CategoryBreadcrumb = () => {
       <BreadcrumbList>
         {breadcrumbs.map((breadcrumb, index) => {
           return index === breadcrumbs.length - 1 ? (
-            <>
-              <BreadcrumbItem key={breadcrumb.name} className="capitalize">
-                <span>{breadcrumb.name}</span>
-              </BreadcrumbItem>
-            </>
+            <BreadcrumbItem key={breadcrumb.name} className="capitalize">
+              <span>{breadcrumb.name}</span>
+            </BreadcrumbItem>
           ) : (
-            <>
-              <BreadcrumbItem key={breadcrumb.name} className="capitalize">
+            <Fragment key={breadcrumb.name}>
+              <BreadcrumbItem className="capitalize">
                 <BreadcrumbLink asChild>
                   <Link to={breadcrumb.path} className="cursor-pointer hover:underline">
                     {breadcrumb.name}
@@ -31,7 +30,7 @@ export const CategoryBreadcrumb = () => {
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
-            </>
+            </Fragment>
           );
         })}
       </BreadcrumbList>
