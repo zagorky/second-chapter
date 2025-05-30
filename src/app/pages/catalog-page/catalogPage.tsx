@@ -1,5 +1,6 @@
 import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
+import { CategoryBreadcrumb } from '~features/breadcrumbs/components/categoryBreadcrumb';
 import { CategoryMenu } from '~features/category/components/categoryMenu';
 import { buildCategoryQueryParameters } from '~features/category/utils/buildCategoryQueryParameters';
 import { EmptyList } from '~features/fetch-products/components/emptyList';
@@ -30,7 +31,7 @@ const CatalogPage = () => {
     searchParameters.get('price') ?? ''
   );
 
-  const { conditions, sale, price, facetsError } = useFacetsData();
+  const { conditions, sale, price } = useFacetsData();
   const { products, error, isLongLoading, isLoading, refresh } = useProductData({
     ...sortData,
     ...searchData,
@@ -38,7 +39,7 @@ const CatalogPage = () => {
     ...categoryData,
   });
   const renderContent = () => {
-    if (facetsError || error) {
+    if (error) {
       return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
     }
 
@@ -59,6 +60,7 @@ const CatalogPage = () => {
         Catalog
       </h1>
       <CategoryMenu />
+      <CategoryBreadcrumb />
       <div className="my-4 flex flex-1 flex-col justify-center gap-4 md:flex-row md:justify-between">
         <SearchBar />
         <SortBar />
