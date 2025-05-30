@@ -29,11 +29,11 @@ export const ImgElement = ({ imageUrl, alt, className, caption, aspectRatio }: I
     <figure
       {...withDataTestId(`${alt}-img`)}
       className={cn(
-        'rounded-base border-border bg-main font-base max-h-[400px] w-full overflow-hidden border-2',
+        'rounded-base border-border bg-main font-base flex max-h-[400px] w-full overflow-hidden border-2',
         className
       )}
     >
-      <img className={`custom-filter ${aspectRatio} w-full object-cover`} src={imageUrl} alt={alt} />
+      <img className={`custom-filter ${aspectRatio} w-full object-cover object-center`} src={imageUrl} alt={alt} />
       {caption && (
         <figcaption className="text-main-foreground border-border line-clamp-3 border-t-2">{caption}</figcaption>
       )}

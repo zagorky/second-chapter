@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import './styles/typography.css';
-@import './styles/colors.css';
+@import './styles/theme.css';
 @import './styles/checkbox.css';
 @import './styles/filter.css';
 

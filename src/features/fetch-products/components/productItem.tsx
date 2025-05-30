@@ -6,11 +6,12 @@ import { navigationRoutes } from '~config/navigation';
 import { AuthorElement } from '~features/fetch-products/components/product-elements/authorElement';
 import { BadgeCondition } from '~features/fetch-products/components/product-elements/badgeCondition';
 import { ImgElement } from '~features/fetch-products/components/product-elements/imgElement';
-import { PriceElement } from '~features/fetch-products/components/product-elements/priceElement';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
 import { getEnumAttribute, getStringAttribute } from '~types/utils/attributesGuards';
 import { withDataTestId } from '~utils/helpers';
 import { Link } from 'react-router';
+
+import { PriceElement } from '~/features/fetch-products/components/product-elements/price-element/priceElement';
 
 type ProductItemProps = {
   product: ProductProjection;
