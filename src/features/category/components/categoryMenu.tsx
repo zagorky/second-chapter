@@ -1,15 +1,16 @@
-import { DropdownMenu, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { useCategoryData } from '~features/category/hooks/useCategoryData';
 import { useSearchParams } from 'react-router';
 
 import { Button } from '~/components/ui/button/button';
 import {
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-} from '~/components/ui/dropdownMenu';
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '~/components/ui/drawer';
 
 export const CategoryMenu = () => {
   const { categories } = useCategoryData();
@@ -22,7 +23,7 @@ export const CategoryMenu = () => {
     ? categories.find((category) => category.id === searchParameters.get('subcategory'))?.name
     : '';
 
-  const onSelect = (categoryID: string) => {
+  const handleClick = (categoryID: string) => {
     const newParameter = new URLSearchParams(searchParameters);
     const selectedCategory = categories.find((category) => category.id === categoryID);
     const isSubcategory = selectedCategory?.parentCategory !== '';
@@ -37,27 +38,44 @@ export const CategoryMenu = () => {
     setSearchParameters(newParameter);
   };
 
-  const filteredCategories = currentCategory
-    ? categories.filter((category) => category.parentCategory === currentCategory)
-    : categories.filter((category) => category.parentCategory === '');
+  const renderHeader = () => {
+    if (currentSubcategory) {
+      return currentSubcategory;
+    } else if (currentCategory) {
+      return currentCategory;
+    } else {
+      return 'Categories';
+    }
+  };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="noShadow">Genres</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-56">
-        <DropdownMenuLabel inset>{currentCategory}</DropdownMenuLabel>
-        <DropdownMenuGroup>
-          <DropdownMenuRadioGroup value={currentCategory ?? currentSubcategory ?? ''} onValueChange={onSelect}>
-            {filteredCategories.map((category) => (
-              <DropdownMenuRadioItem key={category.id} value={category.id}>
-                {category.name}
-              </DropdownMenuRadioItem>
-            ))}
-          </DropdownMenuRadioGroup>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Drawer direction="right">
+      <DrawerTrigger asChild>
+        <Button className="capitalize">{renderHeader()}</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Genres</DrawerTitle>
+          <DrawerDescription className="sr-only">Genres</DrawerDescription>
+        </DrawerHeader>
+        <ul className="overflow-y-auto px-4 text-sm">
+          {categories.map((category) => (
+            <li key={category.name}>
+              <DrawerClose asChild>
+                <Button
+                  className="hover:bg-secondary-background/60 mb-4 w-full cursor-pointer text-lg leading-normal capitalize"
+                  onClick={() => {
+                    handleClick(category.id);
+                  }}
+                  variant="ghost"
+                >
+                  {category.name}
+                </Button>
+              </DrawerClose>
+            </li>
+          ))}
+        </ul>
+      </DrawerContent>
+    </Drawer>
   );
 };

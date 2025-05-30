@@ -6,7 +6,9 @@ export const buildCategoryQueryParameters = (subcategory: string, category: stri
   const allCategories = [...parseParametersToArray(category), ...parseParametersToArray(subcategory)];
 
   if (allCategories.length > 0) {
-    filters.push(`categories.id:subtree(${allCategories.map((id) => `"${id}"`).join(',')})`);
+    const categoryFilters = allCategories.map((id) => `categories.id:subtree("${id}")`);
+
+    filters.push(...categoryFilters);
   }
 
   return filters.length > 0 ? { 'filter.query': filters } : {};
