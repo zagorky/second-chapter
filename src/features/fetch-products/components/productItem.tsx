@@ -1,6 +1,5 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-import { Badge } from '~components/ui/badge/badge';
 import { Card, CardContent, CardTitle } from '~components/ui/card';
 import { navigationRoutes } from '~config/navigation';
 import { AuthorElement } from '~features/fetch-products/components/product-elements/authorElement';
@@ -48,8 +47,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
             <div className="line-clamp-2" {...withDataTestId(`${identifier}-description`)}>
               {product.description?.[DEFAULT_STORE_LANGUAGE] ?? ''}
             </div>
-            <div className="flex flex-row gap-2 self-start">
-              {product.masterVariant.prices?.[0]?.discounted && <Badge>Sale</Badge>}
+            <div className="flex flex-row flex-wrap gap-2 self-start">
               <BadgeCondition
                 label={condition.label}
                 conditionKey={condition.key}

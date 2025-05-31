@@ -20,7 +20,6 @@ describe('ProductItem', () => {
     expect(screen.getByText(/£10.00/)).toBeInTheDocument();
     expect(screen.getByText(/£8.00/)).toBeInTheDocument();
     expect(screen.getByTestId('test-product-slug-author')).toHaveTextContent('Test Author');
-    expect(screen.getByText('Sale')).toBeInTheDocument();
     expect(screen.getByTestId('test-product-slug-condition')).toHaveTextContent('Like New');
     expect(img).toHaveAttribute('src', 'https://example.com/product-image.jpg');
     expect(img).toHaveAttribute('alt', 'test-product-slug');
