@@ -9,6 +9,7 @@ import { LogIn, UserPlus } from 'lucide-react';
 import { Link } from 'react-router';
 
 import { Logo } from '../navbar/logo';
+import { ProfileButton } from '~/features/profile/components/profileButton';
 
 export const Header = () => {
   const { isAuthenticated } = useAuth();
@@ -26,7 +27,10 @@ export const Header = () => {
 
       <div className="flex items-center gap-3">
         {isAuthenticated ? (
-          <LogoutButton />
+          <>
+            <LogoutButton />
+            <ProfileButton />
+          </>
         ) : (
           <>
             <Button variant="default" className="sm:inline-flex" asChild>
