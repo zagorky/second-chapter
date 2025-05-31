@@ -9,7 +9,6 @@ type ConditionListProps = {
   conditions: {
     id: string;
     label: string;
-    count: number;
   }[];
 };
 
@@ -25,7 +24,7 @@ export const ConditionsFormField = ({ conditions }: ConditionListProps) => {
         <FormItem>
           <FormLabel className="text-md">Condition</FormLabel>
           <div className="grid items-center justify-start gap-x-4 gap-y-2 md:p-0">
-            {conditions.map(({ label, id, count }) => (
+            {conditions.map(({ label, id }) => (
               <FormItem key={id} className="flex items-center space-x-2">
                 <FormControl>
                   <Checkbox
@@ -39,9 +38,7 @@ export const ConditionsFormField = ({ conditions }: ConditionListProps) => {
                     }}
                   />
                 </FormControl>
-                <FormLabel className="text-sm font-normal">
-                  {label} ({count})
-                </FormLabel>
+                <FormLabel className="text-sm font-normal">{label}</FormLabel>
               </FormItem>
             ))}
           </div>

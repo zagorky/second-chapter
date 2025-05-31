@@ -16,7 +16,7 @@ import { useSearchParams } from 'react-router';
 
 const CatalogPage = () => {
   const [searchParameters] = useSearchParams();
-  const { conditions, sale, price } = useFacetsData();
+  const { conditions, price } = useFacetsData();
   const { products, error, isLongLoading, isLoading, refresh } = useProductData(buildRequest(searchParameters));
   const renderContent = () => {
     if (error) {
@@ -48,7 +48,7 @@ const CatalogPage = () => {
         <SortBar />
       </div>
       <div className="grid flex-col gap-4 lg:grid-cols-[minmax(230px,_250px)_1fr]">
-        {sale && conditions && price && <FilterBar sale={sale} conditions={conditions} price={price} />}
+        {conditions && price && <FilterBar conditions={conditions} price={price} />}
         {renderContent()}
       </div>
     </>

@@ -7,10 +7,10 @@ import useSWR from 'swr';
 export const useFacetsData = () => {
   const actualParameters = {
     limit: 0,
-    facet: [facetRequests.categories, facetRequests.conditions, facetRequests.price, facetRequests.sale],
+    facet: [facetRequests.conditions, facetRequests.price],
   };
 
-  const { data, error: facetsError } = useSWR<FacetResults, Error>(actualParameters, fetchFacets);
+  const { data } = useSWR<FacetResults, Error>(actualParameters, fetchFacets);
 
   const getTermFacet = (key: string): TermFacetResult | null => {
     const facet = data?.[key];
@@ -19,11 +19,8 @@ export const useFacetsData = () => {
   };
 
   return {
-    categories: getTermFacet(facetRequests.categories),
     conditions: getTermFacet(facetRequests.conditions),
     price: getTermFacet(facetRequests.price),
-    sale: getTermFacet(facetRequests.sale),
-    facetsError,
   };
 };
 

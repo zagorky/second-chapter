@@ -8,30 +8,28 @@ import { ConditionsFormField } from '~features/filters/components/conditionsForm
 import { PriceFormField } from '~features/filters/components/priceFormField';
 import { filterFormSchema } from '~features/filters/types/schemas';
 import { getPriceFilterDataFromFacets } from '~features/filters/utils/getPriceFilterData';
+import { useFormValuesChange } from '~hooks/useFormValuesChange';
 import { isString, withDataTestId } from '~utils/helpers';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router';
 
 type FilterBarProps = {
   conditions: TermFacetResult;
-  sale: TermFacetResult;
   price: TermFacetResult;
 };
 
-export const FilterBar = ({ conditions, sale, price }: FilterBarProps) => {
+export const FilterBar = ({ conditions, price }: FilterBarProps) => {
   const [searchParameters, setSearchParameters] = useSearchParams();
 
   const conditionsData = conditions.terms.map((term) => ({
     id: isString(term.term) ? term.term : '',
     label: isString(term.term) ? term.term : '',
-    count: term.count,
   }));
 
   const priceRange = getPriceFilterDataFromFacets(price);
   const prices = {
     min: priceRange.minPrice,
     max: priceRange.maxPrice,
-    discountProductsNumber: sale.total,
   };
 
   const form = useForm<FilterFormValues>({
@@ -43,28 +41,29 @@ export const FilterBar = ({ conditions, sale, price }: FilterBarProps) => {
     },
   });
 
-  const onApply = (values: FilterFormValues) => {
-    const newParameter = new URLSearchParams(searchParameters.toString());
+  useFormValuesChange(form, ({ values }) => {
+    const newParameters = new URLSearchParams(searchParameters.toString());
 
-    if (values.conditions.length > 0) {
-      newParameter.set('conditions', values.conditions.join(','));
+    if (values.conditions && values.conditions.length > 0) {
+      newParameters.set('conditions', values.conditions.join(','));
     } else {
-      newParameter.delete('conditions');
+      newParameters.delete('conditions');
     }
 
     if (values.sale) {
-      newParameter.set('sale', 'true');
+      newParameters.set('sale', 'true');
     } else {
-      newParameter.delete('sale');
+      newParameters.delete('sale');
     }
 
-    if (values.price[0] !== prices.min || values.price[1] !== prices.max) {
-      newParameter.set('price', values.price.join('-'));
+    if (values.price && (values.price[0] !== prices.min || values.price[1] !== prices.max)) {
+      newParameters.set('price', values.price.join('-'));
     } else {
-      newParameter.delete('price');
+      newParameters.delete('price');
     }
-    setSearchParameters(newParameter);
-  };
+
+    setSearchParameters(newParameters);
+  });
 
   const onReset = () => {
     const newParameter = new URLSearchParams(searchParameters.toString());
@@ -74,22 +73,20 @@ export const FilterBar = ({ conditions, sale, price }: FilterBarProps) => {
     newParameter.delete('price');
 
     setSearchParameters(newParameter);
-    form.reset();
+    form.reset({
+      conditions: [],
+      price: [prices.min, prices.max],
+      sale: false,
+    });
   };
 
   return (
     <div>
       <Form {...form} {...withDataTestId('filter-bar-form')}>
-        <form
-          onSubmit={(event) => void form.handleSubmit(onApply)(event)}
-          className="border-border rounded-base grid items-start gap-4 border-2 p-6 sm:grid-cols-2 lg:grid-cols-1"
-        >
+        <form className="border-border rounded-base grid items-start gap-4 border-2 p-6 sm:grid-cols-2 lg:grid-cols-1">
           <ConditionsFormField conditions={conditionsData} />
           <PriceFormField prices={prices} />
           <div className="flex justify-end gap-4 sm:col-span-2 lg:col-span-1">
-            <Button {...withDataTestId('apply-button')} type="submit">
-              Apply
-            </Button>
             <Button {...withDataTestId('reset-button')} type="reset" onClick={onReset}>
               Reset
             </Button>

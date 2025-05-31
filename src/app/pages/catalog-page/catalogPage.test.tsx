@@ -14,11 +14,8 @@ describe('CatalogPage', () => {
   beforeEach(() => {
     vi.resetAllMocks();
     mockUseFacetsData.mockReturnValue({
-      categories: null,
       conditions: null,
-      sale: null,
       price: null,
-      facetsError: undefined,
     });
   });
 
