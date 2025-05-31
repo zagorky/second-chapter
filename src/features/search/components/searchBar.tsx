@@ -49,7 +49,7 @@ export const SearchBar = () => {
             <FormItem className="w-full">
               <FormLabel className="sr-only">Search</FormLabel>
               <FormControl>
-                <Input placeholder="Search..." {...field} />
+                <Input autoComplete="off" placeholder="Search..." {...field} />
               </FormControl>
             </FormItem>
           )}

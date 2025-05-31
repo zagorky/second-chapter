@@ -26,9 +26,25 @@ export const PriceFormField = ({ prices }: PriceFilterProps) => {
       name="price"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Price</FormLabel>
-          <div className="flex flex-col gap-4 md:flex-wrap lg:flex-row">
-            <div className="justify-items-center lg:justify-items-start">
+          <FormLabel className="text-md">Price</FormLabel>
+
+          <div className="grid gap-2 md:flex-wrap lg:flex-row">
+            <div className="mt-1 min-w-[150px]">
+              <FormControl>
+                <Slider
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  min={min}
+                  max={max}
+                  step={1}
+                  minStepsBetweenThumbs={1}
+                />
+              </FormControl>
+              <div className="mt-2 text-center text-sm">
+                &pound;{formatPrice(field.value[0])} — &pound;{formatPrice(field.value[1])}
+              </div>
+            </div>
+            <div className="lg:justify-items-start">
               <FormField
                 control={form.control}
                 name="sale"
@@ -43,21 +59,6 @@ export const PriceFormField = ({ prices }: PriceFilterProps) => {
                   </FormItem>
                 )}
               />
-            </div>
-            <div className="min-w-[150px] flex-1">
-              <FormControl>
-                <Slider
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  min={min}
-                  max={max}
-                  step={1}
-                  minStepsBetweenThumbs={1}
-                />
-              </FormControl>
-              <div className="mt-2 text-center text-sm">
-                &pound;{formatPrice(field.value[0])} — &pound;{formatPrice(field.value[1])}
-              </div>
             </div>
           </div>
         </FormItem>
