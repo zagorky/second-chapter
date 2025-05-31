@@ -9,7 +9,7 @@ import { useBreadcrumbs } from '~features/breadcrumbs/hooks/useBreadcrumbs';
 import { Fragment } from 'react';
 import { Link } from 'react-router';
 
-export const CategoryBreadcrumb = () => {
+export const Breadcrumbs = () => {
   const breadcrumbs = useBreadcrumbs();
 
   return (
