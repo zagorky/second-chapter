@@ -8,8 +8,9 @@ import { useAuth } from '~features/sign-in/hooks/useAuth';
 import { LogIn, UserPlus } from 'lucide-react';
 import { Link } from 'react-router';
 
-import { Logo } from '../navbar/logo';
 import { ProfileButton } from '~/features/profile/components/profileButton';
+
+import { Logo } from '../navbar/logo';
 
 export const Header = () => {
   const { isAuthenticated } = useAuth();
