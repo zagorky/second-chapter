@@ -88,7 +88,7 @@ export const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: navigationRoutes.product.path + '/:slug',
+        path: navigationRoutes.product.path + '/:key',
         errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
