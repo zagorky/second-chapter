@@ -296,4 +296,4 @@ function CarouselDots({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselDots };
+export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselDots };
