@@ -11,7 +11,7 @@ export const ProductList = ({ products }: ProductListProps) => {
   return (
     <>
       <ul
-        className="m-2 mx-auto grid w-fit grid-cols-1 justify-center justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3"
+        className="mx-auto grid w-fit grid-cols-1 justify-center justify-items-center gap-8 md:grid-cols-2 lg:grid-cols-3"
         {...withDataTestId('catalog-page-product-list')}
       >
         {products.map((product) => {

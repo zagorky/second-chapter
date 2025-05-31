@@ -80,10 +80,13 @@ export const FilterBar = ({ conditions, sale, price }: FilterBarProps) => {
   return (
     <div>
       <Form {...form} {...withDataTestId('filter-bar-form')}>
-        <form onSubmit={(event) => void form.handleSubmit(onApply)(event)} className="space-y-8">
+        <form
+          onSubmit={(event) => void form.handleSubmit(onApply)(event)}
+          className="border-border rounded-base grid items-start gap-4 border-2 p-6 sm:grid-cols-2 lg:grid-cols-1"
+        >
           <ConditionsFormField conditions={conditionsData} />
           <PriceFormField prices={prices} />
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-end gap-4 sm:col-span-2 lg:col-span-1">
             <Button {...withDataTestId('apply-button')} type="submit">
               Apply
             </Button>

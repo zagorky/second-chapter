@@ -1,6 +1,7 @@
 import type { CategoryNode } from '~features/category/utils/buildCategories';
 
 import { useCategoryData } from '~features/category/hooks/useCategoryData';
+import { ChevronsUpDown } from 'lucide-react';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router';
 
@@ -55,7 +56,7 @@ export const CategoryMenu = () => {
           }}
           className="capitalize"
         >
-          Categories
+          Genres <ChevronsUpDown />
         </Button>
       </DrawerTrigger>
       <DrawerContent>
