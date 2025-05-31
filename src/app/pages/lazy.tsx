@@ -8,3 +8,4 @@ export const AboutPage = lazy(() => import('~app/pages/about-page/aboutPage'));
 export const CartPage = lazy(() => import('~app/pages/cart-page/cartPage'));
 export const ErrorPage = lazy(() => import('~app/pages/error-page/errorPage'));
 export const ProductPage = lazy(() => import('~app/pages/product-page/productPage'));
+export const ProfilePage = lazy(() => import('~app/pages/profile-page/profilePage'));

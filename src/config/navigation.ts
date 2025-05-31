@@ -10,6 +10,7 @@ export const navigationRoutes = {
   signup: { path: '/signup', title: 'Sign Up' },
   error: { path: '/*', title: 'Page not Found' },
   product: { path: '/product', title: 'Product Page' },
+  profile: { path: '/profile', title: 'Profile Page' },
 } as const;
 
 export const authenticatedUserGuard = async () => {
@@ -17,6 +18,16 @@ export const authenticatedUserGuard = async () => {
 
   if (isAuthenticated) {
     return redirect(navigationRoutes.main.path);
+  }
+
+  return null;
+};
+
+export const unauthenticatedUserGuard = async () => {
+  const { isAuthenticated } = await appInitializer.initialize();
+
+  if (!isAuthenticated) {
+    return redirect(navigationRoutes.login.path);
   }
 
   return null;
