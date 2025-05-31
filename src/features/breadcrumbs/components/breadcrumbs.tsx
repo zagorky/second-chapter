@@ -15,24 +15,18 @@ export const Breadcrumbs = () => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        {breadcrumbs.map((breadcrumb, index) => {
-          return index === breadcrumbs.length - 1 ? (
-            <BreadcrumbItem key={breadcrumb.name} className="capitalize">
-              <span>{breadcrumb.name}</span>
+        {breadcrumbs.map((breadcrumb, index) => (
+          <Fragment key={breadcrumb.name}>
+            <BreadcrumbItem className="capitalize">
+              <BreadcrumbLink asChild>
+                <Link to={breadcrumb.path} className="cursor-pointer hover:underline">
+                  {breadcrumb.name}
+                </Link>
+              </BreadcrumbLink>
             </BreadcrumbItem>
-          ) : (
-            <Fragment key={breadcrumb.name}>
-              <BreadcrumbItem className="capitalize">
-                <BreadcrumbLink asChild>
-                  <Link to={breadcrumb.path} className="cursor-pointer hover:underline">
-                    {breadcrumb.name}
-                  </Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-            </Fragment>
-          );
-        })}
+            {index !== breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+          </Fragment>
+        ))}
       </BreadcrumbList>
     </Breadcrumb>
   );
