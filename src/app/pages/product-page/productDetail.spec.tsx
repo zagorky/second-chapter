@@ -1,6 +1,7 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import { vi } from 'vitest';
 
 import { mockProduct1 } from '~/features/fetch-products/config/mockProducts';
@@ -39,13 +40,21 @@ describe('ProductDetail', () => {
 
     const IMAGE_FALLBACK_TEXT = 'No description available';
 
-    render(<ProductDetail product={productWithoutDescription} />);
+    render(
+      <MemoryRouter>
+        <ProductDetail product={productWithoutDescription} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByTestId('test-product-slug-description')).toHaveTextContent(IMAGE_FALLBACK_TEXT);
   });
 
   it('should render marquee when product has discount', () => {
-    render(<ProductDetail product={defaultProduct} />);
+    render(
+      <MemoryRouter>
+        <ProductDetail product={defaultProduct} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByTestId('marquee')).toHaveTextContent('-20%');
   });

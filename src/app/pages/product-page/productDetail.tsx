@@ -11,12 +11,14 @@ import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constant
 import { getEnumAttribute, getStringAttribute } from '~types/utils/attributesGuards';
 import { withDataTestId } from '~utils/helpers';
 import { useState } from 'react';
+import { Link } from 'react-router';
 
 import Marquee from '~/components/ui/marquee';
 import { Spinner } from '~/components/ui/spinner/spinner';
 import { PriceElement } from '~/features/fetch-products/components/product-elements/price-element/priceElement';
 import { calculateDiscount } from '~/features/fetch-products/utils/calculateDiscount';
 
+import { getCategoryUrl } from './getCategoryUrl';
 import { ProductCarousel } from './productCarousel';
 import { useProductCategories } from './useProductCategories';
 
@@ -92,9 +94,11 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
           <div className="text-foreground flex flex-wrap gap-2 text-sm">
             {!categoriesLoading &&
               categoryNames.map((category) => (
-                <Badge key={category} variant="neutral">
-                  {category}
-                </Badge>
+                <Link key={category.categoryId} to={getCategoryUrl(category)}>
+                  <Badge variant="neutral" className="hover:bg-main cursor-pointer transition-colors active:opacity-80">
+                    {category.name}
+                  </Badge>
+                </Link>
               ))}
             {categoriesLoading && <Spinner size="md" className="mx-auto" />}
           </div>
