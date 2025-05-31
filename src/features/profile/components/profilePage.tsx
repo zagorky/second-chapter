@@ -8,7 +8,11 @@ import type { ProfileDataShema } from '~/features/sign-up/types/types';
 
 import { Button } from '~/components/ui/button/button';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { StyledDatePicker } from '~/components/ui/form-fields/datePicker';
+import { EmailField } from '~/components/ui/form-fields/emailField';
 import { FirstnameField } from '~/components/ui/form-fields/firstnameField';
+import { LastnameField } from '~/components/ui/form-fields/lastnameField';
+import { ProfileInput } from '~/components/ui/profile-input/profileInput';
 import { fetchCustomer } from '~/features/fetch-customers/components/customersData';
 import { profileSchema } from '~/features/sign-up/types/shemas';
 import { cn } from '~/lib/utilities';
@@ -57,6 +61,9 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
 
   const handleSaveClick = (data: ProfileDataShema) => {
     console.log('Save data:', data);
+    if (customer) {
+      form.reset(customer);
+    }
     setIsEditing(false);
   };
 
@@ -70,6 +77,30 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
   const handleCancelClick = () => {
     form.reset(customer ?? {});
     setIsEditing(false);
+  };
+
+  const renderProfileField = () => {
+    console.log(customer?.dateOfBirth);
+
+    return (
+      <>
+        <ProfileInput name="firstName" label="First Name" />
+        <ProfileInput name="lastName" label="Last Name" />
+        <ProfileInput name="email" label="Email Address" />
+        <ProfileInput name="dateOfBirth" label="Date Of Birth" />
+      </>
+    );
+  };
+
+  const renderEditableField = () => {
+    return (
+      <>
+        <FirstnameField name="firstName" />
+        <LastnameField name="lastName" />
+        <EmailField name="email" />
+        <StyledDatePicker name="dateOfBirth" label="Date of birth" />
+      </>
+    );
   };
 
   const renderContent = () => {
@@ -87,7 +118,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
             <Form {...form}>
               <form onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
                 <div className="flex flex-col gap-6">
-                  {isEditing ? <FirstnameField name="firstName" /> : <h2>First Name: {customer?.firstName}</h2>}
+                  {isEditing ? renderEditableField() : renderProfileField()}
                   {isEditing ? (
                     <div className="flex gap-4">
                       <Button type="submit">Save</Button>
