@@ -6,13 +6,13 @@ import { useForm } from 'react-hook-form';
 
 import type { ProfileDataShema } from '~/features/sign-up/types/types';
 
-import { Button } from '~/components/ui/button/button';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { StyledDatePicker } from '~/components/ui/form-fields/datePicker';
 import { EmailField } from '~/components/ui/form-fields/emailField';
 import { FirstnameField } from '~/components/ui/form-fields/firstnameField';
 import { LastnameField } from '~/components/ui/form-fields/lastnameField';
-import { ProfileInput } from '~/components/ui/profile-input/profileInput';
+import { CancelButton, EditButton, SaveButton } from '~/components/ui/profile/profileButton';
+import { ProfileInput } from '~/components/ui/profile/profileInput';
 import { fetchCustomer } from '~/features/fetch-customers/components/customersData';
 import { profileSchema } from '~/features/sign-up/types/shemas';
 import { cn } from '~/lib/utilities';
@@ -121,15 +121,13 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
                   {isEditing ? renderEditableField() : renderProfileField()}
                   {isEditing ? (
                     <div className="flex gap-4">
-                      <Button type="submit">Save</Button>
-                      <Button type="button" onClick={handleCancelClick}>
-                        Cancel
-                      </Button>
+                      <SaveButton />
+                      <CancelButton onClick={handleCancelClick} />
                     </div>
                   ) : (
-                    <Button type="button" onClick={handleEditClick}>
-                      Edit
-                    </Button>
+                    <div className="flex gap-4">
+                      <EditButton onClick={handleEditClick} />
+                    </div>
                   )}
                 </div>
               </form>
