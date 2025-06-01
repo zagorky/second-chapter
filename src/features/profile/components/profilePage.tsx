@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '~components/ui/form/form';
 import { Spinner } from '~components/ui/spinner/spinner';
+import { ChangePasswordForm } from '~features/change-password/components/changePasswordForm';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -129,6 +130,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
                 </div>
               </form>
             </Form>
+            <ChangePasswordForm />
           </CardContent>
         </Card>
       </div>
