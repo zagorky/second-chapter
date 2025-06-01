@@ -135,3 +135,10 @@ export const registrationSchema = z
       }
     }
   });
+
+export const profileSchema = z.object({
+  firstName: nameSchema,
+  lastName: nameSchema,
+  email: emailSchema,
+  dateOfBirth: dateOfBirthSchema,
+});
