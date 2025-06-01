@@ -10,6 +10,7 @@ import { filterFormSchema } from '~features/filters/types/schemas';
 import { getPriceFilterDataFromFacets } from '~features/filters/utils/getPriceFilterData';
 import { useFormValuesChange } from '~hooks/useFormValuesChange';
 import { isString, withDataTestId } from '~utils/helpers';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router';
 
@@ -40,6 +41,24 @@ export const FilterBar = ({ conditions, price }: FilterBarProps) => {
       sale: searchParameters.get('sale') === 'true',
     },
   });
+
+  useEffect(() => {
+    const hasFilters = ['conditions', 'price', 'sale'].some((parameter) => searchParameters.has(parameter));
+
+    if (hasFilters) {
+      form.reset({
+        conditions: searchParameters.get('conditions')?.split(',') ?? [],
+        price: searchParameters.get('price')?.split('-').map(Number) ?? [prices.min, prices.max],
+        sale: searchParameters.get('sale') === 'true',
+      });
+    } else {
+      form.reset({
+        conditions: [],
+        price: [prices.min, prices.max],
+        sale: false,
+      });
+    }
+  }, [searchParameters]);
 
   useFormValuesChange(form, ({ values }) => {
     const newParameters = new URLSearchParams(searchParameters.toString());
@@ -87,7 +106,7 @@ export const FilterBar = ({ conditions, price }: FilterBarProps) => {
           <ConditionsFormField conditions={conditionsData} />
           <PriceFormField prices={prices} />
           <div className="flex justify-end gap-4 sm:col-span-2 lg:col-span-1">
-            <Button {...withDataTestId('reset-button')} type="reset" onClick={onReset}>
+            <Button {...withDataTestId('reset-button')} type="button" onClick={onReset}>
               Reset
             </Button>
           </div>
