@@ -8,9 +8,15 @@ type StreetFieldProps = {
   name: string;
   label?: string;
   placeholder?: string;
+  readOnly?: boolean;
 };
 
-export const StreetField = ({ name, label = 'Street', placeholder = 'Abbey Road' }: StreetFieldProps) => {
+export const StreetField = ({
+  name,
+  label = 'Street',
+  placeholder = 'Abbey Road',
+  readOnly = false,
+}: StreetFieldProps) => {
   const form = useFormContext();
 
   return (
@@ -30,6 +36,7 @@ export const StreetField = ({ name, label = 'Street', placeholder = 'Abbey Road'
                 autoComplete={name}
                 {...field}
                 type="text"
+                readOnly={readOnly}
                 {...withDataTestId(`${name}-input`)}
               />
             </FormControl>

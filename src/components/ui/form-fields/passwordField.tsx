@@ -1,12 +1,11 @@
 import { Button } from '~components/ui/button/button';
 import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
 import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
+import { Input } from '~components/ui/input';
 import { withDataTestId } from '~utils/helpers';
 import { Eye, EyeOff } from 'lucide-react';
 import { useReducer } from 'react';
 import { useFormContext } from 'react-hook-form';
-
-import { Input } from '~/components/ui/input';
 
 type PasswordFieldProps = {
   name?: string;
