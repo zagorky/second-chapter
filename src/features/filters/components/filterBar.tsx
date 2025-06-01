@@ -42,7 +42,7 @@ export const FilterBar = () => {
         sale: false,
       });
     }
-  }, [searchParameters]);
+  }, [form, price.max, price.min, searchParameters]);
 
   useFormValuesChange(form, ({ values }) => {
     const newParameters = new URLSearchParams(searchParameters.toString());
