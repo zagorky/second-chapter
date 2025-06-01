@@ -8,19 +8,11 @@ import { mockProduct1 } from '~/features/fetch-products/config/mockProducts';
 
 import { ProductDetail } from './productDetail';
 
-vi.mock('./useProductCategories', () => ({
-  useProductCategories: vi.fn(() => ({
-    categoryNames: ['fiction', 'non-fiction'],
-    isLoading: false,
-  })),
-}));
-
-vi.mock('./productCarousel', () => ({
+vi.mock('./productDetailCarousel', () => ({
   ProductCarousel: ({ identifier }: { identifier: string }) => (
     <div data-testid={`${identifier}-carousel`}>Product Carousel</div>
   ),
 }));
-
 vi.mock('~/components/ui/marquee', () => ({
   default: ({ items }: { items: string[] }) => <div data-testid="marquee">{items.join(', ')}</div>,
 }));

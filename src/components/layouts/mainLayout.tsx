@@ -7,7 +7,7 @@ export const MainLayout = () => {
   return (
     <div className="bg-secondary-background flex min-h-screen flex-col">
       <Header />
-      <main className="mx-auto flex w-full max-w-6xl flex-grow flex-col p-8 text-center">
+      <main className="mx-auto flex w-full max-w-7xl flex-grow flex-col p-8 text-center">
         <Outlet key={location.pathname} />
       </main>
     </div>

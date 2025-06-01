@@ -18,9 +18,9 @@ import { Spinner } from '~/components/ui/spinner/spinner';
 import { PriceElement } from '~/features/fetch-products/components/product-elements/price-element/priceElement';
 import { calculateDiscount } from '~/features/fetch-products/utils/calculateDiscount';
 
-import { getCategoryUrl } from './getCategoryUrl';
-import { ProductCarousel } from './productCarousel';
-import { useProductCategories } from './useProductCategories';
+import { useProductCategories } from '../../hooks/useProductCategories';
+import { getCategoryUrl } from '../../utils/getCategoryUrl';
+import { ProductCarousel } from './productDetailCarousel';
 
 type ProductDetailProps = {
   product: ProductProjection;

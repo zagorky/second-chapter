@@ -4,7 +4,7 @@ import { useProductByKey } from '~features/fetch-products/hooks/useProductByKey'
 import { normalizeError } from '~utils/normalizeError';
 import { useParams } from 'react-router';
 
-import { ProductDetail } from './productDetail';
+import { ProductDetail } from '../../../features/fetch-products/components/product-detail/productDetail';
 
 const ProductPage = () => {
   const { key } = useParams<{ key: string }>();

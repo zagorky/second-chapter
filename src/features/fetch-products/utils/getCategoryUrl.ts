@@ -1,6 +1,6 @@
-import { navigationRoutes } from '~config/navigation';
+import type { CategoryLink } from '~features/fetch-products/hooks/useProductCategories';
 
-import type { CategoryLink } from './useProductCategories';
+import { navigationRoutes } from '~config/navigation';
 
 export const getCategoryUrl = (category: CategoryLink) => {
   const parameters = new URLSearchParams();
