@@ -4,20 +4,15 @@ import { Checkbox } from '~components/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Slider } from '~components/ui/slider';
 import { formatPrice } from '~features/fetch-products/utils/formatPrice';
+import { useFacetsData } from '~features/filters/hooks/useFacetsData';
 import { withDataTestId } from '~utils/helpers';
 import { useFormContext } from 'react-hook-form';
 
-type PriceFilterProps = {
-  prices: {
-    discountProductsNumber: number;
-    min: number;
-    max: number;
-  };
-};
-
-export const PriceFormField = ({ prices }: PriceFilterProps) => {
+export const PriceFormField = () => {
   const form = useFormContext<FilterFormValues>();
-  const { discountProductsNumber, min, max } = prices;
+  const {
+    price: { min, max },
+  } = useFacetsData();
 
   return (
     <FormField
@@ -27,7 +22,6 @@ export const PriceFormField = ({ prices }: PriceFilterProps) => {
       render={({ field }) => (
         <FormItem>
           <FormLabel className="text-md">Price</FormLabel>
-
           <div className="grid gap-2 md:flex-wrap lg:flex-row">
             <div className="mt-1 min-w-[150px]">
               <FormControl>
@@ -53,9 +47,7 @@ export const PriceFormField = ({ prices }: PriceFilterProps) => {
                     <FormControl>
                       <Checkbox checked={saleField.value} onCheckedChange={saleField.onChange} />
                     </FormControl>
-                    <FormLabel className="cursor-pointer text-sm font-normal">
-                      Sale ({discountProductsNumber})
-                    </FormLabel>
+                    <FormLabel className="cursor-pointer text-sm font-normal">Sale</FormLabel>
                   </FormItem>
                 )}
               />
