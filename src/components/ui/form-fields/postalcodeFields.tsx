@@ -8,9 +8,15 @@ type AddressFieldProps = {
   name: string;
   label?: string;
   placeholder?: string;
+  readOnly?: boolean;
 };
 
-export const PostalCodeField = ({ name, label = 'Postal Code', placeholder = 'NW8 9AY' }: AddressFieldProps) => {
+export const PostalCodeField = ({
+  name,
+  label = 'Postal Code',
+  placeholder = 'NW8 9AY',
+  readOnly = false,
+}: AddressFieldProps) => {
   const form = useFormContext();
 
   return (
@@ -30,6 +36,7 @@ export const PostalCodeField = ({ name, label = 'Postal Code', placeholder = 'NW
                 autoComplete={name}
                 {...field}
                 type="text"
+                readOnly={readOnly}
                 {...withDataTestId(`${name}-input`)}
               />
             </FormControl>

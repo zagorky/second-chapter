@@ -8,9 +8,10 @@ type CityFieldProps = {
   name: string;
   label?: string;
   placeholder?: string;
+  readOnly?: boolean;
 };
 
-export const CityField = ({ name, label = 'City', placeholder = 'London' }: CityFieldProps) => {
+export const CityField = ({ name, label = 'City', placeholder = 'London', readOnly = false }: CityFieldProps) => {
   const form = useFormContext();
 
   return (
@@ -30,6 +31,7 @@ export const CityField = ({ name, label = 'City', placeholder = 'London' }: City
                 autoComplete={name}
                 {...field}
                 type="text"
+                readOnly={readOnly}
                 {...withDataTestId(`${name}-input`)}
               />
             </FormControl>
