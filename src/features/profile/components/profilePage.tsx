@@ -59,8 +59,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
     }
   }, [customer, form]);
 
-  const handleSaveClick = (data: ProfileDataShema) => {
-    console.log('Save data:', data);
+  const handleSaveClick = () => {
     if (customer) {
       form.reset(customer);
     }
@@ -80,8 +79,6 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
   };
 
   const renderProfileField = () => {
-    console.log(customer?.dateOfBirth);
-
     return (
       <>
         <ProfileInput name="firstName" label="First Name" />
