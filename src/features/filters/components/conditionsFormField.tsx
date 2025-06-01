@@ -2,18 +2,13 @@ import type { FilterFormValues } from '~features/filters/types/types';
 
 import { Checkbox } from '~components/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
+import { useFacetsData } from '~features/filters/hooks/useFacetsData';
 import { withDataTestId } from '~utils/helpers';
 import { useFormContext } from 'react-hook-form';
 
-type ConditionListProps = {
-  conditions: {
-    id: string;
-    label: string;
-  }[];
-};
-
-export const ConditionsFormField = ({ conditions }: ConditionListProps) => {
+export const ConditionsFormField = () => {
   const form = useFormContext<FilterFormValues>();
+  const { conditions } = useFacetsData();
 
   return (
     <FormField

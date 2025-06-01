@@ -14,8 +14,9 @@ describe('CatalogPage', () => {
   beforeEach(() => {
     vi.resetAllMocks();
     mockUseFacetsData.mockReturnValue({
-      conditions: null,
-      price: null,
+      conditions: [],
+      price: { min: 0, max: 0 },
+      isFacetLoading: true,
     });
   });
 

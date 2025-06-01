@@ -4,19 +4,15 @@ import { Checkbox } from '~components/ui/checkbox';
 import { FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Slider } from '~components/ui/slider';
 import { formatPrice } from '~features/fetch-products/utils/formatPrice';
+import { useFacetsData } from '~features/filters/hooks/useFacetsData';
 import { withDataTestId } from '~utils/helpers';
 import { useFormContext } from 'react-hook-form';
 
-type PriceFilterProps = {
-  prices: {
-    min: number;
-    max: number;
-  };
-};
-
-export const PriceFormField = ({ prices }: PriceFilterProps) => {
+export const PriceFormField = () => {
   const form = useFormContext<FilterFormValues>();
-  const { min, max } = prices;
+  const {
+    price: { min, max },
+  } = useFacetsData();
 
   return (
     <FormField
