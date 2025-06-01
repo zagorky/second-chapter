@@ -109,3 +109,7 @@
   scrollbar-color: var(--color-main) var(--color-background);
   scrollbar-width: thin;
 }
+
+html {
+  scrollbar-gutter: stable;
+}
