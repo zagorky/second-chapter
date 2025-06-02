@@ -115,19 +115,18 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
           <CardContent>
             <Form {...form}>
               <form onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
-                <div className="flex flex-col gap-6">
-                  {isEditing ? renderEditableField() : renderProfileField()}
+                <div className="flex justify-end space-x-2">
                   {isEditing ? (
-                    <div className="flex gap-4">
-                      <SaveButton />
+                    <>
                       <CancelButton onClick={handleCancelClick} />
-                    </div>
+                      <SaveButton />
+                    </>
                   ) : (
-                    <div className="flex gap-4">
-                      <EditButton onClick={handleEditClick} />
-                    </div>
+                    <EditButton onClick={handleEditClick} />
                   )}
                 </div>
+
+                <div className="flex flex-col gap-6">{isEditing ? renderEditableField() : renderProfileField()}</div>
               </form>
             </Form>
             <ChangePasswordForm />
