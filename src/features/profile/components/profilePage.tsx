@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 
 import type { ProfileDataShema } from '~/features/sign-up/types/types';
 
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Card, CardContent } from '~/components/ui/card';
 import { CancelButton, EditButton, SaveButton } from '~/components/ui/edit-mode/editModeButton';
 import { StyledDatePicker } from '~/components/ui/form-fields/datePicker';
 import { EmailField } from '~/components/ui/form-fields/emailField';
@@ -78,9 +78,6 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
     return (
       <div className={cn('flex flex-col gap-6', className)} {...props}>
         <Card>
-          <CardHeader>
-            <CardTitle>Your Account</CardTitle>
-          </CardHeader>
           <CardContent>
             <Form {...form}>
               <form onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
