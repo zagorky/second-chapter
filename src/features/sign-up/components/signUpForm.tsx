@@ -120,7 +120,7 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
 
   return (
     <div className={cn('flex w-[calc(100%-32px)] max-w-full flex-col gap-6', className)} {...props}>
-      <Card className="">
+      <Card>
         <CardHeader>
           <CardTitle>Create account</CardTitle>
           <CardDescription>Enter your details to create your account.</CardDescription>

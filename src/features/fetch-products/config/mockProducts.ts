@@ -69,6 +69,7 @@ export const mockProduct1: ProductProjection = {
         name: 'condition',
         value: {
           label: 'Like New',
+          key: '0',
         },
       },
     ],
@@ -151,6 +152,7 @@ const mockProduct2: ProductProjection = {
         name: 'condition',
         value: {
           label: '',
+          key: '0',
         },
       },
     ],

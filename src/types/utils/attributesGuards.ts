@@ -3,10 +3,10 @@ import type { Attribute } from '@commercetools/platform-sdk';
 const isStringAttribute = (attribute?: Attribute): attribute is Omit<Attribute, 'value'> & { value: string } =>
   typeof attribute?.value === 'string';
 
-const isLabelAttribute = (
+const isEnumAttribute = (
   attribute?: Attribute
-): attribute is Omit<Attribute, 'value'> & { value: { label: string } } =>
-  !!attribute?.value && typeof attribute.value === 'object' && 'label' in attribute.value;
+): attribute is Omit<Attribute, 'value'> & { value: { key: string; label: string } } =>
+  !!attribute?.value && typeof attribute.value === 'object' && 'label' in attribute.value && 'key' in attribute.value;
 
 export const getStringAttribute = (attributes: Attribute[] | undefined, key: string): string => {
   const attribute = attributes?.find((attribute_) => attribute_.name === key);
@@ -14,12 +14,15 @@ export const getStringAttribute = (attributes: Attribute[] | undefined, key: str
   return isStringAttribute(attribute) ? attribute.value : 'Unknown';
 };
 
-export const getLabelAttribute = (attributes: Attribute[] | undefined, key: string): string => {
+export const getEnumAttribute = (attributes: Attribute[] | undefined, key: string): { label: string; key: string } => {
   const attribute = attributes?.find((attribute_) => attribute_.name === key);
 
-  if (isLabelAttribute(attribute)) {
-    return attribute.value.label;
+  if (isEnumAttribute(attribute)) {
+    return {
+      label: attribute.value.label,
+      key: attribute.value.key,
+    };
   }
 
-  return 'Unknown';
+  return { label: 'Unknown', key: 'Unknown' };
 };

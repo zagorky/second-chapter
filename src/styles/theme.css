@@ -14,6 +14,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --color-sale: var(--sale);
   --color-destructive: var(--destructive);
   --spacing-boxShadowX: 2px;
   --spacing-boxShadowY: 2px;
@@ -26,6 +27,28 @@
   --font-base:
     'Space Grotesk', system-ui, -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, 'Helvetica Neue', arial,
     sans-serif;
+  --animate-marquee: marquee 5s linear infinite;
+  --animate-marquee2: marquee2 5s linear infinite;
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+
+    100% {
+      transform: translateX(-25%);
+    }
+  }
+
+  @keyframes marquee2 {
+    0% {
+      transform: translateX(100%);
+    }
+
+    100% {
+      transform: translateX(75%);
+    }
+  }
 }
 
 :root {
@@ -39,12 +62,13 @@
   --overlay: oklch(0% 0 0deg / 80%);
   --shadow: 2px 2px 0px 0px var(--border);
   --chart-1: #fc64ab;
+  --chart-5: #29dca6;
   --chart-2: #facc00;
   --chart-3: #ff7a05;
-  --chart-4: #ff4d50;
-  --chart-5: #7a83ff;
+  --chart-4: #7a83ff;
   --chart-active-dot: #000;
   --destructive: oklch(57.7% 0.245 27.325deg);
+  --sale: #d32525;
 }
 
 .dark {
@@ -59,10 +83,11 @@
   --chart-1: #fb3290;
   --chart-2: #e0b700;
   --chart-3: #eb6d00;
-  --chart-4: #ff6669;
-  --chart-5: #7a83ff;
+  --chart-4: #7a83ff;
+  --chart-5: #53ffc0;
   --chart-active-dot: #fff;
   --destructive: oklch(70.4% 0.191 22.216deg);
+  --sale: oklch(70.4% 0.191 22.216deg);
 }
 
 @layer base {
@@ -78,4 +103,13 @@
   h6 {
     @apply font-heading;
   }
+}
+
+* {
+  scrollbar-color: var(--color-main) var(--color-background);
+  scrollbar-width: thin;
+}
+
+html {
+  scrollbar-gutter: stable;
 }
