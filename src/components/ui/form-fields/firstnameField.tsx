@@ -24,7 +24,7 @@ export const FirstnameField = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className="">
+        <FormItem>
           <div className="form-field-wrapper">
             <FormLabel htmlFor={name} className={'text-left'}>
               {label}
