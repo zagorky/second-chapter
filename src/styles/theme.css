@@ -110,6 +110,10 @@
   scrollbar-width: thin;
 }
 
-html {
-  scrollbar-gutter: stable;
+.form-field-wrapper {
+  @apply grid gap-3;
+}
+
+.form-field-input-wrapper {
+  @apply grid gap-1.5;
 }

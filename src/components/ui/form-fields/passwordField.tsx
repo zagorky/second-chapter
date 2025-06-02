@@ -31,29 +31,31 @@ export const PasswordField = ({
       render={({ field }) => (
         <FormItem className="grow">
           <FormLabel className={'text-left'}>{label}</FormLabel>
-          <div className={'relative'}>
-            <FormControl>
-              <Input
-                placeholder={placeholder}
-                autoComplete="current-password"
-                readOnly={readOnly}
-                {...field}
-                type={showPassword ? 'text' : 'password'}
-                {...withDataTestId(`${name}-input`)}
-              />
-            </FormControl>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
-              onClick={toggleShowPassword}
-              disabled={readOnly}
-            >
-              {showPassword || readOnly ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </Button>
+          <div className="form-field-input-wrapper">
+            <div className={'relative'}>
+              <FormControl>
+                <Input
+                  placeholder={placeholder}
+                  autoComplete="current-password"
+                  readOnly={readOnly}
+                  {...field}
+                  type={showPassword ? 'text' : 'password'}
+                  {...withDataTestId(`${name}-input`)}
+                />
+              </FormControl>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={toggleShowPassword}
+                disabled={readOnly}
+              >
+                {showPassword || readOnly ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </Button>
+            </div>
+            <FixedFormErrorMessage />
           </div>
-          <FixedFormErrorMessage />
         </FormItem>
       )}
     />

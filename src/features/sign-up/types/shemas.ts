@@ -19,7 +19,7 @@ const nameSchema = z
 
 const streetSchema = z.string().min(MIN_LENGTH, 'This field cannot be empty').max(MAX_LENGTH);
 
-const cityShema = z
+const citySchema = z
   .string()
   .min(MIN_LENGTH, 'This field cannot be empty')
   .max(MAX_LENGTH)
@@ -27,7 +27,7 @@ const cityShema = z
     message: 'Please use only letters from the Latin alphabet.',
   });
 
-const postalCodeShema = z
+const postalCodeSchema = z
   .string()
   .min(MIN_POSTALCODE_LENGTH, 'Enter a valid UK postcode, such as: NW8 9AY, EC1A 1BB, M1 1AE')
   .max(MAX_POSTALCODE_LENGTH)
@@ -41,6 +41,10 @@ const postalCodeShema = z
   .refine((value) => /^(GIR ?0AA|[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2})$/.test(value), {
     message: 'Enter a valid UK postcode, such as: NW8 9AY, EC1A 1BB, M1 1AE',
   });
+
+const countrySchema = z.literal('GB', {
+  errorMap: () => ({ message: 'Country is required' }),
+});
 
 const dateOfBirthSchema = z
   .string()
@@ -77,9 +81,6 @@ const dateOfBirthSchema = z
 const shippingIsDefaultShippingShema = z.boolean().optional();
 const shippingIsDefaultBillingShema = z.boolean().optional();
 const billingIsDefaultBillingShema = z.boolean().optional();
-const countryShema = z.literal('GB', {
-  errorMap: () => ({ message: 'Country is required' }),
-});
 
 export const registrationSchema = z
   .object({
@@ -88,14 +89,14 @@ export const registrationSchema = z
     email: emailSchema,
     password: passwordSchema,
     streetShipping: streetSchema,
-    cityShipping: cityShema,
-    postalCodeShipping: postalCodeShema,
+    cityShipping: citySchema,
+    postalCodeShipping: postalCodeSchema,
     streetBilling: streetSchema.optional(),
-    cityBilling: cityShema.optional(),
-    postalCodeBilling: postalCodeShema.optional(),
+    cityBilling: citySchema.optional(),
+    postalCodeBilling: postalCodeSchema.optional(),
     dateOfBirth: dateOfBirthSchema,
-    countryShipping: countryShema,
-    countryBilling: countryShema.optional(),
+    countryShipping: countrySchema,
+    countryBilling: countrySchema.optional(),
     shippingIsDefaultShipping: shippingIsDefaultShippingShema,
     shippingIsDefaultBilling: shippingIsDefaultBillingShema,
     billingIsDefaultBilling: billingIsDefaultBillingShema,
@@ -141,4 +142,15 @@ export const profileSchema = z.object({
   lastName: nameSchema,
   email: emailSchema,
   dateOfBirth: dateOfBirthSchema,
+});
+
+export const addressUpdateSchema = z.object({
+  streetName: streetSchema,
+  city: citySchema,
+  postalCode: postalCodeSchema,
+  country: countrySchema,
+  isShippingAddress: z.boolean(),
+  isBillingAddress: z.boolean(),
+  isDefaultShippingAddress: z.boolean(),
+  isDefaultBillingAddress: z.boolean(),
 });

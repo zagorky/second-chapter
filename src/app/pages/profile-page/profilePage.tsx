@@ -13,7 +13,7 @@ const ProfilePage = () => {
   return (
     <>
       <h1 className={'heading-1 sr-only'}>{HEADER_TEXT}</h1>
-      <Tabs defaultValue="account" className="">
+      <Tabs defaultValue="account">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">{TABS.ACCOUNT}</TabsTrigger>
           <TabsTrigger value="addresses">{TABS.ADDRESSES}</TabsTrigger>
