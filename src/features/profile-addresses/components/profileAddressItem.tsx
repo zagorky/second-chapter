@@ -7,6 +7,7 @@ import { Checkbox } from '~components/ui/checkbox';
 import { Spinner } from '~components/ui/spinner/spinner';
 import { AddressForm } from '~features/sign-up/components/addressForm';
 import { addressUpdateSchema } from '~features/sign-up/types/shemas';
+import { X } from 'lucide-react';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -29,7 +30,8 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
   const addressId = address.id ?? '';
   const [isEditing, setIsEditing] = useState(isNew ?? false);
   const [isSaving, setIsSaving] = useState(false);
-  const { customer, updateAddress, createAddress } = useUpdateAddress();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { customer, updateAddress, createAddress, removeAddress } = useUpdateAddress();
 
   const CHECKBOX_LABELS = {
     SHIPPING: 'Shipping Address',
@@ -42,6 +44,7 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
     EDIT_BUTTON: 'Edit',
     CANCEL_BUTTON: 'Cancel',
     SAVE_BUTTON: 'Save',
+    DELETE_BUTTON: 'Delete',
   };
 
   const ERRORS = {
@@ -135,12 +138,34 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      if (!addressId) {
+        throw new Error('Address ID is required for deletion');
+      }
+
+      setIsDeleting(true);
+      await removeAddress(addressId);
+      onAddressUpdated?.();
+    } catch (error) {
+      toast.error(`Failed to delete address: ${normalizeError(error).message}`);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <form className="rounded-base border-border bg-background space-y-4 border-2 p-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">
-          {address.firstName} {address.lastName}
-        </h3>
+      <h3 className="text-lg font-medium">
+        {address.firstName} {address.lastName}
+      </h3>
+      <div className="flex justify-between gap-2">
+        {!isNew && (
+          <Button variant="neutral" size="sm" type="button" onClick={() => void handleDelete()} disabled={isDeleting}>
+            {isDeleting ? <Spinner size="md" /> : <X />}
+            {EDIT_MODE_TEXTS.DELETE_BUTTON}
+          </Button>
+        )}
         <div className="flex gap-2">
           {isEditing ? (
             <>

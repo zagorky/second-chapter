@@ -6,7 +6,7 @@ import useSWR from 'swr';
 
 import { normalizeError } from '~/utils/normalizeError';
 
-import { updateAddress, createAddress } from '../utils/customerAddressUpdateActions';
+import { updateAddress, createAddress, removeAddress } from '../utils/customerAddressUpdateActions';
 import { fetchCustomer } from '../utils/fetchCustomer';
 
 export const useUpdateAddress = () => {
@@ -61,6 +61,21 @@ export const useUpdateAddress = () => {
     [mutate]
   );
 
+  const removeAddressHandler = useCallback(
+    async (addressId: string) => {
+      try {
+        await removeAddress(addressId);
+        await mutate();
+        toast.success('Address deleted successfully');
+
+        return true;
+      } catch (error) {
+        throw normalizeError(error);
+      }
+    },
+    [mutate]
+  );
+
   return {
     customer,
     addresses: customer?.addresses ?? [],
@@ -68,6 +83,7 @@ export const useUpdateAddress = () => {
     isLoading,
     updateAddress: updateAddressHandler,
     createAddress: createAddressHandler,
+    removeAddress: removeAddressHandler,
     refresh: mutate,
   };
 };

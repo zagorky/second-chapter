@@ -156,3 +156,24 @@ export const createAddress = async (parameters: {
       .execute();
   }
 };
+
+export const removeAddress = async (addressId: string): Promise<void> => {
+  const response = await apiInstance.root.me().get().execute();
+  const customer = response.body;
+  const version = customer.version;
+
+  await apiInstance.root
+    .me()
+    .post({
+      body: {
+        version,
+        actions: [
+          {
+            action: 'removeAddress',
+            addressId,
+          },
+        ],
+      },
+    })
+    .execute();
+};

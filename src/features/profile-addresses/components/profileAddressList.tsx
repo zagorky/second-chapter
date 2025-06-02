@@ -60,13 +60,14 @@ export const ProfileAddressList = () => {
       return <Spinner className="m-auto" size="xl" />;
     }
 
-    if (addresses.length === 0 && !newAddress) {
-      return <div>{ADDRESSES_TEXTS.NO_ADDRESSES_FOUND}</div>;
-    }
-
     return (
       <div className="grid gap-6">
         <ul className="contents">
+          {addresses.length === 0 && !newAddress && (
+            <li>
+              <div>{ADDRESSES_TEXTS.NO_ADDRESSES_FOUND}</div>
+            </li>
+          )}
           {addresses.map((address) => (
             <li key={address.id}>
               <ProfileAddressItem address={address} onAddressUpdated={() => void refresh()} />
