@@ -19,15 +19,17 @@ import { useUpdateAddress } from '../hooks/useUpdateAddress';
 type ProfileAddressItemProps = {
   address: BaseAddress;
   onAddressUpdated?: () => void;
+  onCancel?: () => void;
+  isNew?: boolean;
 };
 
 type AddressFormData = z.infer<typeof addressUpdateSchema>;
 
-export const ProfileAddressItem = ({ address, onAddressUpdated }: ProfileAddressItemProps) => {
+export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew }: ProfileAddressItemProps) => {
   const addressId = address.id ?? '';
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(isNew ?? false);
   const [isSaving, setIsSaving] = useState(false);
-  const { customer, updateAddress } = useUpdateAddress();
+  const { customer, updateAddress, createAddress } = useUpdateAddress();
 
   const CHECKBOX_LABELS = {
     SHIPPING: 'Shipping Address',
@@ -78,7 +80,7 @@ export const ProfileAddressItem = ({ address, onAddressUpdated }: ProfileAddress
 
   const handleSave = async () => {
     try {
-      if (!addressId) {
+      if (!isNew && !addressId) {
         throw new Error(ERRORS.ADDRESS_ID_REQUIRED);
       }
 
@@ -91,8 +93,7 @@ export const ProfileAddressItem = ({ address, onAddressUpdated }: ProfileAddress
       setIsSaving(true);
       const formData = form.getValues();
 
-      await updateAddress({
-        addressId,
+      const addressDraftBase = {
         addressData: {
           streetName: formData.streetName,
           city: formData.city,
@@ -103,7 +104,9 @@ export const ProfileAddressItem = ({ address, onAddressUpdated }: ProfileAddress
         setBilling: !!formData.isBillingAddress,
         makeDefaultShipping: !!formData.isDefaultShippingAddress,
         makeDefaultBilling: !!formData.isDefaultBillingAddress,
-      });
+      };
+
+      await (isNew ? createAddress(addressDraftBase) : updateAddress({ ...addressDraftBase, addressId }));
 
       setIsEditing(false);
       onAddressUpdated?.();
@@ -115,17 +118,21 @@ export const ProfileAddressItem = ({ address, onAddressUpdated }: ProfileAddress
   };
 
   const handleCancel = () => {
-    form.reset({
-      streetName: address.streetName ?? '',
-      city: address.city ?? '',
-      postalCode: address.postalCode ?? '',
-      country: 'GB',
-      isShippingAddress,
-      isBillingAddress,
-      isDefaultShippingAddress,
-      isDefaultBillingAddress,
-    });
-    setIsEditing(false);
+    if (isNew) {
+      onCancel?.();
+    } else {
+      form.reset({
+        streetName: address.streetName ?? '',
+        city: address.city ?? '',
+        postalCode: address.postalCode ?? '',
+        country: 'GB',
+        isShippingAddress,
+        isBillingAddress,
+        isDefaultShippingAddress,
+        isDefaultBillingAddress,
+      });
+      setIsEditing(false);
+    }
   };
 
   return (

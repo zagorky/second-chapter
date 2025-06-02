@@ -6,7 +6,7 @@ import useSWR from 'swr';
 
 import { normalizeError } from '~/utils/normalizeError';
 
-import { updateAddress } from '../utils/customerAddressUpdateActions';
+import { updateAddress, createAddress } from '../utils/customerAddressUpdateActions';
 import { fetchCustomer } from '../utils/fetchCustomer';
 
 export const useUpdateAddress = () => {
@@ -39,12 +39,35 @@ export const useUpdateAddress = () => {
     [mutate]
   );
 
+  const createAddressHandler = useCallback(
+    async (parameters: {
+      addressData: {
+        streetName: string;
+        city: string;
+        postalCode: string;
+        country: string;
+      };
+      setShipping: boolean;
+      setBilling: boolean;
+      makeDefaultShipping: boolean;
+      makeDefaultBilling: boolean;
+    }) => {
+      await createAddress(parameters);
+      await mutate();
+      toast.success('Address created successfully!');
+
+      return true;
+    },
+    [mutate]
+  );
+
   return {
     customer,
     addresses: customer?.addresses ?? [],
     error,
     isLoading,
     updateAddress: updateAddressHandler,
+    createAddress: createAddressHandler,
     refresh: mutate,
   };
 };

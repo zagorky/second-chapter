@@ -78,3 +78,81 @@ export const updateAddress = async (parameters: {
     })
     .execute();
 };
+
+export const createAddress = async (parameters: {
+  addressData: {
+    streetName: string;
+    city: string;
+    postalCode: string;
+    country: string;
+  };
+  setShipping: boolean;
+  setBilling: boolean;
+  makeDefaultShipping: boolean;
+  makeDefaultBilling: boolean;
+}): Promise<void> => {
+  const { addressData, setShipping, setBilling, makeDefaultShipping, makeDefaultBilling } = parameters;
+
+  const response = await apiInstance.root.me().get().execute();
+  let version = response.body.version;
+
+  const addressDraft: AddressDraft = {
+    ...addressData,
+    country: addressData.country,
+  };
+
+  const createResponse = await apiInstance.root
+    .me()
+    .post({
+      body: {
+        version,
+        actions: [
+          {
+            action: 'addAddress',
+            address: addressDraft,
+          },
+        ],
+      },
+    })
+    .execute();
+
+  if (setShipping || setBilling || makeDefaultShipping || makeDefaultBilling) {
+    const updatedCustomer = createResponse.body;
+
+    version = updatedCustomer.version;
+    const newAddress = updatedCustomer.addresses.at(-1);
+    const newAddressId = newAddress?.id;
+
+    if (!newAddressId) {
+      throw new Error('Failed to get new address ID');
+    }
+
+    const actions: MyCustomerUpdateAction[] = [];
+
+    if (setShipping) {
+      actions.push({ action: 'addShippingAddressId', addressId: newAddressId });
+    }
+
+    if (setBilling) {
+      actions.push({ action: 'addBillingAddressId', addressId: newAddressId });
+    }
+
+    if (makeDefaultShipping) {
+      actions.push({ action: 'setDefaultShippingAddress', addressId: newAddressId });
+    }
+
+    if (makeDefaultBilling) {
+      actions.push({ action: 'setDefaultBillingAddress', addressId: newAddressId });
+    }
+
+    await apiInstance.root
+      .me()
+      .post({
+        body: {
+          version,
+          actions,
+        },
+      })
+      .execute();
+  }
+};
