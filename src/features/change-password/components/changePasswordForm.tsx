@@ -53,17 +53,14 @@ export const ChangePasswordForm = () => {
 
   return (
     <Form {...form}>
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={(event) => void form.handleSubmit(handleSubmit)(event)}>
+        <h1 className="text-m md:text-l text-left">Change Password</h1>
         <div className="flex flex-col gap-6">
           <div className="flex justify-end space-x-2">
             {isEditing ? (
               <>
                 <CancelButton onClick={handleCancel} />
-                <SaveButton
-                  disabled={isSaving}
-                  isSaving={isSaving}
-                  onClick={(event) => void form.handleSubmit(handleSubmit)(event)}
-                />
+                <SaveButton disabled={isSaving} isSaving={isSaving} />
               </>
             ) : (
               <EditButton onClick={handleEdit} disabled={isLoading} />
