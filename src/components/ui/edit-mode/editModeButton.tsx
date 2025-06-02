@@ -21,7 +21,7 @@ const EDIT_MODE_TEXTS = {
 
 export const EditButton = ({ onClick, isLoading = false, ...rest }: ButtonProps) => {
   return (
-    <Button variant="neutral" className="sm:inline-flex" onClick={onClick} {...rest}>
+    <Button variant="default" className="sm:inline-flex" onClick={onClick} {...rest}>
       {isLoading ? (
         <Spinner size="md" />
       ) : (
