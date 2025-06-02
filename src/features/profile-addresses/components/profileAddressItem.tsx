@@ -185,7 +185,7 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
           <div className="flex items-center gap-2">
             <Checkbox
               id={`${String(addressId)}-address-default-shipping`}
-              checked={form.watch('isDefaultShippingAddress')}
+              checked={isEditing ? form.watch('isDefaultShippingAddress') : isDefaultShippingAddress}
               onCheckedChange={(checked) => {
                 form.setValue('isDefaultShippingAddress', checked === true);
               }}
