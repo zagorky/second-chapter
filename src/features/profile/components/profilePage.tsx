@@ -13,6 +13,7 @@ import { StyledDatePicker } from '~/components/ui/form-fields/datePicker';
 import { EmailField } from '~/components/ui/form-fields/emailField';
 import { FirstnameField } from '~/components/ui/form-fields/firstnameField';
 import { LastnameField } from '~/components/ui/form-fields/lastnameField';
+import { ProfileAvatar } from '~/components/ui/profileAvatar/profileAvatar';
 import { profileSchema } from '~/features/sign-up/types/shemas';
 import { cn } from '~/lib/utilities';
 
@@ -79,22 +80,28 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
       <div className={cn('flex flex-col gap-6', className)} {...props}>
         <Card>
           <CardContent>
-            <Form {...form}>
-              <form onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
-                <div className="flex justify-end space-x-2">
-                  {isEditing ? (
-                    <>
-                      <SaveButton disabled={isSaving} isSaving={isSaving} />
-                      <CancelButton onClick={handleCancelClick} />
-                    </>
-                  ) : (
-                    <EditButton onClick={handleEditClick} />
-                  )}
-                </div>
-                <div className="flex flex-col gap-6">{renderFields()}</div>
-              </form>
-            </Form>
-            <ChangePasswordForm />
+            <div className="mb-10 flex">
+              <ProfileAvatar imageUrl="avatarAccount.jpg" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-15">
+              <Form {...form}>
+                <form className="space-y-8" onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
+                  <h1 className="text-left text-xl md:text-2xl">Profile Information</h1>
+                  <div className="mb-5 flex justify-end space-x-2">
+                    {isEditing ? (
+                      <>
+                        <SaveButton disabled={isSaving} isSaving={isSaving} />
+                        <CancelButton onClick={handleCancelClick} />
+                      </>
+                    ) : (
+                      <EditButton onClick={handleEditClick} />
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-6">{renderFields()}</div>
+                </form>
+              </Form>
+              <ChangePasswordForm />
+            </div>
           </CardContent>
         </Card>
       </div>

@@ -54,6 +54,7 @@ export const ChangePasswordForm = () => {
   return (
     <Form {...form}>
       <form className="space-y-8">
+        <h1 className="text-m md:text-l text-left">Change Password</h1>
         <div className="flex flex-col gap-6">
           <div className="flex justify-end space-x-2">
             {isEditing ? (
