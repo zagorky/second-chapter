@@ -155,7 +155,7 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
   };
 
   return (
-    <form className="rounded-base border-border bg-background space-y-4 border-2 p-4">
+    <form className="rounded-base border-border bg-background space-y-4 border-2 p-6">
       <h3 className="text-lg font-medium">
         {address.firstName} {address.lastName}
       </h3>

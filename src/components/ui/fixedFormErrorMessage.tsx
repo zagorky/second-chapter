@@ -8,7 +8,7 @@ type FixedFormErrorMessageProps = {
 };
 
 export const FixedFormErrorMessage = ({
-  classNames = 'sm:min-h-[2.5rem] min-h-[2rem] max-w-[300px] mx-auto',
+  classNames = 'sm:min-h-[1rem] min-h-[0.5rem] mx-auto',
   children,
 }: FixedFormErrorMessageProps) => {
   return (

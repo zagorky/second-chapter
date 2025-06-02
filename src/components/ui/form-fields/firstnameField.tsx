@@ -25,22 +25,24 @@ export const FirstnameField = ({
       name={name}
       render={({ field }) => (
         <FormItem className="">
-          <div className="grid gap-3">
+          <div className="form-field-wrapper">
             <FormLabel htmlFor={name} className={'text-left'}>
               {label}
             </FormLabel>
-            <FormControl>
-              <Input
-                id={name}
-                placeholder={placeholder}
-                autoComplete={name}
-                readOnly={isReadOnly}
-                {...field}
-                type="text"
-                {...withDataTestId(`${name}-input`)}
-              />
-            </FormControl>
-            <FixedFormErrorMessage />
+            <div className="form-field-input-wrapper">
+              <FormControl>
+                <Input
+                  id={name}
+                  placeholder={placeholder}
+                  autoComplete={name}
+                  readOnly={isReadOnly}
+                  {...field}
+                  type="text"
+                  {...withDataTestId(`${name}-input`)}
+                />
+              </FormControl>
+              <FixedFormErrorMessage />
+            </div>
           </div>
         </FormItem>
       )}

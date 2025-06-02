@@ -25,22 +25,24 @@ export const PostalCodeField = ({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <div className="grid gap-3">
+          <div className="form-field-input-wrapper">
             <FormLabel htmlFor={name} className={'text-left'}>
               {label}
             </FormLabel>
-            <FormControl>
-              <Input
-                id={name}
-                placeholder={placeholder}
-                autoComplete={name}
-                {...field}
-                type="text"
-                readOnly={readOnly}
-                {...withDataTestId(`${name}-input`)}
-              />
-            </FormControl>
-            <FixedFormErrorMessage />
+            <div className="form-field-input-wrapper">
+              <FormControl>
+                <Input
+                  id={name}
+                  placeholder={placeholder}
+                  autoComplete={name}
+                  {...field}
+                  type="text"
+                  readOnly={readOnly}
+                  {...withDataTestId(`${name}-input`)}
+                />
+              </FormControl>
+              <FixedFormErrorMessage />
+            </div>
           </div>
         </FormItem>
       )}
