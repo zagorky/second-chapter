@@ -78,6 +78,7 @@ export const StyledDatePicker = <T extends FieldValues>({
                               fontSize: '14px',
                             },
                             '&.Mui-disabled': {
+                              background: 'transparent',
                               border: 'none',
                               '& span': {
                                 color: 'var(--color-foreground)',
