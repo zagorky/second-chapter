@@ -167,11 +167,11 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
         <div className="flex gap-2">
           {isEditing ? (
             <>
-              <CancelButton onClick={handleCancel} />
-              <SaveButton onClick={() => void handleSave()} disabled={isSaving} />
+              <CancelButton onClick={handleCancel} type="button" />
+              <SaveButton onClick={() => void handleSave()} disabled={isSaving} type="button" />
             </>
           ) : (
-            <EditButton onClick={handleEdit} />
+            <EditButton onClick={handleEdit} type="button" />
           )}
         </div>
       </div>
