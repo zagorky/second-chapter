@@ -17,51 +17,24 @@ import { profileSchema } from '~/features/sign-up/types/shemas';
 import { cn } from '~/lib/utilities';
 
 import { useUpdateProfileData } from '../hooks/useUpdateProfileData';
-import { fetchProfileData } from '../utils/fetchProfileData';
-
-type Customer = {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  dateOfBirth?: string;
-};
-
-function useCustomerData() {
-  const [customer, setCustomer] = React.useState<Customer | null>(null);
-  const [isLoading, setIsLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    setIsLoading(true);
-    fetchProfileData()
-      .then((data) => {
-        setCustomer(data ?? null);
-        setIsLoading(false);
-      })
-      .catch((error: unknown) => {
-        console.error(`Error loading user profile data:`, error);
-      });
-  }, []);
-
-  return { customer, isLoading };
-}
 
 export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>) {
-  const { customer, isLoading } = useCustomerData();
   const [isEditing, setIsEditing] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
-  const { updateProfileData } = useUpdateProfileData();
+
+  const { profileData, updateProfileData } = useUpdateProfileData();
 
   const form = useForm<ProfileDataShema>({
     resolver: zodResolver(profileSchema),
-    defaultValues: customer ?? { firstName: '', lastName: '', email: '', dateOfBirth: '' },
+    defaultValues: profileData ?? { firstName: '', lastName: '', email: '', dateOfBirth: '' },
     mode: 'onChange',
   });
 
   React.useEffect(() => {
-    if (customer) {
-      form.reset(customer);
+    if (profileData) {
+      form.reset(profileData);
     }
-  }, [customer, form]);
+  }, [profileData, form]);
 
   const handleSaveClick = async () => {
     try {
@@ -98,7 +71,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
   };
 
   const renderContent = () => {
-    if (isLoading) {
+    if (!profileData) {
       return <Spinner className="m-auto" size="xl" />;
     }
 
