@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { toast } from 'sonner';
-import useSWR from 'swr';
+import useSWR, { mutate as globalMutate } from 'swr';
 
 import { fetchProfileData } from '../utils/fetchProfileData';
 import { updateProfile } from '../utils/updateProfileData';
@@ -20,6 +20,11 @@ export const useUpdateProfileData = () => {
       try {
         await updateProfile(updateProfileData);
         await mutate();
+
+        if (updateProfileData.email) {
+          await globalMutate('changePassword');
+        }
+
         toast.success('Profile updated successfully!');
 
         return true;
