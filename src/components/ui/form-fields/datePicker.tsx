@@ -56,16 +56,14 @@ export const StyledDatePicker = <T extends FieldValues>({
                         className,
                         fullWidth: true,
                         variant: 'outlined',
-                        sx: {
-                          '& fieldset': {
-                            border: 'none',
-                          },
-                        },
 
                         InputProps: {
                           sx: {
                             '&.Mui-disabled': {
                               border: 'none',
+                              '& span': {
+                                color: 'var(--color-foreground)',
+                              },
                             },
                           },
                           classes: {
