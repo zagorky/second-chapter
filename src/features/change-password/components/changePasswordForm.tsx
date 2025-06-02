@@ -2,17 +2,15 @@ import type { SubmitHandler } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '~components/ui/button/button';
 import { FixedFormErrorMessage } from '~components/ui/fixedFormErrorMessage';
 import { PasswordField } from '~components/ui/form-fields/passwordField';
 import { Form } from '~components/ui/form/form';
-import { Spinner } from '~components/ui/spinner/spinner';
 import { useChangePassword } from '~features/change-password/hooks/useChangePassword';
 import { changePasswordSchema } from '~features/change-password/types/schemas';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { CancelButton, SaveButton } from '~/components/ui/profile/profileButton';
+import { CancelButton, EditButton, SaveButton } from '~/components/ui/edit-mode/editModeButton';
 
 export const ChangePasswordForm = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -37,8 +35,8 @@ export const ChangePasswordForm = () => {
   const handleSubmit: SubmitHandler<z.infer<typeof changePasswordSchema>> = async (data) => {
     try {
       setIsSaving(true);
-      setIsEditing(false);
       await changePassword(data.currentPassword, data.newPassword);
+      setIsEditing(false);
       form.reset();
     } catch (error) {
       console.error('Failed to update password:', error);
@@ -61,12 +59,10 @@ export const ChangePasswordForm = () => {
             {isEditing ? (
               <>
                 <CancelButton onClick={handleCancel} />
-                <SaveButton disabled={isSaving} />
+                <SaveButton disabled={isSaving} isSaving={isSaving} />
               </>
             ) : (
-              <Button variant="neutral" size="sm" onClick={handleEdit} type="button" disabled={isLoading}>
-                {isLoading ? <Spinner size="md" /> : 'edit'}
-              </Button>
+              <EditButton onClick={handleEdit} disabled={isLoading} />
             )}
           </div>
           <PasswordField name="currentPassword" label="Current password" readOnly={!isEditing} />

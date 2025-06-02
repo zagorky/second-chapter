@@ -51,7 +51,7 @@ export const updateProfile = async (updatedProfileData: UpdateProfileData): Prom
   if (updatedProfileData.dateOfBirth !== undefined) {
     const action: MyCustomerSetDateOfBirthAction = {
       action: 'setDateOfBirth',
-      dateOfBirth: updatedProfileData.dateOfBirth,
+      dateOfBirth: updatedProfileData.dateOfBirth.split('T')[0],
     };
 
     updateActions.push(action);
