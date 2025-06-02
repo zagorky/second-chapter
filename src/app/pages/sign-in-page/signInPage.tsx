@@ -3,8 +3,8 @@ import { withDataTestId } from '~utils/helpers';
 
 const SignInPage = () => {
   return (
-    <div className="flex flex-col items-center gap-2">
-      <h1 className={'text-primary heading-1'} {...withDataTestId('signin-header')}>
+    <div>
+      <h1 className={'text-primary heading-1 sr-only'} {...withDataTestId('signin-header')}>
         Sign in
       </h1>
       <SignInForm {...withDataTestId('signin-form')} />

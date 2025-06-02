@@ -119,5 +119,5 @@ html {
 }
 
 .form-field-input-wrapper {
-  @apply grid gap-1;
+  @apply grid gap-1.5;
 }
