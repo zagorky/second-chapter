@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { useFormContext } from 'react-hook-form';
 
 import { cn } from '~/lib/utilities';
+import 'dayjs/locale/en-gb';
 
 type DatePickerFieldProps<T extends FieldValues> = {
   name: Path<T>;
@@ -40,7 +41,7 @@ export const StyledDatePicker = <T extends FieldValues>({
                 {label}
               </FormLabel>
               <FormControl>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
                   <DatePicker
                     {...field}
                     disabled={isReadOnly}
