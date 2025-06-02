@@ -1,6 +1,6 @@
 import { apiInstance } from '~/app/API/apiBuilder';
 
-export const fetchCustomer = async () => {
+export const fetchProfileData = async () => {
   try {
     const response = await apiInstance.root.me().get().execute();
 

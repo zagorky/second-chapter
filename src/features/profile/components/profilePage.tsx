@@ -13,9 +13,11 @@ import { EmailField } from '~/components/ui/form-fields/emailField';
 import { FirstnameField } from '~/components/ui/form-fields/firstnameField';
 import { LastnameField } from '~/components/ui/form-fields/lastnameField';
 import { CancelButton, EditButton, SaveButton } from '~/components/ui/profile/profileButton';
-import { fetchCustomer } from '~/features/fetch-customers/components/customersData';
 import { profileSchema } from '~/features/sign-up/types/shemas';
 import { cn } from '~/lib/utilities';
+
+import { useUpdateProfileData } from '../hooks/useUpdateProfileData';
+import { fetchProfileData } from '../utils/fetchProfileData';
 
 type Customer = {
   firstName?: string;
@@ -30,7 +32,7 @@ function useCustomerData() {
 
   React.useEffect(() => {
     setIsLoading(true);
-    fetchCustomer()
+    fetchProfileData()
       .then((data) => {
         setCustomer(data ?? null);
         setIsLoading(false);
@@ -46,6 +48,8 @@ function useCustomerData() {
 export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>) {
   const { customer, isLoading } = useCustomerData();
   const [isEditing, setIsEditing] = React.useState(false);
+  const [isSaving, setIsSaving] = React.useState(false);
+  const { updateProfileData } = useUpdateProfileData();
 
   const form = useForm<ProfileDataShema>({
     resolver: zodResolver(profileSchema),
@@ -59,22 +63,26 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
     }
   }, [customer, form]);
 
-  const handleSaveClick = () => {
-    if (customer) {
-      form.reset(customer);
+  const handleSaveClick = async () => {
+    try {
+      setIsSaving(true);
+      const values = form.getValues();
+
+      await updateProfileData(values);
+      setIsEditing(false);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSaving(false);
     }
-    setIsEditing(false);
   };
 
   const handleEditClick = () => {
-    if (customer) {
-      form.reset(customer);
-    }
     setIsEditing(true);
   };
 
   const handleCancelClick = () => {
-    form.reset(customer ?? {});
+    form.reset();
     setIsEditing(false);
   };
 
@@ -107,7 +115,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
                   {isEditing ? (
                     <>
                       <CancelButton onClick={handleCancelClick} />
-                      <SaveButton />
+                      <SaveButton disabled={isSaving} />
                     </>
                   ) : (
                     <EditButton onClick={handleEditClick} />
