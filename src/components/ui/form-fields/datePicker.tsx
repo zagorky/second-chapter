@@ -60,7 +60,16 @@ export const StyledDatePicker = <T extends FieldValues>({
                         InputProps: {
                           sx: {
                             '&.Mui-focused:not(.Mui-error) .MuiPickersOutlinedInput-notchedOutline': {
-                              borderColor: 'transparent',
+                              borderColor: 'black',
+                              '--tw-ring-offset-width': '2px',
+                              '--tw-ring-offset-color': 'white',
+                              '--tw-ring-color': 'black',
+                              boxShadow: `
+    0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color),
+    0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)
+  `,
+                              outline: '2px solid transparent',
+                              outlineOffset: '0px',
                             },
                             '& span': {
                               color: 'var(--color-foreground)',
