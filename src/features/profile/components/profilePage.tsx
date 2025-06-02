@@ -80,12 +80,20 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
         <Card>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
+              <form
+                onSubmit={(event) => {
+                  event.preventDefault();
+                }}
+              >
                 <div className="flex justify-end space-x-2">
                   {isEditing ? (
                     <>
                       <CancelButton onClick={handleCancelClick} />
-                      <SaveButton disabled={isSaving} isSaving={isSaving} />
+                      <SaveButton
+                        onClick={(event) => void form.handleSubmit(handleSaveClick)(event)}
+                        disabled={isSaving}
+                        isSaving={isSaving}
+                      />
                     </>
                   ) : (
                     <EditButton onClick={handleEditClick} />

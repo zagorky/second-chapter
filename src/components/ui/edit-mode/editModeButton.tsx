@@ -21,7 +21,7 @@ const EDIT_MODE_TEXTS = {
 
 export const EditButton = ({ onClick, isLoading = false, ...rest }: ButtonProps) => {
   return (
-    <Button variant="default" className="sm:inline-flex" onClick={onClick} {...rest}>
+    <Button type="button" variant="default" className="sm:inline-flex" onClick={onClick} {...rest}>
       {isLoading ? (
         <Spinner size="md" />
       ) : (
@@ -36,7 +36,7 @@ export const EditButton = ({ onClick, isLoading = false, ...rest }: ButtonProps)
 
 export const SaveButton = ({ onClick, isLoading = false, isSaving = false, ...rest }: SavingButtonProps) => {
   return (
-    <Button variant="default" className="sm:inline-flex" onClick={onClick} {...rest}>
+    <Button type="button" variant="default" className="sm:inline-flex" onClick={onClick} {...rest}>
       {isLoading ? (
         <Spinner size="md" />
       ) : (
@@ -53,7 +53,7 @@ export const SaveButton = ({ onClick, isLoading = false, isSaving = false, ...re
 
 export const CancelButton = ({ onClick, isLoading = false, ...rest }: ButtonProps) => {
   return (
-    <Button variant="neutral" className="sm:inline-flex" onClick={onClick} {...rest}>
+    <Button type="button" variant="neutral" className="sm:inline-flex" onClick={onClick} {...rest}>
       {isLoading ? (
         <Spinner size="md" />
       ) : (
