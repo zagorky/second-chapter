@@ -15,6 +15,17 @@ type UpdateProfileData = {
   dateOfBirth?: string;
 };
 
+const minSymbolLength = 2;
+
+function toLocalDateString(dateString: string): string {
+  const date = new Date(dateString);
+  const year = String(date.getFullYear());
+  const month = (date.getMonth() + 1).toString().padStart(minSymbolLength, '0');
+  const day = date.getDate().toString().padStart(minSymbolLength, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
 export const updateProfile = async (updatedProfileData: UpdateProfileData): Promise<void> => {
   const customerResponse = await apiInstance.root.me().get().execute();
   const version = customerResponse.body.version;
@@ -51,7 +62,7 @@ export const updateProfile = async (updatedProfileData: UpdateProfileData): Prom
   if (updatedProfileData.dateOfBirth !== undefined) {
     const action: MyCustomerSetDateOfBirthAction = {
       action: 'setDateOfBirth',
-      dateOfBirth: updatedProfileData.dateOfBirth.split('T')[0],
+      dateOfBirth: toLocalDateString(updatedProfileData.dateOfBirth),
     };
 
     updateActions.push(action);
