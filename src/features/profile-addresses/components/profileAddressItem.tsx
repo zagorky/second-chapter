@@ -82,6 +82,11 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
     setIsEditing(true);
   };
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await handleSave();
+  };
+
   const handleSave = async () => {
     try {
       if (!isNew && !addressId) {
@@ -156,7 +161,10 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
   };
 
   return (
-    <form className="rounded-base border-border bg-background space-y-4 border-2 p-6">
+    <form
+      className="rounded-base border-border bg-background space-y-4 border-2 p-6"
+      onSubmit={(event) => void handleSubmit(event)}
+    >
       <div className="flex justify-between gap-2 [&>*:only-child]:ml-auto">
         {!isNew && (
           <Button variant="neutral" size="sm" type="button" onClick={() => void handleDelete()} disabled={isDeleting}>
@@ -168,7 +176,7 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
           {isEditing ? (
             <>
               <CancelButton onClick={handleCancel} type="button" />
-              <SaveButton onClick={() => void handleSave()} disabled={isSaving} type="button" />
+              <SaveButton disabled={isSaving} type="submit" />
             </>
           ) : (
             <EditButton onClick={handleEdit} type="button" />
