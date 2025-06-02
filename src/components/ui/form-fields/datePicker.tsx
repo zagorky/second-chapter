@@ -59,6 +59,9 @@ export const StyledDatePicker = <T extends FieldValues>({
 
                         InputProps: {
                           sx: {
+                            '&.Mui-focused:not(.Mui-error) .MuiPickersOutlinedInput-notchedOutline': {
+                              borderColor: 'transparent',
+                            },
                             '& span': {
                               color: 'var(--color-foreground)',
                               fontFamily: 'var(--font-base)',
