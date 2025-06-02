@@ -7,9 +7,9 @@ import { useParams } from 'react-router';
 import { ProductDetail } from '../../../features/fetch-products/components/product-detail/productDetail';
 
 const ProductPage = () => {
-  const { key } = useParams<{ key: string }>();
+  const { key = '' } = useParams<{ key: string }>();
 
-  const { product, error, isLongLoading, refresh } = useProductByKey(key ?? '');
+  const { product, error, isLongLoading, refresh } = useProductByKey(key);
 
   if (error) return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
 
