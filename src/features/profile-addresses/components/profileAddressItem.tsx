@@ -1,10 +1,18 @@
 import type { BaseAddress } from '@commercetools/platform-sdk';
-import type { CustomCustomerAddress } from '~app/API/types/customCustomerDraft';
+import type { z } from 'zod';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '~components/ui/button/button';
+import { Checkbox } from '~components/ui/checkbox';
+import { Spinner } from '~components/ui/spinner/spinner';
 import { AddressForm } from '~features/sign-up/components/addressForm';
+import { addressUpdateSchema } from '~features/sign-up/types/shemas';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+
+import { Label } from '~/components/ui/label';
+import { normalizeError } from '~/utils/normalizeError';
 
 import { useUpdateAddress } from '../hooks/useUpdateAddress';
 
@@ -13,75 +21,127 @@ type ProfileAddressItemProps = {
   onAddressUpdated?: () => void;
 };
 
+type AddressFormData = z.infer<typeof addressUpdateSchema>;
+
 export const ProfileAddressItem = ({ address, onAddressUpdated }: ProfileAddressItemProps) => {
+  const addressId = address.id ?? '';
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const { updateAddress } = useUpdateAddress();
+  const { customer, updateAddress } = useUpdateAddress();
 
-  const form = useForm<CustomCustomerAddress>({
-    defaultValues: {
-      streetName: address.streetName ?? '',
-      city: address.city ?? '',
-      postalCode: address.postalCode ?? '',
-      country: 'GB',
-    },
-  });
-
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleSave = async () => {
-    try {
-      if (!address.id) {
-        throw new Error('Address ID is required for update');
-      }
-
-      setIsSaving(true);
-      const formData = form.getValues();
-
-      await updateAddress(address.id, {
-        streetName: formData.streetName,
-        city: formData.city,
-        postalCode: formData.postalCode,
-        country: formData.country,
-      });
-
-      setIsEditing(false);
-      onAddressUpdated?.();
-    } catch (error) {
-      console.error('Failed to update address:', error);
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleCancel = () => {
-    form.reset();
-    setIsEditing(false);
+  const CHECKBOX_LABELS = {
+    SHIPPING: 'Shipping Address',
+    BILLING: 'Billing Address',
+    DEFAULT_SHIPPING: 'Default shipping address',
+    DEFAULT_BILLING: 'Default billing address',
   };
 
   const EDIT_MODE_TEXTS = {
     EDIT_BUTTON: 'Edit',
     CANCEL_BUTTON: 'Cancel',
     SAVE_BUTTON: 'Save',
-    UPDATE_IN_PROGRESS: 'Saving...',
+  };
+
+  const ERRORS = {
+    ADDRESS_ID_REQUIRED: 'Address ID is required for update',
+    FAILED_TO_UPDATE_ADDRESS: 'Failed to update address',
+  };
+
+  const isShippingAddress = customer?.shippingAddressIds?.includes(addressId) ?? false;
+  const isBillingAddress = customer?.billingAddressIds?.includes(addressId) ?? false;
+  const isDefaultShippingAddress = customer?.defaultShippingAddressId === addressId;
+  const isDefaultBillingAddress = customer?.defaultBillingAddressId === addressId;
+
+  const form = useForm<AddressFormData>({
+    resolver: zodResolver(addressUpdateSchema),
+    defaultValues: {
+      streetName: address.streetName ?? '',
+      city: address.city ?? '',
+      postalCode: address.postalCode ?? '',
+      country: 'GB',
+      isShippingAddress,
+      isBillingAddress,
+      isDefaultShippingAddress,
+      isDefaultBillingAddress,
+    },
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  });
+
+  const handleEdit = () => {
+    form.setValue('isShippingAddress', isShippingAddress);
+    form.setValue('isBillingAddress', isBillingAddress);
+    form.setValue('isDefaultShippingAddress', isDefaultShippingAddress);
+    form.setValue('isDefaultBillingAddress', isDefaultBillingAddress);
+    setIsEditing(true);
+  };
+
+  const handleSave = async () => {
+    try {
+      if (!addressId) {
+        throw new Error(ERRORS.ADDRESS_ID_REQUIRED);
+      }
+
+      const isValid = await form.trigger();
+
+      if (!isValid) {
+        return;
+      }
+
+      setIsSaving(true);
+      const formData = form.getValues();
+
+      await updateAddress({
+        addressId,
+        addressData: {
+          streetName: formData.streetName,
+          city: formData.city,
+          postalCode: formData.postalCode,
+          country: formData.country,
+        },
+        setShipping: !!formData.isShippingAddress,
+        setBilling: !!formData.isBillingAddress,
+        makeDefaultShipping: !!formData.isDefaultShippingAddress,
+        makeDefaultBilling: !!formData.isDefaultBillingAddress,
+      });
+
+      setIsEditing(false);
+      onAddressUpdated?.();
+    } catch (error) {
+      toast.error(`${ERRORS.FAILED_TO_UPDATE_ADDRESS}: ${normalizeError(error).message}`);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancel = () => {
+    form.reset({
+      streetName: address.streetName ?? '',
+      city: address.city ?? '',
+      postalCode: address.postalCode ?? '',
+      country: 'GB',
+      isShippingAddress,
+      isBillingAddress,
+      isDefaultShippingAddress,
+      isDefaultBillingAddress,
+    });
+    setIsEditing(false);
   };
 
   return (
-    <form className="rounded-base border-border space-y-4 border-2 p-4">
+    <form className="rounded-base border-border bg-background space-y-4 border-2 p-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-medium">
           {address.firstName} {address.lastName}
         </h3>
-        <div className="space-x-2">
+        <div className="flex gap-2">
           {isEditing ? (
             <>
               <Button variant="ghost" size="sm" onClick={handleCancel} type="button">
                 {EDIT_MODE_TEXTS.CANCEL_BUTTON}
               </Button>
               <Button size="sm" onClick={() => void handleSave()} type="button" disabled={isSaving}>
-                {isSaving ? EDIT_MODE_TEXTS.UPDATE_IN_PROGRESS : EDIT_MODE_TEXTS.SAVE_BUTTON}
+                {isSaving ? <Spinner size="md" /> : EDIT_MODE_TEXTS.SAVE_BUTTON}
               </Button>
             </>
           ) : (
@@ -102,6 +162,53 @@ export const ProfileAddressItem = ({ address, onAddressUpdated }: ProfileAddress
           title={''}
           readOnly={!isEditing}
         />
+        <div className="grid w-fit gap-4 md:grid-cols-2">
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id={`${String(addressId)}-address-shipping`}
+              checked={form.watch('isShippingAddress')}
+              onCheckedChange={(checked) => {
+                form.setValue('isShippingAddress', checked === true);
+              }}
+              disabled={!isEditing}
+            />
+            <Label htmlFor={`${String(addressId)}-address-shipping`}>{CHECKBOX_LABELS.SHIPPING}</Label>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id={`${String(addressId)}-address-default-shipping`}
+              checked={form.watch('isDefaultShippingAddress')}
+              onCheckedChange={(checked) => {
+                form.setValue('isDefaultShippingAddress', checked === true);
+              }}
+              disabled={!isEditing}
+            />
+            <Label htmlFor={`${String(addressId)}-address-default-shipping`}>{CHECKBOX_LABELS.DEFAULT_SHIPPING}</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id={`${String(addressId)}-address-billing`}
+              checked={form.watch('isBillingAddress')}
+              onCheckedChange={(checked) => {
+                form.setValue('isBillingAddress', checked === true);
+              }}
+              disabled={!isEditing}
+            />
+            <Label htmlFor={`${String(addressId)}-address-billing`}>{CHECKBOX_LABELS.BILLING}</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id={`${String(addressId)}-address-default-billing`}
+              checked={form.watch('isDefaultBillingAddress')}
+              onCheckedChange={(checked) => {
+                form.setValue('isDefaultBillingAddress', checked === true);
+              }}
+              disabled={!isEditing}
+            />
+            <Label htmlFor={`${String(addressId)}-address-default-billing`}>{CHECKBOX_LABELS.DEFAULT_BILLING}</Label>
+          </div>
+        </div>
       </FormProvider>
     </form>
   );
