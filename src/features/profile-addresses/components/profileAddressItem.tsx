@@ -157,7 +157,7 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
 
   return (
     <form className="rounded-base border-border bg-background space-y-4 border-2 p-6">
-      <div className="flex justify-between gap-2">
+      <div className="flex justify-between gap-2 [&>*:only-child]:ml-auto">
         {!isNew && (
           <Button variant="neutral" size="sm" type="button" onClick={() => void handleDelete()} disabled={isDeleting}>
             {isDeleting ? <Spinner size="md" /> : <X />}
