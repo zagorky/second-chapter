@@ -43,7 +43,7 @@ const CatalogPage = () => {
       <h1 className={'heading-1 sr-only'} {...withDataTestId('catalog-page-header')}>
         Catalog
       </h1>
-      <div className="my-4 flex flex-1 flex-col justify-center gap-8 md:flex-row md:justify-between">
+      <div className="my-4 flex flex-col justify-center gap-8 md:flex-row md:justify-between">
         <SearchBar />
         <SortBar />
       </div>

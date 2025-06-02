@@ -16,12 +16,12 @@ const ProfilePage = () => {
       <Tabs defaultValue="account" className="">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">{TABS.ACCOUNT}</TabsTrigger>
-          <TabsTrigger value="password">{TABS.ADDRESSES}</TabsTrigger>
+          <TabsTrigger value="addresses">{TABS.ADDRESSES}</TabsTrigger>
         </TabsList>
         <TabsContent value="account">
           <ProfileForm />
         </TabsContent>
-        <TabsContent value="password">
+        <TabsContent value="addresses">
           <ProfileAddressList />
         </TabsContent>
       </Tabs>

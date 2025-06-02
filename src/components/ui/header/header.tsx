@@ -8,7 +8,7 @@ import { useAuth } from '~features/sign-in/hooks/useAuth';
 import { LogIn, UserPlus } from 'lucide-react';
 import { Link } from 'react-router';
 
-import { ProfileButton } from '~/features/profile/components/profileButton';
+import { ProfileButton } from '~/components/ui/profile-button/profileButton';
 
 import { Logo } from '../navbar/logo';
 

@@ -1,6 +1,7 @@
 {
   "entry": ["src/main.tsx"],
   "project": ["src/**/*.{ts,tsx}"],
+  "ignoreExportsUsedInFile": false,
   "ignore": [
     "**/index.ts",
     "**/*.config.{js,ts}",

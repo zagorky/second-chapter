@@ -11,12 +11,14 @@ type PasswordFieldProps = {
   name?: string;
   label?: string;
   placeholder?: string;
+  readOnly?: boolean;
 };
 
 export const PasswordField = ({
   name = 'password',
   label = 'Password',
   placeholder = 'password',
+  readOnly = false,
 }: PasswordFieldProps) => {
   const [showPassword, toggleShowPassword] = useReducer((value) => !value, false);
 
@@ -34,6 +36,7 @@ export const PasswordField = ({
               <Input
                 placeholder={placeholder}
                 autoComplete="current-password"
+                readOnly={readOnly}
                 {...field}
                 type={showPassword ? 'text' : 'password'}
                 {...withDataTestId(`${name}-input`)}
@@ -45,8 +48,9 @@ export const PasswordField = ({
               size="icon"
               className="absolute top-0 right-0 h-full px-3 py-2 hover:bg-transparent"
               onClick={toggleShowPassword}
+              disabled={readOnly}
             >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {showPassword || readOnly ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </Button>
           </div>
           <FixedFormErrorMessage />
