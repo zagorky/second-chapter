@@ -23,9 +23,15 @@ export const useUpdateProfileData = () => {
         toast.success('Profile updated successfully!');
 
         return true;
-      } catch (error) {
-        toast.error('Failed to update profile');
-        throw error;
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          if (error.message === 'EMAIL_ALREADY_EXISTS') {
+            toast.error('Oops! That email is already registered. Please use a different email address.');
+          } else {
+            toast.error('Failed to update address.');
+          }
+          throw error;
+        }
       }
     },
     [mutate]

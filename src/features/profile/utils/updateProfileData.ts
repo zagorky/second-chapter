@@ -59,13 +59,43 @@ export const updateProfile = async (updatedProfileData: UpdateProfileData): Prom
 
   if (updateActions.length === 0) return;
 
-  await apiInstance.root
-    .me()
-    .post({
-      body: {
-        version,
-        actions: updateActions,
-      },
-    })
-    .execute();
+  try {
+    await apiInstance.root
+      .me()
+      .post({
+        body: {
+          version,
+          actions: updateActions,
+        },
+      })
+      .execute();
+  } catch (error: unknown) {
+    if (isCommercetoolsError(error)) {
+      if (
+        error.body?.errors?.some(
+          (error_: unknown) =>
+            isCommercetoolsFieldError(error_) && error_.code === 'DuplicateField' && error_.field === 'email'
+        )
+      ) {
+        throw new Error('EMAIL_ALREADY_EXISTS');
+      }
+      throw error;
+    }
+  }
 };
+
+function isCommercetoolsError(
+  error: unknown
+): error is Error & { body?: { errors?: { code: string; field?: string }[] } } {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    'body' in error &&
+    typeof error.body === 'object'
+  );
+}
+
+function isCommercetoolsFieldError(error: unknown): error is { code: string; field?: string } {
+  return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string';
+}
