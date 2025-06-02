@@ -8,12 +8,14 @@ type LastnameFieldProps = {
   name?: string;
   label?: string;
   placeholder?: string;
+  isReadOnly?: boolean;
 };
 
 export const LastnameField = ({
   name = 'lastname',
   label = 'Last Name',
   placeholder = 'Last Name',
+  isReadOnly = false,
 }: LastnameFieldProps) => {
   const form = useFormContext();
 
@@ -32,6 +34,7 @@ export const LastnameField = ({
                 id={name}
                 placeholder={placeholder}
                 autoComplete={name}
+                readOnly={isReadOnly}
                 {...field}
                 type="text"
                 {...withDataTestId(`${name}-input`)}
