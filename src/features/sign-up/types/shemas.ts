@@ -9,7 +9,7 @@ const MAX_POSTALCODE_LENGTH = 8;
 const MIN_AGE = 18;
 const MAX_AGE = 122;
 
-export const nameSchema = z
+const nameSchema = z
   .string()
   .min(MIN_LENGTH, 'This field cannot be empty')
   .max(MAX_LENGTH)
@@ -17,9 +17,9 @@ export const nameSchema = z
     message: 'Please use only letters from the Latin alphabet.',
   });
 
-export const streetSchema = z.string().min(MIN_LENGTH, 'This field cannot be empty').max(MAX_LENGTH);
+const streetSchema = z.string().min(MIN_LENGTH, 'This field cannot be empty').max(MAX_LENGTH);
 
-export const citySchema = z
+const citySchema = z
   .string()
   .min(MIN_LENGTH, 'This field cannot be empty')
   .max(MAX_LENGTH)
@@ -27,7 +27,7 @@ export const citySchema = z
     message: 'Please use only letters from the Latin alphabet.',
   });
 
-export const postalCodeSchema = z
+const postalCodeSchema = z
   .string()
   .min(MIN_POSTALCODE_LENGTH, 'Enter a valid UK postcode, such as: NW8 9AY, EC1A 1BB, M1 1AE')
   .max(MAX_POSTALCODE_LENGTH)
@@ -42,7 +42,7 @@ export const postalCodeSchema = z
     message: 'Enter a valid UK postcode, such as: NW8 9AY, EC1A 1BB, M1 1AE',
   });
 
-export const countrySchema = z.literal('GB', {
+const countrySchema = z.literal('GB', {
   errorMap: () => ({ message: 'Country is required' }),
 });
 
