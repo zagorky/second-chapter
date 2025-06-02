@@ -59,10 +59,17 @@ export const StyledDatePicker = <T extends FieldValues>({
 
                         InputProps: {
                           sx: {
+                            '& span': {
+                              color: 'var(--color-foreground)',
+                              fontFamily: 'var(--font-base)',
+                              fontSize: '14px',
+                            },
                             '&.Mui-disabled': {
                               border: 'none',
                               '& span': {
                                 color: 'var(--color-foreground)',
+                                fontFamily: 'var(--font-base)',
+                                fontSize: '14px',
                               },
                             },
                           },
