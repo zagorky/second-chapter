@@ -8,9 +8,10 @@ import {
   ProductPage,
   SignInPage,
   SignUpPage,
+  ProfilePage,
 } from '~app/pages/lazy';
 import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
-import { authenticatedUserGuard, navigationRoutes } from '~config/navigation';
+import { authenticatedUserGuard, navigationRoutes, unauthenticatedUserGuard } from '~config/navigation';
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router';
 
@@ -93,6 +94,16 @@ export const appRouter = createBrowserRouter([
         element: (
           <Suspense fallback={<PageSkeleton />}>
             <ProductPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: navigationRoutes.profile.path,
+        errorElement: <ErrorPage />,
+        loader: unauthenticatedUserGuard,
+        element: (
+          <Suspense fallback={<PageSkeleton />}>
+            <ProfilePage />
           </Suspense>
         ),
       },
