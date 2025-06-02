@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { EditButton, SaveButton, CancelButton } from '~/components/ui/edit-mode/editModeButton';
 import { Label } from '~/components/ui/label';
 import { normalizeError } from '~/utils/normalizeError';
 
@@ -156,9 +157,6 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
 
   return (
     <form className="rounded-base border-border bg-background space-y-4 border-2 p-6">
-      <h3 className="text-lg font-medium">
-        {address.firstName} {address.lastName}
-      </h3>
       <div className="flex justify-between gap-2">
         {!isNew && (
           <Button variant="neutral" size="sm" type="button" onClick={() => void handleDelete()} disabled={isDeleting}>
@@ -169,17 +167,11 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
         <div className="flex gap-2">
           {isEditing ? (
             <>
-              <Button variant="ghost" size="sm" onClick={handleCancel} type="button">
-                {EDIT_MODE_TEXTS.CANCEL_BUTTON}
-              </Button>
-              <Button size="sm" onClick={() => void handleSave()} type="button" disabled={isSaving}>
-                {isSaving ? <Spinner size="md" /> : EDIT_MODE_TEXTS.SAVE_BUTTON}
-              </Button>
+              <CancelButton onClick={handleCancel} />
+              <SaveButton onClick={() => void handleSave()} disabled={isSaving} />
             </>
           ) : (
-            <Button variant="neutral" size="sm" onClick={handleEdit} type="button">
-              {EDIT_MODE_TEXTS.EDIT_BUTTON}
-            </Button>
+            <EditButton onClick={handleEdit} />
           )}
         </div>
       </div>
