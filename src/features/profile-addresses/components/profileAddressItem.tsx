@@ -173,7 +173,7 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
           <div className="flex items-center gap-2">
             <Checkbox
               id={`${String(addressId)}-address-shipping`}
-              checked={form.watch('isShippingAddress')}
+              checked={isEditing ? form.watch('isShippingAddress') : isShippingAddress}
               onCheckedChange={(checked) => {
                 form.setValue('isShippingAddress', checked === true);
               }}
@@ -207,7 +207,7 @@ export const ProfileAddressItem = ({ address, onAddressUpdated, onCancel, isNew 
           <div className="flex items-center gap-2">
             <Checkbox
               id={`${String(addressId)}-address-default-billing`}
-              checked={form.watch('isDefaultBillingAddress')}
+              checked={isEditing ? form.watch('isDefaultBillingAddress') : isDefaultBillingAddress}
               onCheckedChange={(checked) => {
                 form.setValue('isDefaultBillingAddress', checked === true);
               }}
