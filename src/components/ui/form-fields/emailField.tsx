@@ -9,9 +9,15 @@ type EmailFieldProps = {
   name?: string;
   label?: string;
   placeholder?: string;
+  isReadOnly?: boolean;
 };
 
-export const EmailField = ({ name = 'email', label = 'Email', placeholder = 'user@example.com' }: EmailFieldProps) => {
+export const EmailField = ({
+  name = 'email',
+  label = 'Email',
+  placeholder = 'user@example.com',
+  isReadOnly = false,
+}: EmailFieldProps) => {
   const form = useFormContext();
 
   return (
@@ -26,6 +32,7 @@ export const EmailField = ({ name = 'email', label = 'Email', placeholder = 'use
               <Input
                 placeholder={placeholder}
                 autoComplete="username"
+                readOnly={isReadOnly}
                 {...field}
                 type="text"
                 {...withDataTestId(`${name}-input`)}

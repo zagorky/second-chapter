@@ -13,7 +13,6 @@ import { EmailField } from '~/components/ui/form-fields/emailField';
 import { FirstnameField } from '~/components/ui/form-fields/firstnameField';
 import { LastnameField } from '~/components/ui/form-fields/lastnameField';
 import { CancelButton, EditButton, SaveButton } from '~/components/ui/profile/profileButton';
-import { ProfileInput } from '~/components/ui/profile/profileInput';
 import { fetchCustomer } from '~/features/fetch-customers/components/customersData';
 import { profileSchema } from '~/features/sign-up/types/shemas';
 import { cn } from '~/lib/utilities';
@@ -79,24 +78,13 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
     setIsEditing(false);
   };
 
-  const renderProfileField = () => {
+  const renderFields = () => {
     return (
       <>
-        <ProfileInput name="firstName" label="First Name" />
-        <ProfileInput name="lastName" label="Last Name" />
-        <ProfileInput name="email" label="Email Address" />
-        <ProfileInput name="dateOfBirth" label="Date Of Birth" />
-      </>
-    );
-  };
-
-  const renderEditableField = () => {
-    return (
-      <>
-        <FirstnameField name="firstName" />
-        <LastnameField name="lastName" />
-        <EmailField name="email" />
-        <StyledDatePicker name="dateOfBirth" label="Date of birth" />
+        <FirstnameField name="firstName" isReadOnly={!isEditing} />
+        <LastnameField name="lastName" isReadOnly={!isEditing} />
+        <EmailField name="email" isReadOnly={!isEditing} />
+        <StyledDatePicker name="dateOfBirth" label="Date of birth" isReadOnly={!isEditing} />
       </>
     );
   };
@@ -125,8 +113,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
                     <EditButton onClick={handleEditClick} />
                   )}
                 </div>
-
-                <div className="flex flex-col gap-6">{isEditing ? renderEditableField() : renderProfileField()}</div>
+                <div className="flex flex-col gap-6">{renderFields()}</div>
               </form>
             </Form>
             <ChangePasswordForm />

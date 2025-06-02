@@ -15,12 +15,14 @@ type DatePickerFieldProps<T extends FieldValues> = {
   name: Path<T>;
   label: string;
   className?: string;
+  isReadOnly?: boolean;
 };
 
 export const StyledDatePicker = <T extends FieldValues>({
   name,
   label = 'Date of birth',
   className,
+  isReadOnly = false,
 }: DatePickerFieldProps<T>) => {
   const form = useFormContext();
 
@@ -41,6 +43,7 @@ export const StyledDatePicker = <T extends FieldValues>({
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     {...field}
+                    disabled={isReadOnly}
                     value={value}
                     onChange={(date) => {
                       field.onChange(date?.isValid() ? date.toISOString() : '');
@@ -55,6 +58,11 @@ export const StyledDatePicker = <T extends FieldValues>({
                         variant: 'outlined',
 
                         InputProps: {
+                          sx: {
+                            '&.Mui-disabled': {
+                              border: 'none',
+                            },
+                          },
                           classes: {
                             root: cn(
                               'rounded-base border-border bg-secondary-background selection:bg-main selection:text-main-foreground font-base text-foreground file:font-heading placeholder:text-foreground/50 flex h-10 w-full border-2 px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm disabled:cursor-not-allowed disabled:opacity-50',
@@ -115,6 +123,9 @@ export const StyledDatePicker = <T extends FieldValues>({
                       },
                       '& .MuiSvgIcon-root': {
                         fill: 'var(--color-foreground)',
+                      },
+                      '& .Mui-disabled *': {
+                        border: 'none',
                       },
                     }}
                   />
