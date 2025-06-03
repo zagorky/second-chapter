@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '~/components/ui/button/button';
 import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet';
 
-import { DialogTitle, DialogDescription } from '../dialog';
+import { DialogTitle, DialogDescription } from '../dialog/dialog';
 import { NavMenu } from './navMenu';
 
 export const NavigationSheet = () => {

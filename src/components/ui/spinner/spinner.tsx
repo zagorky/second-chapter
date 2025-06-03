@@ -1,3 +1,5 @@
+import { withDataTestId } from '~utils/helpers';
+
 import { cn } from '~/lib/utilities';
 
 import type { SpinnerSize } from './spinnerVariants';
@@ -10,5 +12,5 @@ type SpinnerProps = {
 };
 
 export const Spinner = ({ size = 'md', className }: SpinnerProps) => {
-  return <div className={cn(spinnerVariants({ size }), className)} />;
+  return <div className={cn(spinnerVariants({ size }), className)} {...withDataTestId('spinner')} />;
 };

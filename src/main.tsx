@@ -1,22 +1,17 @@
-import { apiInstance } from '~app/API/apiBuilder';
 import { App } from '~app/App';
-import { useAppStore } from '~stores/store';
+import { ErrorFallback } from '~components/ui/error-fallback/errorFallback';
 import { assertIsNonNullable } from '~utils/helpers';
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { ErrorBoundary } from 'react-error-boundary';
 
 import './index.css';
 import './styles/fonts.css';
-import { ErrorFallback } from './components/ui/error-fallback/errorFallback';
+
+import { createRoot } from 'react-dom/client';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const rootElement = document.querySelector('#root');
 
 assertIsNonNullable(rootElement);
-
-await useAppStore.persist.rehydrate();
-
-await apiInstance.init();
 
 createRoot(rootElement).render(
   <StrictMode>

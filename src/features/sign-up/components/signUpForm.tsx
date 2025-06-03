@@ -42,9 +42,9 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       streetShipping: '',
       cityShipping: '',
       postalCodeShipping: '',
-      streetBilling: undefined,
-      cityBilling: undefined,
-      postalCodeBilling: undefined,
+      streetBilling: '',
+      cityBilling: '',
+      postalCodeBilling: '',
       countryShipping: undefined,
       countryBilling: undefined,
       shippingIsDefaultShipping: false,
@@ -87,7 +87,8 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
       lastName: data.lastname,
       dateOfBirth: data.dateOfBirth.split('T')[0],
       addresses,
-      defaultBillingAddress: data.billingIsDefaultBilling ? 1 : undefined,
+      defaultBillingAddress:
+        isShippingIsDefaultBilling && data.billingIsDefaultBilling ? 0 : data.billingIsDefaultBilling ? 1 : undefined,
       defaultShippingAddress: data.shippingIsDefaultShipping ? 0 : undefined,
       billingAddresses: [data.shippingIsDefaultBilling ? 0 : 1],
       shippingAddresses: [0],
@@ -107,9 +108,19 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
 
   const isShippingIsDefaultBilling = form.watch('shippingIsDefaultBilling');
 
+  React.useEffect(() => {
+    if (isShippingIsDefaultBilling) {
+      form.setValue('streetBilling', form.getValues().streetShipping);
+      form.setValue('cityBilling', form.getValues().cityShipping);
+      form.setValue('postalCodeBilling', form.getValues().postalCodeShipping);
+      form.setValue('countryBilling', 'GB');
+      void form.trigger();
+    }
+  }, [isShippingIsDefaultBilling, form]);
+
   return (
     <div className={cn('flex w-[calc(100%-32px)] max-w-full flex-col gap-6', className)} {...props}>
-      <Card className="">
+      <Card>
         <CardHeader>
           <CardTitle>Create account</CardTitle>
           <CardDescription>Enter your details to create your account.</CardDescription>

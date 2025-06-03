@@ -17,6 +17,7 @@ type AddressFormProps<T extends FieldValues> = React.ComponentProps<'div'> & {
   countryPrefix: Path<T>;
   title: string;
   control: Control<T>;
+  readOnly?: boolean;
 };
 
 export function AddressForm<T extends FieldValues>({
@@ -29,12 +30,12 @@ export function AddressForm<T extends FieldValues>({
   ...props
 }: AddressFormProps<T>) {
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className={cn('flex flex-col gap-3', className)} {...props}>
       <h2>{props.title}</h2>
-      <StreetField name={streetPrefix} />
-      <CityField name={cityPrefix} />
+      <StreetField name={streetPrefix} readOnly={props.readOnly} />
+      <CityField name={cityPrefix} readOnly={props.readOnly} />
 
-      <PostalCodeField name={postalCodePrefix} />
+      <PostalCodeField name={postalCodePrefix} readOnly={props.readOnly} />
       <div className="grid grow gap-3">
         <div className="flex items-center">
           <Label htmlFor="country">Country</Label>
@@ -44,19 +45,21 @@ export function AddressForm<T extends FieldValues>({
           name={countryPrefix}
           render={({ field, fieldState }) => (
             <>
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger className="w-[180px]">
+              <Select value={field.value} onValueChange={props.readOnly ? undefined : field.onChange}>
+                <SelectTrigger className={cn('w-[180px]', props.readOnly && 'pointer-events-none opacity-75')}>
                   <SelectValue placeholder="Choose a country">
                     {field.value === 'GB' ? 'United Kingdom' : field.value || ''}
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="GB">United Kingdom</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
+                {!props.readOnly && (
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="GB">United Kingdom</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                )}
               </Select>
-              <FixedFormErrorMessage>{fieldState.error ? fieldState.error.message : ''}</FixedFormErrorMessage>{' '}
+              <FixedFormErrorMessage>{fieldState.error ? fieldState.error.message : ''}</FixedFormErrorMessage>
             </>
           )}
         />

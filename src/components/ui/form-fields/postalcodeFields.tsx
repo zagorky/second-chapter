@@ -8,9 +8,15 @@ type AddressFieldProps = {
   name: string;
   label?: string;
   placeholder?: string;
+  readOnly?: boolean;
 };
 
-export const PostalCodeField = ({ name, label = 'Postal Code', placeholder = 'NW8 9AY' }: AddressFieldProps) => {
+export const PostalCodeField = ({
+  name,
+  label = 'Postal Code',
+  placeholder = 'NW8 9AY',
+  readOnly = false,
+}: AddressFieldProps) => {
   const form = useFormContext();
 
   return (
@@ -19,21 +25,24 @@ export const PostalCodeField = ({ name, label = 'Postal Code', placeholder = 'NW
       name={name}
       render={({ field }) => (
         <FormItem>
-          <div className="grid gap-3">
+          <div className="form-field-input-wrapper">
             <FormLabel htmlFor={name} className={'text-left'}>
               {label}
             </FormLabel>
-            <FormControl>
-              <Input
-                id={name}
-                placeholder={placeholder}
-                autoComplete={name}
-                {...field}
-                type="text"
-                {...withDataTestId(`${name}-input`)}
-              />
-            </FormControl>
-            <FixedFormErrorMessage />
+            <div className="form-field-input-wrapper">
+              <FormControl>
+                <Input
+                  id={name}
+                  placeholder={placeholder}
+                  autoComplete={name}
+                  {...field}
+                  type="text"
+                  readOnly={readOnly}
+                  {...withDataTestId(`${name}-input`)}
+                />
+              </FormControl>
+              <FixedFormErrorMessage />
+            </div>
           </div>
         </FormItem>
       )}

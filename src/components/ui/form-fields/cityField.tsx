@@ -8,9 +8,10 @@ type CityFieldProps = {
   name: string;
   label?: string;
   placeholder?: string;
+  readOnly?: boolean;
 };
 
-export const CityField = ({ name, label = 'City', placeholder = 'London' }: CityFieldProps) => {
+export const CityField = ({ name, label = 'City', placeholder = 'London', readOnly = false }: CityFieldProps) => {
   const form = useFormContext();
 
   return (
@@ -19,21 +20,24 @@ export const CityField = ({ name, label = 'City', placeholder = 'London' }: City
       name={name}
       render={({ field }) => (
         <FormItem className="grow">
-          <div className="grid gap-3">
+          <div className="form-field-input-wrapper">
             <FormLabel htmlFor={name} className={'text-left'}>
               {label}
             </FormLabel>
-            <FormControl>
-              <Input
-                id={name}
-                placeholder={placeholder}
-                autoComplete={name}
-                {...field}
-                type="text"
-                {...withDataTestId(`${name}-input`)}
-              />
-            </FormControl>
-            <FixedFormErrorMessage />
+            <div className="form-field-input-wrapper">
+              <FormControl>
+                <Input
+                  id={name}
+                  placeholder={placeholder}
+                  autoComplete={name}
+                  {...field}
+                  type="text"
+                  readOnly={readOnly}
+                  {...withDataTestId(`${name}-input`)}
+                />
+              </FormControl>
+              <FixedFormErrorMessage />
+            </div>
           </div>
         </FormItem>
       )}

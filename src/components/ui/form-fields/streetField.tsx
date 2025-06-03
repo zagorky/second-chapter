@@ -8,9 +8,15 @@ type StreetFieldProps = {
   name: string;
   label?: string;
   placeholder?: string;
+  readOnly?: boolean;
 };
 
-export const StreetField = ({ name, label = 'Street', placeholder = 'Abbey Road' }: StreetFieldProps) => {
+export const StreetField = ({
+  name,
+  label = 'Street',
+  placeholder = 'Abbey Road',
+  readOnly = false,
+}: StreetFieldProps) => {
   const form = useFormContext();
 
   return (
@@ -19,21 +25,24 @@ export const StreetField = ({ name, label = 'Street', placeholder = 'Abbey Road'
       name={name}
       render={({ field }) => (
         <FormItem className="grow">
-          <div className="grid gap-3">
+          <div className="form-field-wrapper">
             <FormLabel htmlFor={name} className={'text-left'}>
               {label}
             </FormLabel>
-            <FormControl>
-              <Input
-                id={name}
-                placeholder={placeholder}
-                autoComplete={name}
-                {...field}
-                type="text"
-                {...withDataTestId(`${name}-input`)}
-              />
-            </FormControl>
-            <FixedFormErrorMessage />
+            <div className="form-field-input-wrapper">
+              <FormControl>
+                <Input
+                  id={name}
+                  placeholder={placeholder}
+                  autoComplete={name}
+                  {...field}
+                  type="text"
+                  readOnly={readOnly}
+                  {...withDataTestId(`${name}-input`)}
+                />
+              </FormControl>
+              <FixedFormErrorMessage />
+            </div>
           </div>
         </FormItem>
       )}

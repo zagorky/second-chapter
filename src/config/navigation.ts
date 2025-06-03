@@ -1,4 +1,4 @@
-import { useAppStore } from '~stores/store';
+import { appInitializer } from '~app/appInitializer';
 import { redirect } from 'react-router';
 
 export const navigationRoutes = {
@@ -9,13 +9,25 @@ export const navigationRoutes = {
   login: { path: '/login', title: 'Sign In' },
   signup: { path: '/signup', title: 'Sign Up' },
   error: { path: '/*', title: 'Page not Found' },
+  product: { path: '/product', title: 'Product Page' },
+  profile: { path: '/profile', title: 'Profile Page' },
 } as const;
 
-export const authenticatedUserGuard = () => {
-  const isAuthenticated = useAppStore.getState().isAuthenticated;
+export const authenticatedUserGuard = async () => {
+  const { isAuthenticated } = await appInitializer.initialize();
 
   if (isAuthenticated) {
     return redirect(navigationRoutes.main.path);
+  }
+
+  return null;
+};
+
+export const unauthenticatedUserGuard = async () => {
+  const { isAuthenticated } = await appInitializer.initialize();
+
+  if (!isAuthenticated) {
+    return redirect(navigationRoutes.login.path);
   }
 
   return null;

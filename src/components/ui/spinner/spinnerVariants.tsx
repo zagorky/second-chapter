@@ -6,6 +6,7 @@ export const spinnerVariants = cva(
     variants: {
       size: {
         md: 'w-5 h-5',
+        xl: 'w-10 h-10',
       },
     },
     defaultVariants: {
