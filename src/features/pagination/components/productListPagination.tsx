@@ -1,13 +1,11 @@
 import { Button } from '~components/ui/button/button';
-import { useProductData } from '~features/fetch-products/hooks/useProductData';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '~/components/ui/pagination';
 
-export const ProductListPagination = () => {
-  const { total, limit } = useProductData();
+export const ProductListPagination = ({ total, limit }: { total: number; limit: number }) => {
   const [searchParameters, setSearchParameters] = useSearchParams();
 
   const currentPage = Number(searchParameters.get('page') ?? '1');

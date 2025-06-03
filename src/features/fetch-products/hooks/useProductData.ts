@@ -40,7 +40,7 @@ export const useProductData = (parameters?: FetchProductsParameters) => {
     refresh,
     isLongLoading,
     isLoading,
-    total: data?.total,
+    total: data?.total ?? 0,
     limit,
   };
 };
