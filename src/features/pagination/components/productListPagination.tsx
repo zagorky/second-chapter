@@ -11,10 +11,6 @@ export const ProductListPagination = ({ total, limit }: { total: number; limit: 
   const currentPage = Number(searchParameters.get('page') ?? '1');
 
   const totalPages = useMemo(() => {
-    if (!total) {
-      return 0;
-    }
-
     return Math.ceil(total / limit);
   }, [total, limit]);
 
