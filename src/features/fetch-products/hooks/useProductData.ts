@@ -7,7 +7,12 @@ import useSWR from 'swr';
 
 export const useProductData = (parameters?: FetchProductsParameters) => {
   const [isLongLoading, setIsLongLoading] = useState(false);
-  const actualParameters = { expand: ['categories[*]'], limit: 100, ...parameters };
+
+  const actualParameters = {
+    expand: ['categories[*]'],
+    withTotal: true,
+    ...parameters,
+  };
 
   const {
     data: products,

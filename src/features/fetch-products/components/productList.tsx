@@ -1,6 +1,7 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { ProductItem } from '~features/fetch-products/components/productItem';
+import { ProductListPagination } from '~features/pagination/components/productListPagination';
 import { withDataTestId } from '~utils/helpers';
 
 type ProductListProps = {
@@ -17,6 +18,7 @@ export const ProductList = ({ products }: ProductListProps) => {
         {products.map((product) => {
           return <ProductItem product={product} key={product.id} />;
         })}
+        <ProductListPagination />
       </ul>
     </>
   );
