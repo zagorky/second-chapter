@@ -8,6 +8,7 @@ import { useProductData } from '~features/fetch-products/hooks/useProductData';
 import { buildRequest } from '~features/fetch-products/utils/buildRequest';
 import { FilterBar } from '~features/filters/components/filterBar';
 import { useFacetsData } from '~features/filters/hooks/useFacetsData';
+import { ProductListPagination } from '~features/pagination/components/productListPagination';
 import { SearchBar } from '~features/search/components/searchBar';
 import { SortBar } from '~features/sort/components/sortBar';
 import { withDataTestId } from '~utils/helpers';
@@ -51,6 +52,7 @@ const CatalogPage = () => {
         {!isFacetLoading && <FilterBar />}
         {renderContent()}
       </div>
+      <ProductListPagination />
     </>
   );
 };

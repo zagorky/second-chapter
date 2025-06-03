@@ -1,4 +1,4 @@
-import type { ProductProjection } from '@commercetools/platform-sdk';
+import type { ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 import type { FetchProductsParameters } from '~features/fetch-products/utils/fetchProducts';
 
 import { fetchProducts } from '~features/fetch-products/utils/fetchProducts';
@@ -7,19 +7,21 @@ import useSWR from 'swr';
 
 export const useProductData = (parameters?: FetchProductsParameters) => {
   const [isLongLoading, setIsLongLoading] = useState(false);
+  const limit = 6;
 
   const actualParameters = {
     expand: ['categories[*]'],
     withTotal: true,
     ...parameters,
+    limit,
   };
 
   const {
-    data: products,
+    data,
     error,
     mutate: refresh,
     isLoading,
-  } = useSWR<ProductProjection[], Error>(actualParameters, fetchProducts, {
+  } = useSWR<ProductProjectionPagedSearchResponse, Error>(actualParameters, fetchProducts, {
     onLoadingSlow: () => {
       setIsLongLoading(true);
     },
@@ -33,10 +35,12 @@ export const useProductData = (parameters?: FetchProductsParameters) => {
   });
 
   return {
-    products,
+    products: data?.results,
     error,
     refresh,
     isLongLoading,
     isLoading,
+    total: data?.total,
+    limit,
   };
 };

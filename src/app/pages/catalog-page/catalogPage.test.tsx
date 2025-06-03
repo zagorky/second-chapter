@@ -27,6 +27,8 @@ describe('CatalogPage', () => {
       isLongLoading: false,
       isLoading: false,
       refresh: vi.fn(),
+      total: 0,
+      limit: 0,
     });
 
     render(
@@ -45,6 +47,8 @@ describe('CatalogPage', () => {
       isLongLoading: true,
       isLoading: true,
       refresh: vi.fn(),
+      total: 0,
+      limit: 0,
     });
 
     render(
@@ -63,6 +67,8 @@ describe('CatalogPage', () => {
       isLongLoading: false,
       isLoading: false,
       refresh: vi.fn(),
+      total: 0,
+      limit: 0,
     });
 
     render(
