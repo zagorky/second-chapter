@@ -55,7 +55,7 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
   return (
     <div {...withDataTestId(`${identifier}-detail`)}>
       <div className="grid gap-8 md:grid-cols-2">
-        <div className="space-y-4">
+        <div className="relative space-y-4 overflow-x-hidden">
           <ProductCarousel
             images={images}
             identifier={identifier}
