@@ -96,7 +96,7 @@ export const ProductCarousel = ({
       className={cn('relative flex flex-col items-stretch gap-4', isInDialog && 'p-4 pt-10')}
       options={{ loop: true, autoplay, startIndex: initialIndex }}
     >
-      <div className="flex flex-grow items-center justify-center gap-6">
+      <div className="flex flex-grow items-center justify-center gap-6 px-2">
         {hasMultipleImages && <CarouselPrevious />}
         <CarouselContent className="w-fit">
           {images.map((image, index) => (
