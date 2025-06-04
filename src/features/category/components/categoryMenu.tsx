@@ -1,7 +1,7 @@
 import type { CategoryNode } from '~features/category/utils/buildCategories';
 
 import { useCategoryData } from '~features/category/hooks/useCategoryData';
-import { useSetUrl } from '~features/pagination/hooks/useSetUrl';
+import { useSyncQueryParameters } from '~features/pagination/hooks/useSyncQueryParameters';
 import { ChevronsUpDown } from 'lucide-react';
 import { useCallback } from 'react';
 
@@ -19,7 +19,7 @@ import {
 
 export const CategoryMenu = () => {
   const { categories } = useCategoryData();
-  const { updateURLParameters, removeURLParameters } = useSetUrl();
+  const { updateURLParameters, removeURLParameters } = useSyncQueryParameters();
   const closeButtonReference = useCallback((element: HTMLButtonElement | null) => {
     if (element) {
       element.focus();

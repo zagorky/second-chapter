@@ -1,5 +1,5 @@
 import { Button } from '~components/ui/button/button';
-import { useSetUrl } from '~features/pagination/hooks/useSetUrl';
+import { useSyncQueryParameters } from '~features/pagination/hooks/useSyncQueryParameters';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
@@ -8,7 +8,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '~
 
 export const ProductListPagination = ({ total, limit }: { total: number; limit: number }) => {
   const [searchParameters] = useSearchParams();
-  const { updateURLParameters } = useSetUrl();
+  const { updateURLParameters } = useSyncQueryParameters();
   const currentPage = Number(searchParameters.get('page') ?? '1');
 
   const totalPages = useMemo(() => {

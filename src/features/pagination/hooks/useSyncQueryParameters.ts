@@ -12,57 +12,57 @@ type useSetURLParameters = {
 };
 
 type URLParametersKeys = keyof useSetURLParameters;
-export const useSetUrl = () => {
+export const useSyncQueryParameters = () => {
   const [searchParameters, setSearchParameters] = useSearchParams();
 
   const updateURLParameters = (parameters: Partial<useSetURLParameters>) => {
     const newParameters = new URLSearchParams(searchParameters);
 
-    if (
-      parameters.search !== undefined ||
-      parameters.conditions !== undefined ||
-      parameters.price !== undefined ||
-      parameters.sale !== undefined ||
-      parameters.category !== undefined
-    ) {
-      newParameters.set('page', '1');
-    }
-
-    if (parameters.page !== undefined) {
+    if ('page' in parameters && parameters.page !== undefined) {
       newParameters.set('page', String(parameters.page));
     }
 
-    if (parameters.search !== undefined) {
-      if (parameters.search.trim() === '') {
-        newParameters.delete('search');
-      } else {
+    if ('search' in parameters) {
+      if (parameters.search && parameters.search.trim() !== '') {
         newParameters.set('search', parameters.search);
+      } else {
+        newParameters.delete('search');
       }
+      newParameters.set('page', '1');
     }
 
-    if (parameters.conditions !== undefined && parameters.conditions.length > 0) {
-      newParameters.set('conditions', parameters.conditions.join(','));
-    } else {
-      newParameters.delete('conditions');
+    if ('conditions' in parameters) {
+      if (parameters.conditions && parameters.conditions.length > 0) {
+        newParameters.set('conditions', parameters.conditions.join(','));
+      } else {
+        newParameters.delete('conditions');
+      }
+      newParameters.set('page', '1');
     }
 
-    if (parameters.sale) {
-      newParameters.set('sale', 'true');
-    } else {
-      newParameters.delete('sale');
+    if ('sale' in parameters) {
+      if (parameters.sale) {
+        newParameters.set('sale', 'true');
+      } else {
+        newParameters.delete('sale');
+      }
+      newParameters.set('page', '1');
     }
 
-    if (
-      parameters.price &&
-      (parameters.price.priceRange[0] !== parameters.price.min ||
-        parameters.price.priceRange[1] !== parameters.price.max)
-    ) {
-      newParameters.set('price', parameters.price.priceRange.join('-'));
-    } else {
-      newParameters.delete('price');
+    if ('price' in parameters) {
+      if (
+        parameters.price &&
+        (parameters.price.priceRange[0] !== parameters.price.min ||
+          parameters.price.priceRange[1] !== parameters.price.max)
+      ) {
+        newParameters.set('price', parameters.price.priceRange.join('-'));
+      } else {
+        newParameters.delete('price');
+      }
+      newParameters.set('page', '1');
     }
 
-    if (parameters.category !== undefined) {
+    if ('category' in parameters && parameters.category) {
       if (parameters.category.parent === '') {
         newParameters.set('category', parameters.category.id);
         newParameters.delete('subcategory');
@@ -70,7 +70,9 @@ export const useSetUrl = () => {
         newParameters.set('category', parameters.category.parent);
         newParameters.set('subcategory', parameters.category.id);
       }
+      newParameters.set('page', '1');
     }
+
     if (newParameters.toString() !== searchParameters.toString()) {
       setSearchParameters(newParameters);
     }

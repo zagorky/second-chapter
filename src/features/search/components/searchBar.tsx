@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '~components/ui/button/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Input } from '~components/ui/input';
-import { useSetUrl } from '~features/pagination/hooks/useSetUrl';
+import { useSyncQueryParameters } from '~features/pagination/hooks/useSyncQueryParameters';
 import { searchBarSchema } from '~features/search/types/schemas';
 import { Search, XIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -12,7 +12,7 @@ import { useSearchParams } from 'react-router';
 
 export const SearchBar = () => {
   const [searchParameters] = useSearchParams();
-  const { updateURLParameters, removeURLParameters } = useSetUrl();
+  const { updateURLParameters, removeURLParameters } = useSyncQueryParameters();
   const searchQuery = searchParameters.get('search') ?? '';
 
   const form = useForm<z.infer<typeof searchBarSchema>>({

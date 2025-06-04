@@ -7,7 +7,7 @@ import { ConditionsFormField } from '~features/filters/components/conditionsForm
 import { PriceFormField } from '~features/filters/components/priceFormField';
 import { useFacetsData } from '~features/filters/hooks/useFacetsData';
 import { filterFormSchema } from '~features/filters/types/schemas';
-import { useSetUrl } from '~features/pagination/hooks/useSetUrl';
+import { useSyncQueryParameters } from '~features/pagination/hooks/useSyncQueryParameters';
 import { useFormValuesChange } from '~hooks/useFormValuesChange';
 import { withDataTestId } from '~utils/helpers';
 import { useEffect } from 'react';
@@ -16,7 +16,7 @@ import { useSearchParams } from 'react-router';
 
 export const FilterBar = () => {
   const [searchParameters] = useSearchParams();
-  const { updateURLParameters, removeURLParameters } = useSetUrl();
+  const { updateURLParameters, removeURLParameters } = useSyncQueryParameters();
   const { price } = useFacetsData();
 
   const form = useForm<FilterFormValues>({
