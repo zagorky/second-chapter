@@ -7,6 +7,7 @@ import { ConditionsFormField } from '~features/filters/components/conditionsForm
 import { PriceFormField } from '~features/filters/components/priceFormField';
 import { useFacetsData } from '~features/filters/hooks/useFacetsData';
 import { filterFormSchema } from '~features/filters/types/schemas';
+import { useSetUrl } from '~features/pagination/hooks/useSetUrl';
 import { useFormValuesChange } from '~hooks/useFormValuesChange';
 import { withDataTestId } from '~utils/helpers';
 import { useEffect } from 'react';
@@ -14,7 +15,8 @@ import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router';
 
 export const FilterBar = () => {
-  const [searchParameters, setSearchParameters] = useSearchParams();
+  const [searchParameters] = useSearchParams();
+  const { updateURLParameters, removeURLParameters } = useSetUrl();
   const { price } = useFacetsData();
 
   const form = useForm<FilterFormValues>({
@@ -45,37 +47,18 @@ export const FilterBar = () => {
   }, [form, price.max, price.min, searchParameters]);
 
   useFormValuesChange(form, ({ values }) => {
-    const newParameters = new URLSearchParams(searchParameters.toString());
-
-    if (values.conditions && values.conditions.length > 0) {
-      newParameters.set('conditions', values.conditions.join(','));
-    } else {
-      newParameters.delete('conditions');
+    if (values.conditions && values.price) {
+      updateURLParameters({
+        conditions: values.conditions.filter((c): c is string => !!c),
+        price: { priceRange: values.price.filter((c): c is number => !!c), min: price.min, max: price.max },
+        sale: values.sale,
+      });
     }
-
-    if (values.sale) {
-      newParameters.set('sale', 'true');
-    } else {
-      newParameters.delete('sale');
-    }
-
-    if (values.price && (values.price[0] !== price.min || values.price[1] !== price.max)) {
-      newParameters.set('price', values.price.join('-'));
-    } else {
-      newParameters.delete('price');
-    }
-
-    setSearchParameters(newParameters);
   });
 
   const onReset = () => {
-    const newParameter = new URLSearchParams(searchParameters.toString());
+    removeURLParameters(['conditions', 'sale', 'price']);
 
-    newParameter.delete('conditions');
-    newParameter.delete('sale');
-    newParameter.delete('price');
-
-    setSearchParameters(newParameter);
     form.reset({
       conditions: [],
       price: [price.min, price.max],

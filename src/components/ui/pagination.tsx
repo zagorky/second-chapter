@@ -44,7 +44,7 @@ function PaginationLink({
           size,
         }),
         className,
-        isActive && 'bg-black text-white'
+        isActive && 'text-main bg-foreground'
       )}
       {...props}
     >

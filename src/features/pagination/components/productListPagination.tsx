@@ -1,28 +1,23 @@
 import { Button } from '~components/ui/button/button';
+import { useSetUrl } from '~features/pagination/hooks/useSetUrl';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '~/components/ui/pagination';
 
 export const ProductListPagination = ({ total, limit }: { total: number; limit: number }) => {
-  const [searchParameters, setSearchParameters] = useSearchParams();
-
+  const [searchParameters] = useSearchParams();
+  const { updateURLParameters } = useSetUrl();
   const currentPage = Number(searchParameters.get('page') ?? '1');
 
   const totalPages = useMemo(() => {
     return Math.ceil(total / limit);
   }, [total, limit]);
 
-  const setPage = useCallback(
-    (page: number) => {
-      const newParameters = new URLSearchParams(searchParameters);
-
-      newParameters.set('page', String(page));
-      setSearchParameters(newParameters);
-    },
-    [searchParameters, setSearchParameters]
-  );
+  const setPage = (page: number) => {
+    updateURLParameters({ page: page });
+  };
 
   const visiblePages = useMemo(() => {
     const pages = [];
