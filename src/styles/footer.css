@@ -1,0 +1,3 @@
+.footer-text-content {
+  @apply flex flex-col justify-center text-sm not-italic opacity-80;
+}
