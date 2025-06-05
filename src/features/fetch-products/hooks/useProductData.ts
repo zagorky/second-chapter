@@ -1,13 +1,14 @@
 import type { ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 import type { FetchProductsParameters } from '~features/fetch-products/utils/fetchProducts';
 
+import { ITEMS_PER_PAGE } from '~config/constant';
 import { fetchProducts } from '~features/fetch-products/utils/fetchProducts';
 import { useState } from 'react';
 import useSWR from 'swr';
 
 export const useProductData = (parameters?: FetchProductsParameters) => {
   const [isLongLoading, setIsLongLoading] = useState(false);
-  const limit = 6;
+  const limit = parameters?.limit ?? ITEMS_PER_PAGE;
 
   const actualParameters = {
     expand: ['categories[*]'],
@@ -41,6 +42,5 @@ export const useProductData = (parameters?: FetchProductsParameters) => {
     isLongLoading,
     isLoading,
     total: data?.total ?? 0,
-    limit,
   };
 };

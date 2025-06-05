@@ -18,9 +18,7 @@ import { useSearchParams } from 'react-router';
 const CatalogPage = () => {
   const [searchParameters] = useSearchParams();
   const { isFacetLoading } = useFacetsData();
-  const { products, error, isLongLoading, isLoading, refresh, total, limit } = useProductData(
-    buildRequest(searchParameters)
-  );
+  const { products, error, isLongLoading, isLoading, refresh, total } = useProductData(buildRequest(searchParameters));
   const renderContent = () => {
     if (error) {
       return <DataErrorElement errorText={normalizeError(error).message} retryAction={refresh} />;
@@ -54,7 +52,7 @@ const CatalogPage = () => {
         {!isFacetLoading && <FilterBar />}
         {renderContent()}
       </div>
-      <ProductListPagination total={total} limit={limit} />
+      <ProductListPagination total={total} />
     </>
   );
 };

@@ -1,6 +1,8 @@
+import { ITEMS_PER_PAGE } from '~config/constant';
+
 export const buildPaginationQueryParameters = (page: string) => {
   const currentPage = Number(page);
-  const limit = 6;
+  const safePage = Number.isNaN(currentPage) || currentPage < 1 ? 1 : currentPage;
 
-  return { offset: (currentPage - 1) * limit };
+  return { offset: (safePage - 1) * ITEMS_PER_PAGE };
 };

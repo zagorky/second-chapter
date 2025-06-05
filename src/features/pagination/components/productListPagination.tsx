@@ -1,4 +1,5 @@
 import { Button } from '~components/ui/button/button';
+import { ITEMS_PER_PAGE } from '~config/constant';
 import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo } from 'react';
@@ -6,28 +7,20 @@ import { useSearchParams } from 'react-router';
 
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '~/components/ui/pagination';
 
-export const ProductListPagination = ({ total, limit }: { total: number; limit: number }) => {
+export const ProductListPagination = ({ total }: { total: number }) => {
   const [searchParameters] = useSearchParams();
   const { updateURLParameters } = useSyncQueryParameters();
   const currentPage = Number(searchParameters.get('page') ?? '1');
 
-  const totalPages = useMemo(() => {
-    return Math.ceil(total / limit);
-  }, [total, limit]);
-
   const setPage = (page: number) => {
     updateURLParameters({ page: page });
   };
+  const { totalPages, visiblePages } = useMemo(() => {
+    const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+    const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-  const visiblePages = useMemo(() => {
-    const pages = [];
-
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(i);
-    }
-
-    return pages;
-  }, [totalPages]);
+    return { totalPages, visiblePages };
+  }, [total]);
 
   if (totalPages <= 1) {
     return null;
@@ -40,7 +33,9 @@ export const ProductListPagination = ({ total, limit }: { total: number; limit: 
           <Button
             onClick={(event) => {
               event.preventDefault();
-              if (currentPage > 1) setPage(currentPage - 1);
+              if (currentPage > 1) {
+                setPage(currentPage - 1);
+              }
             }}
             disabled={currentPage <= 1}
           >
@@ -66,7 +61,9 @@ export const ProductListPagination = ({ total, limit }: { total: number; limit: 
           <Button
             onClick={(event) => {
               event.preventDefault();
-              if (currentPage < totalPages) setPage(currentPage + 1);
+              if (currentPage < totalPages) {
+                setPage(currentPage + 1);
+              }
             }}
             disabled={currentPage >= totalPages}
           >
