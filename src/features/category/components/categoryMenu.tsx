@@ -1,7 +1,7 @@
 import type { CategoryNode } from '~features/category/utils/buildCategories';
 
 import { useCategoryData } from '~features/category/hooks/useCategoryData';
-import { useSyncQueryParameters } from '~features/pagination/hooks/useSyncQueryParameters';
+import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
 import { ChevronsUpDown } from 'lucide-react';
 import { useCallback } from 'react';
 

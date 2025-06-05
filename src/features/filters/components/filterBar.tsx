@@ -7,8 +7,8 @@ import { ConditionsFormField } from '~features/filters/components/conditionsForm
 import { PriceFormField } from '~features/filters/components/priceFormField';
 import { useFacetsData } from '~features/filters/hooks/useFacetsData';
 import { filterFormSchema } from '~features/filters/types/schemas';
-import { useSyncQueryParameters } from '~features/pagination/hooks/useSyncQueryParameters';
 import { useFormValuesChange } from '~hooks/useFormValuesChange';
+import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
 import { withDataTestId } from '~utils/helpers';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';

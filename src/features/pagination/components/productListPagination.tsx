@@ -1,5 +1,5 @@
 import { Button } from '~components/ui/button/button';
-import { useSyncQueryParameters } from '~features/pagination/hooks/useSyncQueryParameters';
+import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
