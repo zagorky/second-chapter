@@ -53,6 +53,8 @@ export const ProductListPagination = ({ total }: { total: number }) => {
       <PaginationContent>
         <PaginationItem>
           <Button
+            size="sm"
+            className="px-2"
             onClick={(event) => {
               event.preventDefault();
               if (currentPage > 1) {
@@ -69,6 +71,7 @@ export const ProductListPagination = ({ total }: { total: number }) => {
           <PaginationItem>
             <PaginationLink
               href="#"
+              size="sm"
               onClick={(event) => {
                 event.preventDefault();
                 setPage(1);
@@ -89,6 +92,7 @@ export const ProductListPagination = ({ total }: { total: number }) => {
         {visiblePages.map((page) => (
           <PaginationItem key={page}>
             <PaginationLink
+              size="sm"
               href="#"
               onClick={(event) => {
                 event.preventDefault();
@@ -111,6 +115,7 @@ export const ProductListPagination = ({ total }: { total: number }) => {
           <PaginationItem>
             <PaginationLink
               href="#"
+              size="sm"
               onClick={(event) => {
                 event.preventDefault();
                 setPage(totalPages);
@@ -124,6 +129,8 @@ export const ProductListPagination = ({ total }: { total: number }) => {
 
         <PaginationItem>
           <Button
+            size="sm"
+            className="px-2"
             onClick={(event) => {
               event.preventDefault();
               if (currentPage < totalPages) {
