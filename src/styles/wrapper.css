@@ -1,0 +1,3 @@
+.wrapper {
+  @apply mx-auto w-full max-w-[1920px];
+}
