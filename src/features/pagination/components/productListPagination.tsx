@@ -1,11 +1,18 @@
 import { Button } from '~components/ui/button/button';
 import { ITEMS_PER_PAGE } from '~config/constant';
+import { PAGINATION_VISIBLE_RADIUS } from '~features/pagination/config/constant';
 import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 
-import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '~/components/ui/pagination';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+} from '~/components/ui/pagination';
 
 export const ProductListPagination = ({ total }: { total: number }) => {
   const [searchParameters] = useSearchParams();
@@ -15,19 +22,34 @@ export const ProductListPagination = ({ total }: { total: number }) => {
   const setPage = (page: number) => {
     updateURLParameters({ page: page });
   };
-  const { totalPages, visiblePages } = useMemo(() => {
+  const { totalPages, visiblePages, showStartEllipsis, showEndEllipsis } = useMemo(() => {
     const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
-    const visiblePages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    let startPage = Math.max(1, currentPage - 1);
+    let endPage = Math.min(totalPages, currentPage + 1);
 
-    return { totalPages, visiblePages };
-  }, [total]);
+    if (currentPage === 1) {
+      endPage = Math.min(PAGINATION_VISIBLE_RADIUS, totalPages);
+    }
+    if (currentPage === totalPages) {
+      startPage = Math.max(totalPages - 1, 1);
+    }
+    const visiblePages = [];
+
+    for (let i = startPage; i <= endPage; i += 1) {
+      visiblePages.push(i);
+    }
+    const showStartEllipsis = startPage > PAGINATION_VISIBLE_RADIUS;
+    const showEndEllipsis = endPage < totalPages - 1;
+
+    return { totalPages, visiblePages, showStartEllipsis, showEndEllipsis };
+  }, [currentPage, total]);
 
   if (totalPages <= 1) {
     return null;
   }
 
   return (
-    <Pagination className="p-8">
+    <Pagination className="py-8">
       <PaginationContent>
         <PaginationItem>
           <Button
@@ -43,6 +65,27 @@ export const ProductListPagination = ({ total }: { total: number }) => {
           </Button>
         </PaginationItem>
 
+        {visiblePages[0] > 1 && (
+          <PaginationItem>
+            <PaginationLink
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                setPage(1);
+              }}
+              isActive={currentPage === 1}
+            >
+              1
+            </PaginationLink>
+          </PaginationItem>
+        )}
+
+        {showStartEllipsis && (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        )}
+
         {visiblePages.map((page) => (
           <PaginationItem key={page}>
             <PaginationLink
@@ -57,6 +100,28 @@ export const ProductListPagination = ({ total }: { total: number }) => {
             </PaginationLink>
           </PaginationItem>
         ))}
+
+        {showEndEllipsis && (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        )}
+
+        {visiblePages[visiblePages.length - 1] < totalPages && (
+          <PaginationItem>
+            <PaginationLink
+              href="#"
+              onClick={(event) => {
+                event.preventDefault();
+                setPage(totalPages);
+              }}
+              isActive={currentPage === totalPages}
+            >
+              {totalPages}
+            </PaginationLink>
+          </PaginationItem>
+        )}
+
         <PaginationItem>
           <Button
             onClick={(event) => {
