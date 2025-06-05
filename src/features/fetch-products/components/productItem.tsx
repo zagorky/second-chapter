@@ -2,12 +2,12 @@ import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { Card, CardContent, CardTitle } from '~components/ui/card';
 import { navigationRoutes } from '~config/navigation';
-import { AddToCartButton } from '~features/add-to-cart/components/addToCartButton';
+import { AddToCartButton } from '~features/cart/components/addToCartButton';
+import { RemoveFromCartButton } from '~features/cart/components/removeFromCartButton';
 import { AuthorElement } from '~features/fetch-products/components/product-elements/authorElement';
 import { BadgeCondition } from '~features/fetch-products/components/product-elements/badgeCondition';
 import { ImgElement } from '~features/fetch-products/components/product-elements/imgElement';
 import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
-import { RemoveFromCartButton } from '~features/remove-from-cart/components/removeFromCartButton';
 import { getEnumAttribute, getStringAttribute } from '~types/utils/attributesGuards';
 import { withDataTestId } from '~utils/helpers';
 import { Link } from 'react-router';
