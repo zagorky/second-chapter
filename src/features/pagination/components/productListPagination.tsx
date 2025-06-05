@@ -2,6 +2,7 @@ import { Button } from '~components/ui/button/button';
 import { ITEMS_PER_PAGE } from '~config/constant';
 import { PAGINATION_VISIBLE_RADIUS } from '~features/pagination/config/constant';
 import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
+import { withDataTestId } from '~utils/helpers';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router';
@@ -49,7 +50,7 @@ export const ProductListPagination = ({ total }: { total: number }) => {
   }
 
   return (
-    <Pagination className="py-8">
+    <Pagination className="py-8" {...withDataTestId('pagination')}>
       <PaginationContent>
         <PaginationItem>
           <Button
@@ -62,6 +63,7 @@ export const ProductListPagination = ({ total }: { total: number }) => {
               }
             }}
             disabled={currentPage <= 1}
+            {...withDataTestId('page-prev')}
           >
             <ChevronLeft />
           </Button>
@@ -99,6 +101,7 @@ export const ProductListPagination = ({ total }: { total: number }) => {
                 setPage(page);
               }}
               isActive={currentPage === page}
+              {...withDataTestId(`page-${page.toString()}`)}
             >
               {page}
             </PaginationLink>
@@ -138,6 +141,7 @@ export const ProductListPagination = ({ total }: { total: number }) => {
               }
             }}
             disabled={currentPage >= totalPages}
+            {...withDataTestId('page-next')}
           >
             <ChevronRight />
           </Button>
