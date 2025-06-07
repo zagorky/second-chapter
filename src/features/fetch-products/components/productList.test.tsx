@@ -20,7 +20,7 @@ describe('ProductList', () => {
   it('should render product list when products exist', () => {
     render(
       <MemoryRouter>
-        <ProductList products={mockProducts} />
+        <ProductList total={10} products={mockProducts} />
       </MemoryRouter>
     );
 

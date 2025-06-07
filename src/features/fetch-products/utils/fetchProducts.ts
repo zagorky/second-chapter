@@ -23,5 +23,5 @@ export type FetchProductsParameters = {
 export const fetchProducts = async (parameters: FetchProductsParameters) => {
   const response = await apiInstance.root.productProjections().search().get({ queryArgs: parameters }).execute();
 
-  return response.body.results;
+  return response.body;
 };
