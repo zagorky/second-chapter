@@ -14,10 +14,13 @@ export const CartItemsList = ({ cart }: CartItemsListProps) => {
   }
 
   return (
-    <div>
+    <div data-testid="cart-items-list">
       <ul>
         {cart.lineItems.map((item) => (
-          <li key={item.id}>{item.name[DEFAULT_STORE_LANGUAGE]}</li>
+          <li key={item.id}>
+            {item.name[DEFAULT_STORE_LANGUAGE]} - {item.quantity} - {item.price.value.centAmount} -
+            {item.totalPrice.centAmount}
+          </li>
         ))}
       </ul>
     </div>
