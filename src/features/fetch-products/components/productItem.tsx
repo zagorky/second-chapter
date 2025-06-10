@@ -1,11 +1,11 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { Card, CardContent, CardTitle } from '~components/ui/card';
+import { DEFAULT_STORE_LANGUAGE } from '~config/constants';
 import { navigationRoutes } from '~config/navigation';
 import { AuthorElement } from '~features/fetch-products/components/product-elements/authorElement';
 import { BadgeCondition } from '~features/fetch-products/components/product-elements/badgeCondition';
 import { ImgElement } from '~features/fetch-products/components/product-elements/imgElement';
-import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
 import { getEnumAttribute, getStringAttribute } from '~types/utils/attributesGuards';
 import { withDataTestId } from '~utils/helpers';
 import { Link } from 'react-router';

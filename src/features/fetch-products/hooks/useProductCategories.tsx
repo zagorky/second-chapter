@@ -1,7 +1,7 @@
+import { DEFAULT_STORE_LANGUAGE } from '~config/constants';
 import { useEffect, useState } from 'react';
 
 import { fetchCategory } from '~/features/category/utils/fetchCategory';
-import { DEFAULT_STORE_LANGUAGE } from '~/features/fetch-products/config/constants';
 
 const ERRORS = {
   FETCH_CATEGORIES: 'Failed to fetch categories',

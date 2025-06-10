@@ -1,4 +1,4 @@
-import { ITEMS_PER_PAGE } from '~config/constant';
+import { ITEMS_PER_PAGE } from '~/config/constants';
 
 export const buildPaginationQueryParameters = (page: string) => {
   const currentPage = Number(page);
