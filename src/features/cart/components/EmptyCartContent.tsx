@@ -10,7 +10,7 @@ export const EmptyCartContent = () => {
   } as const;
 
   return (
-    <div className="grid gap-7">
+    <div className="flex flex-grow flex-col justify-center gap-7">
       <h2>{TEXTS.HEADING}</h2>
       <Image src="/suspicious-magnifying-glass.svg" alt="Suspicious emoji looking at a magnifying glass" size={150} />
       <Link to={navigationRoutes.catalog.path}>
