@@ -1,9 +1,9 @@
 import type { CategoryNode } from '~features/category/utils/buildCategories';
 
 import { useCategoryData } from '~features/category/hooks/useCategoryData';
+import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
 import { ChevronsUpDown } from 'lucide-react';
 import { useCallback } from 'react';
-import { useSearchParams } from 'react-router';
 
 import { Button } from '~/components/ui/button/button';
 import {
@@ -19,32 +19,18 @@ import {
 
 export const CategoryMenu = () => {
   const { categories } = useCategoryData();
-  const [searchParameters, setSearchParameters] = useSearchParams();
+  const { updateURLParameters, removeURLParameters } = useSyncQueryParameters();
   const closeButtonReference = useCallback((element: HTMLButtonElement | null) => {
     if (element) {
       element.focus();
     }
   }, []);
   const handleClick = (category: CategoryNode) => {
-    const newParameter = new URLSearchParams(searchParameters);
-
-    if (category.parent === '') {
-      newParameter.set('category', category.id);
-      newParameter.delete('subcategory');
-    } else {
-      newParameter.set('category', category.parent);
-      newParameter.set('subcategory', category.id);
-    }
-
-    setSearchParameters(newParameter);
+    updateURLParameters({ category: category });
   };
 
   const handleClickAll = () => {
-    const newParameter = new URLSearchParams(searchParameters);
-
-    newParameter.delete('category');
-    newParameter.delete('subcategory');
-    setSearchParameters(newParameter);
+    removeURLParameters(['category']);
   };
 
   return (
