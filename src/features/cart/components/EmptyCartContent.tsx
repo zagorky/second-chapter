@@ -1,4 +1,5 @@
 import { Button } from '~components/ui/button/button';
+import { Image } from '~components/ui/image';
 import { navigationRoutes } from '~config/navigation';
 import { Link } from 'react-router';
 
@@ -9,11 +10,9 @@ export const EmptyCartContent = () => {
   } as const;
 
   return (
-    <div className="grid justify-center gap-7">
+    <div className="grid gap-7">
       <h2>{TEXTS.HEADING}</h2>
-      <figure className="mx-auto h-[150px] w-[150px] overflow-hidden">
-        <img className="w-full object-contain" src="/suspicious-magnifying-glass.svg" alt="description" />
-      </figure>
+      <Image src="/suspicious-magnifying-glass.svg" alt="Suspicious emoji looking at a magnifying glass" size={150} />
       <Link to={navigationRoutes.catalog.path}>
         <Button>{TEXTS.BUTTON_TEXT} </Button>
       </Link>
