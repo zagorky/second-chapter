@@ -4,6 +4,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 
 import { getCart } from '~/features/cart/utils/getCart';
+import { getProductInCart, type ProductInCart } from '~/features/cart/utils/getProductInCart';
 
 export const useCart = () => {
   const [isLongLoading, setIsLongLoading] = useState(false);
@@ -26,11 +27,16 @@ export const useCart = () => {
     loadingTimeout: 500,
   });
 
+  const checkProductInCart = (productId: string): ProductInCart => {
+    return getProductInCart(cart, productId);
+  };
+
   return {
     cart,
     error,
     refresh,
     isLongLoading,
     isLoading,
+    getProductInCart: checkProductInCart,
   };
 };

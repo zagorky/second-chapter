@@ -15,6 +15,7 @@ import { Link } from 'react-router';
 
 import Marquee from '~/components/ui/marquee';
 import { Spinner } from '~/components/ui/spinner/spinner';
+import { ProductCartButtons } from '~/features/cart/components/ProductCartButtons';
 import { PriceElement } from '~/features/fetch-products/components/product-elements/price-element/priceElement';
 import { calculateDiscount } from '~/features/fetch-products/utils/calculateDiscount';
 
@@ -63,6 +64,10 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
             aspectRatio="aspect-auto"
             enableDialog={true}
           />
+
+          <div className="p-2">
+            <ProductCartButtons product={product} identifier={identifier} />
+          </div>
           {isDiscounted && <Marquee items={marqueeItems} />}
         </div>
 
@@ -144,10 +149,6 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
               </div>
             </CardContent>
           </Card>
-
-          <Button size="lg" disabled={true} className="w-full" {...withDataTestId(`${identifier}-add-to-cart`)}>
-            {PRODUCT_DETAIL_TEXTS.ADD_TO_CART}
-          </Button>
         </div>
       </div>
     </div>
