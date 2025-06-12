@@ -15,7 +15,7 @@ export const buttonVariants = cva(
         reverse:
           'text-main-foreground bg-main border-2 border-border hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-shadow',
         ghostGroupHover:
-          'transition-all border-b-2 border-dotted border-transparent group-hover:border-border group-hover: w-fit mx-auto rounded-none',
+          'transition-all border-b-2 border-dotted border-transparent group-hover:border-border w-fit mx-auto rounded-none',
       },
       size: {
         default: 'min-h-10 px-4 py-2',

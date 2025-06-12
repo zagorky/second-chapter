@@ -2,7 +2,10 @@ import type { Cart } from '@commercetools/platform-sdk';
 
 import { DEFAULT_STORE_LANGUAGE } from '~config/constants';
 
+import { formatPrice } from '~/features/fetch-products/utils/formatPrice';
+
 import { EmptyCartContent } from './EmptyCartContent';
+import { QuantityControls } from './QuantityControls';
 
 type CartItemsListProps = {
   cart: Cart;
@@ -18,11 +21,15 @@ export const CartItemsList = ({ cart }: CartItemsListProps) => {
       <ul>
         {cart.lineItems.map((item) => (
           <li key={item.id}>
-            {item.name[DEFAULT_STORE_LANGUAGE]} - {item.quantity} - {item.price.value.centAmount} -
-            {item.totalPrice.centAmount}
+            <div>
+              {item.name[DEFAULT_STORE_LANGUAGE]} - {formatPrice(item.price.value.centAmount)} -{' '}
+              {formatPrice(item.totalPrice.centAmount)}
+            </div>
+            <QuantityControls cart={cart} productId={item.productId} lineItemId={item.id} quantity={item.quantity} />
           </li>
         ))}
       </ul>
+      <div>Total: {formatPrice(cart.totalPrice.centAmount)}</div>
     </div>
   );
 };

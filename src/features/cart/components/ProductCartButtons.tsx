@@ -105,10 +105,10 @@ export const ProductCartButtons = ({ product, identifier }: ProductCartButtonsPr
         onClick={handleCartAction}
         disabled={isAdding || !cart}
         {...withDataTestId(`${identifier}-add-to-cart`)}
-        className="flex min-w-[60px] flex-grow"
+        className="flex min-w-[52px] flex-grow"
       >
         {isAdding ? (
-          <Spinner />
+          <Spinner size="sm" />
         ) : isInCart ? (
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 text-sm leading-tight">
@@ -128,10 +128,10 @@ export const ProductCartButtons = ({ product, identifier }: ProductCartButtonsPr
           onClick={() => void handleRemoveFromCart()}
           disabled={isRemoving || !cart}
           {...withDataTestId(`${identifier}-remove-from-cart`)}
-          className="min-w-[60px]"
+          className="min-w-[52px]"
           variant="neutral"
         >
-          {isRemoving ? <Spinner /> : <X />}
+          {isRemoving ? <Spinner size="sm" /> : <X />}
         </Button>
       )}
     </div>
