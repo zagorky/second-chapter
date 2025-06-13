@@ -8,6 +8,7 @@ import { Trash } from 'lucide-react';
 import { removeProductFromCart } from '~/features/cart/utils/removeProductFromCart';
 import { formatPrice } from '~/features/fetch-products/utils/formatPrice';
 
+import { clearCart } from '../utils/clearCart';
 import { EmptyCartContent } from './EmptyCartContent';
 import { QuantityControls } from './QuantityControls';
 
@@ -24,8 +25,18 @@ export const CartItemsList = ({ cart }: CartItemsListProps) => {
     return <EmptyCartContent />;
   }
 
+  const handleClearCart = async () => {
+    await clearCart(cart);
+    await refresh();
+  };
+
   return (
     <div data-testid="cart-items-list">
+      <div>
+        <Button variant="ghost" size="icon" onClick={() => void handleClearCart()}>
+          <Trash />
+        </Button>
+      </div>
       <ul>
         {cart.lineItems.map((item) => (
           <li key={item.id} className="flex justify-between gap-2">
