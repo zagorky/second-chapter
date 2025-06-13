@@ -15,11 +15,12 @@ export const buttonVariants = cva(
         reverse:
           'text-main-foreground bg-main border-2 border-border hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-shadow',
         ghostGroupHover:
-          'transition-all border-b-2 border-dotted border-transparent group-hover:border-border w-fit mx-auto rounded-none',
+          'transition-all border-b-2 border-dotted  border-transparent group-hover:text-main w-fit mx-auto rounded-none',
       },
       size: {
         default: 'min-h-10 px-4 py-2',
-        defaultNoPadding: 'p-1',
+        noPadding: 'p-0',
+        smPadding: 'p-0.5',
         sm: 'h-9 px-3',
         lg: 'h-11 px-8',
         dot: 'h-5 w-5',

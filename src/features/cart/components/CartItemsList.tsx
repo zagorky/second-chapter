@@ -1,22 +1,20 @@
 import type { Cart } from '@commercetools/platform-sdk';
 
 import { Button } from '~components/ui/button/button';
-import { DEFAULT_STORE_LANGUAGE } from '~config/constants';
 import { useCart } from '~features/cart/hooks/useCart';
 import { Trash } from 'lucide-react';
+import { toast } from 'sonner';
 
-import { removeProductFromCart } from '~/features/cart/utils/removeProductFromCart';
-import { formatPrice } from '~/features/fetch-products/utils/formatPrice';
+import { normalizeError } from '~/utils/normalizeError';
 
 import { clearCart } from '../utils/clearCart';
+import { CartItem } from './CartItem';
 import { EmptyCartContent } from './EmptyCartContent';
-import { QuantityControls } from './QuantityControls';
+import { OrderSummary } from './OrderSummary';
 
 type CartItemsListProps = {
   cart: Cart;
 };
-
-const formatPriceWithCurrency = (price: number) => `£${formatPrice(price)}`;
 
 export const CartItemsList = ({ cart }: CartItemsListProps) => {
   const { refresh } = useCart();
@@ -26,44 +24,32 @@ export const CartItemsList = ({ cart }: CartItemsListProps) => {
   }
 
   const handleClearCart = async () => {
-    await clearCart(cart);
-    await refresh();
+    try {
+      await clearCart(cart);
+      await refresh();
+      toast.success('Cart cleared successfully');
+    } catch (error: unknown) {
+      toast.error(normalizeError(error).message);
+    }
   };
 
   return (
-    <div data-testid="cart-items-list">
-      <div>
-        <Button variant="ghost" size="icon" onClick={() => void handleClearCart()}>
-          <Trash />
-        </Button>
+    <div data-testid="cart-items-list" className="flex flex-grow flex-col justify-between gap-8">
+      <div className="grid gap-4">
+        <div className="flex justify-end">
+          <Button variant="default" size="default" onClick={() => void handleClearCart()}>
+            <Trash />
+            Clear cart
+          </Button>
+        </div>
+        <ul className="grid gap-4">
+          {cart.lineItems.map((item) => (
+            <CartItem key={item.id} item={item} cart={cart} refresh={() => void refresh()} />
+          ))}
+        </ul>
       </div>
-      <ul>
-        {cart.lineItems.map((item) => (
-          <li key={item.id} className="flex justify-between gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() =>
-                void removeProductFromCart({
-                  cartId: cart.id,
-                  lineItemId: item.id,
-                  cartVersion: cart.version,
-                  quantity: item.quantity,
-                }).then(refresh)
-              }
-            >
-              <Trash />
-            </Button>
 
-            <div>
-              {item.name[DEFAULT_STORE_LANGUAGE]} - {formatPriceWithCurrency(item.price.value.centAmount)} -{' '}
-              {formatPriceWithCurrency(item.totalPrice.centAmount)}
-            </div>
-            <QuantityControls cart={cart} productId={item.productId} lineItemId={item.id} quantity={item.quantity} />
-          </li>
-        ))}
-      </ul>
-      <div className="text-lg">Total: {formatPriceWithCurrency(cart.totalPrice.centAmount)}</div>
+      <OrderSummary cart={cart} />
     </div>
   );
 };

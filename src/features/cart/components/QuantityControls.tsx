@@ -70,22 +70,12 @@ export const QuantityControls = ({ cart, productId, lineItemId, quantity }: Quan
 
   return (
     <div className="flex items-center gap-2 select-none">
-      <Button
-        variant="ghost"
-        onClick={() => void handleDecreaseQuantity()}
-        disabled={isLoading}
-        size="defaultNoPadding"
-      >
+      <Button variant="default" onClick={() => void handleDecreaseQuantity()} disabled={isLoading} size="smPadding">
         <span className="sr-only">Decrease quantity</span>
         <Minus />
       </Button>
       <span className="min-w-8 text-center">{quantity}</span>
-      <Button
-        variant="ghost"
-        onClick={() => void handleIncreaseQuantity()}
-        disabled={isLoading}
-        size="defaultNoPadding"
-      >
+      <Button variant="default" onClick={() => void handleIncreaseQuantity()} disabled={isLoading} size="smPadding">
         <span className="sr-only">Increase quantity</span>
         <Plus />
       </Button>

@@ -61,7 +61,7 @@ export const ProductItem = ({ product }: ProductItemProps) => {
           <Button
             onClick={() => void navigate(`${navigationRoutes.product.path}/${identifier}`)}
             variant="ghostGroupHover"
-            size="defaultNoPadding"
+            size="noPadding"
           >
             Learn more
           </Button>

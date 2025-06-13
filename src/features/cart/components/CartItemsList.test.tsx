@@ -1,6 +1,7 @@
 import type { Cart, LineItem } from '@commercetools/platform-sdk';
 
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import { describe, it, expect, vi } from 'vitest';
 
 import { CartItemsList } from './CartItemsList';
@@ -83,7 +84,11 @@ describe('CartItemsList', () => {
   it('should render only EmptyCartContent when cart has no line items', () => {
     const emptyCart = createMockCart([]);
 
-    render(<CartItemsList cart={emptyCart} />);
+    render(
+      <MemoryRouter>
+        <CartItemsList cart={emptyCart} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByTestId('empty-cart-content')).toBeInTheDocument();
     expect(screen.queryByTestId('cart-items-list')).not.toBeInTheDocument();
@@ -92,7 +97,11 @@ describe('CartItemsList', () => {
   it('should render only CartItemsList when cart has line items', () => {
     const cartWithItems = createMockCart([createMockLineItem('1'), createMockLineItem('2')]);
 
-    render(<CartItemsList cart={cartWithItems} />);
+    render(
+      <MemoryRouter>
+        <CartItemsList cart={cartWithItems} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByTestId('cart-items-list')).toBeInTheDocument();
     expect(screen.queryByTestId('empty-cart-content')).not.toBeInTheDocument();
