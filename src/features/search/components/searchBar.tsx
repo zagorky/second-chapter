@@ -5,12 +5,14 @@ import { Button } from '~components/ui/button/button';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '~components/ui/form/form';
 import { Input } from '~components/ui/input';
 import { searchBarSchema } from '~features/search/types/schemas';
+import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
 import { Search, XIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router';
 
 export const SearchBar = () => {
-  const [searchParameters, setSearchParameters] = useSearchParams();
+  const [searchParameters] = useSearchParams();
+  const { updateURLParameters, removeURLParameters } = useSyncQueryParameters();
   const searchQuery = searchParameters.get('search') ?? '';
 
   const form = useForm<z.infer<typeof searchBarSchema>>({
@@ -21,21 +23,11 @@ export const SearchBar = () => {
   });
 
   function onSubmit(value: z.infer<typeof searchBarSchema>) {
-    const newParameter = new URLSearchParams(searchParameters.toString());
-
-    if (value.search.trim() === '') {
-      newParameter.delete('search');
-    } else {
-      newParameter.set('search', value.search);
-    }
-    setSearchParameters(newParameter);
+    updateURLParameters({ search: value.search });
   }
 
   const onReset = () => {
-    const newParameter = new URLSearchParams(searchParameters.toString());
-
-    newParameter.delete('search');
-    setSearchParameters(newParameter);
+    removeURLParameters(['search']);
     form.reset({ search: '' });
   };
 

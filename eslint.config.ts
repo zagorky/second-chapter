@@ -120,6 +120,7 @@ export default tseslint.config(
       ],
 
       'unicorn/no-array-callback-reference': 'off',
+      'unicorn/prefer-at': 'off',
       'unicorn/no-array-for-each': 'off',
       'unicorn/no-array-reduce': 'off',
       'unicorn/no-null': 'off',

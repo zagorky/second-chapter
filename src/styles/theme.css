@@ -117,3 +117,7 @@
 .form-field-input-wrapper {
   @apply grid gap-1.5;
 }
+
+.group-hover-underline {
+  @apply group-hover:after:border-b-main relative duration-300 after:absolute after:bottom-[-2px] after:left-1/2 after:h-[0] after:border-dotted after:transition-all after:duration-300 after:ease-in-out after:content-[''] group-hover:after:right-0 group-hover:after:left-0 group-hover:after:border-b-2 hover:after:-right-2 hover:after:-left-2;
+}

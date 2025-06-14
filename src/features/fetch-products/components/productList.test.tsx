@@ -1,8 +1,8 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 import { render, screen } from '@testing-library/react';
+import { DEFAULT_STORE_LANGUAGE } from '~config/constants';
 import { ProductList } from '~features/fetch-products/components/productList';
-import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
 import { mockProducts } from '~features/fetch-products/config/mockProducts';
 import { MemoryRouter } from 'react-router';
 
@@ -20,7 +20,7 @@ describe('ProductList', () => {
   it('should render product list when products exist', () => {
     render(
       <MemoryRouter>
-        <ProductList products={mockProducts} />
+        <ProductList total={10} products={mockProducts} />
       </MemoryRouter>
     );
 

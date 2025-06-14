@@ -1,6 +1,6 @@
 import type { Category } from '@commercetools/platform-sdk';
 
-import { DEFAULT_STORE_LANGUAGE } from '~features/fetch-products/config/constants';
+import { DEFAULT_STORE_LANGUAGE } from '~config/constants';
 import { assertIsNonNullable } from '~utils/helpers';
 
 export type CategoryNode = {
