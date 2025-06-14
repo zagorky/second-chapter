@@ -4,8 +4,8 @@ import { Button } from '~components/ui/button/button';
 import { Image } from '~components/ui/image';
 import { DEFAULT_STORE_LANGUAGE } from '~config/constants';
 import { calculateLineItemDiscount } from '~features/cart/utils/calculateLineItemDiscount';
-import { formatPriceWithCurrency } from '~features/cart/utils/formatPriceWithCurrency';
 import { removeProductFromCart } from '~features/cart/utils/removeProductFromCart';
+import { formatPrice } from '~features/fetch-products/utils/formatPrice';
 import { Trash } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
@@ -52,14 +52,14 @@ export const CartItem = ({ item, cart, refresh }: { item: LineItem; cart: Cart; 
 
             <div>{author}</div>
             <div className="flex items-center gap-2 text-sm opacity-70">
-              <div>{formatPriceWithCurrency(isDiscounted ? discountedPrice : fullPrice)}</div>
+              <div>{formatPrice(isDiscounted ? discountedPrice : fullPrice)}</div>
               {isDiscounted && <div>(-{discountPercentage}%)</div>}
             </div>
           </div>
 
           <div className="grid gap-2">
             <QuantityControls cart={cart} productId={item.productId} lineItemId={item.id} quantity={item.quantity} />
-            {formatPriceWithCurrency(item.totalPrice.centAmount)}
+            {formatPrice(item.totalPrice.centAmount)}
           </div>
         </div>
       </div>

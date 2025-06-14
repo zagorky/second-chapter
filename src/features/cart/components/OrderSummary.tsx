@@ -1,8 +1,7 @@
 import type { Cart } from '@commercetools/platform-sdk';
 
 import { Button } from '~components/ui/button/button';
-
-import { formatPriceWithCurrency } from '../utils/formatPriceWithCurrency';
+import { formatPrice } from '~features/fetch-products/utils/formatPrice';
 
 type OrderSummaryProps = {
   cart: Cart;
@@ -38,7 +37,7 @@ export const OrderSummary = ({ cart }: OrderSummaryProps) => {
         <tbody>
           <tr className="border-border border-b">
             <td className="py-2 text-left uppercase">{TEXTS.SUBTOTAL}</td>
-            <td className="py-2 text-right">{formatPriceWithCurrency(cart.totalPrice.centAmount)}</td>
+            <td className="py-2 text-right">{formatPrice(cart.totalPrice.centAmount)}</td>
           </tr>
           <tr className="border-border border-b">
             <td className="py-2 text-left capitalize">{TEXTS.ITEMS}</td>
@@ -54,7 +53,7 @@ export const OrderSummary = ({ cart }: OrderSummaryProps) => {
           </tr>
           <tr>
             <td className="py-3 text-left text-lg font-bold">{TEXTS.TOTAL}</td>
-            <td className="py-3 text-right text-lg font-bold">{formatPriceWithCurrency(cart.totalPrice.centAmount)}</td>
+            <td className="py-3 text-right text-lg font-bold">{formatPrice(cart.totalPrice.centAmount)}</td>
           </tr>
         </tbody>
       </table>

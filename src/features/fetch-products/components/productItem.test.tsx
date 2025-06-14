@@ -17,8 +17,8 @@ describe('ProductItem', () => {
     expect(screen.getByTestId('test-product-slug-name')).toHaveTextContent('Test Product Name');
     expect(screen.getByTestId('test-product-slug-description')).toHaveTextContent('Test product description');
     expect(screen.getByTestId('test-product-slug-price')).toBeInTheDocument();
-    expect(screen.getByText(/£10.00/)).toBeInTheDocument();
-    expect(screen.getByText(/£8.00/)).toBeInTheDocument();
+    expect(screen.getByText(/£ 10\.00/)).toBeInTheDocument();
+    expect(screen.getByText(/£ 8\.00/)).toBeInTheDocument();
     expect(screen.getByTestId('test-product-slug-author')).toHaveTextContent('Test Author');
     expect(screen.getByTestId('test-product-slug-condition')).toHaveTextContent('Like New');
     expect(img).toHaveAttribute('src', 'https://example.com/product-image.jpg');
@@ -43,8 +43,8 @@ describe('ProductItem', () => {
     expect(screen.getByTestId('test-product-slug-author')).toHaveTextContent('Unknown');
   });
 
-  it('should render card with incorrect price', () => {
-    const productWithoutAttributes = {
+  it('should render card with incorrect price when prices are undefined', () => {
+    const productWithoutPrices = {
       ...mockProduct1,
       masterVariant: {
         ...mockProduct1.masterVariant,
@@ -54,7 +54,7 @@ describe('ProductItem', () => {
 
     render(
       <MemoryRouter>
-        <ProductItem product={productWithoutAttributes} />
+        <ProductItem product={productWithoutPrices} />
       </MemoryRouter>
     );
 

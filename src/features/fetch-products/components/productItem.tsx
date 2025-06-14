@@ -24,14 +24,17 @@ export const ProductItem = ({ product }: ProductItemProps) => {
   const identifier = product.slug[DEFAULT_STORE_LANGUAGE];
   const navigate = useNavigate();
 
+  const originalPrice = product.masterVariant.prices?.[0]?.value.centAmount ?? -1;
+  const discountedPrice = product.masterVariant.prices?.[0]?.discounted?.value.centAmount ?? -1;
+
   return (
     <li key={identifier} {...withDataTestId(identifier)} className="group flex flex-col gap-2">
       <Card className="relative flex h-full max-w-[300px] flex-col justify-start gap-2 rounded-lg p-2.5 shadow-none transition-all">
         <PriceElement
           className="absolute top-6 left-0 z-1 py-1 pr-4 pl-5"
           id={identifier}
-          originalPrice={product.masterVariant.prices?.[0]?.value.centAmount ?? 0}
-          discountedPrice={product.masterVariant.prices?.[0]?.discounted?.value.centAmount ?? 0}
+          originalPrice={originalPrice}
+          discountedPrice={discountedPrice}
         />
         <ImgElement
           imageUrl={product.masterVariant.images?.[0]?.url ?? ''}

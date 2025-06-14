@@ -19,22 +19,33 @@ export const PriceElement = ({
   id,
   className,
   type = 'card',
-  price = discountedPrice ? 'discounted' : 'full',
+  price = discountedPrice > 0 ? 'discounted' : 'full',
 }: PriceProps) => {
   const computedOriginalPrice = formatPrice(originalPrice);
   const computedDiscountedPrice = formatPrice(discountedPrice);
 
   price = type === 'standalone' ? 'full' : price;
 
+  if (originalPrice < 0) {
+    return (
+      <div
+        className={cn(priceElementVariants({ type, price: 'full' }), className, '')}
+        {...withDataTestId(`${id}-price`)}
+      >
+        {computedOriginalPrice}
+      </div>
+    );
+  }
+
   return (
     <div className={cn(priceElementVariants({ type, price }), className, '')} {...withDataTestId(`${id}-price`)}>
-      {discountedPrice ? (
+      {discountedPrice > 0 ? (
         <>
-          <span>&pound;{computedDiscountedPrice}</span>{' '}
-          <span className="text-lg font-black line-through">&pound;{computedOriginalPrice}</span>
+          <span>{computedDiscountedPrice}</span>{' '}
+          <span className="text-lg font-black line-through">{computedOriginalPrice}</span>
         </>
       ) : (
-        <>&pound;{computedOriginalPrice}</>
+        <>{computedOriginalPrice}</>
       )}
     </div>
   );
