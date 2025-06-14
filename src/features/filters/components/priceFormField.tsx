@@ -49,7 +49,7 @@ export const PriceFormField = () => {
                 />
               </FormControl>
               <div className="mt-2 text-center text-sm">
-                &pound;{formatPrice(selectedPriceRange[0])} — &pound;{formatPrice(selectedPriceRange[1])}
+                {formatPrice(selectedPriceRange[0])} — {formatPrice(selectedPriceRange[1])}
               </div>
             </div>
             <div className="lg:justify-items-start">

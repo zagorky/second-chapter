@@ -1,5 +1,4 @@
 import { Button } from '~components/ui/button/button';
-import { ITEMS_PER_PAGE } from '~config/constant';
 import { PAGINATION_VISIBLE_RADIUS } from '~features/pagination/config/constant';
 import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
 import { withDataTestId } from '~utils/helpers';
@@ -14,6 +13,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from '~/components/ui/pagination';
+import { ITEMS_PER_PAGE } from '~/config/constants';
 
 export const ProductListPagination = ({ total }: { total: number }) => {
   const [searchParameters] = useSearchParams();

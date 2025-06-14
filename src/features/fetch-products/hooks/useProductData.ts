@@ -1,10 +1,11 @@
 import type { ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 import type { FetchProductsParameters } from '~features/fetch-products/utils/fetchProducts';
 
-import { ITEMS_PER_PAGE } from '~config/constant';
 import { fetchProducts } from '~features/fetch-products/utils/fetchProducts';
 import { useState } from 'react';
 import useSWR from 'swr';
+
+import { ITEMS_PER_PAGE } from '~/config/constants';
 
 export const useProductData = (parameters?: FetchProductsParameters) => {
   const [isLongLoading, setIsLongLoading] = useState(false);
