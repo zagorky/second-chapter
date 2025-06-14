@@ -1,6 +1,8 @@
 import type { Cart } from '@commercetools/platform-sdk';
 
 import { useCart } from '~features/cart/hooks/useCart';
+import { DiscountCodeInput } from '~features/discount-codes/components/DiscountCodeInput';
+import { DiscountCodeList } from '~features/discount-codes/components/DiscountCodeList';
 
 import { CartItem } from './CartItem';
 import { ClearCartDialog } from './ClearCartDialog';
@@ -42,7 +44,8 @@ export const CartItemsList = ({ cart }: CartItemsListProps) => {
           ))}
         </ul>
       </div>
-
+      <DiscountCodeInput cart={cart} />
+      <DiscountCodeList cart={cart} />
       <OrderSummary cart={cart} />
     </div>
   );

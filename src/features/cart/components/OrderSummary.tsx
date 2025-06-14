@@ -52,7 +52,7 @@ export const OrderSummary = ({ cart }: OrderSummaryProps) => {
             <td className="py-2 text-right">{TEXTS.CALCULATED_AT_CHECKOUT}</td>
           </tr>
           <tr>
-            <td className="py-3 text-left text-lg font-bold">{TEXTS.TOTAL}</td>
+            <td className="py-3 text-left text-lg font-bold uppercase">{TEXTS.TOTAL}</td>
             <td className="py-3 text-right text-lg font-bold">{formatPrice(cart.totalPrice.centAmount)}</td>
           </tr>
         </tbody>
