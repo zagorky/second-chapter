@@ -19,6 +19,9 @@ const TEXTS = {
   CALCULATED_AT_CHECKOUT: 'Calculated at checkout',
   CTA: 'Checkout',
   TAX_RATE: 'Tax rate',
+  FIELD: 'Field',
+  VALUE: 'Value',
+  CTA_TEXT: 'Checkout',
 };
 
 export const OrderSummary = ({ cart }: OrderSummaryProps) => {
@@ -26,6 +29,12 @@ export const OrderSummary = ({ cart }: OrderSummaryProps) => {
     <div className="grid gap-4">
       <h3 className="text-left text-lg font-bold uppercase">{TEXTS.TITLE}</h3>
       <table className="w-full border-collapse">
+        <thead className="sr-only">
+          <tr>
+            <th>{TEXTS.FIELD}</th>
+            <th>{TEXTS.VALUE}</th>
+          </tr>
+        </thead>
         <tbody>
           <tr className="border-border border-b">
             <td className="py-2 text-left uppercase">{TEXTS.SUBTOTAL}</td>
@@ -50,7 +59,7 @@ export const OrderSummary = ({ cart }: OrderSummaryProps) => {
         </tbody>
       </table>
       <Button className="justify-self-end" size="lg">
-        Checkout
+        {TEXTS.CTA_TEXT}
       </Button>
     </div>
   );
