@@ -25,13 +25,13 @@ export const CartItem = ({ item, cart, refresh }: { item: LineItem; cart: Cart; 
       key={item.id}
       className="border-border rounded-base bg-background group flex justify-between gap-4 border-2 p-4"
     >
-      <div className="gap-4 sm:flex sm:justify-between">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row">
         <Image
           borders="base"
           src={item.variant.images?.[0]?.url ?? ''}
           alt={item.name[DEFAULT_STORE_LANGUAGE]}
           size={DEFAULT_IMAGE_SIZE}
-          className="select-none"
+          className="ml-0 select-none"
           {...(item.variant.images?.[0]?.dimensions && {
             width: item.variant.images[0].dimensions.w,
             height: item.variant.images[0].dimensions.h,
@@ -41,7 +41,7 @@ export const CartItem = ({ item, cart, refresh }: { item: LineItem; cart: Cart; 
           <div className="flex flex-col items-start gap-1">
             <div className="w-fit">
               <Button
-                className="flex-col gap-1"
+                className="flex-col gap-1 text-left whitespace-normal"
                 variant="ghostGroupHover"
                 size="noPadding"
                 onClick={() => void navigate(`${navigationRoutes.product.path}/${item.productKey ?? ''}`)}
@@ -67,6 +67,7 @@ export const CartItem = ({ item, cart, refresh }: { item: LineItem; cart: Cart; 
       <Button
         variant="neutral"
         size="icon"
+        className="min-w-[40px]"
         onClick={() =>
           void removeProductFromCart({
             cartId: cart.id,
