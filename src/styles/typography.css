@@ -1,3 +1,87 @@
 .heading-1 {
   @apply text-main text-3xl leading-tight font-semibold md:text-4xl;
 }
+
+.about-developer-name {
+  @apply text-main-foreground text-7xl max-[450px]:text-5xl sm:text-9xl;
+}
+
+@keyframes bounce-up {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10%);
+  }
+
+  70% {
+    transform: translateY(-2%);
+  }
+
+  90% {
+    transform: translateY(-5%);
+  }
+
+  100% {
+    transform: translateY(-10%);
+  }
+}
+
+@keyframes bounce-up-reset {
+  0% {
+    transform: translateY(-10%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.bounce-up {
+  animation: bounce-up 0.6s ease-in-out forwards;
+}
+
+.bounce-up-reset {
+  animation: bounce-up-reset 0.6s ease-in-out forwards;
+}
+
+@keyframes bounce-down {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10%);
+  }
+
+  70% {
+    transform: translateY(2%);
+  }
+
+  90% {
+    transform: translateY(5%);
+  }
+
+  100% {
+    transform: translateY(10%);
+  }
+}
+
+@keyframes bounce-down-reset {
+  0% {
+    transform: translateY(10%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.bounce-down {
+  animation: bounce-down 0.6s ease-in-out forwards;
+}
+
+.bounce-down-reset {
+  animation: bounce-down-reset 0.6s ease-in-out forwards;
+}
