@@ -51,6 +51,14 @@
   }
 }
 
+.animate-marquee-dynamic {
+  animation: marquee var(--marquee-duration, 5s) linear infinite;
+}
+
+.animate-marquee2-dynamic {
+  animation: marquee2 var(--marquee-duration, 5s) linear infinite;
+}
+
 :root {
   --background: oklch(95.16% 0.0242 343.23deg);
   --secondary-background: oklch(100% 0 0deg);

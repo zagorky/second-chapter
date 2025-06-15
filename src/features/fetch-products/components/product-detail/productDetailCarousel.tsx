@@ -12,6 +12,8 @@ import { cn } from '~lib/utilities';
 
 import { Dialog, DialogTrigger, DialogContent } from '~/components/ui/dialog/dialog';
 
+type ImageType = { url: string; dimensions: { w: number; h: number } };
+
 const ProductCarouselItem = ({
   image,
   identifier,
@@ -19,7 +21,7 @@ const ProductCarouselItem = ({
   aspectRatio,
   isInDialog = false,
 }: {
-  image: { url: string };
+  image: ImageType;
   identifier: string;
   index: number;
   aspectRatio: 'aspect-square' | 'aspect-video' | 'aspect-auto';
@@ -30,6 +32,8 @@ const ProductCarouselItem = ({
       <img
         src={image.url}
         alt={`${identifier}-carousel-${String(index)}`}
+        width={image.dimensions.w}
+        height={image.dimensions.h}
         className={'rounded-base mx-auto h-full max-h-[80vh] w-auto border-2 object-contain'}
         data-carousel-scale-target
       />
@@ -53,7 +57,7 @@ const ImageDialog = ({
   identifier,
   initialIndex = 0,
 }: {
-  images: { url: string }[];
+  images: ImageType[];
   identifier: string;
   initialIndex?: number;
 }) => {
@@ -80,7 +84,7 @@ export const ProductCarousel = ({
   enableDialog = false,
   isInDialog = false,
 }: {
-  images: { url: string }[];
+  images: ImageType[];
   identifier: string;
   autoplay: boolean;
   aspectRatio: 'aspect-square' | 'aspect-video' | 'aspect-auto';

@@ -46,7 +46,7 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
   const author = getStringAttribute(product.masterVariant.attributes, 'author');
   const condition = getEnumAttribute(product.masterVariant.attributes, 'condition');
   const identifier = product.slug[DEFAULT_STORE_LANGUAGE];
-  const images = product.masterVariant.images ?? [{ url: '' }];
+  const images = product.masterVariant.images ?? [{ url: '', dimensions: { w: 0, h: 0 } }];
   const discountPercentage = calculateDiscount(product);
   const isDiscounted = discountPercentage > 0;
 
