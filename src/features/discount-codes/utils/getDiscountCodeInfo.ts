@@ -11,5 +11,6 @@ export const getDiscountCodeInfo = (id: string): DiscountCodeConfig => {
     conditions: code?.conditions ?? 'No conditions available',
     id: code?.id ?? '',
     code: code?.code ?? '',
+    discount: code?.discount,
   };
 };

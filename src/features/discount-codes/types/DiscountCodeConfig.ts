@@ -4,4 +4,13 @@ export type DiscountCodeConfig = {
   title: string;
   description: string;
   conditions: string;
+  discount?:
+    | {
+        type: 'relative';
+        items: 'all' | 'some';
+        percentage: number;
+      }
+    | {
+        type: 'gift-line-item';
+      };
 };
