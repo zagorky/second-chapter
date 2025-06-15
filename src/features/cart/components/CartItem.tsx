@@ -1,4 +1,4 @@
-import type { LineItem, Cart } from '@commercetools/platform-sdk';
+import type { LineItem, Cart, DiscountedLineItemPrice } from '@commercetools/platform-sdk';
 
 import { Button } from '~components/ui/button/button';
 import { Image } from '~components/ui/image';
@@ -7,6 +7,7 @@ import { calculateLineItemDiscount } from '~features/cart/utils/calculateLineIte
 import { getIsGifted } from '~features/cart/utils/getIsGifted';
 import { removeProductFromCart } from '~features/cart/utils/removeProductFromCart';
 import { formatPrice } from '~features/fetch-products/utils/formatPrice';
+import { cn } from '~lib/utilities';
 import { Trash } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
@@ -16,13 +17,23 @@ import { getStringAttribute } from '~/types/utils/attributesGuards';
 import { GiftBadge } from './GiftBadge';
 import { QuantityControls } from './QuantityControls';
 
-export const CartItem = ({ item, cart, refresh }: { item: LineItem; cart: Cart; refresh: () => void }) => {
+type ExtendedLineItem = LineItem & {
+  discountedPrice?: DiscountedLineItemPrice;
+};
+
+const geTotalFullPrice = (item: ExtendedLineItem) => item.price.value.centAmount * item.quantity;
+
+export const CartItem = ({ item, cart, refresh }: { item: ExtendedLineItem; cart: Cart; refresh: () => void }) => {
   const DEFAULT_IMAGE_SIZE = 150;
   const { discountPercentage, isDiscounted, discountedPrice, fullPrice } = calculateLineItemDiscount(item);
   const navigate = useNavigate();
   const author = getStringAttribute(item.variant.attributes, 'author');
 
   const isGifted = getIsGifted(item);
+
+  const includedDiscounts = item.discountedPrice?.includedDiscounts ?? [];
+
+  const hasCartDiscount = includedDiscounts.length > 0;
 
   const TEXTS = {
     FREE_ITEM: 'Free!',
@@ -62,7 +73,9 @@ export const CartItem = ({ item, cart, refresh }: { item: LineItem; cart: Cart; 
                 size="noPadding"
                 onClick={() => void navigate(`${navigationRoutes.product.path}/${item.productKey ?? ''}`)}
               >
-                <div className="m-0 font-bold uppercase">{item.name[DEFAULT_STORE_LANGUAGE]}</div>
+                <div className="m-0 font-bold uppercase">
+                  {item.name[DEFAULT_STORE_LANGUAGE]} {isGifted && ' - Gift'}
+                </div>
               </Button>
             </div>
 
@@ -75,11 +88,21 @@ export const CartItem = ({ item, cart, refresh }: { item: LineItem; cart: Cart; 
 
           <div className="grid gap-2">
             <QuantityControls cart={cart} lineItem={item} />
-            {isGifted ? (
-              <div className="flex items-center gap-2 font-bold uppercase">{TEXTS.FREE_ITEM}</div>
-            ) : (
-              formatPrice(item.totalPrice.centAmount)
-            )}
+            <div className="flex items-center gap-2">
+              <div
+                className={cn(
+                  (hasCartDiscount || isGifted) && 'text-main',
+                  isGifted && 'flex items-center gap-2 font-bold uppercase',
+                  'font-bold'
+                )}
+              >
+                {isGifted ? TEXTS.FREE_ITEM : formatPrice(item.totalPrice.centAmount)}
+              </div>
+
+              {hasCartDiscount && !isGifted && (
+                <div className="text-sm line-through opacity-70">{formatPrice(geTotalFullPrice(item))}</div>
+              )}
+            </div>
           </div>
         </div>
       </div>

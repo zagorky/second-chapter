@@ -42,7 +42,7 @@ export const DiscountCodeInput = ({ cart }: DiscountCodeInputProps) => {
 
     try {
       setIsLoading(true);
-      const nextCart = await applyDiscountCode({ cart, discountCode: discountCode.trim() });
+      const nextCart = await applyDiscountCode({ cart, discountCode: discountCode.trim().toUpperCase() });
 
       if (nextCart.discountCodes.length > 0) {
         const lastDiscountCode = nextCart.discountCodes[nextCart.discountCodes.length - 1];

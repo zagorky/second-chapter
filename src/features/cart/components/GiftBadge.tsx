@@ -18,7 +18,7 @@ export const GiftBadge = () => {
         stroke={'var(--color-border)'}
       />
 
-      <img className="" src={'/gift.svg'} alt="" width={80} height={80} />
+      <img src={'/gift.svg'} alt="" width={70} height={70} />
     </div>
   );
 };
