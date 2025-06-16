@@ -1,3 +1,4 @@
+import { ModeToggle } from '~components/ui/modeToggle';
 import { SheetClose } from '~components/ui/sheet';
 import { Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -33,12 +34,15 @@ export const NavigationSheet = () => {
         </Button>
       </SheetTrigger>
       <SheetContent className="p-4">
-        <SheetClose className="ml-auto" asChild>
-          <Button variant="neutral" size="icon">
-            <X className="h-4 w-4" />
-            <span className="sr-only">Close</span>
-          </Button>
-        </SheetClose>
+        <div className="flex w-full justify-between">
+          <SheetClose asChild>
+            <Button variant="neutral" size="icon">
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </Button>
+          </SheetClose>
+          <ModeToggle />
+        </div>
         <DialogTitle className={'sr-only'}>Navigation Menu</DialogTitle>
         <DialogDescription className="sr-only">Navigation links and actions</DialogDescription>
         <NavMenu
