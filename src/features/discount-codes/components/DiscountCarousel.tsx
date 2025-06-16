@@ -15,16 +15,22 @@ import { DiscountBanner } from './DiscountBanner';
 type DiscountCarouselProps = {
   discounts: DiscountCodeConfig[];
   autoplay?: boolean;
+  autoplayDelay?: number;
   className?: string;
 };
 
-export const DiscountCarousel = ({ discounts, autoplay = true, className }: DiscountCarouselProps) => {
+export const DiscountCarousel = ({
+  discounts,
+  autoplay = true,
+  autoplayDelay = 8000,
+  className,
+}: DiscountCarouselProps) => {
   return (
     <Carousel
       className={cn('relative flex flex-col items-stretch gap-4', className)}
       options={{
         loop: true,
-        autoplay,
+        autoplay: autoplay ? { delay: autoplayDelay, stopOnInteraction: false } : false,
         align: 'center',
         slidesToScroll: 1,
       }}
