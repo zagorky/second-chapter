@@ -26,14 +26,16 @@ export const DiscountBanner = ({ discount }: DiscountBannerProps) => {
   };
 
   return (
-    <div className="text-main-foreground relative grid min-h-50 w-full grid-cols-[100px_auto] gap-2 overflow-hidden">
+    <div className="text-main-foreground relative grid min-h-50 w-full gap-2 overflow-hidden sm:grid-cols-[100px_auto]">
       <div
         className={cn(
-          "before:border-border border-border rounded-base before:bg-secondary-background relative flex items-center justify-center border-2 p-0 pl-6 text-right before:absolute before:top-3 before:bottom-3 before:left-[-2px] before:w-4 before:rounded-r-full before:border-2 before:border-l-0 before:content-['']",
+          "before:border-border border-border rounded-base before:bg-secondary-background relative hidden items-center justify-center border-2 p-0 pl-6 text-right before:absolute before:top-3 before:bottom-3 before:left-[-2px] before:w-4 before:rounded-r-full before:border-2 before:border-l-0 before:content-[''] sm:flex",
           'bg-chart-4'
         )}
       >
-        <div className="text-center text-2xl font-bold [writing-mode:sideways-lr]">{getDiscountText()}</div>
+        <div className="text-border-foreground text-center text-4xl font-bold uppercase [text-shadow:3px_4px_0px_var(--color-border)] [writing-mode:sideways-lr]">
+          {getDiscountText()}
+        </div>
       </div>
       <div className={cn('border-border rounded-base flex border-2 p-5', 'bg-chart-4')}>
         <div
@@ -44,13 +46,20 @@ export const DiscountBanner = ({ discount }: DiscountBannerProps) => {
         >
           <button
             onClick={() => void copyToClipboard()}
-            className="group text-bg-main-foreground border-border flex items-center gap-2 rounded border-2 border-dotted bg-transparent px-4 py-2 text-left text-2xl font-bold uppercase transition-opacity hover:cursor-pointer hover:opacity-80 active:opacity-50"
+            className="group text-bg-main-foreground border-border flex items-center gap-2 rounded border-2 border-dotted bg-transparent px-4 py-2 text-left text-xl font-bold uppercase transition-opacity hover:cursor-pointer hover:opacity-80 active:opacity-50"
           >
             <span>{discount.code}</span>
 
             {<Copy className="self-start transition group-hover:scale-130" size={16} />}
           </button>
           <p className="text-md max-w-[70%] self-start text-left opacity-90">{discount.description}</p>
+          <img
+            src={discount.image.src}
+            alt={discount.title}
+            className="absolute right-[2px] bottom-[2px] w-40"
+            width={discount.image.width}
+            height={discount.image.height}
+          />
         </div>
       </div>
     </div>

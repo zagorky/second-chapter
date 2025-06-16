@@ -10,6 +10,11 @@ export const getDiscountCodeInfo = (id: string): DiscountCodeConfig => {
     description: code?.description ?? 'No description available',
     conditions: code?.conditions ?? 'No conditions available',
     id: code?.id ?? '',
+    image: {
+      src: code?.image.src ?? '',
+      width: code?.image.width ?? 0,
+      height: code?.image.height ?? 0,
+    },
     code: code?.code ?? '',
     discount: code?.discount,
   };

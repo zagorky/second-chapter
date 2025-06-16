@@ -4,6 +4,11 @@ export type DiscountCodeConfig = {
   title: string;
   description: string;
   conditions: string;
+  image: {
+    src: string;
+    width: number;
+    height: number;
+  };
   discount?:
     | {
         type: 'relative';
