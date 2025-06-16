@@ -7,7 +7,20 @@
 }
 
 .vertical-header {
+  @apply text-foreground;
+
   font-size: clamp(2rem, 5vw, 3rem);
+  writing-mode: vertical-lr;
+  rotate: 180deg;
+  display: flex;
+  align-items: flex-start;
+}
+
+@media screen and (width <= 640px) {
+  .vertical-header {
+    writing-mode: horizontal-tb;
+    rotate: 360deg;
+  }
 }
 
 .typeography-clamp-sm {
@@ -24,8 +37,4 @@
 
 .p-clamp {
   font-size: clamp(1rem, 1.5vw, 2rem);
-}
-
-.vertical-header-size {
-  font-size: clamp(2rem, 20vw, 10rem);
 }
