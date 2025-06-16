@@ -15,7 +15,13 @@ export const NavMenu = ({ onItemClick, ...props }: NavMenuProps) => {
         {NAVIGATION_ITEMS.map((item) => {
           return (
             <NavigationMenuItem key={item.path} onClick={onItemClick}>
-              <NavLink to={item.path} end className={({ isActive }) => (isActive ? 'border-border border-b-2' : '')}>
+              <NavLink
+                to={item.path}
+                end
+                className={({ isActive }) =>
+                  isActive ? 'nav-item-active block px-4 py-2 text-sm' : 'block px-4 py-2 text-sm font-medium'
+                }
+              >
                 {item.title}
               </NavLink>
             </NavigationMenuItem>
