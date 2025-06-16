@@ -7,14 +7,14 @@ export const DISCOUNT_CODES: DiscountCodeConfig[] = [
     title: 'Help',
     description: 'Feeling lost? Shout ‘HELP’ — spend £10 and get a free ChatGPT book',
     conditions: 'Add products for at least £10',
-    color: {
-      background: '--color-chart-1',
-      foreground: '--color-chart-2',
-    },
     image: {
-      src: '/discount-banners/hand.png',
-      width: 262,
-      height: 219,
+      src: '/discount-banners/sad.png',
+      width: 694,
+      height: 694,
+    },
+    color: {
+      background: '--color-chart-4',
+      foreground: '--color-chart-1',
     },
     discount: {
       type: 'gift-line-item',
@@ -27,13 +27,13 @@ export const DISCOUNT_CODES: DiscountCodeConfig[] = [
     description: 'Ready to COMMIT-CRIME? Get 30% discount on true crime and programming books. No alibi needed!',
     conditions: 'Add books from the true crime or programming categories',
     color: {
-      background: '--color-chart-2',
-      foreground: '--color-chart-1',
+      background: '--color-chart-1',
+      foreground: '--color-chart-2',
     },
     image: {
-      src: '/discount-banners/hand.png',
-      width: 262,
-      height: 219,
+      src: '/discount-banners/pets-magnifying-glass.png',
+      width: 421,
+      height: 236,
     },
     discount: {
       type: 'relative',
@@ -46,16 +46,16 @@ export const DISCOUNT_CODES: DiscountCodeConfig[] = [
     code: 'DASHA',
     title: 'Dasha',
     image: {
-      src: '/discount-banners/hand.png',
-      width: 262,
-      height: 219,
+      src: '/discount-banners/dasha-and-gift.png',
+      width: 487,
+      height: 440,
     },
     description:
       'Are you a Dasha? Good news: you’re awesome. Even better news: books just got 20% cheaper for you! Happy birthday to our Dasha!',
-    conditions: ' Only for users named Dasha, Daria or Darya',
+    conditions: 'Only for users named Dasha, Daria or Darya',
     color: {
-      background: '--color-chart-3',
-      foreground: '--color-chart-4',
+      background: '--color-chart-5',
+      foreground: '--color-chart-1',
     },
     discount: {
       type: 'relative',
