@@ -82,6 +82,7 @@ export default tseslint.config(
       'import/no-cycle': ['error', { maxDepth: Infinity }],
       'import/first': 'error',
 
+      '@typescript-eslint/no-misused-spread': 'off',
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],

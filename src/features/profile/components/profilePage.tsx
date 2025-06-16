@@ -7,13 +7,13 @@ import { useForm } from 'react-hook-form';
 
 import type { ProfileDataShema } from '~/features/sign-up/types/types';
 
+import { ProfileAvatar } from '~/components/ui/avatarImage/imageAvatar';
 import { Card, CardContent } from '~/components/ui/card';
 import { CancelButton, EditButton, SaveButton } from '~/components/ui/edit-mode/editModeButton';
 import { StyledDatePicker } from '~/components/ui/form-fields/datePicker';
 import { EmailField } from '~/components/ui/form-fields/emailField';
 import { FirstnameField } from '~/components/ui/form-fields/firstnameField';
 import { LastnameField } from '~/components/ui/form-fields/lastnameField';
-import { ProfileAvatar } from '~/components/ui/profileAvatar/profileAvatar';
 import { profileSchema } from '~/features/sign-up/types/shemas';
 import { cn } from '~/lib/utilities';
 
