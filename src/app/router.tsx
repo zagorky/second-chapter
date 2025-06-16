@@ -76,7 +76,7 @@ export const appRouter = createBrowserRouter([
         errorElement: <ErrorPage />,
         element: (
           <Suspense fallback={<PageSkeleton />}>
-            <CartPage />
+            <CartPage title={navigationRoutes.cart.title} />
           </Suspense>
         ),
       },

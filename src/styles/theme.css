@@ -16,6 +16,7 @@
   --color-chart-5: var(--chart-5);
   --color-sale: var(--sale);
   --color-destructive: var(--destructive);
+  --color-border-foreground: var(--border-foreground);
   --spacing-boxShadowX: 2px;
   --spacing-boxShadowY: 2px;
   --spacing-reverseBoxShadowX: -2px;
@@ -51,6 +52,14 @@
   }
 }
 
+.animate-marquee-dynamic {
+  animation: marquee var(--marquee-duration, 5s) linear infinite;
+}
+
+.animate-marquee2-dynamic {
+  animation: marquee2 var(--marquee-duration, 5s) linear infinite;
+}
+
 :root {
   --background: oklch(95.16% 0.0242 343.23deg);
   --secondary-background: oklch(100% 0 0deg);
@@ -69,6 +78,7 @@
   --chart-active-dot: #000;
   --destructive: oklch(57.7% 0.245 27.325deg);
   --sale: #d32525;
+  --border-foreground: #fff;
 }
 
 .dark {
@@ -88,6 +98,7 @@
   --chart-active-dot: #fff;
   --destructive: oklch(70.4% 0.191 22.216deg);
   --sale: oklch(70.4% 0.191 22.216deg);
+  --border-foreground: #fff;
 }
 
 @layer base {
@@ -116,4 +127,12 @@
 
 .form-field-input-wrapper {
   @apply grid gap-1.5;
+}
+
+.group-hover-underline {
+  @apply group-hover:after:border-b-main relative duration-300 after:absolute after:bottom-[-2px] after:left-1/2 after:h-[0] after:border-dotted after:transition-all after:duration-300 after:ease-in-out after:content-[''] group-hover:after:right-0 group-hover:after:left-0 group-hover:after:border-b-2 hover:after:-right-2 hover:after:-left-2;
+}
+
+.nav-item-active {
+  @apply rounded-base border-border bg-main text-main-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 relative h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden border-2 md:w-[var(--radix-navigation-menu-viewport-width)];
 }

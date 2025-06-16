@@ -4,6 +4,9 @@
 @import './styles/theme.css';
 @import './styles/checkbox.css';
 @import './styles/filter.css';
+@import './styles/wrapper.css';
+@import './styles/footer.css';
+@import './styles/animation.css';
 
 @layer base {
   * {

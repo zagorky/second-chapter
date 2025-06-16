@@ -27,13 +27,21 @@ function DialogClose({ ...props }: React.ComponentProps<typeof DialogPrimitive.C
 type DialogOverlayProps = {} & React.ComponentProps<typeof DialogPrimitive.Overlay>;
 
 function DialogOverlay({ className, ...props }: DialogOverlayProps) {
-  return <DialogPrimitive.Overlay data-slot="dialog-overlay" className={className} {...props} />;
+  return (
+    <DialogPrimitive.Overlay
+      data-slot="dialog-overlay"
+      className={cn('fixed inset-0 z-50 bg-black/50', className)}
+      {...props}
+    />
+  );
 }
 
 type DialogContentProps = {} & React.ComponentProps<typeof DialogPrimitive.Content> &
-  VariantProps<typeof dialogContentVariants>;
+  VariantProps<typeof dialogContentVariants> & {
+    hasCloseButton?: boolean;
+  };
 
-function DialogContent({ className, children, size, ...props }: DialogContentProps) {
+function DialogContent({ className, children, size, hasCloseButton = true, ...props }: DialogContentProps) {
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -43,12 +51,14 @@ function DialogContent({ className, children, size, ...props }: DialogContentPro
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute top-4 right-4">
-          <Button variant="default" size="icon">
-            <X />
-            <span className="sr-only">Close</span>
-          </Button>
-        </DialogPrimitive.Close>
+        {hasCloseButton && (
+          <DialogPrimitive.Close className="absolute top-4 right-4">
+            <Button variant="default" size="icon">
+              <X />
+              <span className="sr-only">Close</span>
+            </Button>
+          </DialogPrimitive.Close>
+        )}
       </DialogPrimitive.Content>
     </DialogPortal>
   );
