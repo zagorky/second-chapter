@@ -1,4 +1,4 @@
-import { DiscountBanner } from '~features/discount-codes/components/DiscountBanner';
+import { DiscountCarousel } from '~features/discount-codes/components/DiscountCarousel';
 import { withDataTestId } from '~utils/helpers';
 
 import { DISCOUNT_CODES } from '~/features/discount-codes/configs/discountCodesConfig';
@@ -10,10 +10,8 @@ const MainPage = () => {
         Second Chapter Store
       </h1>
 
-      <div className="my-8 space-y-4">
-        {DISCOUNT_CODES.map((code) => (
-          <DiscountBanner key={code.id} discount={code} />
-        ))}
+      <div className="my-8">
+        <DiscountCarousel discounts={DISCOUNT_CODES} />
       </div>
     </>
   );

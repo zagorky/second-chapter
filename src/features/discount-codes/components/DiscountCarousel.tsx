@@ -1,0 +1,48 @@
+import type { DiscountCodeConfig } from '~features/discount-codes/types/DiscountCodeConfig';
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  CarouselDots,
+} from '~components/carousel/carousel';
+import { cn } from '~lib/utilities';
+
+import { DiscountBanner } from './DiscountBanner';
+
+type DiscountCarouselProps = {
+  discounts: DiscountCodeConfig[];
+  autoplay?: boolean;
+  className?: string;
+};
+
+export const DiscountCarousel = ({ discounts, autoplay = true, className }: DiscountCarouselProps) => {
+  return (
+    <Carousel
+      className={cn('relative flex flex-col items-stretch gap-4', className)}
+      options={{
+        loop: true,
+        autoplay,
+        align: 'center',
+        slidesToScroll: 1,
+      }}
+    >
+      <div className="flex flex-grow items-center justify-center gap-6 px-2">
+        <CarouselPrevious />
+        <CarouselContent className="w-full">
+          {discounts.map((discount) => (
+            <CarouselItem key={discount.id} className="basis-full">
+              <div className="p-2">
+                <DiscountBanner discount={discount} />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselNext />
+      </div>
+      <CarouselDots />
+    </Carousel>
+  );
+};

@@ -15,6 +15,10 @@ export const getDiscountCodeInfo = (id: string): DiscountCodeConfig => {
       width: code?.image.width ?? 0,
       height: code?.image.height ?? 0,
     },
+    color: {
+      background: code?.color.background ?? '--color-chart-1',
+      foreground: code?.color.foreground ?? '--color-chart-2',
+    },
     code: code?.code ?? '',
     discount: code?.discount,
   };

@@ -7,6 +7,10 @@ export const DISCOUNT_CODES: DiscountCodeConfig[] = [
     title: 'Help',
     description: 'Feeling lost? Shout ‘HELP’ — spend £10 and get a free ChatGPT book',
     conditions: 'Add products for at least £10',
+    color: {
+      background: '--color-chart-1',
+      foreground: '--color-chart-2',
+    },
     image: {
       src: '/discount-banners/hand.png',
       width: 262,
@@ -22,6 +26,10 @@ export const DISCOUNT_CODES: DiscountCodeConfig[] = [
     title: 'Commit Crime',
     description: 'Ready to COMMIT-CRIME? Get 30% discount on true crime and programming books. No alibi needed!',
     conditions: 'Add books from the true crime or programming categories',
+    color: {
+      background: '--color-chart-2',
+      foreground: '--color-chart-1',
+    },
     image: {
       src: '/discount-banners/hand.png',
       width: 262,
@@ -45,6 +53,10 @@ export const DISCOUNT_CODES: DiscountCodeConfig[] = [
     description:
       'Are you a Dasha? Good news: you’re awesome. Even better news: books just got 20% cheaper for you! Happy birthday to our Dasha!',
     conditions: ' Only for users named Dasha, Daria or Darya',
+    color: {
+      background: '--color-chart-3',
+      foreground: '--color-chart-4',
+    },
     discount: {
       type: 'relative',
       items: 'some',

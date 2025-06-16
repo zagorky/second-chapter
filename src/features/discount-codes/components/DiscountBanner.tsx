@@ -28,21 +28,30 @@ export const DiscountBanner = ({ discount }: DiscountBannerProps) => {
   return (
     <div className="text-main-foreground relative grid min-h-50 w-full gap-2 overflow-hidden sm:grid-cols-[100px_auto]">
       <div
-        className={cn(
-          "before:border-border border-border rounded-base before:bg-secondary-background relative hidden items-center justify-center border-2 p-0 pl-6 text-right before:absolute before:top-3 before:bottom-3 before:left-[-2px] before:w-4 before:rounded-r-full before:border-2 before:border-l-0 before:content-[''] sm:flex",
-          'bg-chart-4'
-        )}
+        className="before:border-border border-border rounded-base before:bg-secondary-background relative hidden items-center justify-center border-2 p-0 pl-6 text-right before:absolute before:top-3 before:bottom-3 before:left-[-3px] before:w-4 before:rounded-r-full before:border-2 before:border-l-0 before:content-[''] sm:flex"
+        style={{
+          backgroundColor: `var(${discount.color.background})`,
+        }}
       >
-        <div className="text-border-foreground text-center text-4xl font-bold uppercase [text-shadow:3px_4px_0px_var(--color-border)] [writing-mode:sideways-lr]">
+        <div
+          className={cn(
+            'text-border-foreground text-center text-4xl font-bold uppercase [text-shadow:3px_4px_0px_var(--color-border)] [writing-mode:sideways-lr]'
+          )}
+        >
           {getDiscountText()}
         </div>
       </div>
-      <div className={cn('border-border rounded-base flex border-2 p-5', 'bg-chart-4')}>
+      <div
+        className="border-border rounded-base flex border-2 p-5"
+        style={{
+          backgroundColor: `var(${discount.color.background})`,
+        }}
+      >
         <div
-          className={cn(
-            'border-border rounded-base flex flex-grow flex-col items-start gap-4 border-2 p-3',
-            'bg-chart-5'
-          )}
+          className="border-border rounded-base flex flex-grow flex-col items-start gap-4 border-2 p-3"
+          style={{
+            backgroundColor: `var(${discount.color.foreground})`,
+          }}
         >
           <button
             onClick={() => void copyToClipboard()}

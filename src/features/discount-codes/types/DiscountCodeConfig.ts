@@ -4,6 +4,10 @@ export type DiscountCodeConfig = {
   title: string;
   description: string;
   conditions: string;
+  color: {
+    background: string;
+    foreground: string;
+  };
   image: {
     src: string;
     width: number;
