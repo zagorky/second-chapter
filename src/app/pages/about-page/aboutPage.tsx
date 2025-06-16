@@ -223,7 +223,7 @@ const AboutPage = () => {
             <div className="vertical-header">
               <span>RS School</span>
             </div>
-            <Card className="w-[clamp(280px,90vw,800px)]">
+            <Card className="px-5 sm:px-10">
               <CardTitle>💛 Thank You, RSSchool</CardTitle>
               <CardDescription className="text-base md:text-lg">
                 This project was created as part of our training at{' '}
@@ -258,7 +258,7 @@ const AboutPage = () => {
                 and move forward. 💛
               </CardDescription>
               <a href="https://rs.school/" target="_blank" rel="noopener noreferrer">
-                <Button variant={'neutral'}>
+                <Button variant={'default'}>
                   <span>Visit</span>
 
                   <img src="logo-rs.svg" alt="RSSchool Logo" className="h-10 w-10" />

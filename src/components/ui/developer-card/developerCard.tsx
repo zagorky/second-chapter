@@ -45,7 +45,7 @@ const GITHUB_BUTTON_MSG = 'Visit Github';
 
 const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey, githubLink }: DeveloperCardType) => {
   return (
-    <Card className="bg-secondary-background w-[clamp(280px,60vw,800px)] px-10">
+    <Card className="bg-secondary-background w-full px-10">
       <div className="flex items-center justify-center gap-5">
         <AvatarImage imageUrl={imageUrl} />
         <div>
@@ -55,7 +55,7 @@ const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey,
       </div>
       <CardDescription className="px-5 md:px-10">{description}</CardDescription>
       <div className="flex justify-center">
-        <Carousel className="flex w-full items-center">
+        <Carousel className="flex w-[clamp(150px,60vw,800px)] items-center">
           <CarouselPrevious className="bg-secondary-background hover:bg-transparent hover:outline-none" />
           <CarouselContent>
             {feedbackMessages[feedbackKey].map((_, index) => (
