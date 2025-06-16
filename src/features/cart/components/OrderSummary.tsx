@@ -2,6 +2,7 @@ import type { Cart } from '@commercetools/platform-sdk';
 
 import { Button } from '~components/ui/button/button';
 import { formatPrice } from '~features/fetch-products/utils/formatPrice';
+import { cn } from '~lib/utilities';
 
 type OrderSummaryProps = {
   cart: Cart;
@@ -21,9 +22,23 @@ const TEXTS = {
   FIELD: 'Field',
   VALUE: 'Value',
   CTA_TEXT: 'Checkout',
+  DISCOUNT: 'Discount code savings',
+};
+
+const getTotalPrice = (cart: Cart) => {
+  const totalPrice = cart.totalPrice.centAmount;
+  const totalFullPrice = cart.lineItems.reduce((acc, item) => {
+    const itemFullPrice = (item.price.discounted?.value.centAmount ?? item.price.value.centAmount) * item.quantity;
+
+    return acc + itemFullPrice;
+  }, 0);
+
+  return { totalDiscounts: totalFullPrice - totalPrice, totalFullPrice };
 };
 
 export const OrderSummary = ({ cart }: OrderSummaryProps) => {
+  const { totalDiscounts, totalFullPrice } = getTotalPrice(cart);
+
   return (
     <div className="grid gap-4">
       <h3 className="text-left text-lg font-bold uppercase">{TEXTS.TITLE}</h3>
@@ -37,8 +52,16 @@ export const OrderSummary = ({ cart }: OrderSummaryProps) => {
         <tbody>
           <tr className="border-border border-b">
             <td className="py-2 text-left uppercase">{TEXTS.SUBTOTAL}</td>
-            <td className="py-2 text-right">{formatPrice(cart.totalPrice.centAmount)}</td>
+            <td className={cn('py-2 text-right', totalDiscounts > 0 && 'line-through')}>
+              {formatPrice(totalFullPrice)}
+            </td>
           </tr>
+          {totalDiscounts > 0 && (
+            <tr className="border-border border-b">
+              <td className="py-2 text-left">{TEXTS.DISCOUNT}</td>
+              <td className={cn('text-main py-2 text-right')}>{formatPrice(totalDiscounts)}</td>
+            </tr>
+          )}
           <tr className="border-border border-b">
             <td className="py-2 text-left capitalize">{TEXTS.ITEMS}</td>
             <td className="py-2 text-right">{cart.totalLineItemQuantity ?? 0} </td>
@@ -52,7 +75,7 @@ export const OrderSummary = ({ cart }: OrderSummaryProps) => {
             <td className="py-2 text-right">{TEXTS.CALCULATED_AT_CHECKOUT}</td>
           </tr>
           <tr>
-            <td className="py-3 text-left text-lg font-bold">{TEXTS.TOTAL}</td>
+            <td className="py-3 text-left text-lg font-bold uppercase">{TEXTS.TOTAL}</td>
             <td className="py-3 text-right text-lg font-bold">{formatPrice(cart.totalPrice.centAmount)}</td>
           </tr>
         </tbody>

@@ -14,7 +14,7 @@ export const LogoutButton = () => {
 
   return (
     <Button variant="neutral" className="sm:inline-flex" onClick={handleLogout}>
-      <LogOut className="size-4 sm:hidden sm:size-0" />
+      <LogOut className="relative size-4 -translate-x-1 -scale-x-100 sm:hidden sm:size-0" />
       <span className="hidden sm:inline">Logout</span>
     </Button>
   );
