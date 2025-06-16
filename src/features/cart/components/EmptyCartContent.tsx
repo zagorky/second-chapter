@@ -1,5 +1,4 @@
 import { Button } from '~components/ui/button/button';
-import { Image } from '~components/ui/image';
 import { navigationRoutes } from '~config/navigation';
 import { Link } from 'react-router';
 
@@ -10,9 +9,15 @@ export const EmptyCartContent = () => {
   } as const;
 
   return (
-    <div className="flex flex-grow flex-col justify-center gap-7">
+    <div className="flex flex-grow flex-col items-center justify-center gap-7">
       <h2>{TEXTS.HEADING}</h2>
-      <Image src="/suspicious-magnifying-glass.svg" alt="Suspicious emoji looking at a magnifying glass" size={150} />
+      <img
+        src="/discount-banners/pets-magnifying-glass.png"
+        alt="Pets with magnifying glass"
+        width={420}
+        height={236}
+        className="block max-w-[300px]"
+      />
       <Link to={navigationRoutes.catalog.path}>
         <Button>{TEXTS.BUTTON_TEXT} </Button>
       </Link>
