@@ -3,7 +3,7 @@
 }
 
 .about-developer-name {
-  @apply text-main-foreground;
+  @apply text-foreground;
 }
 
 .vertical-header {

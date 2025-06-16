@@ -65,7 +65,7 @@ const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey,
                   <Card className="bg-secondary-background text-main-foreground p-0 shadow-none">
                     <CardContent className="flex flex-col items-center justify-center gap-5 p-4">
                       <AvatarImage imageUrl={feedbackArrayImgs[randomIndex(feedbackArrayImgs)]} />
-                      <span className="font-base text-sm">{feedbackMessages[feedbackKey][index]}</span>
+                      <span className="font-base text-foreground text-sm">{feedbackMessages[feedbackKey][index]}</span>
                     </CardContent>
                   </Card>
                 </div>
