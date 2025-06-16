@@ -6,10 +6,12 @@ type ImgProps = {
   caption?: string;
   className?: string;
   alt: string;
+  width?: number;
+  height?: number;
   aspectRatio: 'aspect-square' | 'aspect-video' | 'aspect-auto';
 };
 
-export const ImgElement = ({ imageUrl, alt, className, caption, aspectRatio }: ImgProps) => {
+export const ImgElement = ({ imageUrl, alt, className, caption, aspectRatio, width, height }: ImgProps) => {
   if (!imageUrl) {
     return (
       <div
@@ -33,7 +35,13 @@ export const ImgElement = ({ imageUrl, alt, className, caption, aspectRatio }: I
         className
       )}
     >
-      <img className={`custom-filter ${aspectRatio} w-full object-cover object-center`} src={imageUrl} alt={alt} />
+      <img
+        className={`custom-filter ${aspectRatio} w-full object-cover object-center`}
+        src={imageUrl}
+        alt={alt}
+        width={width}
+        height={height}
+      />
       {caption && (
         <figcaption className="text-main-foreground border-border line-clamp-3 border-t-2">{caption}</figcaption>
       )}

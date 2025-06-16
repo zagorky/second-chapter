@@ -1,5 +1,6 @@
 import type { Cart } from '@commercetools/platform-sdk';
 
+import { useAppStore } from '~stores/store';
 import { useState } from 'react';
 import useSWR from 'swr';
 
@@ -8,13 +9,14 @@ import { getProductInCart, type ProductInCart } from '~/features/cart/utils/getP
 
 export const useCart = () => {
   const [isLongLoading, setIsLongLoading] = useState(false);
+  const isAuthenticated = useAppStore((state) => state.isAuthenticated);
 
   const {
     data: cart,
     error,
     mutate: refresh,
     isLoading,
-  } = useSWR<Cart, Error>('cart', getCart, {
+  } = useSWR<Cart, Error>(`cart-${isAuthenticated ? 'authenticated' : 'unauthenticated'}`, getCart, {
     onLoadingSlow: () => {
       setIsLongLoading(true);
     },

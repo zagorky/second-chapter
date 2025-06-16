@@ -19,11 +19,28 @@ import { cn } from '~/lib/utilities';
 
 import { useUpdateProfileData } from '../hooks/useUpdateProfileData';
 
+const getAvatarByUserId = (userId: string | undefined): string => {
+  const avatarImages = ['binja.png', 'kura.png', 'popique.png'];
+  const DIVISOR = 10;
+
+  if (!userId || userId.length === 0) return avatarImages[0];
+
+  const lastChar = userId[userId.length - 1];
+  const charCode = (lastChar.codePointAt(0) ?? 0) % DIVISOR;
+
+  const GROUPS_COUNT = 3;
+  const group = (charCode % GROUPS_COUNT) + 1;
+
+  return avatarImages[group - 1];
+};
+
 export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>) {
   const [isEditing, setIsEditing] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
 
   const { profileData, updateProfileData } = useUpdateProfileData();
+
+  const userAvatar = getAvatarByUserId(profileData?.id);
 
   const form = useForm<ProfileDataShema>({
     resolver: zodResolver(profileSchema),
@@ -81,7 +98,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
         <Card>
           <CardContent>
             <div className="mb-10 flex">
-              <ProfileAvatar imageUrl="avatarAccount.jpg" />
+              <ProfileAvatar imageUrl={userAvatar} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 md:gap-15">
               <Form {...form}>

@@ -8,7 +8,7 @@ export const priceElementVariants = cva('text-2xl text-background border-border 
     },
     price: {
       full: 'bg-main',
-      discounted: 'bg-destructive',
+      discounted: 'bg-main',
     },
   },
   defaultVariants: {

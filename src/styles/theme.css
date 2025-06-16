@@ -16,6 +16,7 @@
   --color-chart-5: var(--chart-5);
   --color-sale: var(--sale);
   --color-destructive: var(--destructive);
+  --color-border-foreground: var(--border-foreground);
   --spacing-boxShadowX: 2px;
   --spacing-boxShadowY: 2px;
   --spacing-reverseBoxShadowX: -2px;
@@ -51,6 +52,14 @@
   }
 }
 
+.animate-marquee-dynamic {
+  animation: marquee var(--marquee-duration, 5s) linear infinite;
+}
+
+.animate-marquee2-dynamic {
+  animation: marquee2 var(--marquee-duration, 5s) linear infinite;
+}
+
 :root {
   --background: oklch(95.16% 0.0242 343.23deg);
   --secondary-background: oklch(100% 0 0deg);
@@ -69,6 +78,7 @@
   --chart-active-dot: #000;
   --destructive: oklch(57.7% 0.245 27.325deg);
   --sale: #d32525;
+  --border-foreground: #fff;
 }
 
 .dark {
@@ -88,6 +98,7 @@
   --chart-active-dot: #fff;
   --destructive: oklch(70.4% 0.191 22.216deg);
   --sale: oklch(70.4% 0.191 22.216deg);
+  --border-foreground: #fff;
 }
 
 @layer base {

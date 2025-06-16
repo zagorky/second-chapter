@@ -13,18 +13,52 @@ const MarqueeItems = ({ items }: { items: string[] }) => (
   </>
 );
 
+const SPEED_PIXELS_PER_SECOND = 70;
+
+const setupMarquee = (container: HTMLDivElement, content: HTMLDivElement) => {
+  const updateDuration = () => {
+    const contentWidth = content.scrollWidth;
+    const duration = contentWidth / SPEED_PIXELS_PER_SECOND;
+
+    container.style.setProperty('--marquee-duration', `${String(duration)}s`);
+  };
+
+  updateDuration();
+
+  const resizeObserver = new ResizeObserver(updateDuration);
+
+  resizeObserver.observe(container);
+};
+
 export default function Marquee({ items }: { items: string[] }) {
+  let containerElement: HTMLDivElement | null = null;
+  let contentElement: HTMLDivElement | null = null;
+
+  const setContainer = (element: HTMLDivElement | null) => {
+    containerElement = element;
+    if (containerElement && contentElement) {
+      setupMarquee(containerElement, contentElement);
+    }
+  };
+
+  const setContent = (element: HTMLDivElement | null) => {
+    contentElement = element;
+    if (containerElement && contentElement) {
+      setupMarquee(containerElement, contentElement);
+    }
+  };
+
   return (
-    <div className="relative max-w-full overflow-hidden">
+    <div ref={setContainer} className="relative max-w-full overflow-hidden">
       <div className="border-border bg-secondary-background text-foreground font-base relative flex w-full overflow-x-hidden border-y-2">
-        <div className="animate-marquee flex gap-2 pl-2 whitespace-nowrap">
+        <div ref={setContent} className="animate-marquee-dynamic flex gap-2 pl-2 whitespace-nowrap">
           <MarqueeItems items={items} />
           <MarqueeItems items={items} />
           <MarqueeItems items={items} />
           <MarqueeItems items={items} />
         </div>
 
-        <div className="animate-marquee2 absolute top-0 flex gap-2 pl-2 whitespace-nowrap">
+        <div className="animate-marquee2-dynamic absolute top-0 flex gap-2 pl-2 whitespace-nowrap">
           <MarqueeItems items={items} />
           <MarqueeItems items={items} />
           <MarqueeItems items={items} />

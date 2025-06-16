@@ -33,7 +33,7 @@ export const ProductCartButtons = ({ product, identifier }: ProductCartButtonsPr
   const [isAdding, setIsAdding] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
   const { cart, refresh, getProductInCart } = useCart();
-  const { isInCart, lineItemId } = getProductInCart(product.id);
+  const { isInCart, lineItemId, quantity } = getProductInCart(product.id);
   const navigate = useNavigate();
 
   const handleAddToCart = async () => {
@@ -67,11 +67,7 @@ export const ProductCartButtons = ({ product, identifier }: ProductCartButtonsPr
   };
 
   const handleRemoveFromCart = async () => {
-    if (!cart || isRemoving || !lineItemId) return;
-
-    const { quantity } = getProductInCart(product.id);
-
-    if (!quantity) return;
+    if (!cart || isRemoving || !lineItemId || !quantity) return;
 
     try {
       setIsRemoving(true);
