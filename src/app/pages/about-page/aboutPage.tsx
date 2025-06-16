@@ -125,6 +125,7 @@ const AboutPage = () => {
                       : developerProps.secondDeveloper.developerId
                   );
                 }}
+                isActive={activeDeveloper === developerProps.secondDeveloper.developerId}
               />
               <AnimatePresence mode="wait">
                 {activeDeveloper === developerProps.secondDeveloper.developerId && (
@@ -159,6 +160,7 @@ const AboutPage = () => {
                       : developerProps.thirdDeveloper.developerId
                   );
                 }}
+                isActive={activeDeveloper === developerProps.thirdDeveloper.developerId}
               />
               <AnimatePresence mode="wait">
                 {activeDeveloper === developerProps.thirdDeveloper.developerId && (
@@ -193,6 +195,7 @@ const AboutPage = () => {
                       : developerProps.firstDeveloper.developerId
                   );
                 }}
+                isActive={activeDeveloper === developerProps.firstDeveloper.developerId}
               />
               <AnimatePresence mode="wait">
                 {activeDeveloper === developerProps.firstDeveloper.developerId && (

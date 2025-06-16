@@ -1,4 +1,8 @@
+import { ChevronUp } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+
+import { Button } from '../button/button';
 
 type DeveloperNameType = {
   name: string;
@@ -7,9 +11,18 @@ type DeveloperNameType = {
   bounceUpIndexes: number[];
   bounceDownIndexes: number[];
   onClick: () => void;
+  isActive: boolean;
 };
 
-const DeveloperName = ({ name, img, imgHover, bounceUpIndexes, bounceDownIndexes, onClick }: DeveloperNameType) => {
+const DeveloperName = ({
+  name,
+  img,
+  imgHover,
+  bounceUpIndexes,
+  bounceDownIndexes,
+  onClick,
+  isActive = false,
+}: DeveloperNameType) => {
   const [isHovered, setHovered] = useState(false);
 
   return (
@@ -39,7 +52,6 @@ const DeveloperName = ({ name, img, imgHover, bounceUpIndexes, bounceDownIndexes
             );
           })}
         </div>
-
         <div className="relative flex h-[clamp(150px,15vw,200px)] w-[clamp(150px,15vw,200px)] items-end">
           <img
             src={img}
@@ -51,6 +63,15 @@ const DeveloperName = ({ name, img, imgHover, bounceUpIndexes, bounceDownIndexes
             alt="developer"
             className="absolute ml-7 w-[clamp(100px,7vw,120px)] opacity-0 transition-opacity duration-600 ease-in-out group-hover:opacity-100"
           />
+        </div>
+        <div className="flex h-[clamp(150px,15vw,200px)] items-center">
+          <Button variant={'neutral'}>
+            {isActive ? (
+              <ChevronUp size={48} color="var(--foreground)" />
+            ) : (
+              <ChevronDown size={48} color="var(--foreground)" />
+            )}
+          </Button>
         </div>
       </button>
     </li>

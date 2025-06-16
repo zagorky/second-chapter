@@ -57,7 +57,8 @@ const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey,
         </div>
       </div>
       <CardDescription className="px-5 md:px-10">{description}</CardDescription>
-      <div className="flex justify-center">
+      <div className="text-main flex flex-col items-center justify-center">
+        <span>Feedback on our projects:</span>
         <Carousel className="flex w-[clamp(150px,60vw,800px)] items-center">
           <CarouselPrevious className="bg-secondary-background hover:bg-transparent hover:outline-none" />
           <CarouselContent>
