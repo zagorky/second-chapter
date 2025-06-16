@@ -7,6 +7,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from '~components/ui/navigation-menu/navigationMenu';
+import { CartWidget } from '~features/cart/components/CartWidget';
 import { Link, useLocation } from 'react-router';
 
 type NavMenuProps = NavigationMenuProps & {
@@ -31,6 +32,9 @@ export const NavMenu = ({ onItemClick, ...props }: NavMenuProps) => {
             </NavigationMenuItem>
           );
         })}
+        <NavigationMenuItem>
+          <CartWidget />
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
