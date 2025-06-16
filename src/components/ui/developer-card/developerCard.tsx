@@ -20,24 +20,27 @@ type DeveloperCardType = {
   githubLink: string;
 };
 
-type FeedbackKey = keyof typeof feedbackMessages;
+type FeedbackKey = keyof typeof feedback;
 
-const feedbackArrayImgs = ['reviewer-1.svg', 'reviewer-2.svg', 'reviewer-3.svg', 'reviewer-4.svg'];
+const feedbackArrayImgs = ['reviewer-1.svg', 'reviewer-2.svg', 'reviewer-3.svg'];
 
-const feedbackMessages = {
+const feedback = {
   firstDeveloper: [
-    'Good students don’t code like that.',
-    'Do you work at Google? Your icon here is misaligned.',
-    'In my opinion, the work is incorrect because there is no HTML code at all.',
+    { message: 'Good students don’t code like that.', author: 'Reviewer 1' },
+    { message: 'Do you work at Google? Your icon here is misaligned.', author: 'Reviewer 2' },
+    { message: 'In my opinion, the work is incorrect because there is no HTML code at all.', author: 'Reviewer 3' },
   ],
   secondDeveloper: [
-    '70% of your code was actually written by your mentor.',
-    "It used to be called bad practice — now it's just called custom.",
+    { message: '70% of your code was actually written by your mentor.', author: 'Reviewer 1' },
+    { message: "It used to be called bad practice — now it's just called custom.", author: 'Sasarik' },
   ],
   thirdDeveloper: [
-    'Good students don’t code like that.',
-    'Do you work at Google? Your icon here is misaligned.',
-    'In my opinion, the work is incorrect because there is no HTML code at all.',
+    {
+      message:
+        'I could put up with her being at the computer all the time now — if only she at least did something high-quality.',
+      author: 'Andrey, Nastya’s husband',
+    },
+    { message: '-50 points. Good luck with your future studies', author: 'Reviewer 1' },
   ],
 };
 
@@ -58,13 +61,16 @@ const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey,
         <Carousel className="flex w-[clamp(150px,60vw,800px)] items-center">
           <CarouselPrevious className="bg-secondary-background hover:bg-transparent hover:outline-none" />
           <CarouselContent>
-            {feedbackMessages[feedbackKey].map((_, index) => (
+            {feedback[feedbackKey].map((_, index) => (
               <CarouselItem className="bg-secondary-background" key={`dev-${index.toString()}`}>
                 <div className="p-[10px]">
                   <Card className="bg-secondary-background text-main-foreground p-0 shadow-none">
                     <CardContent className="flex flex-col items-center justify-center gap-5 p-4">
-                      <AvatarImage imageUrl={feedbackArrayImgs[randomIndex(feedbackArrayImgs)]} />
-                      <span className="font-base text-foreground text-sm">{feedbackMessages[feedbackKey][index]}</span>
+                      <div className="flex flex-col items-center font-bold">
+                        <AvatarImage imageUrl={feedbackArrayImgs[randomIndex(feedbackArrayImgs)]} />
+                        <span>{feedback[feedbackKey][index].author}</span>
+                      </div>
+                      <span className="font-base text-foreground text-sm">{feedback[feedbackKey][index].message}</span>
                     </CardContent>
                   </Card>
                 </div>

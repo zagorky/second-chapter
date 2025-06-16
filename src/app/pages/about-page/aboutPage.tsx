@@ -55,11 +55,9 @@ const AboutPage = () => {
       developerFullName: 'Daria Melnikova',
       developerId: 'secondDeveloper',
       developerPosition: 'Frontend Developer / Teamlead',
-      developerDesription: `Before joining the school, I wasn't very confident in my coding skills, but my passion for writing clean,
-       elegant code kept me motivated. Styling and visual design aren't my favorite parts — I prefer focusing on the structure and
-       quality of the code itself. Sometimes, I rewrote assignments from scratch multiple times just to make sure the code was as
-       clear and well-organized as possible. To future developers, I'd say: focus on writing clean and well-structured code — it
-       makes all the difference.`,
+      developerDesription: `Hi, Im the dev who ships code then immediately hates it. It works... but what if I rewrite it just one more time?
+      Design? Please. My UI looks like a pink potato. My imposter syndrome says Im a fraud, my ide says Im a mess, and my commit history says 'refactor:
+      fix typo' 47 times.`,
       developerGithubLink: 'https://github.com/zagorky',
       developerGithubImg: 'https://avatars.githubusercontent.com/u/156232667?v=4',
     },
@@ -68,10 +66,9 @@ const AboutPage = () => {
       developerFullName: 'Anastasiia Nikonova',
       developerId: 'thirdDeveloper',
       developerPosition: 'Frontend Developer',
-      developerDesription: `I've never been the kind of developer who's okay with just making things work — I always want to understand
-       how and why they work. I love digging into documentation, exploring new features, and making sure every detail is thought through.
-       Even linters feel like a fun challenge rather than a chore. I'd rather spend extra time finding the right solution than use a quick
-       fix or hacky workaround. For me, clean and reliable code isn't a luxury — it's the standard.`,
+      developerDesription: `A year ago I was choosing between studying frontend or starting a TikTok for my cat. At that moment
+      I came across RS School, and that’s how a year went by. I really like the style of teaching at the school, the challenging
+      assignments, and the community. But cat's TikTok still an option.`,
       developerGithubLink: 'https://github.com/anastanei',
       developerGithubImg: 'https://avatars.githubusercontent.com/u/9627974?v=4',
     },
