@@ -6,6 +6,7 @@ import { fetchProfileData } from '../utils/fetchProfileData';
 import { updateProfile } from '../utils/updateProfileData';
 
 type ProfileData = {
+  id?: string;
   firstName?: string;
   lastName?: string;
   email: string;
