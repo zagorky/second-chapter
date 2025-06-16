@@ -15,3 +15,11 @@ export const ProfileAvatar = ({ imageUrl }: ProfileAvatarProps) => {
     </figure>
   );
 };
+
+export const AvatarImage = ({ imageUrl }: ProfileAvatarProps) => {
+  return (
+    <figure className={`border-border aspect-square w-[80px] overflow-hidden rounded-full border-2 text-center`}>
+      <img className="h-full w-full object-cover" src={imageUrl} alt="Avatar" />
+    </figure>
+  );
+};
