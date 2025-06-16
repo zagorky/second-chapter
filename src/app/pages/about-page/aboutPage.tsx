@@ -125,10 +125,12 @@ const AboutPage = () => {
                 {activeDeveloper === developerProps.secondDeveloper.developerId && (
                   <motion.div
                     key={developerProps.secondDeveloper.developerId}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{ y: 20 }}
+                    animate={{ y: 0 }}
+                    exit={{ y: 20 }}
+                    transition={{
+                      duration: 0.3,
+                    }}
                   >
                     <DeveloperCard
                       fullName={developerProps.secondDeveloper.developerFullName}
@@ -160,10 +162,12 @@ const AboutPage = () => {
                 {activeDeveloper === developerProps.thirdDeveloper.developerId && (
                   <motion.div
                     key={developerProps.thirdDeveloper.developerId}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{ y: 20 }}
+                    animate={{ y: 0 }}
+                    exit={{ y: 20 }}
+                    transition={{
+                      duration: 0.3,
+                    }}
                   >
                     <DeveloperCard
                       fullName={developerProps.thirdDeveloper.developerFullName}
@@ -195,10 +199,12 @@ const AboutPage = () => {
                 {activeDeveloper === developerProps.firstDeveloper.developerId && (
                   <motion.div
                     key={developerProps.firstDeveloper.developerId}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{ y: 20 }}
+                    animate={{ y: 0 }}
+                    exit={{ y: 20 }}
+                    transition={{
+                      duration: 0.3,
+                    }}
                   >
                     <DeveloperCard
                       fullName={developerProps.firstDeveloper.developerFullName}
