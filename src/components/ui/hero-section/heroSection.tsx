@@ -29,7 +29,7 @@ export const HeroSection = () => {
   const displayWords = categoryNames.length > 0 ? categoryNames : ['Store', 'Shop', 'Market', 'Library'];
 
   return (
-    <section className="relative flex flex-col-reverse bg-contain bg-right bg-no-repeat p-6 text-left lg:grid lg:grid-cols-[2fr_1fr]">
+    <section className="relative flex flex-col-reverse gap-1 bg-contain bg-right bg-no-repeat px-6 text-left lg:grid lg:grid-cols-[2fr_1fr]">
       <div className="space-y-6">
         <div className="text-left">
           <h1
@@ -47,13 +47,13 @@ export const HeroSection = () => {
           Shop Now
         </Button>
       </div>
-      <div className="relative flex max-w-[300px] flex-col items-end">
+      <div className="relative flex max-w-[200px] flex-col items-end pt-[50px] sm:max-w-[300px] sm:pt-[100px]">
         <Star17
           size={100}
           color="var(--color-chart-1"
           stroke="var(--color-border)"
           strokeWidth={2}
-          className="relative animate-[spin_10s_linear_infinite]"
+          className="absolute top-0 right-0 w-[50px] animate-[spin_10s_linear_infinite] sm:w-[100px]"
         />
         <img src="/hero-team.png" alt="Hero Section" className="" />
       </div>
