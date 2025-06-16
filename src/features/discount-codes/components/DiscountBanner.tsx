@@ -65,7 +65,7 @@ export const DiscountBanner = ({ discount }: DiscountBannerProps) => {
           <img
             src={discount.image.src}
             alt={discount.title}
-            className="absolute right-[2px] bottom-[2px] w-40"
+            className="absolute right-[2px] bottom-[2px] w-30 sm:w-40"
             width={discount.image.width}
             height={discount.image.height}
           />

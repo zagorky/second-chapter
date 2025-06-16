@@ -30,7 +30,7 @@ export const DiscountCarousel = ({ discounts, autoplay = true, className }: Disc
       }}
     >
       <div className="flex flex-grow items-center justify-center gap-6 px-2">
-        <CarouselPrevious />
+        <CarouselPrevious className="hidden sm:block" />
         <CarouselContent className="w-full">
           {discounts.map((discount) => (
             <CarouselItem key={discount.id} className="basis-full">
@@ -40,7 +40,7 @@ export const DiscountCarousel = ({ discounts, autoplay = true, className }: Disc
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselNext />
+        <CarouselNext className="hidden sm:block" />
       </div>
       <CarouselDots />
     </Carousel>
