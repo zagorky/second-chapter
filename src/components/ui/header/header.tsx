@@ -3,6 +3,7 @@ import { ModeToggle } from '~components/ui/modeToggle';
 import { NavigationSheet } from '~components/ui/navbar/navigationSheet';
 import { NavMenu } from '~components/ui/navbar/navMenu';
 import { navigationRoutes } from '~config/navigation';
+import { CartCounter } from '~features/cart/components/CartCounter';
 import { LogoutButton } from '~features/logout/components/logoutButton';
 import { useAuth } from '~features/sign-in/hooks/useAuth';
 import { LogIn, UserPlus } from 'lucide-react';
@@ -28,6 +29,7 @@ export const Header = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <CartCounter />
           {isAuthenticated ? (
             <>
               <LogoutButton />
@@ -49,7 +51,9 @@ export const Header = () => {
               </Button>
             </>
           )}
-          <ModeToggle />
+          <div className="hidden md:flex">
+            <ModeToggle />
+          </div>
           <div className="md:hidden">
             <NavigationSheet />
           </div>

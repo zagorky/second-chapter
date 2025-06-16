@@ -121,3 +121,7 @@
 .group-hover-underline {
   @apply group-hover:after:border-b-main relative duration-300 after:absolute after:bottom-[-2px] after:left-1/2 after:h-[0] after:border-dotted after:transition-all after:duration-300 after:ease-in-out after:content-[''] group-hover:after:right-0 group-hover:after:left-0 group-hover:after:border-b-2 hover:after:-right-2 hover:after:-left-2;
 }
+
+.nav-item-active {
+  @apply rounded-base border-border bg-main text-main-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 relative h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden border-2 md:w-[var(--radix-navigation-menu-viewport-width)];
+}
