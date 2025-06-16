@@ -1,57 +1,84 @@
-import { useState } from 'react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '~/components/carousel/carousel';
+import { AvatarImage } from '~/components/ui/avatarImage/imageAvatar';
+import { Card, CardContent, CardDescription, CardTitle } from '~/components/ui/card';
+import { randomIndex } from '~/utils/helpers';
+
+import { Button } from '../button/button';
 
 type DeveloperCardType = {
-  name: string;
-  img: string;
-  imgHover: string;
-  bounceUpIndexes: number[];
-  bounceDownIndexes: number[];
+  fullName: string;
+  position: string;
+  imageUrl: string;
+  description: string;
+  feedbackKey: FeedbackKey;
+  githubLink: string;
 };
 
-const DeveloperCard = ({ name, img, imgHover, bounceUpIndexes, bounceDownIndexes }: DeveloperCardType) => {
-  const [isHovered, setHovered] = useState(false);
+type FeedbackKey = keyof typeof feedbackMessages;
 
+const feedbackArrayImgs = ['reviewer-1.svg', 'reviewer-2.svg', 'reviewer-3.svg', 'reviewer-4.svg'];
+
+const feedbackMessages = {
+  firstDeveloper: [
+    'Good students don’t code like that.',
+    'Do you work at Google? Your icon here is misaligned.',
+    'In my opinion, the work is incorrect because there is no HTML code at all.',
+  ],
+  secondDeveloper: [
+    'Good students don’t code like that.',
+    'Do you work at Google? Your icon here is misaligned.',
+    'In my opinion, the work is incorrect because there is no HTML code at all.',
+  ],
+  thirdDeveloper: [
+    'Good students don’t code like that.',
+    'Do you work at Google? Your icon here is misaligned.',
+    'In my opinion, the work is incorrect because there is no HTML code at all.',
+  ],
+};
+
+const GITHUB_BUTTON_MSG = 'Visit Github';
+
+const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey, githubLink }: DeveloperCardType) => {
   return (
-    <li
-      className="group flex cursor-pointer items-end"
-      onMouseEnter={() => {
-        setHovered(true);
-      }}
-      onMouseLeave={() => {
-        setHovered(false);
-      }}
-    >
-      <div className="flex">
-        {[...name].map((letter, index) => {
-          let className = 'about-developer-name';
-
-          if (bounceUpIndexes.includes(index)) {
-            className += isHovered ? ' bounce-up' : ' bounce-up-reset';
-          } else if (bounceDownIndexes.includes(index)) {
-            className += isHovered ? ' bounce-down' : ' bounce-down-reset';
-          }
-
-          return (
-            <span key={index} className={className}>
-              {letter}
-            </span>
-          );
-        })}
+    <Card className="bg-secondary-background w-[clamp(280px,60vw,800px)] px-10">
+      <div className="flex items-center justify-center gap-5">
+        <AvatarImage imageUrl={imageUrl} />
+        <div>
+          <CardTitle>{fullName}</CardTitle>
+          <CardDescription>{position}</CardDescription>
+        </div>
       </div>
-
-      <div className="relative flex h-40 w-40 items-end">
-        <img
-          src={img}
-          alt="developer"
-          className="absolute h-full w-full opacity-100 transition-opacity duration-600 ease-in-out group-hover:opacity-0"
-        />
-        <img
-          src={imgHover}
-          alt="developer"
-          className="absolute ml-7 w-25 opacity-0 transition-opacity duration-600 ease-in-out group-hover:opacity-100"
-        />
+      <CardDescription className="px-5 md:px-10">{description}</CardDescription>
+      <div className="flex justify-center">
+        <Carousel className="flex w-full items-center">
+          <CarouselPrevious className="bg-secondary-background hover:bg-transparent hover:outline-none" />
+          <CarouselContent>
+            {feedbackMessages[feedbackKey].map((_, index) => (
+              <CarouselItem className="bg-secondary-background" key={`dev-${index.toString()}`}>
+                <div className="p-[10px]">
+                  <Card className="bg-secondary-background text-main-foreground p-0 shadow-none">
+                    <CardContent className="flex flex-col items-center justify-center gap-5 p-4">
+                      <AvatarImage imageUrl={feedbackArrayImgs[randomIndex(feedbackArrayImgs)]} />
+                      <span className="font-base text-sm">{feedbackMessages[feedbackKey][index]}</span>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselNext className="bg-secondary-background hover:bg-transparent hover:outline-none" />
+        </Carousel>
       </div>
-    </li>
+      <a href={githubLink} target="_blank" rel="noopener noreferrer">
+        <Button variant={'neutral'}>{GITHUB_BUTTON_MSG}</Button>
+      </a>
+    </Card>
   );
 };
 

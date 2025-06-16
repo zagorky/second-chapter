@@ -13,3 +13,7 @@ export const withDataTestId = (testID: string) => {
 export const isString = (value: unknown): value is string => {
   return typeof value === 'string';
 };
+
+export const randomIndex = (array: unknown[]): number => {
+  return Math.floor(Math.random() * array.length);
+};

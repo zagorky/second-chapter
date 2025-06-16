@@ -3,85 +3,29 @@
 }
 
 .about-developer-name {
-  @apply text-main-foreground text-7xl max-[450px]:text-5xl sm:text-9xl;
+  @apply text-main-foreground;
 }
 
-@keyframes bounce-up {
-  0% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10%);
-  }
-
-  70% {
-    transform: translateY(-2%);
-  }
-
-  90% {
-    transform: translateY(-5%);
-  }
-
-  100% {
-    transform: translateY(-10%);
-  }
+.vertical-header {
+  font-size: clamp(2rem, 5vw, 3rem);
 }
 
-@keyframes bounce-up-reset {
-  0% {
-    transform: translateY(-10%);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
+.typeography-clamp-sm {
+  font-size: clamp(1.5rem, 8vw, 8rem);
 }
 
-.bounce-up {
-  animation: bounce-up 0.6s ease-in-out forwards;
+.typeography-clamp {
+  font-size: clamp(0.7rem, 2vw, 2rem);
 }
 
-.bounce-up-reset {
-  animation: bounce-up-reset 0.6s ease-in-out forwards;
+.typeography-clamp-header {
+  font-size: clamp(1rem, 2vw, 2rem);
 }
 
-@keyframes bounce-down {
-  0% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(10%);
-  }
-
-  70% {
-    transform: translateY(2%);
-  }
-
-  90% {
-    transform: translateY(5%);
-  }
-
-  100% {
-    transform: translateY(10%);
-  }
+.p-clamp {
+  font-size: clamp(1rem, 1.5vw, 2rem);
 }
 
-@keyframes bounce-down-reset {
-  0% {
-    transform: translateY(10%);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.bounce-down {
-  animation: bounce-down 0.6s ease-in-out forwards;
-}
-
-.bounce-down-reset {
-  animation: bounce-down-reset 0.6s ease-in-out forwards;
+.vertical-header-size {
+  font-size: clamp(2rem, 20vw, 10rem);
 }
