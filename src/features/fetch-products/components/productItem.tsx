@@ -39,6 +39,8 @@ export const ProductItem = ({ product }: ProductItemProps) => {
         <ImgElement
           imageUrl={product.masterVariant.images?.[0]?.url ?? ''}
           alt={identifier}
+          width={product.masterVariant.images?.[0]?.dimensions.w ?? 0}
+          height={product.masterVariant.images?.[0]?.dimensions.h ?? 0}
           aspectRatio="aspect-square"
         ></ImgElement>
         <CardContent className="flex grow flex-col justify-between gap-3 p-2.5">
