@@ -115,40 +115,6 @@ const AboutPage = () => {
           </div>
           <ul className="flex flex-col items-center">
             <DeveloperName
-              name={developerProps.firstDeveloper.developerName}
-              img={firstDeveloperImgSource}
-              imgHover={firstDeveloperImgSourceHover}
-              bounceUpIndexes={[ZERO_LETTER_INDEX, SECOND_LETTER_INDEX]}
-              bounceDownIndexes={[FOUR_LETTER_INDEX, EIGHTH_LETTER_INDEX]}
-              onClick={() => {
-                setActiveDeveloper((previous) =>
-                  previous === developerProps.firstDeveloper.developerId
-                    ? null
-                    : developerProps.firstDeveloper.developerId
-                );
-              }}
-            />
-            <AnimatePresence mode="wait">
-              {activeDeveloper === developerProps.firstDeveloper.developerId && (
-                <motion.div
-                  key={developerProps.firstDeveloper.developerId}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <DeveloperCard
-                    fullName={developerProps.firstDeveloper.developerFullName}
-                    position={developerProps.firstDeveloper.developerPosition}
-                    imageUrl={developerProps.firstDeveloper.developerGithubImg}
-                    description={developerProps.firstDeveloper.developerDesription}
-                    feedbackKey={developerProps.firstDeveloper.developerId}
-                    githubLink={developerProps.firstDeveloper.developerGithubLink}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-            <DeveloperName
               name={developerProps.secondDeveloper.developerName}
               img={secondDeveloperImgSource}
               imgHover={secondDeveloperImgSourceHover}
@@ -212,6 +178,40 @@ const AboutPage = () => {
                     description={developerProps.thirdDeveloper.developerDesription}
                     feedbackKey={developerProps.thirdDeveloper.developerId}
                     githubLink={developerProps.thirdDeveloper.developerGithubLink}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <DeveloperName
+              name={developerProps.firstDeveloper.developerName}
+              img={firstDeveloperImgSource}
+              imgHover={firstDeveloperImgSourceHover}
+              bounceUpIndexes={[ZERO_LETTER_INDEX, SECOND_LETTER_INDEX]}
+              bounceDownIndexes={[FOUR_LETTER_INDEX, EIGHTH_LETTER_INDEX]}
+              onClick={() => {
+                setActiveDeveloper((previous) =>
+                  previous === developerProps.firstDeveloper.developerId
+                    ? null
+                    : developerProps.firstDeveloper.developerId
+                );
+              }}
+            />
+            <AnimatePresence mode="wait">
+              {activeDeveloper === developerProps.firstDeveloper.developerId && (
+                <motion.div
+                  key={developerProps.firstDeveloper.developerId}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <DeveloperCard
+                    fullName={developerProps.firstDeveloper.developerFullName}
+                    position={developerProps.firstDeveloper.developerPosition}
+                    imageUrl={developerProps.firstDeveloper.developerGithubImg}
+                    description={developerProps.firstDeveloper.developerDesription}
+                    feedbackKey={developerProps.firstDeveloper.developerId}
+                    githubLink={developerProps.firstDeveloper.developerGithubLink}
                   />
                 </motion.div>
               )}
