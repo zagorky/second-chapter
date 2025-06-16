@@ -49,7 +49,7 @@ const GITHUB_BUTTON_MSG = 'Visit Github';
 
 const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey, githubLink }: DeveloperCardType) => {
   return (
-    <Card className="bg-secondary-background w-full px-10">
+    <Card className="bg-secondary-background w-full items-center px-10">
       <div className="flex items-center justify-center gap-5">
         <AvatarImage imageUrl={imageUrl} />
         <div>
@@ -57,7 +57,7 @@ const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey,
           <CardDescription>{position}</CardDescription>
         </div>
       </div>
-      <CardDescription className="px-5 md:px-10">{description}</CardDescription>
+      <CardDescription className="max-w-[600px] px-5 md:px-10">{description}</CardDescription>
       <div className={`text-main flex flex-col items-center justify-center`}>
         <span>Feedback on our projects:</span>
         <Carousel className="flex w-[clamp(150px,60vw,800px)] items-center">
@@ -72,7 +72,9 @@ const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey,
                         <AvatarImage imageUrl={feedbackArrayImgs[randomIndex(feedbackArrayImgs)]} />
                         <span className="font-base text-foreground text-sm">{feedback[feedbackKey][index].author}</span>
                       </div>
-                      <span className="font-base text-foreground text-sm">{feedback[feedbackKey][index].message}</span>
+                      <span className="font-base text-foreground text-sm italic">
+                        {feedback[feedbackKey][index].message}
+                      </span>
                     </CardContent>
                   </Card>
                 </div>
