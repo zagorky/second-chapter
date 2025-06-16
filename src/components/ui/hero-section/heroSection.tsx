@@ -29,7 +29,7 @@ export const HeroSection = () => {
   const displayWords = categoryNames.length > 0 ? categoryNames : ['Store', 'Shop', 'Market', 'Library'];
 
   return (
-    <section className="relative flex flex-col-reverse gap-1 bg-contain bg-right bg-no-repeat px-6 text-left lg:grid lg:grid-cols-[2fr_1fr]">
+    <section className="relative flex flex-col-reverse gap-1 bg-contain bg-right bg-no-repeat px-6 text-left lg:grid lg:grid-cols-[2fr_1fr] lg:py-6">
       <div className="space-y-6">
         <div className="text-left">
           <h1
