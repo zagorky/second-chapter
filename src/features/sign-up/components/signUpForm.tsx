@@ -108,15 +108,19 @@ export function SignUpForm({ className, ...props }: React.ComponentProps<'div'>)
 
   const isShippingIsDefaultBilling = form.watch('shippingIsDefaultBilling');
 
+  const watchStreetShipping = form.watch('streetShipping');
+  const watchCityShipping = form.watch('cityShipping');
+  const watchPostalCodeShipping = form.watch('postalCodeShipping');
+
   React.useEffect(() => {
     if (isShippingIsDefaultBilling) {
-      form.setValue('streetBilling', form.getValues().streetShipping);
-      form.setValue('cityBilling', form.getValues().cityShipping);
-      form.setValue('postalCodeBilling', form.getValues().postalCodeShipping);
+      form.setValue('streetBilling', watchStreetShipping);
+      form.setValue('cityBilling', watchCityShipping);
+      form.setValue('postalCodeBilling', watchPostalCodeShipping);
       form.setValue('countryBilling', 'GB');
       void form.trigger();
     }
-  }, [isShippingIsDefaultBilling, form]);
+  }, [isShippingIsDefaultBilling, watchStreetShipping, watchCityShipping, watchPostalCodeShipping, form]);
 
   return (
     <div className={cn('flex w-[calc(100%-32px)] max-w-full flex-col gap-6', className)} {...props}>
