@@ -1,15 +1,29 @@
 import { SheetClose } from '~components/ui/sheet';
 import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '~/components/ui/button/button';
 import { Sheet, SheetContent, SheetTrigger } from '~/components/ui/sheet';
 
-import { DialogTitle, DialogDescription } from '../dialog/dialog';
+import { DialogDescription, DialogTitle } from '../dialog/dialog';
 import { NavMenu } from './navMenu';
 
 export const NavigationSheet = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isOpen]);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
