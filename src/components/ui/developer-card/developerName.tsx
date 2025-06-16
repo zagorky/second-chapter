@@ -34,7 +34,17 @@ const DeveloperName = ({
         setHovered(false);
       }}
     >
-      <button className="group flex cursor-pointer items-end" type="button" onClick={onClick}>
+      <div
+        className="group flex cursor-pointer items-end"
+        role="button"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            onClick();
+          }
+        }}
+      >
         <div className="flex">
           {[...name].map((letter, index) => {
             let className = 'about-developer-name typeography-clamp-sm';
@@ -65,15 +75,9 @@ const DeveloperName = ({
           />
         </div>
         <div className="flex h-[clamp(150px,15vw,200px)] items-center">
-          <Button variant={'neutral'}>
-            {isActive ? (
-              <ChevronUp size={48} color="var(--foreground)" />
-            ) : (
-              <ChevronDown size={48} color="var(--foreground)" />
-            )}
-          </Button>
+          <Button variant={'neutral'}>{isActive ? <ChevronUp /> : <ChevronDown />}</Button>
         </div>
-      </button>
+      </div>
     </li>
   );
 };

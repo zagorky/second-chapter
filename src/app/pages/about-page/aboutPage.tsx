@@ -85,25 +85,19 @@ const AboutPage = () => {
             <div className="vertical-header">
               <span>About Us</span>
             </div>
-            <Card className="flex flex-col items-center px-5">
+            <Card className="flex flex-col items-center px-5 text-left">
               <CardDescription className="text-base md:text-lg">
-                Every book has its first chapter, but the real magic begins with the second. At Second Chapter, we
-                believe that great stories deserve more than just one reader — they deserve to be shared, rediscovered,
-                and loved all over again.
+                Every book begins with a first chapter — but the real magic starts with the second. At Second Chapter,
+                we believe great stories deserve to be shared, rediscovered, and loved again.
               </CardDescription>
               <CardDescription className="text-base md:text-lg">
-                We collect books with a past and give them a future, carefully curating each one so it can find a new
-                home. Every worn cover and dog-eared page holds a story within a story — not only the one written by the
-                author, but also the silent journey it’s taken through hands and hearts.
+                We give pre-loved books a new life, curating each one to find its next home. Every worn cover and folded
+                page holds two stories — the one inside, and the one it’s lived through.
               </CardDescription>
               <CardDescription className="text-base md:text-lg">
-                Our team puts love and care into every part of the process — from choosing books to creating a cozy
-                space where readers can explore and enjoy. We work so that you can feel the joy of finding something
-                special — a story that feels like it was waiting just for you.
-              </CardDescription>
-              <CardDescription className="text-base md:text-lg">
-                Because at Second Chapter, it’s not just about books — it’s about the people who read them, the memories
-                they carry, and the new beginnings they inspire.
+                With care and heart, we create a cozy space where readers can find stories that feel like they were
+                meant for them. Because Second Chapter is not just about books — it’s about people, memories, and new
+                beginnings.
               </CardDescription>
             </Card>
           </div>
