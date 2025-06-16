@@ -251,7 +251,7 @@ const AboutPage = () => {
                 , for the knowledge, for the friendships, and for the atmosphere that makes you want to learn, improve,
                 and move forward. 💛
               </CardDescription>
-              <a href="https://rs.school/" target="_blank" rel="noopener noreferrer">
+              <a href="https://rs.school/" target="_blank" rel="noopener noreferrer" className="flex justify-center">
                 <Button variant={'default'}>
                   <span>Visit</span>
 
