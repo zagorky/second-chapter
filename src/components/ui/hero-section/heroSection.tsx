@@ -44,7 +44,7 @@ export const HeroSection = () => {
 
         <p className="block max-w-60 text-left text-2xl">Old books, fresh&nbsp;experience</p>
         <Button className="mr-auto" size="lg" onClick={() => void navigate(navigationRoutes.catalog.path)}>
-          Shop Now
+          Start exploring
         </Button>
       </div>
       <div className="relative flex max-w-[200px] flex-col items-end pt-[50px] sm:max-w-[300px] sm:pt-[100px]">
