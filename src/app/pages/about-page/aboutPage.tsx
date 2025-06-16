@@ -16,6 +16,7 @@ type DeveloperInfo = {
   developerDesription: string;
   developerGithubLink: string;
   developerGithubImg: string;
+  accentColor: string;
 };
 
 type DeveloperProps = Record<DeveloperId, DeveloperInfo>;
@@ -49,6 +50,7 @@ const AboutPage = () => {
        but discipline makes the magic real.`,
       developerGithubLink: 'https://github.com/savryna',
       developerGithubImg: 'https://avatars.githubusercontent.com/u/123760669?v=4',
+      accentColor: 'chart-2',
     },
     secondDeveloper: {
       developerName: 'Daria',
@@ -60,6 +62,7 @@ const AboutPage = () => {
       fix typo' 47 times.`,
       developerGithubLink: 'https://github.com/zagorky',
       developerGithubImg: 'https://avatars.githubusercontent.com/u/156232667?v=4',
+      accentColor: 'chart-3',
     },
     thirdDeveloper: {
       developerName: 'Anastasia',
@@ -71,6 +74,7 @@ const AboutPage = () => {
       assignments, and the community. But cat's TikTok still an option.`,
       developerGithubLink: 'https://github.com/anastanei',
       developerGithubImg: 'https://avatars.githubusercontent.com/u/9627974?v=4',
+      accentColor: 'main',
     },
   };
 
@@ -87,8 +91,9 @@ const AboutPage = () => {
             </div>
             <Card className="flex flex-col items-center px-5 text-left">
               <CardDescription className="text-base md:text-lg">
-                Every book begins with a first chapter — but the real magic starts with the second. At Second Chapter,
-                we believe great stories deserve to be shared, rediscovered, and loved again.
+                Every book begins with a first chapter — but the real magic starts with the second. At{' '}
+                <span className="text-main text-base font-extrabold sm:text-2xl">Second Chapter</span>, we believe great
+                stories deserve to be shared, rediscovered, and loved again.
               </CardDescription>
               <CardDescription className="text-base md:text-lg">
                 We give pre-loved books a new life, curating each one to find its next home. Every worn cover and folded
@@ -96,8 +101,9 @@ const AboutPage = () => {
               </CardDescription>
               <CardDescription className="text-base md:text-lg">
                 With care and heart, we create a cozy space where readers can find stories that feel like they were
-                meant for them. Because Second Chapter is not just about books — it’s about people, memories, and new
-                beginnings.
+                meant for them. Because{' '}
+                <span className="text-main text-base font-extrabold sm:text-2xl">Second Chapter</span> is not just about
+                books — it’s about people, memories, and new beginnings.
               </CardDescription>
             </Card>
           </div>
@@ -139,6 +145,7 @@ const AboutPage = () => {
                       description={developerProps.secondDeveloper.developerDesription}
                       feedbackKey={developerProps.secondDeveloper.developerId}
                       githubLink={developerProps.secondDeveloper.developerGithubLink}
+                      accentColor={developerProps.secondDeveloper.accentColor}
                     />
                   </motion.div>
                 )}
@@ -176,6 +183,7 @@ const AboutPage = () => {
                       description={developerProps.thirdDeveloper.developerDesription}
                       feedbackKey={developerProps.thirdDeveloper.developerId}
                       githubLink={developerProps.thirdDeveloper.developerGithubLink}
+                      accentColor={developerProps.thirdDeveloper.accentColor}
                     />
                   </motion.div>
                 )}
@@ -213,6 +221,7 @@ const AboutPage = () => {
                       description={developerProps.firstDeveloper.developerDesription}
                       feedbackKey={developerProps.firstDeveloper.developerId}
                       githubLink={developerProps.firstDeveloper.developerGithubLink}
+                      accentColor={developerProps.firstDeveloper.accentColor}
                     />
                   </motion.div>
                 )}
@@ -231,7 +240,7 @@ const AboutPage = () => {
                   href="https://rs.school/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-main underline transition"
+                  className="hover:text-chart-1 text-base font-extrabold underline transition sm:text-2xl"
                 >
                   RSSchool
                 </a>
@@ -250,7 +259,7 @@ const AboutPage = () => {
                   href="https://rs.school/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-main underline transition"
+                  className="hover:text-chart-1 text-base font-extrabold underline transition sm:text-2xl"
                 >
                   RSSchool
                 </a>

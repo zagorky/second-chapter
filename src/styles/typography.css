@@ -9,7 +9,7 @@
 .vertical-header {
   @apply text-foreground;
 
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2rem, 5vw, 2rem);
   writing-mode: vertical-lr;
   rotate: 180deg;
   display: flex;

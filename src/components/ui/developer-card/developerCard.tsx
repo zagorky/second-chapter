@@ -18,6 +18,7 @@ type DeveloperCardType = {
   description: string;
   feedbackKey: FeedbackKey;
   githubLink: string;
+  accentColor: string;
 };
 
 type FeedbackKey = keyof typeof feedback;
@@ -57,15 +58,15 @@ const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey,
         </div>
       </div>
       <CardDescription className="px-5 md:px-10">{description}</CardDescription>
-      <div className="text-main flex flex-col items-center justify-center">
+      <div className={`text-main flex flex-col items-center justify-center`}>
         <span>Feedback on our projects:</span>
         <Carousel className="flex w-[clamp(150px,60vw,800px)] items-center">
-          <CarouselPrevious className="bg-secondary-background hover:bg-transparent hover:outline-none" />
+          <CarouselPrevious className={`bg-transparent hover:outline-none`} />
           <CarouselContent>
             {feedback[feedbackKey].map((_, index) => (
               <CarouselItem className="bg-secondary-background" key={`dev-${index.toString()}`}>
                 <div className="p-[10px]">
-                  <Card className="bg-secondary-background text-main-foreground p-0 shadow-none">
+                  <Card className="bg-secondaty-foreground text-main-foreground p-0 shadow-none">
                     <CardContent className="flex flex-col items-center justify-center gap-5 p-4">
                       <div className="flex flex-col items-center font-bold">
                         <AvatarImage imageUrl={feedbackArrayImgs[randomIndex(feedbackArrayImgs)]} />
@@ -78,11 +79,13 @@ const DeveloperCard = ({ fullName, position, imageUrl, description, feedbackKey,
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselNext className="bg-secondary-background hover:bg-transparent hover:outline-none" />
+          <CarouselNext className={`bg-transparent hover:outline-none`} />
         </Carousel>
       </div>
       <a href={githubLink} target="_blank" rel="noopener noreferrer">
-        <Button variant={'neutral'}>{GITHUB_BUTTON_MSG}</Button>
+        <Button variant={'neutral'} className={`bg-main`}>
+          {GITHUB_BUTTON_MSG}
+        </Button>
       </a>
     </Card>
   );

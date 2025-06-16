@@ -75,7 +75,7 @@ const DeveloperName = ({
           />
         </div>
         <div className="flex h-[clamp(150px,15vw,200px)] items-center">
-          <Button variant={'neutral'}>{isActive ? <ChevronUp /> : <ChevronDown />}</Button>
+          <Button variant={'default'}>{isActive ? <ChevronUp /> : <ChevronDown />}</Button>
         </div>
       </div>
     </li>
