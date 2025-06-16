@@ -31,9 +31,8 @@ const feedbackMessages = {
     'In my opinion, the work is incorrect because there is no HTML code at all.',
   ],
   secondDeveloper: [
-    'Good students don’t code like that.',
-    'Do you work at Google? Your icon here is misaligned.',
-    'In my opinion, the work is incorrect because there is no HTML code at all.',
+    '70% of your code was actually written by your mentor.',
+    "It used to be called bad practice — now it's just called custom.",
   ],
   thirdDeveloper: [
     'Good students don’t code like that.',
