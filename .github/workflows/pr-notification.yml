@@ -1,7 +1,7 @@
 name: PR Discord Notifier
 on:
   pull_request:
-    types: [opened,  reopened, ready_for_review]
+    types: [opened, reopened, ready_for_review]
 
 jobs:
   notify-discord:
@@ -15,4 +15,4 @@ jobs:
             -d '{
               "content": "🚀 PR ${{ github.event.action }}: **${{ github.event.pull_request.title }}**\n🔗 ${{ github.event.pull_request.html_url }}\n👤 Author: ${{ github.event.pull_request.user.login }}"
             }' \
-            "https://discord.com/api/webhooks/1368324302817984592/3sJzz4DtszYv0xdQ4tgt44xPMM9IubhPrs_PtdzY6RXl3N_OhWusltgDDSEVLt8hFnpO"
+            "${{ secrets.PR_NOTIFIER_WEBHOOK }}"
