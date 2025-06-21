@@ -10,9 +10,12 @@ This project is a fully functional online platform for buying used books.
   - [React](https://reactjs.org), [TypeScript](https://www.typescriptlang.org), [Tailwind CSS](https://tailwindcss.com), [shadcn/ui](https://ui.shadcn.com/)
 - **State Management**:
   - [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction)
+- **Router**:
+  - [React Router Data Mode](https://reactrouter.com/)
 - **Testing**:
 
   - [Vitest](https://vitest.dev)
+  - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
 - **Code Quality**:
 
@@ -22,13 +25,20 @@ This project is a fully functional online platform for buying used books.
 
   - [Knip](https://knip.dev/)
 
-- **E-Commerce**:
+- **E-Commerce Platform**:
 
-  - [E-Commerce Tools](https://docs.commercetools.com/docs)
+  - [commercetools](https://docs.commercetools.com/docs)
 
 - **Deployment**:
 
   - [Netlify](https://www.netlify.com)
+
+- **Data fetching and validation**:
+
+  - [SWR](https://swr.vercel.app/)
+  - [React Hook Form](https://react-hook-form.com/)
+  - [Zod](https://zod.dev/)
+
 
 - **CI/CD**:
   - [GitHub Actions](https://github.com/features/actions)
@@ -61,6 +71,9 @@ To get started with this project locally, follow these steps:
    ```
 
 3. **Run the project locally**
+
+   Get and  add .env file
+
    ```bash
    npm run dev
    ```
