@@ -1,6 +1,6 @@
 import type { Cart } from '@commercetools/platform-sdk';
 
-import { apiInstance } from '~/app/API/apiBuilder';
+import { apiInstance } from '~app/API/apiBuilder';
 
 export const applyDiscountCode = async ({ cart, discountCode }: { cart: Cart; discountCode: string }) => {
   const response = await apiInstance.root

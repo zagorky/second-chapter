@@ -1,8 +1,5 @@
-export type DiscountCodeConfig = {
-  id: string;
+export type DiscountCodeConfigType = {
   code: string;
-  title: string;
-  description: string;
   conditions: string;
   color: {
     background: string;

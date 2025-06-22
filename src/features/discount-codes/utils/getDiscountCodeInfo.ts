@@ -1,15 +1,13 @@
-import type { DiscountCodeConfig } from '~features/discount-codes/types/DiscountCodeConfig';
+import type { DiscountCodeConfigType } from '~features/discount-codes/types/DiscountCodeConfigType';
 
-import { DISCOUNT_CODES } from '~features/discount-codes/configs/discountCodesConfig';
+import { DISCOUNT_CODE_CONFIG } from '~features/discount-codes/configs/discountCodeConfig';
 
-export const getDiscountCodeInfo = (id: string): DiscountCodeConfig => {
-  const code = DISCOUNT_CODES.find((code) => code.id === id);
+export const getDiscountCodeInfo = (codeValue: string): DiscountCodeConfigType => {
+  const code = DISCOUNT_CODE_CONFIG.find((code) => code.code === codeValue);
 
   return {
-    title: code?.title ?? 'Unknown code',
-    description: code?.description ?? 'No description available',
+    code: code?.code ?? '',
     conditions: code?.conditions ?? 'No conditions available',
-    id: code?.id ?? '',
     image: {
       src: code?.image.src ?? '',
       width: code?.image.width ?? 0,
@@ -19,7 +17,6 @@ export const getDiscountCodeInfo = (id: string): DiscountCodeConfig => {
       background: code?.color.background ?? '--color-chart-1',
       foreground: code?.color.foreground ?? '--color-chart-2',
     },
-    code: code?.code ?? '',
     discount: code?.discount,
   };
 };
