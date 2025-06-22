@@ -1,18 +1,22 @@
 import type { Cart, DiscountCodeInfo } from '@commercetools/platform-sdk';
-import type { DiscountCodeConfig } from '~features/discount-codes/types/DiscountCodeConfig';
+import type { DiscountCodeConfigType } from '~features/discount-codes/types/DiscountCodeConfigType';
 
 import { Button } from '~components/ui/button/button';
+import { DEFAULT_STORE_LANGUAGE } from '~config/constants';
 import { useCart } from '~features/cart/hooks/useCart';
+import { useDiscountCodeById } from '~features/discount-codes/hooks/useDiscountCodeById';
 import { removeDiscountCode } from '~features/discount-codes/utils/removeDiscountCode';
 import { normalizeError } from '~utils/normalizeError';
 import { CircleCheck, X, Info } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
+import { Spinner } from '~/components/ui/spinner/spinner';
+
 type DiscountCodeItemProps = {
   code: DiscountCodeInfo;
   cart: Cart;
-  getDiscountCodeInfo: (id: string) => DiscountCodeConfig;
+  getDiscountCodeInfo: (id: string) => DiscountCodeConfigType;
   getDiscountStatusMessage: (state: string) => string;
 };
 
@@ -31,6 +35,8 @@ export const DiscountCodeItem = ({
   const { refresh } = useCart();
   const [isRemoving, setIsRemoving] = useState(false);
 
+  const { discountCode: fullDiscountCode, isLoading } = useDiscountCodeById(code.discountCode.id);
+
   const handleRemove = async () => {
     if (isRemoving) return;
 
@@ -46,10 +52,15 @@ export const DiscountCodeItem = ({
     }
   };
 
-  const { description, conditions } = getDiscountCodeInfo(code.discountCode.id);
+  const description = fullDiscountCode?.description?.[DEFAULT_STORE_LANGUAGE] ?? '';
+  const discountConfig = getDiscountCodeInfo(fullDiscountCode?.code ?? '');
+  const { conditions } = discountConfig;
   const statusMessage = getDiscountStatusMessage(code.state);
   const isSuccessfullyApplied = code.state === 'MatchesCart';
-  const isMatching = code.state === 'DoesNotMatchCart';
+  const isNotMatching = code.state === 'DoesNotMatchCart';
+
+  const isConditionallyAppliedDiscount =
+    discountConfig.discount?.type === 'relative' && discountConfig.discount.items === 'some';
 
   return (
     <li
@@ -58,14 +69,14 @@ export const DiscountCodeItem = ({
     >
       <div className="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] items-start gap-4 text-left">
         <div className="col-start-2 row-start-1 text-sm font-bold uppercase">
-          <span> {description}</span>
+          {isLoading ? <Spinner size="sm" /> : <span> {description}</span>}
         </div>
         <div className="col-start-1 row-start-2">
           {isSuccessfullyApplied ? <CircleCheck className="h-6 w-6" /> : <Info className="h-6 w-6" />}
         </div>
         <div className="col-start-2 row-start-2">
           {statusMessage}
-          {isMatching && <div> {conditions}</div>}
+          {(isNotMatching || isConditionallyAppliedDiscount) && <div> {conditions}</div>}
         </div>
       </div>
       <Button
