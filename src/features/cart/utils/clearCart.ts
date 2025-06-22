@@ -10,10 +10,12 @@ export const clearCart = async (cart: Cart) => {
     .post({
       body: {
         version: cart.version,
-        actions: cart.lineItems.map((item) => ({
-          action: 'removeLineItem',
-          lineItemId: item.id,
-        })),
+        actions: cart.lineItems
+          .filter((item) => item.lineItemMode !== 'GiftLineItem')
+          .map((item) => ({
+            action: 'removeLineItem',
+            lineItemId: item.id,
+          })),
       },
     })
     .execute();
