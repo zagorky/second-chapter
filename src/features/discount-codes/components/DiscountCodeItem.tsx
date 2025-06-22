@@ -62,8 +62,6 @@ export const DiscountCodeItem = ({
   const isConditionallyAppliedDiscount =
     discountConfig.discount?.type === 'relative' && discountConfig.discount.items === 'some';
 
-  console.log(isConditionallyAppliedDiscount, 'isConditionallyAppliedDiscount', discountConfig);
-
   return (
     <li
       key={code.discountCode.id}
