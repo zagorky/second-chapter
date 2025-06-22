@@ -1,7 +1,8 @@
 import type { Cart } from '@commercetools/platform-sdk';
 
-import { getDiscountCodeInfo } from '~features/discount-codes/utils/getDiscountCodeInfo';
 import { getDiscountStatusMessage } from '~features/discount-codes/utils/getDiscountStatusMessage';
+
+import { getDiscountCodeInfo } from '~/features/discount-codes/utils/getDiscountCodeInfo';
 
 import { DiscountCodeItem } from './DiscountCodeItem';
 
@@ -24,7 +25,7 @@ export const DiscountCodeList = ({ cart }: DiscountCodeListProps) => {
       <ul className="space-y-2">
         {cart.discountCodes.map((code) => (
           <DiscountCodeItem
-            key={code.discountCode.id}
+            key={code.discountCode.obj?.id}
             code={code}
             cart={cart}
             getDiscountCodeInfo={getDiscountCodeInfo}
