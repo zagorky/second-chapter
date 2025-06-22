@@ -53,10 +53,16 @@ export const DiscountCodeItem = ({
   };
 
   const description = fullDiscountCode?.description?.[DEFAULT_STORE_LANGUAGE] ?? '';
-  const { conditions } = getDiscountCodeInfo(fullDiscountCode?.code ?? '');
+  const discountConfig = getDiscountCodeInfo(fullDiscountCode?.code ?? '');
+  const { conditions } = discountConfig;
   const statusMessage = getDiscountStatusMessage(code.state);
   const isSuccessfullyApplied = code.state === 'MatchesCart';
-  const isMatching = code.state === 'DoesNotMatchCart';
+  const isNotMatching = code.state === 'DoesNotMatchCart';
+
+  const isConditionallyAppliedDiscount =
+    discountConfig.discount?.type === 'relative' && discountConfig.discount.items === 'some';
+
+  console.log(isConditionallyAppliedDiscount, 'isConditionallyAppliedDiscount', discountConfig);
 
   return (
     <li
@@ -72,7 +78,7 @@ export const DiscountCodeItem = ({
         </div>
         <div className="col-start-2 row-start-2">
           {statusMessage}
-          {isMatching && <div> {conditions}</div>}
+          {(isNotMatching || isConditionallyAppliedDiscount) && <div> {conditions}</div>}
         </div>
       </div>
       <Button

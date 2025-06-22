@@ -31,7 +31,7 @@ export const DISCOUNT_CODE_CONFIG: DiscountCodeConfigType[] = [
     },
     discount: {
       type: 'relative',
-      items: 'all',
+      items: 'some',
       percentage: 30,
     },
   },
@@ -49,7 +49,7 @@ export const DISCOUNT_CODE_CONFIG: DiscountCodeConfigType[] = [
     },
     discount: {
       type: 'relative',
-      items: 'some',
+      items: 'all',
       percentage: 20,
     },
   },
