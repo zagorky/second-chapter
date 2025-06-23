@@ -95,19 +95,27 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
 
     return (
       <div className={cn('flex flex-col gap-6', className)} {...props}>
-        <Card className="test h-full bg-[url(profile-bg.svg)] bg-contain bg-center bg-no-repeat">
+        <Card className="h-full bg-[url(profile-bg.svg)] bg-cover bg-center bg-no-repeat">
           <CardContent>
-            <div>
-              <ProfileAvatar imageUrl={userAvatar} />
+            <div className="flex items-center gap-5 md:gap-10">
+              <div>
+                <ProfileAvatar imageUrl={userAvatar} />
+              </div>
+              <div className="w-full text-center">
+                <h2 className="text-[clamp(1rem,5vw,3rem)]">
+                  {profileData.firstName} {profileData.lastName}
+                </h2>
+              </div>
             </div>
           </CardContent>
         </Card>
-        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-15">
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-15">
           <Card>
             <CardContent>
               <Form {...form}>
                 <form className="space-y-8" onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
-                  <h1 className="text-left text-xl md:text-2xl">Profile Information</h1>
+                  <h2 className="text-left text-xl md:text-2xl">Profile Information</h2>
                   <div className="flex flex-col gap-6">
                     <div className="flex justify-end">
                       {isEditing ? (
