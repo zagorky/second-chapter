@@ -52,7 +52,7 @@ export const DiscountBanner = ({ discount }: DiscountBannerProps) => {
         </div>
       </div>
       <div
-        className="border-border rounded-base flex border-2 p-5"
+        className="border-border rounded-base relative flex border-2 p-5"
         style={{
           backgroundColor: `var(${discountConfig.color.background})`,
         }}
@@ -76,7 +76,7 @@ export const DiscountBanner = ({ discount }: DiscountBannerProps) => {
           <img
             src={discountConfig.image.src}
             alt={code}
-            className="absolute right-[2px] bottom-[2px] w-30 sm:w-40"
+            className="absolute right-0 bottom-0 max-w-[clamp(120px,30%,200px)]"
             width={discountConfig.image.width}
             height={discountConfig.image.height}
           />
