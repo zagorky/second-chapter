@@ -25,24 +25,22 @@ export const LastnameField = ({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <div className="form-field-wrapper">
-            <FormLabel htmlFor={name} className={'text-left'}>
-              {label}
-            </FormLabel>
-            <div className="form-field-input-wrapper">
-              <FormControl>
-                <Input
-                  id={name}
-                  placeholder={placeholder}
-                  autoComplete={name}
-                  readOnly={isReadOnly}
-                  {...field}
-                  type="text"
-                  {...withDataTestId(`${name}-input`)}
-                />
-              </FormControl>
-              <FixedFormErrorMessage />
-            </div>
+          <FormLabel htmlFor={name} className={'text-left'}>
+            {label}
+          </FormLabel>
+          <div className="form-field-input-wrapper">
+            <FormControl>
+              <Input
+                id={name}
+                placeholder={placeholder}
+                autoComplete={name}
+                readOnly={isReadOnly}
+                {...field}
+                type="text"
+                {...withDataTestId(`${name}-input`)}
+              />
+            </FormControl>
+            <FixedFormErrorMessage />
           </div>
         </FormItem>
       )}

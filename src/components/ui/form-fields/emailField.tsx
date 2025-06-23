@@ -26,21 +26,19 @@ export const EmailField = ({
       name={name}
       render={({ field }) => (
         <FormItem className="grow">
-          <div className="form-field-wrapper">
-            <FormLabel className={'text-left'}>{label}</FormLabel>
-            <div className="form-field-input-wrapper">
-              <FormControl>
-                <Input
-                  placeholder={placeholder}
-                  autoComplete="username"
-                  readOnly={isReadOnly}
-                  {...field}
-                  type="text"
-                  {...withDataTestId(`${name}-input`)}
-                />
-              </FormControl>
-              <FixedFormErrorMessage />
-            </div>
+          <FormLabel className={'text-left'}>{label}</FormLabel>
+          <div className="form-field-input-wrapper">
+            <FormControl>
+              <Input
+                placeholder={placeholder}
+                autoComplete="username"
+                readOnly={isReadOnly}
+                {...field}
+                type="text"
+                {...withDataTestId(`${name}-input`)}
+              />
+            </FormControl>
+            <FixedFormErrorMessage />
           </div>
         </FormItem>
       )}
