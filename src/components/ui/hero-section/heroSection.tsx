@@ -39,7 +39,10 @@ export const HeroSection = () => {
             Second Chapter books
           </h1>
 
-          <AnimatedWord words={displayWords} className="text-2xl font-bold uppercase sm:text-6xl" />
+          <AnimatedWord
+            words={displayWords}
+            className="pointer-events-none text-2xl font-bold uppercase select-none sm:text-4xl lg:text-5xl"
+          />
         </div>
 
         <p className="block max-w-60 text-left text-2xl">Old books, fresh&nbsp;experience</p>
