@@ -1,8 +1,11 @@
 name: Auto Assign and request review
-on: pull_request
+on:
+  pull_request:
+    types: [ opened, reopened, ready_for_review ]
 
 jobs:
   assign:
+
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -22,10 +25,12 @@ jobs:
               assignees: [context.payload.pull_request.user.login]
             })
             
-            await github.rest.pulls.requestReviewers({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number,
-              reviewers: reviewers
-            });
+            if (!context.payload.pull_request.draft) {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                reviewers: reviewers
+              });
+            }
 
