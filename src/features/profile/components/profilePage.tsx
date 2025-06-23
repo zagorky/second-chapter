@@ -117,7 +117,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
                 <form className="space-y-8" onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
                   <h2 className="text-left text-xl md:text-2xl">Profile Information</h2>
                   <div className="flex flex-col gap-6">
-                    <div className="flex justify-end">
+                    <div className="flex justify-end space-x-2">
                       {isEditing ? (
                         <>
                           <CancelButton onClick={handleCancelClick} />
