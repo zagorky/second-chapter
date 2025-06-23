@@ -101,10 +101,9 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
               <div>
                 <ProfileAvatar imageUrl={userAvatar} />
               </div>
-              <div className="w-full text-center">
-                <h2 className="text-[clamp(1rem,5vw,3rem)]">
-                  {profileData.firstName} {profileData.lastName}
-                </h2>
+              <div className="w-full truncate text-center">
+                <h2 className="text-[clamp(1rem,5vw,3rem)]">{profileData.firstName}</h2>
+                <h2 className="text-[clamp(1rem,5vw,3rem)]">{profileData.lastName}</h2>
               </div>
             </div>
           </CardContent>
