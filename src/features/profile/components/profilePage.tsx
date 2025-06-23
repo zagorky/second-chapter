@@ -95,7 +95,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
 
     return (
       <div className={cn('flex flex-col gap-6', className)} {...props}>
-        <Card className="h-full bg-[url(profile-bg.svg)] bg-cover bg-center bg-no-repeat">
+        <Card className="h-full bg-[url(/profile-bg.svg)] bg-cover bg-center bg-no-repeat">
           <CardContent>
             <div className="flex items-center gap-5 md:gap-10">
               <div>
