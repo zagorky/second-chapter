@@ -9,23 +9,18 @@ import {
 } from '~components/ui/select';
 import { SORT_OPTIONS } from '~features/sort/config/constants';
 import { validateSortKey } from '~features/sort/utils/validateSortKey';
+import { useSyncQueryParameters } from '~hooks/useSyncQueryParameters';
 import { useSearchParams } from 'react-router';
 
 export const SortBar = () => {
-  const [searchParameters, setSearchParameters] = useSearchParams();
+  const [searchParameters] = useSearchParams();
+  const { updateURLParameters } = useSyncQueryParameters();
   const sortParameter = searchParameters.get('sort');
 
   const currentSortOption = sortParameter ? validateSortKey(sortParameter).shortKey : 'default';
 
   const handleSortChange = (value: string) => {
-    const newParameter = new URLSearchParams(searchParameters.toString());
-
-    if (value === 'default') {
-      newParameter.delete('sort');
-    } else {
-      newParameter.set('sort', validateSortKey(value).shortKey);
-    }
-    setSearchParameters(newParameter);
+    updateURLParameters({ sort: value });
   };
 
   return (

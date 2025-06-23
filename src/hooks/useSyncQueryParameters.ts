@@ -1,5 +1,6 @@
 import type { CategoryNode } from '~features/category/utils/buildCategories';
 
+import { validateSortKey } from '~features/sort/utils/validateSortKey';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router';
 
@@ -10,6 +11,7 @@ type UseSetURLParameters = {
   price: { priceRange: number[]; min: number; max: number };
   sale: boolean;
   category: CategoryNode;
+  sort: string;
 };
 
 type URLParametersKeys = keyof UseSetURLParameters;
@@ -42,6 +44,10 @@ export const useSyncQueryParameters = () => {
 
       if ('category' in parameters) {
         handleCategoryParameter(newParameters, parameters.category);
+      }
+
+      if ('sort' in parameters) {
+        handleSortParameter(newParameters, parameters.sort);
       }
 
       if (newParameters.toString() !== searchParameters.toString()) {
@@ -113,7 +119,9 @@ function handlePriceParameter(parameters: URLSearchParams, price?: { priceRange:
 }
 
 function handleCategoryParameter(parameters: URLSearchParams, category?: CategoryNode) {
-  if (!category) return;
+  if (!category) {
+    return;
+  }
 
   if (category.parent === '') {
     parameters.set('category', category.id);
@@ -122,6 +130,20 @@ function handleCategoryParameter(parameters: URLSearchParams, category?: Categor
     parameters.set('category', category.parent);
     parameters.set('subcategory', category.id);
   }
+  setPageToOne(parameters);
+}
+
+function handleSortParameter(parameters: URLSearchParams, sort?: string) {
+  if (!sort) {
+    return;
+  }
+
+  if (sort === 'default') {
+    parameters.delete('sort');
+  } else {
+    parameters.set('sort', validateSortKey(sort).shortKey);
+  }
+
   setPageToOne(parameters);
 }
 
@@ -160,6 +182,12 @@ function handleRemoveParameter(parameters: URLSearchParams, parameter: URLParame
       setPageToOne(parameters);
       parameters.delete('category');
       parameters.delete('subcategory');
+      break;
+    }
+
+    case 'sort': {
+      setPageToOne(parameters);
+      parameters.delete('sort');
       break;
     }
   }
