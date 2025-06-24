@@ -8,7 +8,7 @@ export const ProfileAvatar = ({ imageUrl }: ProfileAvatarProps) => {
   return (
     <figure
       className={cn(
-        'aspect-square w-[clamp(60px,25vw,150px)] overflow-hidden rounded-full border-2 bg-white p-4 text-center shadow-[3px_4px_0_0_rgba(0,0,0,1)]'
+        'bg-background aspect-square w-[clamp(60px,25vw,150px)] overflow-hidden rounded-full border-2 p-4 text-center shadow-[3px_4px_0_0_rgba(0,0,0,1)]'
       )}
     >
       <img className="h-full w-full object-contain" src={imageUrl} alt="description" />

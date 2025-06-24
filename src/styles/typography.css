@@ -2,6 +2,10 @@
   @apply text-main text-3xl leading-tight font-semibold md:text-4xl;
 }
 
+.heading-2 {
+  @apply text-foreground text-3xl leading-tight font-semibold md:text-4xl;
+}
+
 .about-developer-name {
   @apply text-foreground;
 }

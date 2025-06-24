@@ -101,15 +101,15 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
               <div>
                 <ProfileAvatar imageUrl={userAvatar} />
               </div>
-              <div className="w-full truncate text-center">
-                <h2 className="text-[clamp(1rem,5vw,3rem)]">{profileData.firstName}</h2>
-                <h2 className="text-[clamp(1rem,5vw,3rem)]">{profileData.lastName}</h2>
+              <div className="flex gap-5 truncate">
+                <span className="heading-2 block truncate">{profileData.firstName}</span>
+                <span className="heading-2 block truncate">{profileData.lastName}</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-15">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <Card>
             <CardContent>
               <Form {...form}>
