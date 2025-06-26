@@ -100,7 +100,7 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
             <div>
               <ProfileAvatar imageUrl={userAvatar} />
             </div>
-            <div className="flex items-end justify-end gap-2 truncate">
+            <div className="flex max-w-[360px] items-end justify-end gap-2 truncate">
               <span className="heading-2 block truncate">{profileData.firstName}</span>
               <span className="heading-2 block truncate">{profileData.lastName}</span>
             </div>
