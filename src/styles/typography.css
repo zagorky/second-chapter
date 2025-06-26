@@ -44,10 +44,10 @@
 }
 
 .width-truncate-ch {
-  @apply max-w-[32ch];
+  @apply max-w-[25ch];
 }
 
-@media screen and (width <= 430px) {
+@media screen and (width <= 650px) {
   .width-truncate-ch {
     @apply max-w-[20ch];
   }
