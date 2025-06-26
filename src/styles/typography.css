@@ -2,6 +2,10 @@
   @apply text-main text-3xl leading-tight font-semibold md:text-4xl;
 }
 
+.heading-2 {
+  @apply text-foreground text-2xl leading-tight font-semibold md:text-3xl;
+}
+
 .about-developer-name {
   @apply text-foreground;
 }
@@ -37,4 +41,14 @@
 
 .p-clamp {
   font-size: clamp(1rem, 1.5vw, 2rem);
+}
+
+.width-truncate-ch {
+  @apply max-w-[25ch];
+}
+
+@media screen and (width <= 650px) {
+  .width-truncate-ch {
+    @apply max-w-[20ch];
+  }
 }

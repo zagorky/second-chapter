@@ -1,0 +1,17 @@
+.relative-wrapper {
+  @apply relative mb-15;
+}
+
+.absolute-wrapper {
+  @apply absolute -bottom-15 flex gap-5;
+}
+
+@media screen and (width <= 600px) {
+  .relative-wrapper {
+    @apply mb-25 h-[170px];
+  }
+
+  .absolute-wrapper {
+    @apply -bottom-25 flex-col gap-2;
+  }
+}

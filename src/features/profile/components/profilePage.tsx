@@ -95,32 +95,48 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
 
     return (
       <div className={cn('flex flex-col gap-6', className)} {...props}>
-        <Card>
-          <CardContent>
-            <div className="mb-10 flex">
+        <Card className="from-chart-1 via-chart-1 to-chart-2 relative-wrapper h-[200px] bg-gradient-to-r">
+          <CardContent className="absolute-wrapper">
+            <div>
               <ProfileAvatar imageUrl={userAvatar} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-15">
-              <Form {...form}>
-                <form className="space-y-8" onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
-                  <h1 className="text-left text-xl md:text-2xl">Profile Information</h1>
-                  <div className="mb-5 flex justify-end space-x-2">
-                    {isEditing ? (
-                      <>
-                        <SaveButton disabled={isSaving} isSaving={isSaving} />
-                        <CancelButton onClick={handleCancelClick} />
-                      </>
-                    ) : (
-                      <EditButton onClick={handleEditClick} />
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-6">{renderFields()}</div>
-                </form>
-              </Form>
-              <ChangePasswordForm />
+            <div className="flex items-end justify-end gap-2">
+              <span className="heading-2 width-truncate-ch block truncate">
+                {profileData.firstName} {profileData.lastName}
+              </span>
             </div>
           </CardContent>
         </Card>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Card>
+            <CardContent>
+              <Form {...form}>
+                <form className="space-y-8" onSubmit={(event) => void form.handleSubmit(handleSaveClick)(event)}>
+                  <h2 className="text-left text-xl md:text-2xl">Profile Information</h2>
+                  <div className="flex flex-col gap-6">
+                    <div className="flex justify-end space-x-2">
+                      {isEditing ? (
+                        <>
+                          <CancelButton onClick={handleCancelClick} />
+                          <SaveButton disabled={isSaving} isSaving={isSaving} />
+                        </>
+                      ) : (
+                        <EditButton onClick={handleEditClick} />
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-6">{renderFields()}</div>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent>
+              <ChangePasswordForm />
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   };
