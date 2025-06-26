@@ -42,3 +42,13 @@
 .p-clamp {
   font-size: clamp(1rem, 1.5vw, 2rem);
 }
+
+.width-truncate-ch {
+  @apply max-w-[32ch];
+}
+
+@media screen and (width <= 430px) {
+  .width-truncate-ch {
+    @apply max-w-[20ch];
+  }
+}
