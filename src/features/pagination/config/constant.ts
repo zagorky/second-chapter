@@ -1,0 +1,1 @@
+export const PAGINATION_VISIBLE_RADIUS = 2;
