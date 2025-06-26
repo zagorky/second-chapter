@@ -95,17 +95,14 @@ export function ProfileForm({ className, ...props }: React.ComponentProps<'div'>
 
     return (
       <div className={cn('flex flex-col gap-6', className)} {...props}>
-        {/*<Card className="relative mb-15 h-[200px] bg-[url(/profile-bg-transparent.svg)] bg-cover bg-center bg-no-repeat">*/}
-        <Card className="from-chart-1 via-chart-1 to-chart-2 relative mb-15 h-[200px] bg-gradient-to-r">
-          <CardContent className="absolute -bottom-15">
-            <div className="flex gap-5 md:gap-10">
-              <div>
-                <ProfileAvatar imageUrl={userAvatar} />
-              </div>
-              <div className="flex flex-row justify-end truncate max-md:flex-col md:items-end md:gap-5">
-                <span className="heading-2 block truncate">{profileData.firstName}</span>
-                <span className="heading-2 block truncate">{profileData.lastName}</span>
-              </div>
+        <Card className="from-chart-1 via-chart-1 to-chart-2 relative-wrapper h-[200px] bg-gradient-to-r">
+          <CardContent className="absolute-wrapper">
+            <div>
+              <ProfileAvatar imageUrl={userAvatar} />
+            </div>
+            <div className="flex items-end justify-end gap-2 truncate">
+              <span className="heading-2 block truncate">{profileData.firstName}</span>
+              <span className="heading-2 block truncate">{profileData.lastName}</span>
             </div>
           </CardContent>
         </Card>
