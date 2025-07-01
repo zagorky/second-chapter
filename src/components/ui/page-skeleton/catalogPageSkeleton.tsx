@@ -15,16 +15,16 @@ export const CatalogPageSkeleton = () => {
       <>
         <div className="m-2 flex justify-between gap-4">
           <Skeleton className="h-10 w-full max-w-30" />
-          <Skeleton className="h-10 w-full max-w-26" />
+          <Skeleton className="bg-main h-10 w-full max-w-26" />
         </div>
 
         <div className="my-4 flex flex-col justify-center gap-8 md:flex-row md:justify-between">
           <div className="flex w-full flex-2 gap-2">
             <Skeleton className="w-full" />
-            <Skeleton className="w-15" />
-            <Skeleton className="w-15" />
+            <Skeleton className="bg-main w-15" />
+            <Skeleton className="bg-main w-15" />
           </div>
-          <Skeleton className="flex h-10 w-full max-w-xl flex-1" />
+          <Skeleton className="bg-main flex h-10 w-full max-w-xl flex-1" />
         </div>
 
         <div className="grid flex-col gap-4 lg:grid-cols-[minmax(230px,_250px)_1fr]">
@@ -35,7 +35,7 @@ export const CatalogPageSkeleton = () => {
                 <Skeleton key={index} className="h-144 w-full max-w-[300px] justify-self-center rounded-lg" />
               ))}
             </ul>
-            <Skeleton className="my-6 h-12 w-full max-w-sm" />
+            <Skeleton className="bg-main my-6 h-12 w-full max-w-sm" />
           </div>
         </div>
       </>

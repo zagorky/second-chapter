@@ -14,6 +14,7 @@ import { AboutUsPageSkeleton } from '~components/ui/page-skeleton/aboutUsPageSke
 import { CatalogPageSkeleton } from '~components/ui/page-skeleton/catalogPageSkeleton';
 import { MainPageSkeleton } from '~components/ui/page-skeleton/mainPageSkeleton';
 import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
+import { SinginPageSkeleton } from '~components/ui/page-skeleton/singinPageSkeleton';
 import { authenticatedUserGuard, navigationRoutes, unauthenticatedUserGuard } from '~config/navigation';
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router';
@@ -41,7 +42,7 @@ export const appRouter = createBrowserRouter([
         errorElement: <ErrorPage />,
         loader: authenticatedUserGuard,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
+          <Suspense fallback={<SinginPageSkeleton />}>
             <SignInPage />
           </Suspense>
         ),

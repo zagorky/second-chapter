@@ -19,7 +19,7 @@ export const MainPageSkeleton = () => {
             <Skeleton className="mb-2 h-28 w-full max-w-xl" />
             <Skeleton className="mb-6 h-14 w-full max-w-sm" />
             <Skeleton className="mb-7 h-16 w-full max-w-50" />
-            <Skeleton className="h-12 w-full max-w-42" />
+            <Skeleton className="bg-main h-12 w-full max-w-42" />
           </div>
           <div className="flex justify-center">
             <Skeleton className="h-84 w-98" />
