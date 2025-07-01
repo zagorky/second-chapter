@@ -13,8 +13,8 @@ import {
 import { AboutUsPageSkeleton } from '~components/ui/page-skeleton/aboutUsPageSkeleton';
 import { CartPageSkeleton } from '~components/ui/page-skeleton/cartPageSkeleton';
 import { CatalogPageSkeleton } from '~components/ui/page-skeleton/catalogPageSkeleton';
+import { ErrorPageSkeleton } from '~components/ui/page-skeleton/errorPageSkeleton';
 import { MainPageSkeleton } from '~components/ui/page-skeleton/mainPageSkeleton';
-import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
 import { ProductPageSkeleton } from '~components/ui/page-skeleton/productPageSkeleton';
 import { ProfilePageSkeleton } from '~components/ui/page-skeleton/profilePageSkeleton';
 import { SignupPageSkeleton } from '~components/ui/page-skeleton/signupPageSkeleton';
@@ -110,7 +110,7 @@ export const appRouter = createBrowserRouter([
       {
         path: navigationRoutes.error.path,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
+          <Suspense fallback={<ErrorPageSkeleton />}>
             <ErrorPage />
           </Suspense>
         ),
