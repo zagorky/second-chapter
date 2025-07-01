@@ -1,18 +1,29 @@
 import { Skeleton } from '~components/ui/skeleton';
+import { VISIBILITY_DELAY } from '~config/constants';
+import { useTimeout } from '~hooks/useTimeout';
+import { useState } from 'react';
 
 export const AboutUsPageSkeleton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useTimeout(() => {
+    setIsVisible(true);
+  }, VISIBILITY_DELAY);
+
   return (
-    <div className="flex flex-col">
-      <Skeleton className="m-auto mb-12 h-10 w-full max-w-xl" />
-      <Skeleton className="mb-30 h-70 w-full max-w-7xl" />
+    isVisible && (
+      <div className="flex flex-col">
+        <Skeleton className="m-auto mb-12 h-10 w-full max-w-xl" />
+        <Skeleton className="mb-30 h-70 w-full max-w-7xl" />
 
-      <div className="mb-30 flex flex-col items-center gap-6">
-        <Skeleton className="h-45 w-full max-w-2xl" />
-        <Skeleton className="h-45 w-full max-w-5xl" />
-        <Skeleton className="h-45 w-full max-w-5xl" />
+        <div className="mb-30 flex flex-col items-center gap-6">
+          <Skeleton className="h-45 w-full max-w-2xl" />
+          <Skeleton className="h-45 w-full max-w-5xl" />
+          <Skeleton className="h-45 w-full max-w-5xl" />
+        </div>
+
+        <Skeleton className="mb-2 h-110 w-full max-w-7xl" />
       </div>
-
-      <Skeleton className="mb-2 h-110 w-full max-w-7xl" />
-    </div>
+    )
   );
 };

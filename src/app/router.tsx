@@ -6,10 +6,13 @@ import {
   ErrorPage,
   MainPage,
   ProductPage,
+  ProfilePage,
   SignInPage,
   SignUpPage,
-  ProfilePage,
 } from '~app/pages/lazy';
+import { AboutUsPageSkeleton } from '~components/ui/page-skeleton/aboutUsPageSkeleton';
+import { CatalogPageSkeleton } from '~components/ui/page-skeleton/catalogPageSkeleton';
+import { MainPageSkeleton } from '~components/ui/page-skeleton/mainPageSkeleton';
 import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
 import { authenticatedUserGuard, navigationRoutes, unauthenticatedUserGuard } from '~config/navigation';
 import { Suspense } from 'react';
@@ -28,7 +31,7 @@ export const appRouter = createBrowserRouter([
         path: navigationRoutes.main.path,
         errorElement: <ErrorPage />,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
+          <Suspense fallback={<MainPageSkeleton />}>
             <MainPage />
           </Suspense>
         ),
@@ -57,7 +60,7 @@ export const appRouter = createBrowserRouter([
         path: navigationRoutes.about.path,
         errorElement: <ErrorPage />,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
+          <Suspense fallback={<AboutUsPageSkeleton />}>
             <AboutPage />
           </Suspense>
         ),
@@ -66,7 +69,7 @@ export const appRouter = createBrowserRouter([
         path: navigationRoutes.catalog.path,
         errorElement: <ErrorPage />,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
+          <Suspense fallback={<CatalogPageSkeleton />}>
             <CatalogPage />
           </Suspense>
         ),
