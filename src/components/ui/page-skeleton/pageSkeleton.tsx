@@ -1,3 +1,4 @@
+import { AboutUsPageSkeleton } from '~components/ui/page-skeleton/aboutUsPageSkeleton';
 import { MainPageSkeleton } from '~components/ui/page-skeleton/mainPageSkeleton';
 import { navigationRoutes } from '~config/navigation';
 import { useTimeout } from '~hooks/useTimeout';
@@ -20,7 +21,7 @@ export const PageSkeleton = () => {
 function matchPath(pathname: string) {
   switch (pathname) {
     case navigationRoutes.about.path: {
-      return <></>;
+      return <AboutUsPageSkeleton />;
     }
 
     case navigationRoutes.catalog.path: {
