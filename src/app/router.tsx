@@ -11,9 +11,13 @@ import {
   SignUpPage,
 } from '~app/pages/lazy';
 import { AboutUsPageSkeleton } from '~components/ui/page-skeleton/aboutUsPageSkeleton';
+import { CartPageSkeleton } from '~components/ui/page-skeleton/cartPageSkeleton';
 import { CatalogPageSkeleton } from '~components/ui/page-skeleton/catalogPageSkeleton';
 import { MainPageSkeleton } from '~components/ui/page-skeleton/mainPageSkeleton';
 import { PageSkeleton } from '~components/ui/page-skeleton/pageSkeleton';
+import { ProductPageSkeleton } from '~components/ui/page-skeleton/productPageSkeleton';
+import { ProfilePageSkeleton } from '~components/ui/page-skeleton/profilePageSkeleton';
+import { SignupPageSkeleton } from '~components/ui/page-skeleton/signupPageSkeleton';
 import { SinginPageSkeleton } from '~components/ui/page-skeleton/singinPageSkeleton';
 import { authenticatedUserGuard, navigationRoutes, unauthenticatedUserGuard } from '~config/navigation';
 import { Suspense } from 'react';
@@ -52,7 +56,7 @@ export const appRouter = createBrowserRouter([
         loader: authenticatedUserGuard,
         errorElement: <ErrorPage />,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
+          <Suspense fallback={<SignupPageSkeleton />}>
             <SignUpPage />
           </Suspense>
         ),
@@ -79,16 +83,8 @@ export const appRouter = createBrowserRouter([
         path: navigationRoutes.cart.path,
         errorElement: <ErrorPage />,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
+          <Suspense fallback={<CartPageSkeleton />}>
             <CartPage title={navigationRoutes.cart.title} />
-          </Suspense>
-        ),
-      },
-      {
-        path: navigationRoutes.error.path,
-        element: (
-          <Suspense fallback={<PageSkeleton />}>
-            <ErrorPage />
           </Suspense>
         ),
       },
@@ -96,7 +92,7 @@ export const appRouter = createBrowserRouter([
         path: navigationRoutes.product.path + '/:key',
         errorElement: <ErrorPage />,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
+          <Suspense fallback={<ProductPageSkeleton />}>
             <ProductPage />
           </Suspense>
         ),
@@ -106,8 +102,16 @@ export const appRouter = createBrowserRouter([
         errorElement: <ErrorPage />,
         loader: unauthenticatedUserGuard,
         element: (
-          <Suspense fallback={<PageSkeleton />}>
+          <Suspense fallback={<ProfilePageSkeleton />}>
             <ProfilePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: navigationRoutes.error.path,
+        element: (
+          <Suspense fallback={<PageSkeleton />}>
+            <ErrorPage />
           </Suspense>
         ),
       },
