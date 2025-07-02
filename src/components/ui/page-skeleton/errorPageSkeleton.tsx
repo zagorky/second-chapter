@@ -13,9 +13,11 @@ export const ErrorPageSkeleton = () => {
 
   return (
     isVisible && (
-      <div className="flex w-full flex-col items-center gap-4 p-4">
-        <Skeleton className="h-8 w-3/4 rounded-md sm:w-1/2" />
-        <Skeleton className="h-40 w-3/5 rounded-lg sm:w-1/2" />
+      <div className="m-auto flex h-[calc(100vh-200px)] w-full max-w-xl flex-col justify-center p-10">
+        <div className="flex w-full flex-col gap-4 p-4">
+          <Skeleton className="h-70 w-full max-w-xl py-5" />
+          <Skeleton className="bg-main m-auto h-10 w-full max-w-30" />
+        </div>
       </div>
     )
   );
