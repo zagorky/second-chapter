@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '~components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~components/ui/tabs';
 import { ProfileForm } from '~features/profile/components/profilePage';
 
 import { ProfileAddressList } from '~/features/profile-addresses/components/profileAddressList';

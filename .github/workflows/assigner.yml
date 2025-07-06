@@ -15,7 +15,7 @@ jobs:
         with:
           script: |
             const author = context.payload.pull_request.user.login;
-            const allPossibleReviewers = ['zagorky', 'anastanei', 'savryna', 'JsPowWow']; 
+            const allPossibleReviewers = ['zagorky', 'anastanei', 'savryna']; 
             const reviewers = allPossibleReviewers.filter(reviewer => reviewer !== author);
 
             await github.rest.issues.addAssignees({

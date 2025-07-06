@@ -1,10 +1,9 @@
 import { DataErrorElement } from '~components/ui/data-error-element/dataErrorElement';
 import { Spinner } from '~components/ui/spinner/spinner';
+import { ProductDetail } from '~features/fetch-products/components/product-detail/productDetail';
 import { useProductByKey } from '~features/fetch-products/hooks/useProductByKey';
 import { normalizeError } from '~utils/normalizeError';
 import { useParams } from 'react-router';
-
-import { ProductDetail } from '../../../features/fetch-products/components/product-detail/productDetail';
 
 const ProductPage = () => {
   const { key = '' } = useParams<{ key: string }>();
