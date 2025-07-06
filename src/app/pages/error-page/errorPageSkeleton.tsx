@@ -1,15 +1,8 @@
 import { Skeleton } from '~components/ui/skeleton';
-import { useTimeout } from '~hooks/useTimeout';
-import { useState } from 'react';
-
-const VISIBILITY_DELAY = 1000;
+import { useSkeletonVisibility } from '~hooks/useSkeletonVisibility';
 
 export const ErrorPageSkeleton = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useTimeout(() => {
-    setIsVisible(true);
-  }, VISIBILITY_DELAY);
+  const isVisible = useSkeletonVisibility();
 
   return (
     isVisible && (

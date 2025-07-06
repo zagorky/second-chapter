@@ -1,14 +1,9 @@
 import { Skeleton } from '~components/ui/skeleton';
-import { ITEMS_PER_PAGE, VISIBILITY_DELAY } from '~config/constants';
-import { useTimeout } from '~hooks/useTimeout';
-import { useState } from 'react';
+import { ITEMS_PER_PAGE } from '~config/constants';
+import { useSkeletonVisibility } from '~hooks/useSkeletonVisibility';
 
 export const CatalogPageSkeleton = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useTimeout(() => {
-    setIsVisible(true);
-  }, VISIBILITY_DELAY);
+  const isVisible = useSkeletonVisibility();
 
   return (
     isVisible && (

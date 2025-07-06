@@ -1,15 +1,9 @@
-import { VISIBILITY_DELAY } from '~config/constants';
-import { useTimeout } from '~hooks/useTimeout';
-import { useState } from 'react';
+import { useSkeletonVisibility } from '~hooks/useSkeletonVisibility';
 
 import { Skeleton } from '~/components/ui/skeleton';
 
 export const ProductPageSkeleton = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useTimeout(() => {
-    setIsVisible(true);
-  }, VISIBILITY_DELAY);
+  const isVisible = useSkeletonVisibility();
 
   return (
     isVisible && (
