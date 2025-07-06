@@ -1,4 +1,8 @@
 import { appInitializer } from '~app/appInitializer';
+import { AboutUsPageSkeleton } from '~app/pages/about-page/aboutUsPageSkeleton';
+import { CartPageSkeleton } from '~app/pages/cart-page/cartPageSkeleton';
+import { CatalogPageSkeleton } from '~app/pages/catalog-page/catalogPageSkeleton';
+import { ErrorPageSkeleton } from '~app/pages/error-page/errorPageSkeleton';
 import {
   AboutPage,
   CartPage,
@@ -10,15 +14,11 @@ import {
   SignInPage,
   SignUpPage,
 } from '~app/pages/lazy';
-import { AboutUsPageSkeleton } from '~components/ui/page-skeleton/aboutUsPageSkeleton';
-import { CartPageSkeleton } from '~components/ui/page-skeleton/cartPageSkeleton';
-import { CatalogPageSkeleton } from '~components/ui/page-skeleton/catalogPageSkeleton';
-import { ErrorPageSkeleton } from '~components/ui/page-skeleton/errorPageSkeleton';
-import { MainPageSkeleton } from '~components/ui/page-skeleton/mainPageSkeleton';
-import { ProductPageSkeleton } from '~components/ui/page-skeleton/productPageSkeleton';
-import { ProfilePageSkeleton } from '~components/ui/page-skeleton/profilePageSkeleton';
-import { SignupPageSkeleton } from '~components/ui/page-skeleton/signupPageSkeleton';
-import { SinginPageSkeleton } from '~components/ui/page-skeleton/singinPageSkeleton';
+import { MainPageSkeleton } from '~app/pages/main-page/mainPageSkeleton';
+import { ProductPageSkeleton } from '~app/pages/product-page/productPageSkeleton';
+import { ProfilePageSkeleton } from '~app/pages/profile-page/profilePageSkeleton';
+import { SignupPageSkeleton } from '~app/pages/sign-in-page/signupPageSkeleton';
+import { SinginPageSkeleton } from '~app/pages/sign-up-page/singinPageSkeleton';
 import { authenticatedUserGuard, navigationRoutes, unauthenticatedUserGuard } from '~config/navigation';
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router';

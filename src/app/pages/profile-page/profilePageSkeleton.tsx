@@ -1,8 +1,7 @@
+import { Skeleton } from '~components/ui/skeleton';
 import { VISIBILITY_DELAY } from '~config/constants';
 import { useTimeout } from '~hooks/useTimeout';
 import { useState } from 'react';
-
-import { Skeleton } from '../skeleton';
 
 export const ProfilePageSkeleton = () => {
   const [isVisible, setIsVisible] = useState(false);
