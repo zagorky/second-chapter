@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import './styles/typography.css';
+@import './styles/theme.css';
+@import './styles/checkbox.css';
+@import './styles/filter.css';
+@import './styles/wrapper.css';
+@import './styles/footer.css';
+@import './styles/animation.css';
+@import './styles/profile.css';
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+
+    font-family: var(--font-sans);
+  }
+}
