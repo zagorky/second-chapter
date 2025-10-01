@@ -3,3 +3,9 @@
   to = "/"
   status = 200
 
+[[redirects]]
+  from = "/*"
+  to = "https://second-chapter-store.netlify.app/:splat"
+  status = 301
+  force = true
+  conditions = {Host = ["second-chapter-zagorky-jsfe2024q4.netlify.app"]}
